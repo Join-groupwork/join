@@ -1,4 +1,32 @@
 @font-face {
+    font-family: 'Inter';
+    src: url(../assets/fonts/Inter/Inter_18pt-Bold.ttf);
+    font-weight: 700;
+    font-style: Bold;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url(../assets/fonts/Inter/Inter_18pt-Regular.ttf);
+    font-weight: 400;
+    font-style: regular;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url(../assets/fonts/Inter/Inter_18pt-Medium.ttf);
+    font-weight: 500;
+    font-style: Medium;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url(../assets/fonts/Inter/Inter_18pt-SemiBold.ttf);
+    font-weight: 600;
+    font-style: Semi Bold;
+}
+
+@font-face {
     font-family: 'Figtree';
     src: url(../assets/fonts/desktop/Figtree-Bold.ttf);
     font-weight: normal;
@@ -7,7 +35,7 @@
 
 @font-face {
     font-family: 'Poppins';
-    src: url(../assets/fonts/mobile/Poppins-Bold.ttf);
+    src: url(../assets/fonts/Poppins/Poppins-Regular.ttf);
     font-weight: normal;
     font-style: normal;
 }
