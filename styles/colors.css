@@ -1,6 +1,31 @@
-.bg-primary{
+.bg-primary {
     background-color: #f6f7f8;
 }
-.bg-menue{
+
+.bg-menue {
     background-color: #2a3647;
+}
+
+.bg-card {
+    background-color: #ffffff;
+}
+
+.bg-card-us {
+    background-color: #0038FF;
+}
+
+.bg-card-tt {
+    background-color: #1FD7C1;
+}
+
+.bg-contact {
+    background-color: #ffffff;
+}
+
+.bg-contact:hover {
+    background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
+}
+
+.scrollbar-color {
+    scrollbar-color: #4589FF;
 }
