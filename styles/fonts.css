@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Figtree';
+    src: url(../assets/fonts/desktop/Figtree-Bold.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url(../assets/fonts/mobile/Poppins-Bold.ttf);
+    font-weight: normal;
+    font-style: normal;
+}

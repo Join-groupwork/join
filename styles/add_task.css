@@ -1,0 +1,28 @@
+.main_add_task {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.section_add_task {
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px;
+    width: 300px;
+
+}
+
+.form_add_task {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 20px;
+    width: 300px;
+}
+
+
+
+.h1_add_task {
+    text-align: flex-start;
+     
+}
