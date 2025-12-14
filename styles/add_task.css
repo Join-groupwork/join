@@ -2,6 +2,13 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    height: 525px;
+    width: 641px;   
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 60px;
+    gap: 20px;
 }
 
 .section_add_task {
@@ -16,30 +23,43 @@
     display: flex;
     flex-direction: column;
     margin: auto;
-    padding-right: 20px;
+    padding-right: 40px;
     width: 280px;
 }
 
 .select_add_task {
     display: flex;
     flex-direction: column;
-    margin: auto;
-    padding-left:20px;
+    padding-left: 40px;
     min-width: 280px;
+    gap: 5px;
 }
 
 .section_priority {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly   ;
+    justify-content: flex-start;
     align-items: flex-start;
+    margin-bottom: 40px;
+    gap: 5px;
+    width: 300px;
 }
 
-
+.priority {
+    display: flex;
+    justify-content: space-between;
+    width: 277px;
+    
+}
 
 .h1_add_task {
     text-align: flex-start;
 
+}
+
+.hr_add_task {
+   height: 310px;
+    margin: 20px 0;
 }
 
 .body_add_task {
@@ -48,4 +68,33 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+}
+
+.input_add_task {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.textarea_add_task {
+    margin-bottom: 10px;
+    height: 80px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    resize: vertical;
+}
+
+.section_add_task_button {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 85px;
+    gap: 15px;
+}
+
+.margin_bottom_add_task {
+    margin-bottom: 15px;
 }
