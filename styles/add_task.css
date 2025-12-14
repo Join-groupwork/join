@@ -7,7 +7,7 @@
 .section_add_task {
     display: flex;
     justify-content: flex-start;
-   
+
     width: 300px;
 
 }
@@ -16,20 +16,34 @@
     display: flex;
     flex-direction: column;
     margin: auto;
-    padding: 20px;
-    width: 300px;
+    padding-right: 20px;
+    width: 280px;
+}
+
+.select_add_task {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding-left:20px;
+    min-width: 280px;
+}
+
+.section_priority {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly   ;
+    align-items: flex-start;
 }
 
 
 
 .h1_add_task {
     text-align: flex-start;
-     
+
 }
 
 .body_add_task {
     max-width: 1440px;
-    ;
     background-color: #f0f0f0;
     display: flex;
     justify-content: center;
