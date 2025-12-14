@@ -269,13 +269,13 @@ h3 {
 }
 
 .urgent-right .date {
-  font-size: 16px;
+  font-size: 20px;
   color: #2b3546;
   font-weight: 600;
 }
 
 .urgent-right .small-sub {
-  color: #28313f;
+  color: #2b3544;
   margin-top: 6px;
 }
 
@@ -290,7 +290,7 @@ h3 {
 }
 
 .card-sub {
-  color: #676a71;
+  color: #2b3544;
 }
 
 .card.urgent {
@@ -323,5 +323,5 @@ h3 {
 
 .label {
   margin-top: 5px;
-  color: #283444;
+  color: #2b3544;
   }
