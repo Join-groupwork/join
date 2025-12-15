@@ -20,7 +20,7 @@ export function getSidebarTemplate() {
 
 export function getHeaderTemplate() {
     return `
-        <div>Kanban Project Management Tool</div>
+        <div class="topbar-left">Kanban Project Management Tool</div>
         <div class="topbar-right">
           <div class="help-circle" title="Help">?</div>
           <div class="profile">SM</div>
