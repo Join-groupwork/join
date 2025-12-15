@@ -1,4 +1,4 @@
-import { getHeaderTemplate, getSidebarTemplate } from './scripts/templates.js';
+import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate } from './scripts/templates.js';
 
 init();
 
@@ -9,6 +9,7 @@ async function init() {
 function render() {
     renderHeader();
     renderSidebar();
+    renderAddTask()
 }
 
 function renderHeader() {
@@ -26,5 +27,14 @@ function renderSidebar() {
         sidebarRef.innerHTML = getSidebarTemplate();
     } else {
         console.error('Sidebar-Element nicht gefunden!');
+    }
+}
+
+function renderAddTask() {
+    const addTaskRef = document.getElementById('add_task');
+    if (addTaskRef) {
+        addTaskRef.innerHTML = getTaskTemplate();
+    } else {
+        console.error('Add Task-Element nicht gefunden!');
     }
 }
