@@ -13,11 +13,10 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 100%;
+    width: 89%;
     background-color: #f6f7f8;
     border-radius: 12px transparent;
     gap: 20px;
-
 }
 
 .container_add_task {
@@ -25,7 +24,7 @@
     flex-direction: column;
     flex: 1;
     width: 100%;
-    
+
 }
 
 .overlay_add_task {
