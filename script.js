@@ -6,15 +6,10 @@ async function init() {
     render();
 }
 
-
-
 function render() {
     renderHeader();
     renderSidebar();
 }
-
-
-
 
 function renderHeader() {
     const headerRef = document.getElementById('header');
