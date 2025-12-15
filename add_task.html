@@ -18,12 +18,12 @@
                     <label for="title">Title*</label>
                     <input class="input_add_task" type="text" id="title" name="title" required placeholder="Enter a title">
 
-                    <br><br>
+                 
 
                     <label for="description">Description</label>
                     <textarea class="textarea_add_task" id="description" name="description" required placeholder="Enter a Description"></textarea>
 
-                    <br><br>
+                   
                     <label for="due_date">Due date*</label>
                     <input class="input_add_task" type="date" id="due_date" name="due_date" required placeholder="dd/mm/yyyy">
                 </form>
@@ -35,9 +35,9 @@
                 <section class="section_priority">
                     <label for="priority">Priority</label>
                     <div id="priority" class="priority" name="priority">
-                        <button value="low">Urgent</button>
-                        <button value="medium">Medium</button>
-                        <button value="high">Low</button>
+                        <button class="priority_button" value="low">Urgent <img src="assets\icons\Property 1=Urgent.svg" alt=""></button>
+                        <button class="priority_button" value="medium">Medium <img src="assets\icons\Property 1=Medium.svg" alt=""></button>
+                        <button class="priority_button" value="high">Low <img src="assets\icons\Property 1=Low.svg" alt=""></button>
                     </div>
                 </section>
        
@@ -64,8 +64,8 @@
             </form>
         </section>
         <section class="section_add_task_button">
-            <button type="button">Clear</button>
-            <button type="submit">Add Task</button>
+            <button class="clear_button_add_task" type="button">Cancel <img src="assets\icons\close.svg" alt=""></button>
+            <button class="Create_button_add_task" type="submit">Create Task <img src="assets\icons\check.svg" alt=""></button>
         </section>
     </main>
 
