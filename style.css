@@ -162,3 +162,13 @@ footer p{
     justify-content: center;
     gap: 20px;
 }
+
+.header-menue-nav {
+    min-width: 105px;
+    font-family: Inter;
+    font-weight: regular;
+    font-size: 16px;
+    border: 2px solid purple;
+    border-radius: 20px 0px 20px 20px;
+    z-index: -1px;
+}
