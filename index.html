@@ -13,10 +13,8 @@
 
   <script type="module" src="firebase.js"></script>
   <script type="module" src="./login/login.js"></script>
-  <script type="module" src="./login/login.js"></script>
-  <script type="module" src="./scripts/allVariables.js"></script>
   <script type="module" src="./scripts/templates.js"></script>
-  <script type="module" src="script.js"></script>
+  <!-- <script type="module" src="script.js"></script> -->
 </head>
 
 <body>
@@ -36,8 +34,9 @@
 
       <form>
         <div class="form-section">
-          <input id="email" class="email-input" type="email" placeholder="Email" required />
-          <input id="password" class="password-input" type="password" placeholder="Password" required />
+          <input id="email" class="email-input" type="email" autocomplete="email" placeholder="Email" required />
+          <input id="password" class="password-input" type="password" autocomplete="current-password"
+            placeholder="Password" required />
         </div>
         <div class="buttons-section">
           <button id="loginBtn" class="login-button" type="submit">Log in</button>
