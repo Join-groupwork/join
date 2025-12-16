@@ -39,19 +39,14 @@ export function getTaskTemplate() {
                     <label for="title">Title*</label>
                     <input class="input_add_task" type="text" id="title" name="title" required placeholder="Enter a title">
 
-                 
-
                     <label for="description">Description</label>
                     <textarea class="textarea_add_task" id="description" name="description" required placeholder="Enter a Description"></textarea>
 
-                   
                     <label for="due_date">Due date*</label>
                     <input class="input_add_task" type="date" id="due_date" name="due_date" required placeholder="dd/mm/yyyy">
                 </form>
             </section>
-
             <hr class="hr_add_task">
-
             <form class="select_add_task">
                 <section class="section_priority">
                     <label for="priority">Priority</label>
@@ -61,7 +56,7 @@ export function getTaskTemplate() {
                         <button class="priority_button" value="high">Low <img src="assets\icons\Property 1=Low.svg" alt=""></button>
                     </div>
                 </section>
-       
+
                 <label for="">Assigned to</label>
                 <select class="input_add_task margin_bottom_add_task" type="text" id="assigned_to" name="assigned_to" required
                     placeholder="Select contacts to assign">
@@ -71,14 +66,12 @@ export function getTaskTemplate() {
                     <option value="contact_3">Contact 3</option>
                 </select>
 
-
                 <label for="">Category</label>
                 <select class="input_add_task margin_bottom_add_task" id="category" name="category" required placeholder="">
                     <option value="select_task_category">Select task category</option>
                     <option value="technical_task">Technical Task</option>
                     <option value="user_story">User Story</option>
                 </select>
-
 
                 <label for="">Subtasks</label>
                 <input class="input_add_task" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
