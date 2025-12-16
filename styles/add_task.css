@@ -1,9 +1,39 @@
+.body_add_task {
+    background-color: #f6f7f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .main_add_task {
+    max-width: 1440px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: #f6f7f8;
+    border-radius: 12px transparent;
+    gap: 20px;
+
+}
+
+.container_add_task {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+    
+}
+
+.overlay_add_task {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 555px;
-    width: 641px;   
+    height: 642px;
+    width: 53%;
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -14,9 +44,7 @@
 .section_add_task {
     display: flex;
     justify-content: flex-start;
-
     width: 300px;
-
 }
 
 .form_add_task {
@@ -31,7 +59,7 @@
     display: flex;
     flex-direction: column;
     padding-left: 40px;
-    min-width: 280px;
+    min-width: 317px;
     gap: 5px;
 }
 
@@ -53,21 +81,14 @@
 }
 
 .h1_add_task {
-    text-align: flex-start;
+    text-align: start;
+    margin-bottom: 10px;
 }
 
 .hr_add_task {
-   height: 310px;
+    height: 310px;
     margin: -7px 0;
-}
-
-.body_add_task {
-    max-width: 1440px;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    border: 1px solid #E0E0E0;
 }
 
 .input_add_task {
@@ -79,7 +100,7 @@
 }
 
 .textarea_add_task {
-    margin-bottom:30px;
+    margin-bottom: 30px;
     height: 80px;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -93,14 +114,12 @@
     align-items: center;
     margin-top: 85px;
     gap: 15px;
+    min-width: 600px;
 }
 
 .margin_bottom_add_task {
     margin-bottom: 15px;
 }
-
-
-/* assets/icons/priority wieder löschen vor merge */
 
 .priority_button {
     display: flex;
@@ -110,7 +129,7 @@
     background-color: #ffffff;
     width: 100px;
     height: 40px;
-   
+
     border-radius: 8px;
 }
 
@@ -132,7 +151,7 @@
     margin-left: 8px;
 }
 
-.Create_button_add_task{
+.Create_button_add_task {
     display: flex;
     justify-content: center;
     align-items: center;
