@@ -22,8 +22,17 @@ export function getHeaderTemplate() {
     return `
         <div class="topbar-left">Kanban Project Management Tool</div>
         <div class="topbar-right">
-          <div class="help-circle" title="Help">?</div>
-          <div class="profile">SM</div>
+            <div class="help-circle" title="Help">?</div>
+            <div id="headerMenue" class="profile">
+                SM
+                <nav id="headerMenueNav" class="header-menue-nav d_none">
+                    <a href="legal_notice.html">Legal Notice</a>
+                    <a href="privacy_policy.html">Privacy Policy</a>
+                    <button id="LogoutBtn">
+                        Log out
+                    </button>
+                </nav>
+            </div>
         </div>
       `;
 }
