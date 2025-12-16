@@ -1,6 +1,50 @@
 import { auth } from "../firebase.js";
 import { signInWithEmailAndPassword, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+document.addEventListener("DOMContentLoaded", () => {
+    const loginBtn = document.getElementById("loginBtn");
+    const guestBtn = document.getElementById("guestBtn");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    loginBtn.addEventListener("click", async () => {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        if (!email || !password) {
+            alert("Check your email and password. Pleasy try again.");
+            return;
+        }
+        try {
+            const userCredential = await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+            console.log("Login erforlgreich:", userCredential.user);
+            window.location.href = "summary_user.html"; // target page after login
+        } catch (error) {
+            console.error("Login Fehlgeschlagen:", error.message);
+            alert("Login fehlgeschlagen");
+        }
+        console.log("LOGIN CLICK");
+        console.log("Email:", email);
+        console.log("Password:", password);
+    })
+
+    guestBtn.addEventListener("click", async () => {
+        try {
+            const userCredential = await signInAnonymously(auth);
+            console.log("GUEST LOGIN CLICK");
+            window.location.href = "summary_guest.html"; // target page after login
+        } catch (error) {
+            console.error(error.message);
+            alert("Gast-Login fehlgeschlagen");
+        }
+    });
+
+})
+
 // email/password login
 export function loginWithEmail(email, password) {
     signInWithEmailAndPassword(auth, email, password)
@@ -27,23 +71,3 @@ export function loginAsGuest() {
         });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const loginBtn = document.getElementById("loginBtn");
-    const guestBtn = document.getElementById("guestBtn");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-
-    loginBtn.addEventListener("click", () => {
-        const email = emailInput.value;
-        const password = passwordInput.value;
-
-        console.log("LOGIN CLICK");
-        console.log("Email:", email);
-        console.log("Password:", password);
-    })
-
-    guestBtn.addEventListener("click", () => {
-        console.log("GUEST LOGIN CLICK");
-    });
-
-})
