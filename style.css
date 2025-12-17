@@ -43,6 +43,7 @@ body {
     height: 310px;
 
 }
+
 .form-section {
     display: flex;
     justify-content: center;
@@ -58,8 +59,8 @@ h2 {
 }
 
 .section-1 {
-   
-    margin: 50px auto; 
+
+    margin: 50px auto;
 }
 
 .signup-button {
@@ -89,14 +90,14 @@ input {
 }
 
 .email-input {
-  border: 1px solid #ccc;
-  background-image: url('../join/assets/icons/envelope-regular-full.svg');
-  background-repeat: no-repeat;
-  background-position: 230px center;
-  background-size: 18px 18px;
+    border: 1px solid #ccc;
+    background-image: url('../join/assets/icons/envelope-regular-full.svg');
+    background-repeat: no-repeat;
+    background-position: 230px center;
+    background-size: 18px 18px;
 }
 
-.password-input{
+.password-input {
     border: 1px solid #ccc;
     background-image: url('../join/assets/icons/lock-solid-full.svg');
     background-repeat: no-repeat;
@@ -127,17 +128,18 @@ input {
     height: 30px;
 
 }
+
 button {
-  display: flex;
-  justify-content: center; 
-  align-items: center;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-button p{
+button p {
     font-family: sans-serif;
     font-weight: bold;
     font-size: 14px;
-}    
+}
 
 
 footer {
@@ -149,12 +151,13 @@ footer {
     text-align: center;
 
 }
-footer p{
+
+footer p {
     font-size: 14px;
     font-weight: bold;
     font-family: sans-serif;
     color: #afb8c5;
-    
+
 }
 
 .footer-container {
@@ -164,11 +167,28 @@ footer p{
 }
 
 .header-menue-nav {
-    min-width: 105px;
-    font-family: Inter;
-    font-weight: regular;
-    font-size: 16px;
-    border: 2px solid purple;
+    width: 150px;
+    height: 160px;
+    position: absolute;
+    top: 135%;
+    right: -10px;
     border-radius: 20px 0px 20px 20px;
-    z-index: -1px;
+    min-width: 160px;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 16px;
+    transition: opacity 0.25s ease, transform 0.25 ease;
+    z-index: 100;
+}
+
+.header-menue-nav ul {
+    height: 46px;
+    list-style: none;
+    margin: 0;
+    padding: 16px 16px;
+}
+
+.header-menue-nav ul a {
+    display: block;
+    padding: 8px, 12px;
 }
