@@ -28,8 +28,9 @@
 }
 
 .div_add_task {
-    grid-column-start: 3;
+    grid-column-start: 2;
     grid-row-start: 3;
+    margin-left: 226px;
 }
 
 .overlay_add_task {
