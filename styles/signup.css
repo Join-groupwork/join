@@ -1,0 +1,19 @@
+.signup-content {
+    width: 600px;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-head {
+    display: flex;
+}
+
+.signup-form{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
