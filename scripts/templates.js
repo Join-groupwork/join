@@ -25,12 +25,18 @@ export function getHeaderTemplate() {
             <div class="help-circle" title="Help">?</div>
             <div id="headerMenue" class="profile">
                 SM
-                <nav id="headerMenueNav" class="header-menue-nav d_none">
-                    <a href="legal_notice.html">Legal Notice</a>
-                    <a href="privacy_policy.html">Privacy Policy</a>
-                    <button id="LogoutBtn">
-                        Log out
-                    </button>
+                <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
+                    <ul>
+                        <a href="legal_notice.html">Legal Notice</a>
+                    </ul>
+                    <ul>
+                        <a href="privacy_policy.html">Privacy Policy</a>
+                    </ul>
+                    <ul>
+                        <a id="logoutBtn">
+                            Log out
+                        </a>
+                    <ul/>
                 </nav>
             </div>
         </div>

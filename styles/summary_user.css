@@ -99,7 +99,7 @@
   position: fixed;
   top: 0px;
   width: 100%;
- 
+
 }
 
 .topbar-left {
@@ -130,18 +130,19 @@
 .profile {
   width: 40px;
   height: 40px;
+  color: #2eabe2;
+  font-weight: bold;
+  border: 2px solid#252b41;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bold;
-  border: 2px solid;
-  border-color: #252b41;
-  color: #2eabe2;
+  position: relative;  /* Bezugspunkt für das Dropdown-Menü */
+  cursor: pointer;  /* Zeigt an, dass man klicken kann */
 }
 
 .dashboard {
- padding: 186px 0px 0px 340px;
+  padding: 186px 0px 0px 340px;
 }
 
 .cards {
