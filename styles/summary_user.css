@@ -37,12 +37,13 @@
   margin-left: -40px;
   margin-right: -40px;
   padding: 10px 40px;
+  margin-top: 10px;
   cursor: pointer;
   color: #ced1d7;
 }
 
 .nav-item:hover {
-  background: #091932;
+  background: #2a3e59;
 }
 
 .nav-item {
@@ -71,8 +72,9 @@
 }
 
 .legal a:hover {
-  background: #091932;
-  color: #ffffff;
+  /* background: #091932; */
+  color: #2ba9e5;
+  font-weight: bold;
 }
 
 .main {
