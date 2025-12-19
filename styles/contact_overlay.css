@@ -1,0 +1,57 @@
+.overlay_add_contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 43vh;
+    width: 90%;
+    background-color: #ffffff;
+    color: #ffffff;
+    font-size: 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+
+}
+
+.overlay_add_contact h2 {
+    font-size: 40px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.overlay_add_contact_left {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #e0e0e0;
+    padding-right: 20px;
+    background-color: #2A3647;
+}
+
+.overlay_add_contact_right {
+    width: 50%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.overlay_add_contact_right form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
+    width: 50%;
+    border-radius: 16px;
+}
+
+.buttons_add_contact {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    padding-right: 40px;
+}
