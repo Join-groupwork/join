@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 43vh;
+    height: 592px;
     width: 90%;
     background-color: #ffffff;
     color: #ffffff;
@@ -10,33 +10,47 @@
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     gap: 20px;
-
+    border-radius: 16px;
 }
 
 .overlay_add_contact h2 {
-    font-size: 40px;
-    margin-bottom: 10px;
+    font-size: 56px;
+    margin: unset;
     color: #ffffff;
 }
 
+
 .overlay_add_contact_left {
     height: 100%;
-    width: 50%;
+    width: 40%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     border-right: 1px solid #e0e0e0;
     padding-right: 20px;
+    padding-left: 32px;
     background-color: #2A3647;
+    border-radius: 16px 0 0 16px;
 }
 
 .overlay_add_contact_right {
-    width: 50%;
+    width: 60%;
     display: flex;
-    align-items: flex-end;
+
     justify-content: flex-end;
     flex-direction: column;
+}
+
+.overlay_add_contact_right img {
+    margin: 20px 40px;
+}
+
+
+.overlay_add_contact_left p {
+    font-size: 16px;
+    margin: unset;
+    justify-self: flex-start;
 }
 
 .overlay_add_contact_right form {
@@ -44,8 +58,20 @@
     flex-direction: column;
     padding: 20px;
     gap: 15px;
-    width: 50%;
+    width: 63%;
     border-radius: 16px;
+}
+
+.overlay_add_contact form input.input_add_contact {
+    height: 40px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.addContact_form_container {
+    display: flex;
+    align-items: center;
 }
 
 .buttons_add_contact {
@@ -54,4 +80,25 @@
     gap: 10px;
     margin-top: 20px;
     padding-right: 40px;
+}
+
+.btn_save_contact{
+    background-color: #ffffff;
+    border: 1px solid #2A3647;
+    border-radius: 8px;
+    height: 40px;
+    width: 100px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn_cancel_contact{
+    background-color: #2A3647;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    height: 40px;
+    width: 120px;
+    font-size: 16px;
+    cursor: pointer;
 }
