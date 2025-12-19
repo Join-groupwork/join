@@ -16,7 +16,7 @@
 }
 
 .overlay_add_contact h2 {
-    font-size: 56px;
+    font-size: 61px;
     margin: unset;
     color: #ffffff;
 }
@@ -37,15 +37,15 @@
 }
 
 .overlay_add_contact_left p {
-    font-size: 16px;
+    font-size: 27px;
     margin: unset;
     justify-self: flex-start;
 }
 
 .overlay_add_contact_left img {
-    margin-bottom: 40px;
-    margin-top: 80px;
-    
+    margin-bottom: 10px;
+    margin-top: 148px;
+    height : 7vh;
 }
 
 .overlay_add_contact_right {
