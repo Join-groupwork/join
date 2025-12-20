@@ -1,11 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign_up</title>
+    <link rel="icon" type="image/png" href="./assets/icons/Capa2.png">
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div>
+      <img class="signup-icon" src="./assets/icons/Capa2.png" alt="Join-logo" />
+    </div>
+
+    <div class="section-1-signup">
+      <div class="signup-container">
+        <div class="h2-container">
+          <img
+            class="back-icon"
+            src="./assets/icons/arrow-left-line.png"
+            alt="Back"
+          />
+          <h2 class="h2-signup">Sign up</h2>
+        </div>
+        <form class="form-signup">
+          <div class="form-section-signup">
+            <input
+              class="name-input-signup"
+              type="name"
+              placeholder="Name"
+              required
+            />
+            <input
+              class="email-input-signup"
+              type="email"
+              placeholder="Email"
+              required
+            />
+            <input
+              class="password-input-signup"
+              type="password"
+              placeholder="Password"
+              required
+            />
+            <input
+              class="password-input-signup"
+              type="password"
+              placeholder="Confirm Password"
+              required
+            />
+          </div>
+          <label class="checkbox-container">
+            <input type="checkbox" required />
+            <span class="checkmark"></span>
+            <p>I accept the <a>privacy policy</a></p>
+          </label>
+          <div class="buttons-section">
+            <button class="signup-button" type="submit">Sign up</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-container">
+        <p>Privacy Policy</p>
+        <p>Legal notice</p>
+      </div>
+    </footer>
+  </body>
 </html>
+
