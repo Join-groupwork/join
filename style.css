@@ -135,6 +135,10 @@ button {
     align-items: center;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 button p {
     font-family: sans-serif;
     font-weight: bold;
