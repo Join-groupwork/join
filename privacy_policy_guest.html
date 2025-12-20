@@ -1,11 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Join</title>
+    <link rel="icon" href="./assets/img/Logo for Favicon construction.svg" type="image/png">
+    <script src="./script.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles/summary_user.css">
+    <link rel="stylesheet" href="styles\privacy-policy.css">
 </head>
+
 <body>
-    
+    <div class="app">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="./assets/img/joinlogo.png" alt="" srcset="">
+            </div>
+
+            <nav class="nav">
+                <a class="nav-item"><img src="./assets/icons/sideMenu/summary1.png" alt="Summary"
+                        class="nav-icon">Summary</a>
+                <a class="nav-item"><img src="./assets/icons/sideMenu/addtask1.png" alt="Add Task" class="nav-icon">Add
+                    Task</a>
+                <a class="nav-item"><img src="./assets/icons/sideMenu/board1.png" alt="Board" class="nav-icon">Board</a>
+                <a class="nav-item"><img src="./assets/icons/sideMenu/contacs1.png" alt="Contacts"
+                        class="nav-icon">Contacts</a>
+            </nav>
+
+            <div class="legal">
+                <a>Privacy Policy</a>
+                <a>Legal Notice</a>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+
+        <main class="main">
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div>Kanban Project Management Tool</div>
+                <div class="topbar-right">
+                    <div class="help-circle" title="Help">?</div>
+                    <div class="profile">G</div>
+                </div>
+            </header>
+
+
+            <section class="privacy-policy">
+
+                <!-- PRIVACY POLICY CONTENT -->
+                <h1>Privacy Policy</h1>
+
+                <section>
+                    <h2>1. Introduction</h2>
+                    <p>
+                        This Privacy Policy explains how <strong>[Project Name]</strong> (“we”, “our”, or “us”)
+                        collects, uses, and protects personal data when you use our Kanban Board web application.
+                    </p>
+                    <p>
+                        This project is developed for demonstration and portfolio purposes only and is not intended
+                        for commercial use.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>2. Data Controller</h2>
+                    <p>
+                        <strong>Website Owner:</strong> [Your Name / Company Name]<br>
+                        <strong>Email:</strong> [contact@example.com]<br>
+                        <strong>Country:</strong> [Country]
+                    </p>
+                </section>
+
+                <section>
+                    <h2>3. Personal Data We Collect</h2>
+
+                    <h3>a) Account Data</h3>
+                    <ul>
+                        <li>Username</li>
+                        <li>Email address</li>
+                        <li>Encrypted password</li>
+                    </ul>
+                    <p>Used for user authentication and account management.</p>
+
+                    <h3>b) User-Generated Content</h3>
+                    <ul>
+                        <li>Tasks</li>
+                        <li>Task descriptions</li>
+                        <li>Other content entered by users or guests</li>
+                    </ul>
+
+                    <h3>c) Technical Data</h3>
+                    <ul>
+                        <li>IP address</li>
+                        <li>Browser type and version</li>
+                        <li>Operating system</li>
+                        <li>Date and time of access</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>4. Cookies</h2>
+                    <p>
+                        We use <strong>essential cookies only</strong>. These cookies are required for the core
+                        functionality of the application, including:
+                    </p>
+                    <ul>
+                        <li>User login sessions</li>
+                        <li>Security and authentication</li>
+                        <li>Application state management</li>
+                    </ul>
+                    <p>No tracking or marketing cookies are used.</p>
+                </section>
+
+                <section>
+                    <h2>5. Purpose of Data Processing</h2>
+                    <ul>
+                        <li>Providing and operating the Kanban Board application</li>
+                        <li>User authentication and account management</li>
+                        <li>Saving and displaying tasks entered by users</li>
+                        <li>Ensuring application security and stability</li>
+                        <li>Debugging and improving functionality</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>6. Legal Basis (GDPR)</h2>
+                    <p>Data processing is based on:</p>
+                    <ul>
+                        <li>Article 6(1)(b) GDPR – performance of a contract</li>
+                        <li>Article 6(1)(f) GDPR – legitimate interest (technical operation and security)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>7. Third-Party Services</h2>
+
+                    <h3>a) Firebase</h3>
+                    <p>
+                        We use <strong>Firebase</strong> as a backend service and database provider.
+                        Firebase may process personal data such as user account information,
+                        stored tasks, and technical connection data.
+                    </p>
+                    <p>
+                        Firebase is provided by Google LLC. Data may be processed on servers outside the EU.
+                        Appropriate safeguards are applied in accordance with GDPR requirements.
+                    </p>
+
+                    <h3>b) Google Fonts</h3>
+                    <p>
+                        This website uses Google Fonts to ensure consistent typography.
+                        When loading fonts, your IP address may be transmitted to Google.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>8. Data Storage and Retention</h2>
+                    <p>
+                        Personal data is stored only for as long as necessary to fulfill the purposes
+                        described in this Privacy Policy or until the user deletes their account.
+                    </p>
+                    <p>
+                        User-generated content remains stored until it is deleted by the user,
+                        the account is removed, or the project is discontinued.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>9. User Rights</h2>
+                    <p>Under the GDPR, users have the right to:</p>
+                    <ul>
+                        <li>Access their personal data</li>
+                        <li>Rectify inaccurate data</li>
+                        <li>Request deletion of their data</li>
+                        <li>Restrict or object to processing</li>
+                        <li>Request data portability</li>
+                    </ul>
+                    <p>
+                        Requests can be sent to: <strong>[contact@example.com]</strong>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>10. Data Security</h2>
+                    <p>
+                        We apply appropriate technical and organizational measures to protect personal data,
+                        including encrypted passwords, access restrictions, and secure communication protocols.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>11. Changes to This Privacy Policy</h2>
+                    <p>
+                        This Privacy Policy may be updated to reflect technical or legal changes.
+                        The latest version will always be available within the project.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>12. Contact</h2>
+                    <p>
+                        If you have any questions regarding this Privacy Policy, please contact:
+                    </p>
+                    <p>
+                        <strong>[Your Name / Project Owner]</strong><br>
+                        Email: [contact@example.com]
+                    </p>
+                </section>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
 </body>
+
 </html>
