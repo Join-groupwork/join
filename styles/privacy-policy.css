@@ -1,117 +1,61 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* =========================
-   Root Variables
-   ========================= */
-:root {
-    --bg-color: #f9fafb;
-    --content-bg: #ffffff;
-    --text-color: #1f2937;
-    --muted-text: #6b7280;
-    --heading-color: #111827;
-    --accent-color: #2563eb;
-    --border-color: #e5e7eb;
-    --max-width: 900px;
+/* Base */
+body {
+  font-family: "Open Sans";
+  background-color: #f5f6f8;
+  color: #1f2937;
 }
 
-/* =========================
-   Main Container
-   ========================= */
-.privacy-policy {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 48px 64px;
+/* Content area */
+.legal-page {
+  width: 100%;
+  padding: 48px 64px;
+  background-color: #ffffff;
 }
 
-/* =========================
-   Headings
-   ========================= */
-.privacy-policy h1 {
-    font-size: 2.25rem;
-    margin-bottom: 32px;
-    color: var(--heading-color);
-    font-weight: 700;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 16px;
+/* Headings */
+.legal-page h1 {
+  font-size: 2rem;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 12px;
 }
 
-.privacy-policy h2 {
-    font-size: 1.5rem;
-    margin-top: 40px;
-    margin-bottom: 16px;
-    color: var(--heading-color);
-    font-weight: 600;
+.legal-page h2 {
+  font-size: 1.25rem;
+  margin-top: 32px;
+  margin-bottom: 12px;
 }
 
-.privacy-policy h3 {
-    font-size: 1.1rem;
-    margin-top: 24px;
-    margin-bottom: 8px;
-    color: var(--heading-color);
-    font-weight: 600;
+.legal-page h3 {
+  font-size: 1rem;
+  margin-top: 20px;
+  margin-bottom: 8px;
 }
 
-/* =========================
-   Text Elements
-   ========================= */
-.privacy-policy p {
-    margin-bottom: 16px;
-    color: var(--text-color);
-    font-weight: 400;
+/* Text */
+.legal-page p {
+  margin-bottom: 16px;
+  line-height: 1.6;
 }
 
-.privacy-policy strong {
-    font-weight: 600;
-    color: var(--heading-color);
+.legal-page ul {
+  margin-left: 20px;
+  margin-bottom: 16px;
 }
 
-/* =========================
-   Lists
-   ========================= */
-.privacy-policy ul {
-    margin: 12px 0 20px 20px;
-    padding-left: 20px;
+.legal-page li {
+  margin-bottom: 6px;
 }
 
-.privacy-policy li {
-    margin-bottom: 8px;
-}
-
-/* =========================
-   Sections
-   ========================= */
-.privacy-policy section {
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.privacy-policy section:last-of-type {
-    border-bottom: none;
-}
-
-/* =========================
-   Links
-   ========================= */
-.privacy-policy a {
-    color: var(--accent-color);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.privacy-policy a:hover {
-    text-decoration: underline;
-}
-
-/* =========================
-   Responsive
-   ========================= */
+/* Responsive */
 @media (max-width: 768px) {
-    .privacy-policy {
-        padding: 32px 24px;
-    }
+  .legal-page {
+    padding: 32px 24px;
+  }
 }
