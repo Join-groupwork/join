@@ -11,7 +11,7 @@ function render() {
     renderSidebar();
     renderAddTask();
     // renderContactAddOverlay();   <-- Aktivieren, um das Overlay zum Hinzufügen von Kontakten anzuzeigen
-    // renderContactEditOverlay();  
+    // renderContactEditOverlay(); Contact
 }
 
 function renderHeader() {
@@ -53,9 +53,9 @@ function renderContactEditOverlay() {
 }
 
 function renderContactAddOverlay() {
-    const addTaskRef = document.getElementById('addC_overlay');
-    if (addTaskRef) {
-        addTaskRef.innerHTML = getAddOverlayTemplate();
+    const addContactRef = document.getElementById('addC_overlay');
+    if (addContactRef) {
+        addContactRef.innerHTML = getAddOverlayTemplate();
     } else {
         console.error('ContactOverlay-Element nicht gefunden!');
     }
