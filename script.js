@@ -1,4 +1,4 @@
-import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate } from './scripts/templates.js';
+import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate, getAddOverlayTemplate } from './scripts/templates.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { auth } from "./firebase.js";
 
@@ -11,7 +11,9 @@ async function init() {
 function render() {
     renderHeader();
     renderSidebar();
-    renderAddTask()
+    renderAddTask();
+    // renderContactAddOverlay();   <-- Aktivieren, um das Overlay zum Hinzufügen von Kontakten anzuzeigen
+    // renderContactEditOverlay(); Contact
 }
 
 function renderHeader() {
@@ -40,6 +42,27 @@ function renderAddTask() {
         console.error('Add Task-Element nicht gefunden!');
     }
 }
+
+
+
+function renderContactEditOverlay() {
+    const editContactRef = document.getElementById('editC_overlay');
+    if (editContactRef) {
+        editContactRef.innerHTML = getEditOverlayTemplate();
+    } else {
+        console.error('ContactOverlay-Element nicht gefunden!');
+    }
+}
+
+function renderContactAddOverlay() {
+    const addContactRef = document.getElementById('addC_overlay');
+    if (addContactRef) {
+        addContactRef.innerHTML = getAddOverlayTemplate();
+    } else {
+        console.error('ContactOverlay-Element nicht gefunden!');
+    }
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const profileBtn = document.getElementById('headerMenue');
