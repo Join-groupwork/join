@@ -1,3 +1,7 @@
+import { auth } from "../firebase.js";
+import { createUserWitrhEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { pushContact } from '../scripts/firebase/pushContact.js';
+
 const signupName = document.getElementById('signupName');
 const signupEmail = document.getElementById('loginEmail');
 const signupPassword = document.getElementById('loginPassword');
@@ -32,16 +36,35 @@ function validateForm() {
     });
 }
 
-function handleSignup(event) {
+async function handleSignup(event) {
     event.preventDefault();
 
-    const userData= {
-        name: signupName.value.trim(),
-        email: signupEmail.value.trim(),
-        password: signupPassword.value,
-        confirmPasswor: signupConfirmPassword.value,
-        acceptedTerms: termsCheckbox.checked
-    }
-    console.log('User-Daten gesammelt:', userData);
-}
+    const email = signupEmail.value.trim();
+    const password = signupPassword.value;
 
+    try {
+        const userCredential = await createUserWitrhEmailAndPassword(auth, email, password);
+
+        const uid = userCredential.user.uid;
+
+        const contactData = {
+            uid: uid,
+            name: signupName.value.trim(),
+            email: email,
+            createdAT: Date.now()
+        };
+
+        console.log('Contact-Daten vorbereitet:', contactData);
+
+        await pushContact(contactData);
+        console.log('Contact erfolgreich gespeichert');
+        // signupForm.reset();
+        // signupBtn.disabled = true;
+
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 1500);
+    } catch (error) {
+        console.error('Fehler beim Speichern:', error);
+    }
+}
