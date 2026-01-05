@@ -1,5 +1,12 @@
-import { auth } from "../firebase.js";
+import { auth } from "/join/firebase.js";
 import { signInWithEmailAndPassword, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+console.log("Auth object:", auth);
+if (location.protocol === 'https:') {
+    console.log("Seite läuft über HTTPS ✅");
+} else {
+    console.log("Seite läuft NICHT über HTTPS ❌");
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     const loginBtn = document.getElementById("loginBtn");
@@ -8,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const passwordInput = document.getElementById("password");
 
     loginBtn.addEventListener("click", async () => {
+        event.preventDefault();
         const email = emailInput.value.trim();
         const password = passwordInput.value;
 

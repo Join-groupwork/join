@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>join-Signup</title>
     <link rel="icon" href="./assets/img/Logo for Favicon construction.svg" type="image/png">
     <link rel="stylesheet" href="./styles/standard.css">
     <link rel="stylesheet" href="./styles/colors.css">
@@ -23,10 +23,12 @@
         <h1>Sign up</h1>
         <div class="signup-form">
             <form id="signupForm" action="">
-                <input class="sigup-input" type="text" id="signupName" placeholder="name" required>
-                <input class="sigup-input" type="email" name="email" id="loginEmail" placeholder="Email" required>
-                <input class="sigup-input" type="password" name="Password" id="loginPassword" placeholder="Password"
+                <input class="sigup-input" type="text" id="signupName" placeholder="name" autocomplete="username"
                     required>
+                <input class="sigup-input" type="email" name="email" id="loginEmail" placeholder="Email"
+                    autocomplete="email" required>
+                <input class="sigup-input" type="password" name="Password" id="loginPassword" placeholder="Password"
+                    autocomplete="new-password" minlength="6" required>
                 <input class="sigup-input" type="password" name="confirmPassword" id="signupConfirmPassword"
                     placeholder="Confirm Password" required>
                 <div><input type="checkbox" name="termsCheckbox" id="termsCheckbox"></div>

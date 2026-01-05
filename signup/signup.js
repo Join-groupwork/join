@@ -1,5 +1,5 @@
-import { auth } from "../firebase.js";
-import { createUserWitrhEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { auth } from "/join/firebase.js";
+import { createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 import { pushContact } from '../scripts/firebase/pushContact.js';
 
 const signupName = document.getElementById('signupName');
@@ -43,7 +43,7 @@ async function handleSignup(event) {
     const password = signupPassword.value;
 
     try {
-        const userCredential = await createUserWitrhEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
         const uid = userCredential.user.uid;
 
@@ -58,13 +58,15 @@ async function handleSignup(event) {
 
         await pushContact(contactData);
         console.log('Contact erfolgreich gespeichert');
+        // signupMassegeTemplate();
         // signupForm.reset();
-        // signupBtn.disabled = true;
+
 
         setTimeout(() => {
             window.location.href = "index.html";
         }, 1500);
     } catch (error) {
+        signupBtn.disabled = true;
         console.error('Fehler beim Speichern:', error);
     }
 }

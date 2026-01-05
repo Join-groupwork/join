@@ -198,3 +198,13 @@ export function getAddOverlayTemplate() {
     </main>
     `;
 }
+
+export function signupMassegeTemplate() {
+    return `
+        <aside class="signup-massege-box">
+            <p>
+                You Signed Up successfully
+            </p>
+        </aside>
+    `
+}

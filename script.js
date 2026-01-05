@@ -1,6 +1,6 @@
 import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate, getAddOverlayTemplate } from './scripts/templates.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { auth } from "./firebase.js";
+import { auth } from "/join/firebase.js";
 
 init();
 
@@ -43,8 +43,6 @@ function renderAddTask() {
     }
 }
 
-
-
 function renderContactEditOverlay() {
     const editContactRef = document.getElementById('editC_overlay');
     if (editContactRef) {
@@ -63,16 +61,13 @@ function renderContactAddOverlay() {
     }
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
     const profileBtn = document.getElementById('headerMenue');
     const logoutBtn = document.getElementById('logoutBtn');
     const headerMenueNav = document.getElementById('headerMenueNav');
-
     profileBtn.addEventListener('click', () => {
         headerMenueNav.classList.toggle('d_none');
     })
-
     logoutBtn.addEventListener('click', () => {
         try {
             const userCredential = signOut(auth);
