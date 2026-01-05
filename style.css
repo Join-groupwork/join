@@ -5,7 +5,8 @@ body {
 
 body {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+    /* conflict with body_contacts, vorübergehend herausgenommen */
 }
 
 
@@ -43,6 +44,7 @@ body {
     height: 310px;
 
 }
+
 .form-section {
     display: flex;
     justify-content: center;
@@ -58,8 +60,8 @@ h2 {
 }
 
 .section-1 {
-   
-    margin: 50px auto; 
+
+    margin: 50px auto;
 }
 
 .signup-button {
@@ -89,14 +91,14 @@ input {
 }
 
 .email-input {
-  border: 1px solid #ccc;
-  background-image: url('../join/assets/icons/envelope-regular-full.svg');
-  background-repeat: no-repeat;
-  background-position: 230px center;
-  background-size: 18px 18px;
+    border: 1px solid #ccc;
+    background-image: url('../join/assets/icons/envelope-regular-full.svg');
+    background-repeat: no-repeat;
+    background-position: 230px center;
+    background-size: 18px 18px;
 }
 
-.password-input{
+.password-input {
     border: 1px solid #ccc;
     background-image: url('../join/assets/icons/lock-solid-full.svg');
     background-repeat: no-repeat;
@@ -127,17 +129,18 @@ input {
     height: 30px;
 
 }
+
 button {
-  display: flex;
-  justify-content: center; 
-  align-items: center;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-button p{
+button p {
     font-family: sans-serif;
     font-weight: bold;
     font-size: 14px;
-}    
+}
 
 
 footer {
@@ -149,16 +152,77 @@ footer {
     text-align: center;
 
 }
-footer p{
+
+footer p {
     font-size: 14px;
     font-weight: bold;
     font-family: sans-serif;
     color: #afb8c5;
-    
+
 }
 
 .footer-container {
     display: flex;
     justify-content: center;
     gap: 20px;
+}
+
+.contactside_section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 61px;
+    height: 100%;
+    width: 367px;
+    background: white;
+    margin-left: 222px;
+}
+
+.contact_list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: calc(100vh - 200px);
+    width: 367px;
+    background-color: white;
+    overflow-y: auto;
+}
+
+.body_contacts {
+    display: flex;
+    height: 100vh;
+    background-color: #F6F7F8;
+}
+
+.contact_slogan {
+    font-size: 25px;
+    display: flex;
+    align-items: flex-start;
+    margin-top: 156px;
+    gap: 30px;
+    padding-left: 60px;
+}
+
+.hr_line_contacts {
+    border: 1px solid #29ABE2;
+    height: 60px;
+}
+
+.contact_btn_addNew {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2A3647;
+    height: 50px;
+    width: 300px;
+    border-radius: 8px;
+    color: white;
+    margin: 30px auto;
+}
+
+.contact_slogan p { 
+    font-size: 27px;
+    font-weight: 400;
+    padding-top: 20px;
+    color: #2A3647;
 }
