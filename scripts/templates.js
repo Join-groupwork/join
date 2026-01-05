@@ -5,10 +5,10 @@ export function getSidebarTemplate() {
       </div>
 
       <nav class="nav">
-        <a class="nav-item" href="summary_user.html"><img src="./assets/icons/sideMenu/summary1.png" alt="Summary" class="nav-icon">Summary</a>
-        <a class="nav-item" href="add_task.html"><img src="./assets/icons/sideMenu/addtask1.png" alt="Add Task" class="nav-icon">Add Task</a>
-        <a class="nav-item" href="#"><img src="./assets/icons/sideMenu/board1.png" alt="Board" class="nav-icon">Board</a>
-        <a class="nav-item" href="#"><img src="./assets/icons/sideMenu/contacs1.png" alt="Contacts" class="nav-icon">Contacts</a>
+        <a class="nav-item" href="./pages/summary_user.html"><img src="./assets/icons/sideMenu/summary1.png" alt="Summary" class="nav-icon">Summary</a>
+        <a class="nav-item" href="./pages/add_task.html"><img src="./assets/icons/sideMenu/addtask1.png" alt="Add Task" class="nav-icon">Add Task</a>
+        <a class="nav-item" href="./pages/board.html"><img src="./assets/icons/sideMenu/board1.png" alt="Board" class="nav-icon">Board</a>
+        <a class="nav-item" href="./pages/contacts.html"><img src="./assets/icons/sideMenu/contacs1.png" alt="Contacts" class="nav-icon">Contacts</a>
       </nav>
 
       <div class="legal">
