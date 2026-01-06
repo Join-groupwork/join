@@ -8,8 +8,32 @@ body {
     flex-direction: column;
 }
 
+/* fonts */
+h1 {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-style: bold;
+    font-size: 60px;
+}
 
+h2 {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-style: bold;
+    font-size: 30px;
+}
 
+h2 {
+    font-size: 45px;
+    margin-block-start: -18px;
+    font-family: sans-serif;
+}
+.inter-400 {
+    font-family: 'Inter';
+    font-weight: 400;
+    font-style: regular;
+    font-size: 16px;
+}
 .board {
     display: flex;
     gap: 10px;
@@ -43,6 +67,7 @@ body {
     height: 310px;
 
 }
+
 .form-section {
     display: flex;
     justify-content: center;
@@ -51,15 +76,11 @@ body {
 
 }
 
-h2 {
-    font-size: 45px;
-    margin-block-start: -18px;
-    font-family: sans-serif;
-}
+
 
 .section-1 {
-   
-    margin: 50px auto; 
+
+    margin: 50px auto;
 }
 
 .signup-button {
@@ -89,14 +110,14 @@ input {
 }
 
 .email-input {
-  border: 1px solid #ccc;
-  background-image: url('../join/assets/icons/envelope-regular-full.svg');
-  background-repeat: no-repeat;
-  background-position: 230px center;
-  background-size: 18px 18px;
+    border: 1px solid #ccc;
+    background-image: url('../join/assets/icons/envelope-regular-full.svg');
+    background-repeat: no-repeat;
+    background-position: 230px center;
+    background-size: 18px 18px;
 }
 
-.password-input{
+.password-input {
     border: 1px solid #ccc;
     background-image: url('../join/assets/icons/lock-solid-full.svg');
     background-repeat: no-repeat;
@@ -127,17 +148,18 @@ input {
     height: 30px;
 
 }
+
 button {
-  display: flex;
-  justify-content: center; 
-  align-items: center;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-button p{
+button p {
     font-family: sans-serif;
     font-weight: bold;
     font-size: 14px;
-}    
+}
 
 
 footer {
@@ -149,12 +171,13 @@ footer {
     text-align: center;
 
 }
-footer p{
+
+footer p {
     font-size: 14px;
     font-weight: bold;
     font-family: sans-serif;
     color: #afb8c5;
-    
+
 }
 
 .footer-container {
