@@ -3,13 +3,20 @@ body {
     margin: 0;
 }
 
-body {
-    display: flex;
+
+    /* body -> display: flex; */
     /* flex-direction: column; */
     /* conflict with body_contacts, vorübergehend herausgenommen */
+
+
+
+
+.main_index {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #F6F7F8;
 }
-
-
 
 .board {
     display: flex;
@@ -220,14 +227,14 @@ footer p {
     border-radius: 8px;
     color: white;
     margin: 30px auto;
-    gap:10px;
+    gap: 10px;
     font-size: 21px;
     cursor: pointer;
     font-weight: 700;
     padding: 15px 15px;
 }
 
-.contact_slogan p { 
+.contact_slogan p {
     font-size: 27px;
     font-weight: 400;
     padding-top: 20px;

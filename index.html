@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Join</title>
-    <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="./styles/standard.css">
-    <link rel="stylesheet" href="./styles/assets.css">
-    <link rel="stylesheet" href="./styles/colors.css">
-    <link rel="stylesheet" href="./styles/fonts.css">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./styles/standard.css">
+  <link rel="stylesheet" href="./styles/assets.css">
+  <link rel="stylesheet" href="./styles/colors.css">
+  <link rel="stylesheet" href="./styles/fonts.css">
 
-    <script type="module" src="./scripts/allVariables.js"></script>
-    <script type="module" src="./scripts/firebase/getFirebase.js"></script>
-    <script type="module" src="./scripts/templates.js"></script>
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
+  <script type="module" src="./scripts/allVariables.js"></script>
+  <script type="module" src="./scripts/firebase/getFirebase.js"></script>
+  <script type="module" src="./scripts/templates.js"></script>
+  <script type="module" src="script.js"></script>
+</head>
+    <!-- added <main>tag for fixing index - contacts body conflict -->
+<body>
+  <main class="main_index"> 
     <div class="menu">
       <div class="board">
         <p>Not a Join user ?</p>
@@ -42,16 +44,13 @@
         </form>
       </div>
     </div>
+  </main>
+  <footer>
+    <div class="footer-container">
+      <p>Privacy Policy</p>
+      <p>Legal notice</p>
+    </div>
+  </footer>
+</body>
 
-    <footer>
-      <div class="footer-container">
-        <p>Privacy Policy</p>
-        <p>Legal notice</p>
-      </div>
-    </footer>
-  </body>
 </html>
-
-
-
-
