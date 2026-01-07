@@ -2,7 +2,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: OpenSans, sans-serif;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
 }
 
 .app {
@@ -37,12 +40,13 @@
   margin-left: -40px;
   margin-right: -40px;
   padding: 10px 40px;
+  margin-top: 10px;
   cursor: pointer;
   color: #ced1d7;
 }
 
 .nav-item:hover {
-  background: #091932;
+  background: #2a3e59;
 }
 
 .nav-item {
@@ -68,11 +72,13 @@
   padding: 10px 40px;
   box-sizing: border-box;
   border-radius: 4px;
+  text-decoration: none;
 }
 
 .legal a:hover {
-  background: #091932;
-  color: #ffffff;
+  /* background: #091932; */
+  color: #2ba9e5;
+  font-weight: bold;
 }
 
 .main {
@@ -132,19 +138,20 @@
 .cards {
   margin-top: 20px;
   display: flex;
-  gap: 20px;
+  gap: 30px;
 }
 
 /* Dashboard two-column layout: left = cards, right = greeting (50% / 50%) */
 .dashboard-top {
   display: flex;
   gap: 24px;
-  align-items: stretch;
-  width: calc(100% - 60px);
+  align-items: center;
+  /* width: calc(100% - 200px); */
 }
 
 .dashboard-left {
   flex: 0 0 50%;
+  max-width: 460px;
 }
 
 .dashboard-right {
@@ -158,17 +165,17 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  align-items: center;
-  padding-left: 24px;
+  align-items: flex-start;
+  padding-left: 48px;
 }
 
 .greeting-line {
-  font-size: 32px;
+  font-size: 38px;
   color: #2c374b;
 }
 
 .greeting-name {
-  font-size: 38px;
+  font-size: 48px;
   font-weight: 700;
   color: #45a0c5;
 }
@@ -176,10 +183,44 @@
 .card {
   background: white;
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 24px;
   width: 100%;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover styles: To-do / Done (icon cards), urgent info card, and small statistic cards */
+.card.icon-card,
+.card.urgent-info,
+.small-card {
+  transition: background 0.18s ease, color 0.18s ease;
+  cursor: pointer;
+}
+
+.card.icon-card:hover,
+.card.urgent-info:hover,
+.small-card:hover {
+  background: #2a3547;
+  transform: scale(1.10);
+  transition: transform 0.18s ease;
+}
+
+.card.icon-card:hover .card-title,
+.card.icon-card:hover .card-sub,
+.card.urgent-info:hover .card-title,
+.card.urgent-info:hover .card-sub,
+.small-card:hover .big,
+.small-card:hover .label {
+  color: #ffffff;
+}
+
+.card.urgent-info:hover .urgent-right .date,
+.card.urgent-info:hover .urgent-right .small-sub {
+  color: #ffffff;
+}
+
+.card-left-icon:hover {
+  background-image: url('assets/icons/done_hovericon.png');
 }
 
 .heading-join {
@@ -220,9 +261,31 @@ h3 {
 }
 
 .card-left-icon {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Default icons for todo/done/urgent */
+.card.icon-card.todo > .card-left-icon {
+  background-image: url('../assets/icons/pencil_icon.png');
+}
+.card.icon-card.done > .card-left-icon {
+  background-image: url('../assets/icons/done_icon.png');
+}
+.card.urgent-info .card-left-icon {
+  background-image: url('../assets/icons/urgent_icon.png');
+}
+
+/* Hover swap */
+.card.icon-card.todo:hover > .card-left-icon {
+  background-image: url('../assets/icons/pencil_hovericon.png');
+}
+.card.icon-card.done:hover > .card-left-icon {
+  background-image: url('../assets/icons/done_hovericon.png');
 }
 
 .card-right {
@@ -231,7 +294,7 @@ h3 {
 }
 
 .info-row {
-  margin-top: 16px;
+  margin-top: 30px;
   display: flex;
   gap: 20px;
 }
@@ -240,7 +303,7 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  gap: 16px;
+  /* gap: 16px; */
   width: 100%;
   padding: 30px;
   box-sizing: border-box;
@@ -285,7 +348,7 @@ h3 {
 }
 
 .card-title {
-  font-size: 28px;
+  font-size: 56px;
   font-weight: bold;
 }
 
@@ -298,15 +361,15 @@ h3 {
 }
 
 .small-cards {
-  margin-top: 25px;
+  margin-top: 30px;
   display: flex;
-  gap: 20px;
+  gap: 30px;
 }
 
 .small-card {
   background: white;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 24px;
   width: 100%;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -317,7 +380,7 @@ h3 {
 }
 
 .big {
-  font-size: 32px;
+  font-size: 56px;
   font-weight: bold;
 }
 
