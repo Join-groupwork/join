@@ -5,8 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Join</title>
-  <link rel="icon" href="./assets/img/Logo for Favicon construction.svg" type="image/png">
-  <script src="./script.js"></script>
+  <link rel="shortcut icon" href="/assets/img/Logo for Favicon construction.svg" type="image/x-icon">
+  <script type="module" src="./scripts/templates.js"></script>
+  <script type="module" src="./script.js"></script>
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./styles/summary_user.css">
 
@@ -32,21 +33,17 @@
       </nav>
 
       <div class="legal">
-        <a href="privacy_policy_guest.html">Privacy Policy</a>
-        <a href="legal_notice_guest.html">Legal Notice</a>
+        <a href="privacy_policy_user.html">Privacy Policy</a>
+        <a href="legal_notice_user.html">Legal Notice</a>
       </div>
     </aside>
+
 
     <!-- MAIN -->
     <main class="main">
 
       <!-- TOPBAR -->
-      <header class="topbar">
-        <div>Kanban Project Management Tool</div>
-        <div class="topbar-right">
-          <div class="help-circle" title="Help">?</div>
-          <div class="profile">G</div>
-        </div>
+      <header class="topbar" id="header">
       </header>
 
       <!-- DASHBOARD -->
@@ -117,7 +114,8 @@
 
           <div class="dashboard-right">
             <div class="greeting">
-              <div class="greeting-line">Good morning!</div>
+              <div class="greeting-line">Good morning,</div>
+              <div class="greeting-line greeting-name">Sofia Müller</div>
             </div>
           </div>
 
