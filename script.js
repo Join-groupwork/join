@@ -1,4 +1,6 @@
 import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate, getAddOverlayTemplate } from './scripts/templates.js';
+import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { auth } from "/join/firebase.js";
 
 init();
 
@@ -41,8 +43,6 @@ function renderAddTask() {
     }
 }
 
-
-
 function renderContactEditOverlay() {
     const editContactRef = document.getElementById('editC_overlay');
     if (editContactRef) {
@@ -60,3 +60,22 @@ function renderContactAddOverlay() {
         console.error('ContactOverlay-Element nicht gefunden!');
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const profileBtn = document.getElementById('headerMenue');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const headerMenueNav = document.getElementById('headerMenueNav');
+    profileBtn.addEventListener('click', () => {
+        headerMenueNav.classList.toggle('d_none');
+    })
+    logoutBtn.addEventListener('click', () => {
+        try {
+            const userCredential = signOut(auth);
+            console.log("Logout erfolgreich:", userCredential.user);
+            window.location.href = "index.html"; // target page after Logout
+        } catch (error) {
+            console.error("Logout Fehlgeschlagen:", error.message);
+            alert("Logout fehlgeschlagen");
+        }
+    })
+})
