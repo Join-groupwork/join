@@ -4,11 +4,74 @@ body {
 }
 
 body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: 0;
     display: flex;
     flex-direction: column;
 }
 
+/* fonts */
+h2 {
+    font-size: 30px;
+}
 
+h2 {
+    font-size: 45px;
+    margin-block-start: -18px;
+    font-family: sans-serif;
+}
+
+.inter-400-regular {
+    font-family: 'Inter';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+}
+
+.inter-500-medium {
+    font-family: 'Inter';
+    font-weight: 500;
+    font-style: medium;
+}
+
+.inter-600-SemiBold {
+    font-family: 'Inter';
+    font-weight: 600;
+    font-style: semibold;
+}
+
+.inter-700-bold {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-style: bold;
+}
+
+.f-s-16 {
+    font-size: 16px;
+}
+
+.f-s {
+    font-size: 20px;
+}
+
+.f-s-27 {
+    font-size: 27px;
+}
+
+.f-s-60 {
+    font-size: 60px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 70px;
+}
 
 .board {
     display: flex;
@@ -21,14 +84,6 @@ body {
     font-size: 19px;
     font-family: sans-serif;
 
-}
-
-.menu {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 70px;
 }
 
 .login-container {
@@ -52,11 +107,7 @@ body {
 
 }
 
-h2 {
-    font-size: 45px;
-    margin-block-start: -18px;
-    font-family: sans-serif;
-}
+
 
 .section-1 {
 
@@ -139,7 +190,7 @@ button:hover {
     cursor: pointer;
 }
 
-button p {
+button p  {
     font-family: sans-serif;
     font-weight: bold;
     font-size: 14px;
