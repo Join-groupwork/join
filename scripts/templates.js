@@ -22,8 +22,23 @@ export function getHeaderTemplate() {
     return `
         <div class="topbar-left">Kanban Project Management Tool</div>
         <div class="topbar-right">
-          <div class="help-circle" title="Help">?</div>
-          <div class="profile">SM</div>
+            <div class="help-circle" title="Help">?</div>
+            <div id="headerMenue" class="profile">
+                SM
+                <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
+                    <ul>
+                        <a href="legal_notice.html">Legal Notice</a>
+                    </ul>
+                    <ul>
+                        <a href="privacy_policy.html">Privacy Policy</a>
+                    </ul>
+                    <ul>
+                        <a id="logoutBtn">
+                            Log out
+                        </a>
+                    <ul/>
+                </nav>
+            </div>
         </div>
       `;
 }
@@ -182,4 +197,14 @@ export function getAddOverlayTemplate() {
 
     </main>
     `;
+}
+
+export function signupMassegeTemplate() {
+    return `
+        <aside class="signup-massege-box">
+            <p>
+                You Signed Up successfully
+            </p>
+        </aside>
+    `
 }
