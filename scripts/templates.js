@@ -16,6 +16,8 @@ export function getSidebarTemplate() {
         <a>Legal Notice</a>
       </div>
     `;
+
+
 }
 
 export function getHeaderTemplate() {
