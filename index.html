@@ -2,23 +2,58 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join</title>
-    <link rel="stylesheet" href="./styles/standard.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="./styles/assets.css">
-    <link rel="stylesheet" href="./styles/colors.css">
-    <link rel="stylesheet" href="./styles/fonts.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join</title>
+  <link rel="shortcut icon" href="./assets/img/Logo for Favicon construction.svg" type="image/x-icon">
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./styles/standard.css">
+  <link rel="stylesheet" href="./styles/assets.css">
+  <link rel="stylesheet" href="./styles/colors.css">
+  <link rel="stylesheet" href="./styles/fonts.css">
 
-    <script type="module" src="./scripts/allVariables.js"></script>
-    <script type="module" src="./scripts/firebase/getFirebase.js"></script>
-    <script type="module" src="./scripts/templates.js"></script>
-    <script type="module" src="script.js"></script>
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="./login/login.js"></script>
+  <script type="module" src="./scripts/templates.js"></script>
+  <!-- <script type="module" src="script.js"></script> -->
 </head>
-
+    <!-- added <main>tag for fixing index - contacts body conflict -->
 <body>
+  <main class="main_index"> 
+    <div class="menu">
+      <div class="board">
+        <p>Not a Join user ?</p>
+        <a href="sign_Up.html"><button class="signup-button">Sign up</button></a>
+      </div>
+      <div>
+        <img class="join-icon" src="./assets/icons/Capa2.png" alt="Join-logo" />
+      </div>
+    </div>
 
+    <div class="section-1">
+      <div class="login-container">
+        <h2>Log in</h2>
+  
+      <form>
+          <div class="form-section">
+            <input id="email" class="email-input" type="email" autocomplete="email" placeholder="Email" required />
+            <input id="password" class="password-input" type="password" autocomplete="current-password"
+            placeholder="Password" required />
+          </div>
+          <div class="buttons-section">
+            <button id="loginBtn" class="login-button" type="submit">Log in</button>
+            <button id="guestBtn" class="guest-button" type="button">Guest Log in</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="footer-container">
+      <p>Privacy Policy</p>
+      <p>Legal notice</p>
+    </div>
+  </footer>
 </body>
 
 </html>

@@ -4,11 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD:summary_user.html
   <title>Join</title>
   <link rel="icon" href="./assets/img/Logo for Favicon construction.svg" type="image/png">
-  <script src="./script.js"></script>
+=======
+  <title>Join-User</title>
+  <link rel="shortcut icon" href="./assets/img/Logo for Favicon construction.svg" type="image/x-icon">
+  <link rel="stylesheet" href="./styles/standard.css">
+  <link rel="stylesheet" href="./styles/colors.css">
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./styles/fonts.css">
   <link rel="stylesheet" href="./styles/summary_user.css">
+
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="./login/auth-guard.js"></script>
+
+>>>>>>> dev:pages/summary_user.html
+  <script type="module" src="./scripts/templates.js"></script>
+  <script type="module" src="./script.js"></script>
 </head>
 
 <body>
@@ -17,19 +30,19 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="logo">
-        <img src="./assets/img/joinlogo.png" alt="" srcset="">
+        <img src="/assets/img/joinlogo.png" alt="" srcset="">
       </div>
 
       <nav class="nav">
-        <a class="nav-item"><img src="./assets/icons/sideMenu/summary1.png" alt="Summary" class="nav-icon">Summary</a>
-        <a class="nav-item"><img src="./assets/icons/sideMenu/addtask1.png" alt="Add Task" class="nav-icon">Add Task</a>
-        <a class="nav-item"><img src="./assets/icons/sideMenu/board1.png" alt="Board" class="nav-icon">Board</a>
-        <a class="nav-item"><img src="./assets/icons/sideMenu/contacs1.png" alt="Contacts" class="nav-icon">Contacts</a>
+        <a class="nav-item"><img src="/assets/icons/sideMenu/summary1.png" alt="Summary" class="nav-icon">Summary</a>
+        <a class="nav-item"><img src="/assets/icons/sideMenu/addtask1.png" alt="Add Task" class="nav-icon">Add Task</a>
+        <a class="nav-item"><img src="/assets/icons/sideMenu/board1.png" alt="Board" class="nav-icon">Board</a>
+        <a class="nav-item"><img src="/assets/icons/sideMenu/contacs1.png" alt="Contacts" class="nav-icon">Contacts</a>
       </nav>
 
       <div class="legal">
-        <a>Privacy Policy</a>
-        <a>Legal Notice</a>
+        <a href="privacy_policy_user.html">Privacy Policy</a>
+        <a href="legal_notice_user.html">Legal Notice</a>
       </div>
     </aside>
 
@@ -58,16 +71,16 @@
           <div class="dashboard-left">
             <div class="cards">
 
-              <div class="card icon-card">
-                <img src="./assets/icons/pencil_icon.png" alt="To-do" class="card-left-icon">
+              <div class="card icon-card todo">
+                <span class="card-left-icon" aria-hidden="true"></span>
                 <div class="card-right">
                   <div class="card-title">1</div>
                   <div class="card-sub">To-do</div>
                 </div>
               </div>
 
-              <div class="card icon-card">
-                <img src="./assets/icons/done_icon.png" alt="Done" class="card-left-icon">
+              <div class="card icon-card done">
+                <span class="card-left-icon" aria-hidden="true"></span>
                 <div class="card-right">
                   <div class="card-title">1</div>
                   <div class="card-sub">Done</div>
@@ -79,7 +92,7 @@
             <div class="cards info-row">
               <div class="card urgent-info">
                 <div class="urgent-left">
-                  <img src="./assets/icons/urgent_icon.png" alt="Urgent" class="card-left-icon">
+                  <img src="/assets/icons/urgent_icon.png" alt="Urgent" class="card-left-icon">
                   <div class="card-right">
                     <div class="card-title">1</div>
                     <div class="card-sub">Urgent</div>
