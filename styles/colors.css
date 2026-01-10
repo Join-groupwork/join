@@ -25,7 +25,13 @@
 .bg-contact:hover {
     background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
 }
-
+.color-menue{
+    color: #cdcdcd;
+}
 .scrollbar-color {
     scrollbar-color: #4589FF;
+}
+
+a {
+    color: #29ABE2
 }
