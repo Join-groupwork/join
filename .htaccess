@@ -1,1 +1,3 @@
+DirectoryIndex public/index.html
+
 AddType application/javascript .js
