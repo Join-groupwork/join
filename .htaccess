@@ -1,3 +1,3 @@
-DirectoryIndex public/index.html
+DirectoryIndex index.html
 
 AddType application/javascript .js
