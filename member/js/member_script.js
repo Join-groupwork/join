@@ -1,6 +1,6 @@
 import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate, getAddOverlayTemplate } from '../scripts/templates.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { auth } from "./firebase.js";
+import { auth } from "../firebase.js";
 
 init();
 
