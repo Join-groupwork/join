@@ -2,17 +2,25 @@
 <html lang="en">
 
 <head>
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join</title>
     <link rel="icon" href="../assets/img/Logo for Favicon construction.svg" type="image/png">
-    <script src="../script.js"></script>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../styles/summary_user.css">
-    <link rel="stylesheet" href="../styles/privacy-policy.css">
+    <link rel="stylesheet" href="../styles/standard.css">
+    <link rel="stylesheet" href="../styles/join.css">
+    <link rel="stylesheet" href="../styles/fonts.css">
+    <link rel="stylesheet" href="../styles/colors.css">
+    <link rel="stylesheet" href="../styles/assets.css">
+    <link rel="stylesheet" href="css/summary_user.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- die fonts müssen noch mit css eingebunden werden. Dafür gibt es ja die fonts.css, der goolge linkmuss ersetzt werden. -->
+    <script type="module" src="../scripts/firebase/firebase.js"></script>
+    <script type="module" src="../login/auth-guard.js"></script>
+    <script type="module" src="../member/js/member_templates.js"></script>
+    <script type="module" src="js/member_script.js"></script>
+    <script src="../member/js/member_script.js"></script>
 </head>
 
 <body>
@@ -21,22 +29,23 @@
         <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="logo">
-                <img src="/assets/img/joinlogo.png" alt="" srcset="">
+                <img src="../assets/img/joinlogo.png" alt="" srcset="">
             </div>
 
             <nav class="nav">
-                <a class="nav-item"><img src="/assets/icons/sideMenu/summary1.png" alt="Summary"
+                <a class="nav-item"><img src="../assets/icons/sideMenu/summary1.png" alt="Summary"
                         class="nav-icon">Summary</a>
-                <a class="nav-item"><img src="/assets/icons/sideMenu/addtask1.png" alt="Add Task" class="nav-icon">Add
+                <a class="nav-item"><img src="../assets/icons/sideMenu/addtask1.png" alt="Add Task" class="nav-icon">Add
                     Task</a>
-                <a class="nav-item"><img src="/assets/icons/sideMenu/board1.png" alt="Board" class="nav-icon">Board</a>
-                <a class="nav-item"><img src="/assets/icons/sideMenu/contacs1.png" alt="Contacts"
+                <a class="nav-item"><img src="../assets/icons/sideMenu/board1.png" alt="Board"
+                        class="nav-icon">Board</a>
+                <a class="nav-item"><img src="../assets/icons/sideMenu/contacs1.png" alt="Contacts"
                         class="nav-icon">Contacts</a>
             </nav>
 
             <div class="legal">
-                <a href="/pages/privacy_policy_user.html">Privacy Policy</a>
-                <a href="/pages/legal_notice_user.html">Legal Notice</a>
+                <a href="privacy_policy_user.html">Privacy Policy</a>
+                <a href="legal_notice_user.html">Legal Notice</a>
             </div>
         </aside>
 
