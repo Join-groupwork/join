@@ -1,142 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join</title>
+    <link
+      rel="icon"
+      href="../assets/img/Logo for Favicon construction.svg"
+      type="image/png"
+    />
+    <link rel="stylesheet" href="../styles/standard.css" />
+    <link rel="stylesheet" href="../styles/join.css" />
+    <link rel="stylesheet" href="../styles/fonts.css" />
+    <link rel="stylesheet" href="../styles/colors.css" />
+    <link rel="stylesheet" href="../styles/assets.css" />
+    <link rel="stylesheet" href="../styles/summary_user.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- die fonts müssen noch mit css eingebunden werden. Dafür gibt es ja die fonts.css, der goolge linkmuss ersetzt werden. -->
+    <script type="module" src="../scripts/firebase/firebase.js"></script>
+    <script type="module" src="../login/auth-guard.js"></script>
+    <script type="module" src="../member/js/member_templates.js"></script>
+    <script type="module" src="js/member_script.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Join</title>
-  <link rel="icon" href="../assets/img/Logo for Favicon construction.svg" type="image/png">
-  <link rel="stylesheet" href="../styles/standard.css">
-  <link rel="stylesheet" href="../styles/join.css">
-  <link rel="stylesheet" href="../styles/fonts.css">
-  <link rel="stylesheet" href="../styles/colors.css">
-  <link rel="stylesheet" href="../styles/assets.css">
-  <link rel="stylesheet" href="../styles/summary_user.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <!-- die fonts müssen noch mit css eingebunden werden. Dafür gibt es ja die fonts.css, der goolge linkmuss ersetzt werden. -->
-  <script type="module" src="../scripts/firebase/firebase.js"></script>
-  <script type="module" src="../login/auth-guard.js"></script>
-  <script type="module" src="../member/js/member_templates.js"></script>
-  <script type="module" src="js/member_script.js"></script>
-
-</head>
-
-<body>
-  <div class="app">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="logo">
-        <img src="../assets/img/joinlogo.png" alt="" srcset="">
-      </div>
-
-      <nav class="nav">
-        <a class="nav-item"><img src="../assets/icons/sideMenu/summary1.png" alt="Summary" class="nav-icon">Summary</a>
-        <a class="nav-item"><img src="../assets/icons/sideMenu/addtask1.png" alt="Add Task" class="nav-icon">Add
-          Task</a>
-        <a class="nav-item"><img src="../assets/icons/sideMenu/board1.png" alt="Board" class="nav-icon">Board</a>
-        <a class="nav-item"><img src="../assets/icons/sideMenu/contacs1.png" alt="Contacts"
-            class="nav-icon">Contacts</a>
-      </nav>
-
-      <div class="legal">
-        <a href="privacy_policy_user.html">Privacy Policy</a>
-        <a href="legal_notice_user.html">Legal Notice</a>
-      </div>
-    </aside>
-
-    <!-- MAIN -->
-    <main class="main">
+  <body>
+    <div class="app">
+      <!-- SIDEBAR -->
+      <aside class="sidebar" id="sidebar"></aside>
 
       <!-- TOPBAR -->
-      <header class="topbar">
-        <div>Kanban Project Management Tool</div>
-        <div class="topbar-right">
-          <div class="help-circle" title="Help">?</div>
-          <div class="profile">G</div>
-        </div>
-      </header>
+      <header class="topbar" id="header"></header>
 
-      <!-- DASHBOARD -->
-      <section class="dashboard">
-        <div class="heading-join">
-          <h1>Join 360</h1>
-          <div class="divider-blue"></div>
-          <h3>Key Metrics at a Glance</h3>
-        </div>
+      <!-- MAIN -->
+      <main class="main">
+        <!-- DASHBOARD -->
+        <section class="dashboard">
+          <div class="heading-join">
+            <h1>Join 360</h1>
+            <div class="divider-blue"></div>
+            <h3>Key Metrics at a Glance</h3>
+          </div>
 
-        <div class="dashboard-top">
-
-          <div class="dashboard-left">
-            <div class="cards">
-
-              <div class="card icon-card todo">
-                <span class="card-left-icon" aria-hidden="true"></span>
-                <div class="card-right">
-                  <div class="card-title">1</div>
-                  <div class="card-sub">To-do</div>
-                </div>
-              </div>
-
-              <div class="card icon-card done">
-                <span class="card-left-icon" aria-hidden="true"></span>
-                <div class="card-right">
-                  <div class="card-title">1</div>
-                  <div class="card-sub">Done</div>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="cards info-row">
-              <div class="card urgent-info">
-                <div class="urgent-left">
-                  <img src="/assets/icons/urgent_icon.png" alt="Urgent" class="card-left-icon">
+          <div class="dashboard-top">
+            <div class="dashboard-left">
+              <div class="cards">
+                <div class="card icon-card todo">
+                  <span class="card-left-icon" aria-hidden="true"></span>
                   <div class="card-right">
                     <div class="card-title">1</div>
-                    <div class="card-sub">Urgent</div>
+                    <div class="card-sub">To-do</div>
                   </div>
                 </div>
 
-                <div class="divider"></div>
+                <div class="card icon-card done">
+                  <span class="card-left-icon" aria-hidden="true"></span>
+                  <div class="card-right">
+                    <div class="card-title">1</div>
+                    <div class="card-sub">Done</div>
+                  </div>
+                </div>
+              </div>
 
-                <div class="urgent-right">
-                  <div class="date">October 16, 2022</div>
-                  <div class="small-sub">Upcoming Deadline</div>
+              <div class="cards info-row">
+                <div class="card urgent-info">
+                  <div class="urgent-left">
+                    <img
+                      src="/assets/icons/urgent_icon.png"
+                      alt="Urgent"
+                      class="card-left-icon"
+                    />
+                    <div class="card-right">
+                      <div class="card-title">1</div>
+                      <div class="card-sub">Urgent</div>
+                    </div>
+                  </div>
+
+                  <div class="divider"></div>
+
+                  <div class="urgent-right">
+                    <div class="date">October 16, 2022</div>
+                    <div class="small-sub">Upcoming Deadline</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cards small-cards">
+                <div class="small-card">
+                  <div class="big">5</div>
+                  <div class="label">Tasks in Board</div>
+                </div>
+                <div class="small-card">
+                  <div class="big">2</div>
+                  <div class="label">Tasks In Progress</div>
+                </div>
+                <div class="small-card">
+                  <div class="big">2</div>
+                  <div class="label">Awaiting Feedback</div>
                 </div>
               </div>
             </div>
 
-            <div class="cards small-cards">
-              <div class="small-card">
-                <div class="big">5</div>
-                <div class="label">Tasks in Board</div>
-              </div>
-              <div class="small-card">
-                <div class="big">2</div>
-                <div class="label">Tasks In Progress</div>
-              </div>
-              <div class="small-card">
-                <div class="big">2</div>
-                <div class="label">Awaiting Feedback</div>
+            <div class="dashboard-right">
+              <div class="greeting">
+                <div class="greeting-line">Good morning,</div>
+                <!-- <div class="greeting-line greeting-name">Sofia Müller</div> -->
               </div>
             </div>
           </div>
-
-          <div class="dashboard-right">
-            <div class="greeting">
-              <div class="greeting-line">Good morning,</div>
-              <!-- <div class="greeting-line greeting-name">Sofia Müller</div> -->
-            </div>
-          </div>
-
-        </div>
-
-      </section>
-    </main>
-  </div>
-</body>
-
+        </section>
+      </main>
+    </div>
+  </body>
 </html>
