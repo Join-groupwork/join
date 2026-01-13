@@ -56,3 +56,26 @@
   width: 24px;                
   height: 24px;
 }
+
+.board {
+    display: flex;
+    justify-content: center;
+    padding-left: 214px;
+    gap: 20px;
+}
+
+.column {
+  width: 250px;
+  min-height: 300px;
+  background: #f4f4f4;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.card {
+  background: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: grab;
+}
