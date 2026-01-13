@@ -1,6 +1,6 @@
 import { auth } from "/join/firebase.js";
 import { createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import { pushContact } from '../scripts/firebase/pushContact.js';
+import { pushContact } from '../../scripts/firebase/pushContact.js';
 
 const signupName = document.getElementById('signupName');
 const signupEmail = document.getElementById('loginEmail');
