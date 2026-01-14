@@ -3,7 +3,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/fi
 
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    window.location.href = "index.html";
+    window.location.href = "../index.html";
   }
   // Nachdem alles fertig ist, kann die untere if Anweisung entfernt werden.
   if (user.isAnonymous) {
