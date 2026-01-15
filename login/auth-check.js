@@ -5,7 +5,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com7/firebasejs/10.7.1/f
 onAuthStateChanged(auth, (user) => {
     if (user) {
         // Weiterleitung geschützte Seite
-        window.location.href = "summary_user.html";
+        window.location.href = "puclic/summary_user.html";
     } else {
         console.log("Nicht eingeloggt");
     }

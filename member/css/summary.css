@@ -10,134 +10,11 @@
   height: 100vh;
 }
 
-.sidebar {
-  width: 220px;
-  /* height ergänzt wegen add_task */
-  height: 100%;
-  background: #1a2c47;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 40px;
-  /* ergänzt für add_task */
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: +1;
-}
-
-.logo {
-  margin-left: 20px;
-  margin-top: 12px;
-  margin-bottom: 8px;
-}
-
-.nav {
-  margin-top: 88px;
-  display: flex;
-  flex-direction: column;
-}
-
-.nav-item {
-  width: calc(100% + 80px);
-  margin-left: -40px;
-  margin-right: -40px;
-  padding: 10px 40px;
-  cursor: pointer;
-  color: #ced1d7;
-}
-
-.nav-item:hover {
-  background: #091932;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.nav-icon {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-}
-
-.legal a {
-  display: block;
-  font-size: 14px;
-  color: #abb0b3;
-  cursor: pointer;
-  width: calc(100% + 80px);
-  margin-left: -40px;
-  margin-right: -40px;
-  padding: 10px 40px;
-  box-sizing: border-box;
-  border-radius: 4px;
-}
-
-.legal a:hover {
-  background: #091932;
-  color: #ffffff;
-}
 
 .main {
   flex: 1;
   background: #f6f7f8;
   overflow-y: auto;
-}
-
-.topbar {
-  height: 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px 0px 60px;
-  background: white;
-  border-bottom: 1px solid #e5e5e5;
-  position: fixed;
-  top: 0px;
-  width: 100%;
- 
-}
-
-.topbar-left {
-  padding-left: 279px;
-}
-
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.help-circle {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: 1px solid #aaaaaa;
-  color: #aaaaaa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 12px;
-  cursor: default;
-}
-
-.profile {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  border: 2px solid;
-  border-color: #252b41;
-  color: #2eabe2;
 }
 
 .dashboard {
@@ -327,9 +204,7 @@ h3 {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.legal {
-  margin-top: auto;
-}
+
 
 .big {
   font-size: 32px;
