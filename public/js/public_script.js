@@ -1,6 +1,20 @@
-import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate, getAddOverlayTemplate } from './js/public_templates.js';
+import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate, getAddOverlayTemplate } from '/member/js/member-templates.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { auth } from "../scripts/firebase/firebase.js";
+import { auth } from "/scripts/firebase/firebase.js";
+
+init();
+
+async function init() {
+    render();
+}
+
+function render() {
+    renderHeader();
+    renderSidebar();
+    renderAddTask();
+    // renderContactAddOverlay();   <-- Aktivieren, um das Overlay zum Hinzufügen von Kontakten anzuzeigen
+    // renderContactEditOverlay(); Contact
+}
 
 function renderHeader() {
     const headerRef = document.getElementById('header');

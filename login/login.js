@@ -1,4 +1,4 @@
-import { auth } from "../scripts/firebase/firebase.js";
+import { auth } from "/scripts/firebase/firebase.js";
 import { signInWithEmailAndPassword, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 console.log("Auth object:", auth);
