@@ -1,25 +1,25 @@
 export function getSidebarTemplate() {
-    return `
+  return `
       <div class="logo">
         <img src="../assets/img/joinlogo.png" alt="" >
       </div>
 
       <nav class="nav">
-        <a class="nav-item" href="./summary_user.html"><img src="../assets/icons/sideMenu/summary1.png" alt="Summary" class="nav-icon">Summary</a>
-        <a class="nav-item" href="./add_task.html"><img src="../assets/icons/sideMenu/addtask1.png" alt="Add Task" class="nav-icon">Add Task</a>
-        <a class="nav-item" href="./board.html"><img src="../assets/icons/sideMenu/board1.png" alt="Board" class="nav-icon">Board</a>
-        <a class="nav-item" href="./contacts.html"><img src="../assets/icons/sideMenu/contacs1.png" alt="Contacts" class="nav-icon">Contacts</a>
+        <a class="nav-item" href="./summary_user.html"><img src="/assets/icons/sideMenu/summary1.png" alt="Summary" class="nav-icon">Summary</a>
+        <a class="nav-item" href="./add_task.html"><img src="/assets/icons/sideMenu/addtask1.png" alt="Add Task" class="nav-icon">Add Task</a>
+        <a class="nav-item" href="./board.html"><img src="/assets/icons/sideMenu/board1.png" alt="Board" class="nav-icon">Board</a>
+        <a class="nav-item" href="./contacts.html"><img src="/assets/icons/sideMenu/contacs1.png" alt="Contacts" class="nav-icon">Contacts</a>
       </nav>
 
       <div class="legal">
-        <a href="./privacy_policy.html">Privacy Policy</a>
-        <a href="./legal_notice.html">Legal Notice</a>
+        <a href="/public/privacy-policy-public.html">Privacy Policy</a>
+        <a href="/public/legal-notice-public.html">Legal Notice</a>
       </div>
     `;
 }
 
 export function getHeaderTemplate() {
-    return `
+  return `
         <div class="topbar-left">Kanban Project Management Tool</div>
         <div class="topbar-right">
             <div class="help-circle" title="Help">?</div>
@@ -27,10 +27,10 @@ export function getHeaderTemplate() {
                 SM
                 <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
                     <ul>
-                        <a href="legal_notice.html">Legal Notice</a>
+                        <a href="/pubpic/legal-notice-public.html">Legal Notice</a>
                     </ul>
                     <ul>
-                        <a href="privacy_policy.html">Privacy Policy</a>
+                        <a href="/public/privacy-policy-public.html">Privacy Policy</a>
                     </ul>
                     <ul>
                         <a id="logoutBtn">
@@ -44,7 +44,7 @@ export function getHeaderTemplate() {
 }
 
 export function getTaskTemplate() {
-    return `
+  return `
      <section class="overlay_add_task">
         <h1 class="h1_add_task">Add Task</h1>
             <section class="section_add_task">
@@ -66,9 +66,9 @@ export function getTaskTemplate() {
                 <section class="section_priority">
                     <label for="priority">Priority</label>
                     <div id="priority" class="priority" name="priority">
-                        <button class="priority_button" value="low">Urgent <img src="assets\icons\Property 1=Urgent.svg" alt=""></button>
-                        <button class="priority_button" value="medium">Medium <img src="assets\icons\Property 1=Medium.svg" alt=""></button>
-                        <button class="priority_button" value="high">Low <img src="assets\icons\Property 1=Low.svg" alt=""></button>
+                        <button class="priority_button" value="low">Urgent <img src="/assets/icons/urgent-prio-icon.svg" alt="Urgent Prio Icon"></button>
+                        <button class="priority_button" value="medium">Medium <img src="/assets/icons/medium-prio-icon.svg" alt="Medium Prio Icon"></button>
+                        <button class="priority_button" value="high">Low <img src="/assets/icons/low-prio-icon.svg" alt="Low Prio Icon"></button>
                     </div>
                 </section>
 
@@ -93,8 +93,8 @@ export function getTaskTemplate() {
             </form>
         </section>
         <section class="section_add_task_button">
-            <button class="clear_button_add_task" type="button">Cancel <img src="assets\icons\close.svg" alt=""></button>
-            <button class="Create_button_add_task" type="submit">Create Task <img src="assets\icons\check.svg" alt=""></button>
+            <button class="clear_button_add_task" type="button">Cancel <img src="/assets/icons/close-icon.svg" alt="Close"></button>
+            <button class="Create_button_add_task" type="submit">Create Task <img src="/assets/icons/check-icon-dark.svg" alt="Check"></button>
         </section>
     </section>
     `;
@@ -103,28 +103,28 @@ export function getTaskTemplate() {
 
 
 // contact overlays einbinden --->id="editC_overlay" oder id="addC_overlay" in den <body> einfügen,
-// (siehe contact_add_overlay.html/contact_edit_overlay.html <-- können danach gelöscht werden) 
+// (siehe contact_add_overlay.html/contact_edit_overlay.html <-- können danach gelöscht werden)
 // je nachdem welches overlay gebraucht wird --- ansonsten bis auf css fertig
 
 export function getEditOverlayTemplate() {
-    return `
- <main class="addContact_overlay" >    
+  return `
+ <main class="addContact_overlay" >
   <section class="overlay_add_contact">
 
             <div class="overlay_add_contact_left">
-                <img class="join_logo_overlay" src="assets/img/joinlogo.png" alt="Join Logo">
+                <img class="join_logo_overlay" src="/assets/img/logo-bright.svg" alt="Join Logo">
                 <h2 class="heading_add_contact">Edit Contact</h2>
-                <img class="h2_underline" src="assets/icons/Vector 5.svg" alt="">
-        
+                <img class="h2_underline" src="/assets/icons/underline-blue.svg" alt="Underline">
+
             </div>
 
             <div class="overlay_add_contact_right">
             <div class="close_overlay_icon_container">
-            <img class="close_overlay_icon" src="assets/icons/x_cancel.svg" alt="Close Overlay Icon">
+            <img class="close_overlay_icon" src="/assets//icons/close-icon.svg" alt="Close Overlay Icon">
             </div>
                 <div class="addContact_form_container">
                     <div>
-                        <img src="/assets/icons/Contact_icon.svg" alt="Contact Icon">
+                        <img src="/assets/icons/person-icon.svg" alt="Contact Icon">
                     </div>
 
                     <form class="form_add_contact" action="">
@@ -139,8 +139,8 @@ export function getEditOverlayTemplate() {
 
                 <div class="buttons_add_contact">
                     <button type="submit" class="btn_save_contact">Delete</button>
-                    <button type="button" class="btn_cancel_contact">Save <img src="assets/icons/check.svg"
-                            alt=""></button>
+                    <button type="button" class="btn_cancel_contact">Save <img src="/assets/icons/check-icon-white.svg"
+                            alt="Check"></button>
                 </div>
 
             </div>
@@ -153,28 +153,28 @@ export function getEditOverlayTemplate() {
 
 
 export function getAddOverlayTemplate() {
-    return `
+  return `
 
      <main class="addContact_overlay">
           <section class="overlay_add_contact">
 
             <div class="overlay_add_contact_left">
-                <img class="join_logo_overlay" src="assets/img/joinlogo.png" alt="Join Logo">
+                <img class="join_logo_overlay" src="/assets/img/logo-dark.svg" alt="Join Logo">
                 <div>
                 <h2 class="heading_add_contact">Add Contact</h2>
                 <p>Tasks are better with a team!</p>
-                <img class="h2_underline" style="margin: unset; height: unset; width: 90px;" src="assets/icons/Vector 5.svg" alt="">
+                <img class="h2_underline" style="margin: unset; height: unset; width: 90px;" src="/assets/icons/underline-blue.svg" alt="Underline">
                 </div>
             </div>
-               
+
             <div class="overlay_add_contact_right">
                 <div class="close_overlay_icon_container">
-                    <img class="close_overlay_icon" src="assets/icons/x_cancel.svg" alt="Close Overlay Icon">
+                    <img class="close_overlay_icon" src="/assets/icons/close-icon.svg" alt="Close Overlay Icon">
                 </div>
                 <div class="addContact_form_container">
-                    
+
                     <div>
-                        <img src="/assets/icons/Contact_icon.svg" alt="Contact Icon">
+                        <img src="/assets/icons/person-icon.svg" alt="Contact Icon">
                     </div>
                     <form class="form_add_contact" action="">
                         <input type="text" id="contact_name" name="contact_name" class="input_add_contact"
@@ -187,8 +187,8 @@ export function getAddOverlayTemplate() {
                 </div>
 
                 <div class="buttons_add_contact">
-                    <button type="submit" class="btn_save_contact">Cancel <img src="assets/icons/x_cancel.svg" alt=""></button>
-                    <button type="button" class="btn_cancel_contact">Create contact <img src="assets/icons/check.svg" alt=""></button>
+                    <button type="submit" class="btn_save_contact">Cancel <img src="/assets/icons/close-icon.svg" alt=""></button>
+                    <button type="button" class="btn_cancel_contact">Create contact <img src="/assets/icons/check-icon-white.svg" alt="Check"></button>
                 </div>
 
             </div>
@@ -200,7 +200,7 @@ export function getAddOverlayTemplate() {
 }
 
 export function signupMassegeTemplate() {
-    return `
+  return `
         <aside class="signup-massege-box">
             <p>
                 You Signed Up successfully
