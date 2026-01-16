@@ -1,4 +1,4 @@
-import { database } from '/join/firebase.js';
+import { database } from '/scripts/firebase/firebase.js';
 import { ref, push } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
 export async function pushContact(contactData) {
