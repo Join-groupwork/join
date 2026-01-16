@@ -1,14 +1,14 @@
 export function getSidebarTemplate() {
     return `
       <div class="logo">
-        <img src="/assets/img/joinlogo.png" alt="" >
+        <img src="/assets/img/logo-bright.svg" alt="" >
       </div>
 
       <nav class="nav">
-        <a class="nav-item" href="./summary_user.html"><img src="/assets/icons/sideMenu/summary1.png" alt="Summary" class="nav-icon">Summary</a>
-        <a class="nav-item" href="./add_task.html"><img src="/assets/icons/sideMenu/addtask1.png" alt="Add Task" class="nav-icon">Add Task</a>
-        <a class="nav-item" href="./board.html"><img src="/assets/icons/sideMenu/board1.png" alt="Board" class="nav-icon">Board</a>
-        <a class="nav-item" href="./contacts.html"><img src="/assets/icons/sideMenu/contacs1.png" alt="Contacts" class="nav-icon">Contacts</a>
+        <a class="nav-item" href="./summary_user.html"><img src="/assets/icons/side-menu/add-task-icon.svg" alt="Summary" class="nav-icon">Summary</a>
+        <a class="nav-item" href="./add_task.html"><img src="/assets/icons/side-menu/add-task-icon.svg" alt="Add Task" class="nav-icon">Add Task</a>
+        <a class="nav-item" href="./board.html"><img src="/assets/icons/side-menu/add-task-icon.svg" alt="Board" class="nav-icon">Board</a>
+        <a class="nav-item" href="./contacts.html"><img src="/assets/icons/side-menu/add-task-icon.svg" alt="Contacts" class="nav-icon">Contacts</a>
       </nav>
 
       <div class="legal">
@@ -112,15 +112,15 @@ export function getEditOverlayTemplate() {
   <section class="overlay_add_contact">
 
             <div class="overlay_add_contact_left">
-                <img class="join_logo_overlay" src="assets/img/joinlogo.png" alt="Join Logo">
+                <img class="join_logo_overlay" src="/assets/img/joinlogo.png" alt="Join Logo">
                 <h2 class="heading_add_contact">Edit Contact</h2>
-                <img class="h2_underline" src="assets/icons/Vector 5.svg" alt="">
+                <img class="h2_underline" src="/assets/icons/underline-blue.svg" alt="">
         
             </div>
 
             <div class="overlay_add_contact_right">
             <div class="close_overlay_icon_container">
-            <img class="close_overlay_icon" src="assets/icons/x_cancel.svg" alt="Close Overlay Icon">
+            <img class="close_overlay_icon" src="/assets/icons/x_cancel.svg" alt="Close Overlay Icon">
             </div>
                 <div class="addContact_form_container">
                     <div>
