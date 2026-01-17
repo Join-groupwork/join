@@ -460,3 +460,13 @@ footer p {
 .legal {
   margin-top: auto;
 }
+
+.summary_pencil {
+    width: 40px;
+    height: 40px;
+}
+
+.summary_check {
+    width: 40px;
+    height: 40px;
+}
