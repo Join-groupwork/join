@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>join-Signup</title>
+    <link rel="icon" href="/assets/img/logo-dark.svg" type="image/png">
+    <link rel="stylesheet" href="/styles/standard.css">
+    <link rel="stylesheet" href="/styles/colors.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/public/css/signup.css">
+    <link rel="stylesheet" href="/styles/fonts.css">
+    <script type="module" src="/scripts/firebase/firebase.js"></script>
+    <script type="module" src="/public/js/signup.js"></script>
+</head>
+
+<body>
+    <section class="signup-content">
+        <a href="/index.html"><img src="/assets/icons/arrow-left-icon.svg" alt="Arrow Left"></a>
+        <h1>Sign up</h1>
+        <div class="signup-form">
+            <form id="signupForm" action="">
+                <input class="sigup-input" type="text" id="signupName" placeholder="name" autocomplete="username"
+                    required>
+                <input class="sigup-input" type="email" name="email" id="loginEmail" placeholder="Email"
+                    autocomplete="email" required>
+                <input class="sigup-input" type="password" name="Password" id="loginPassword" placeholder="Password"
+                    autocomplete="new-password" minlength="6" required>
+                <input class="sigup-input" type="password" name="confirmPassword" id="signupConfirmPassword"
+                    placeholder="Confirm Password" required>
+                <div><input type="checkbox" name="termsCheckbox" id="termsCheckbox"></div>
+                <button class="btn-signup" id="signupBtn" type="submit" disabled>Sign Up</button>
+            </form>
+        </div>
+
+    </section>
+    <footer>
+        <a href="/public/privacy-policy-public.html">Privacy Policy</a>
+        <a href="/public/legal-notice-public.html">Legal notice</a>
+    </footer>
+</body>
+
+</html>

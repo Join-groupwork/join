@@ -1,3 +1,9 @@
+/* Buttons */
 .btn:hover {
     background-color: #29abe2;
+}
+
+.btn-s-40 {
+    width: 40px;
+    height: 40px;
 }

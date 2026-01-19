@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join</title>
+    <link rel="icon" href="/assets/img/logo-dark.svg" type="image/svg" />
+    <link rel="stylesheet" href="/styles/standard.css" />
+    <link rel="stylesheet" href="/styles/join.css" />
+    <link rel="stylesheet" href="/styles/fonts.css" />
+    <link rel="stylesheet" href="/styles/colors.css" />
+    <link rel="stylesheet" href="/styles/assets.css" />
+    <link rel="stylesheet" href="css/add-task.css" />
+    <script type="module" src="/scripts/firebase/firebase.js"></script>
+    <script type="module" src="/login/auth-guard.js"></script>
+    <script type="module" src="/member/js/member-templates.js"></script>
+    <script type="module" src="/member/js/member-script.js"></script>
+</head>
+
+<!-- id="add_task" in body hinzufügen, wenn als template genutzt für das overlay_addTask -->
+
+<body class="body_add_task">
+    
+        <aside class="sidebar" id="sidebar"></aside>
+
+        <header class="topbar" id="header"></header>
+        <section class="container_add_task">
+        <main class="main_add_task">
+            <div class="div_add_task">
+                <h1 class="h1_add_task">Add Task</h1>
+                <section class="section_add_task">
+                    <section>
+                        <form class="form_add_task">
+                            <label for="title">Title*</label>
+                            <input class="input_add_task" type="text" id="title" name="title" required
+                                placeholder="Enter a title" />
+
+                            <label for="description">Description</label>
+                            <textarea class="textarea_add_task" id="description" name="description" required
+                                placeholder="Enter a Description"></textarea>
+
+                            <label for="due_date">Due date*</label>
+                            <input class="input_add_task" type="date" id="due_date" name="due_date" required
+                                placeholder="dd/mm/yyyy" />
+                        </form>
+                    </section>
+
+                    <hr class="hr_add_task" />
+
+                    <form class="select_add_task">
+                        <section class="section_priority">
+                            <label for="priority">Priority</label>
+                            <div id="priority" class="priority" name="priority">
+                                <button class="priority_button" value="low">
+                                    Urgent
+                                    <img src="../assets/icons/Property 1=Urgent.svg" alt="" />
+                                </button>
+                                <button class="priority_button" value="medium">
+                                    Medium
+                                    <img src="../assets/icons/Property 1=Medium.svg" alt="" />
+                                </button>
+                                <button class="priority_button" value="high">
+                                    Low <img src="../assets/icons/Property 1=Low.svg" alt="" />
+                                </button>
+                            </div>
+                        </section>
+
+                        <label for="">Assigned to</label>
+                        <select class="input_add_task margin_bottom_add_task" type="text" id="assigned_to"
+                            name="assigned_to" required placeholder="Select contacts to assign">
+                            <option value="select_contact">
+                                Select contacts to assign
+                            </option>
+                            <option value="contact_1">Contact 1</option>
+                            <option value="contact_2">Contact 2</option>
+                            <option value="contact_3">Contact 3</option>
+                        </select>
+
+                        <label for="">Category</label>
+                        <select class="input_add_task margin_bottom_add_task" id="category" name="category" required
+                            placeholder="">
+                            <option value="select_task_category">
+                                Select task category
+                            </option>
+                            <option value="technical_task">Technical Task</option>
+                            <option value="user_story">User Story</option>
+                        </select>
+
+                        <label for="">Subtasks</label>
+                        <input class="input_add_task" type="text" id="subtask" name="subtask"
+                            placeholder="Add new subtask" />
+                    </form>
+                </section>
+                <section class="section_add_task_button">
+                    <button class="clear_button_add_task" type="button">
+                        Cancel <img src="..\assets\icons\close.svg" alt="" />
+                    </button>
+                    <button class="Create_button_add_task" type="submit">
+                        Create Task <img src="..\assets\icons\check.svg" alt="" />
+                    </button>
+                </section>
+            </div>
+        </main>
+    </section>
+</body>
+
+</html>
