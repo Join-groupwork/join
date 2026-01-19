@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         password
       );
       console.log("Login erforlgreich:", userCredential.user);
-      window.location.href = "/member/summary_user.html"; // target page after login
+      window.location.href = "/member/summary-user.html"; // target page after login
     } catch (error) {
       console.error("Login Fehlgeschlagen:", error.message);
       alert("Login fehlgeschlagen");
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const userCredential = await signInAnonymously(auth);
       console.log("GUEST LOGIN CLICK");
-      window.location.href = "/member/summary_guest.html"; // target page after login
+      window.location.href = "/member/summary-guest.html"; // target page after login
     } catch (error) {
       console.error(error.message);
       alert("Gast-Login fehlgeschlagen");
@@ -58,7 +58,7 @@ export function loginWithEmail(email, password) {
   signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
       console.log("Login erfolgreich:", userCredential.user);
-      window.location.href = "board.html";
+      window.location.href = "/member/summary-user.html";
     })
     .catch(error => {
       console.log("Login Fehlgeschlagen", error.message);
@@ -71,7 +71,7 @@ export function loginAsGuest() {
   signInAnonymously(auth)
     .then(userCredential => {
       console.log("Gast eingeloggt:", userCredential.user);
-      window.location.href = "board.html";
+      window.location.href = "/member/summary-guest.html";
     })
     .catch(error => {
       console.error("Gast Login Fehlgeschlagen:", error.message);
