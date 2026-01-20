@@ -183,7 +183,7 @@ body {
 }
 
 .card-left-icon:hover {
-  background-image: url('assets/icons/done_hovericon.png');
+  background-image: url('/assets/icons/check-circle-white.svg');
 }
 
 .heading-join {
@@ -234,21 +234,21 @@ h3 {
 
 /* Default icons for todo/done/urgent */
 .card.icon-card.todo > .card-left-icon {
-  background-image: url('../assets/icons/pencil_icon.png');
+  background-image: url('/assets/icons/pencil-circle.svg');
 }
 .card.icon-card.done > .card-left-icon {
-  background-image: url('../assets/icons/done_icon.png');
+  background-image: url('/assets/icons/check-circle.svg');
 }
 .card.urgent-info .card-left-icon {
-  background-image: url('../assets/icons/urgent_icon.png');
+  background-image: url('/assets/icons/urgent-prio-summary.svg');
 }
 
 /* Hover swap */
 .card.icon-card.todo:hover > .card-left-icon {
-  background-image: url('../assets/icons/pencil_hovericon.png');
+  background-image: url('/assets/icons/pencil-circle-white.svg');
 }
 .card.icon-card.done:hover > .card-left-icon {
-  background-image: url('../assets/icons/done_hovericon.png');
+  background-image: url('/assets/icons/check-circle-white.svg');
 }
 
 .card-right {
