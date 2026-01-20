@@ -24,7 +24,7 @@ body {
     font-style: normal;
     line-height: 1.2;
     letter-spacing: 0;
-    display: flex;
+    /* display: flex; */
     /* flex-direction: column; */
     /*<--- conflict with body_contacts, vorübergehend herausgenommen*/
     height: 100vh;
@@ -127,9 +127,9 @@ h2 {
 
 
 
-.section-1 {
-
-    margin: 50px auto;
+.section-1 {   
+    display: grid;
+    place-items: center;
 }
 
 .signup-button {
@@ -147,7 +147,7 @@ h2 {
 form {
     display: flex;
     flex-direction: column;
-    gap: 60px;
+    gap: 30px;
 
 }
 
@@ -164,6 +164,7 @@ input {
     background-repeat: no-repeat;
     background-position: 230px center;
     background-size: 18px 18px;
+    margin-top: 20px;
 }
 
 .password-input {
