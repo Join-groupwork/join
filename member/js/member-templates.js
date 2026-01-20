@@ -1,5 +1,5 @@
 export function getSidebarTemplate() {
-    return `
+  return `
       <div class="logo">
         <img src="/assets/img/logo-bright.svg" alt="" >
       </div>
@@ -19,10 +19,10 @@ export function getSidebarTemplate() {
 }
 
 export function getHeaderTemplate() {
-    return `
+  return `
         <div class="topbar-left">Kanban Project Management Tool</div>
         <div class="topbar-right">
-            <div class="help-circle" title="Help">?</div>
+            <a href="/member/help.html"class="help-circle" title="Help">?</a>
             <div id="headerMenue" class="profile">
                 SM
                 <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
@@ -44,7 +44,7 @@ export function getHeaderTemplate() {
 }
 
 export function getTaskTemplate() {
-    return `
+  return `
      <section class="overlay_add_task">
         <h1 class="h1_add_task">Add Task</h1>
             <section class="section_add_task">
@@ -103,19 +103,19 @@ export function getTaskTemplate() {
 
 
 // contact overlays einbinden --->id="editC_overlay" oder id="addC_overlay" in den <body> einfügen,
-// (siehe contact_add_overlay.html/contact_edit_overlay.html <-- können danach gelöscht werden) 
+// (siehe contact_add_overlay.html/contact_edit_overlay.html <-- können danach gelöscht werden)
 // je nachdem welches overlay gebraucht wird --- ansonsten bis auf css fertig
 
 export function getEditOverlayTemplate() {
-    return `
- <main class="addContact_overlay" >    
+  return `
+ <main class="addContact_overlay" >
   <section class="overlay_add_contact">
 
             <div class="overlay_add_contact_left">
                 <img class="join_logo_overlay" src="/assets/img/joinlogo.png" alt="Join Logo">
                 <h2 class="heading_add_contact">Edit Contact</h2>
                 <img class="h2_underline" src="/assets/icons/underline-blue.svg" alt="">
-        
+
             </div>
 
             <div class="overlay_add_contact_right">
@@ -153,7 +153,7 @@ export function getEditOverlayTemplate() {
 
 
 export function getAddOverlayTemplate() {
-    return `
+  return `
 
      <main class="addContact_overlay">
           <section class="overlay_add_contact">
@@ -166,13 +166,13 @@ export function getAddOverlayTemplate() {
                 <img class="h2_underline" style="margin: unset; height: unset; width: 90px;" src="assets/icons/Vector 5.svg" alt="">
                 </div>
             </div>
-               
+
             <div class="overlay_add_contact_right">
                 <div class="close_overlay_icon_container">
                     <img class="close_overlay_icon" src="assets/icons/x_cancel.svg" alt="Close Overlay Icon">
                 </div>
                 <div class="addContact_form_container">
-                    
+
                     <div>
                         <img src="/assets/icons/Contact_icon.svg" alt="Contact Icon">
                     </div>
@@ -200,7 +200,7 @@ export function getAddOverlayTemplate() {
 }
 
 export function signupMassegeTemplate() {
-    return `
+  return `
         <aside class="signup-massege-box">
             <p>
                 You Signed Up successfully
