@@ -24,10 +24,11 @@ body {
   justify-content: flex-start;
   padding: 40px;
   /* ergänzt für add_task */
-  position: fixed;
+  /* erstmal für summary-page entfernt */
+  /* position: fixed;
   left: 0;
   top: 0;
-  z-index: +1;
+  z-index: +1; */
 }
 
 .logo {
@@ -88,14 +89,14 @@ body {
   font-weight: bold;
 }
 
-.main {
+/* .main {
   flex: 1;
   background: #f6f7f8;
   overflow-y: auto;
-}
+} */
 
 .dashboard {
- padding: 186px 0px 0px 340px;
+  padding: 186px 0px 0px 340px;
 }
 
 .cards {
@@ -112,10 +113,10 @@ body {
   /* width: calc(100% - 200px); */
 }
 
-.dashboard-left {
+/* .dashboard-left {
   flex: 0 0 50%;
   max-width: 460px;
-}
+} */
 
 .dashboard-right {
   flex: 0 0 50%;
@@ -133,12 +134,12 @@ body {
 }
 
 .greeting-line {
-  font-size: 38px;
+  font-size: 48px;
   color: #2c374b;
 }
 
 .greeting-name {
-  font-size: 48px;
+  font-size: 64px;
   font-weight: 700;
   color: #45a0c5;
 }
@@ -194,11 +195,12 @@ body {
 }
 
 h1 {
-  font-size: 56px;
+  font-size: 64px;
 }
 
 h3 {
-  font-size: 24px;
+  font-size: 30px;
+  font-weight: normal;
 }
 
 .heading-join h1,
@@ -208,7 +210,7 @@ h3 {
 
 .divider-blue {
   width: 2px;
-  height: 36px;
+  height: 64px;
   background: #2fa9db;
   align-self: center;
   border-radius: 8px;
@@ -221,6 +223,7 @@ h3 {
   justify-content: center;
   gap: 12px;
   text-align: left;
+  width: 250px;
 }
 
 .card-left-icon {
@@ -233,21 +236,24 @@ h3 {
 }
 
 /* Default icons for todo/done/urgent */
-.card.icon-card.todo > .card-left-icon {
+.card.icon-card.todo>.card-left-icon {
   background-image: url('/assets/icons/pencil-circle.svg');
 }
-.card.icon-card.done > .card-left-icon {
+
+.card.icon-card.done>.card-left-icon {
   background-image: url('/assets/icons/check-circle.svg');
 }
+
 .card.urgent-info .card-left-icon {
   background-image: url('/assets/icons/urgent-prio-summary.svg');
 }
 
 /* Hover swap */
-.card.icon-card.todo:hover > .card-left-icon {
+.card.icon-card.todo:hover>.card-left-icon {
   background-image: url('/assets/icons/pencil-circle-white.svg');
 }
-.card.icon-card.done:hover > .card-left-icon {
+
+.card.icon-card.done:hover>.card-left-icon {
   background-image: url('/assets/icons/check-circle-white.svg');
 }
 
@@ -270,6 +276,7 @@ h3 {
   width: 100%;
   padding: 30px;
   box-sizing: border-box;
+  width: 530px;
 }
 
 .urgent-left {
@@ -311,7 +318,7 @@ h3 {
 }
 
 .card-title {
-  font-size: 56px;
+  font-size: 72px;
   font-weight: bold;
 }
 
@@ -341,7 +348,7 @@ h3 {
 
 
 .big {
-  font-size: 56px;
+  font-size: 72px;
   font-weight: bold;
 }
 
