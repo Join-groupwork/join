@@ -20,26 +20,28 @@ export function getSidebarTemplate() {
 
 export function getHeaderTemplate() {
   return `
-        <div class="topbar-left">Kanban Project Management Tool</div>
-        <div class="topbar-right">
-            <a href="/member/help.html"class="help-circle" title="Help">?</a>
-            <div id="headerMenue" class="profile">
-                SM
-                <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
-                    <ul>
-                        <a href="legal_notice.html">Legal Notice</a>
-                    </ul>
-                    <ul>
-                        <a href="privacy_policy.html">Privacy Policy</a>
-                    </ul>
-                    <ul>
-                        <a id="logoutBtn">
-                            Log out
-                        </a>
-                    <ul/>
-                </nav>
-            </div>
-        </div>
+        <header>
+          <div class="topbar-left">Kanban Project Management Tool</div>
+          <div class="topbar-right">
+              <a href="/member/help.html"class="help-circle" title="Help">?</a>
+              <div id="headerMenue" class="profile">
+                  SM
+                  <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
+                      <ul>
+                          <a href="legal_notice.html">Legal Notice</a>
+                      </ul>
+                      <ul>
+                          <a href="privacy_policy.html">Privacy Policy</a>
+                      </ul>
+                      <ul>
+                          <a id="logoutBtn">
+                              Log out
+                          </a>
+                      <ul/>
+                  </nav>
+              </div>
+          </div>
+        </header>
       `;
 }
 

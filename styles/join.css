@@ -1,328 +1,322 @@
 html,
 body {
-    margin: 0;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
 }
-
 
 /* body -> display: flex; */
 /* flex-direction: column; */
 /* conflict with body_contacts, vorübergehend herausgenommen */
+body {
+  max-width: 1440px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  display: flex;
+  /* flex-direction: column; */
+  /*<--- conflict with body_contacts, vorübergehend herausgenommen*/
+  height: 100vh;
+  background-color: #F6F7F8;
+}
 
+.main {
+  margin: 60px 0 0 220px;
+}
 
 .main_index {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background-color: #F6F7F8;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #F6F7F8;
 }
 
 
-
-body {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 1.2;
-    letter-spacing: 0;
-    display: flex;
-    /* flex-direction: column; */
-    /*<--- conflict with body_contacts, vorübergehend herausgenommen*/
-    height: 100vh;
-    background-color: #F6F7F8;
-}
 
 /* fonts */
 h2 {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 h2 {
-    font-size: 45px;
-    margin-block-start: -18px;
-    font-family: sans-serif;
+  font-size: 45px;
+  margin-block-start: -18px;
+  font-family: sans-serif;
 }
 
 .inter-400-regular {
-    font-family: 'Inter';
-    font-weight: 400;
-    font-style: normal;
-    font-size: 16px;
+  font-family: 'Inter';
+  font-weight: 400;
 }
 
 .inter-500-medium {
-    font-family: 'Inter';
-    font-weight: 500;
-    font-style: medium;
+  font-family: 'Inter';
+  font-weight: 500;
 }
 
 .inter-600-SemiBold {
-    font-family: 'Inter';
-    font-weight: 600;
-    font-style: semibold;
+  font-family: 'Inter';
+  font-weight: 600;
 }
 
 .inter-700-bold {
-    font-family: 'Inter';
-    font-weight: 700;
-    font-style: bold;
+  font-family: 'Inter';
+  font-weight: 700;
 }
 
 .f-s-16 {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .f-s {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .f-s-27 {
-    font-size: 27px;
+  font-size: 27px;
 }
 
 .f-s-60 {
-    font-size: 60px;
+  font-size: 60px;
 }
 
+.link--color {
+  color: #29ABE2
+}
+
+/* menu */
 .menu {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 70px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 70px;
 }
 
 .board {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 
 }
 
 .board p {
-    font-size: 19px;
-    font-family: sans-serif;
-
+  font-size: 19px;
+  font-family: sans-serif;
 }
 
 .login-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    height: 310px;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  height: 310px;
 }
 
 .form-section {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 15px;
-
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
 }
 
 
 
 .section-1 {
-
-    margin: 50px auto;
+  margin: 50px auto;
 }
 
 .signup-button {
-    background-color: #2a3647;
-    color: white;
-    height: 35px;
-    border-radius: 8px;
+  background-color: #2a3647;
+  color: white;
+  height: 35px;
+  border-radius: 8px;
 }
 
 .join-icon {
-    width: 100px;
-    height: 120px;
+  width: 100px;
+  height: 120px;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
 
 }
 
 input {
-    border-radius: 5px;
-    border-width: 1px;
-    width: 250px;
-    height: 20px;
+  border-radius: 5px;
+  border-width: 1px;
+  width: 250px;
+  height: 20px;
 }
 
 .email-input {
-    border: 1px solid #ccc;
-    background-image: url('../assets/icons/envelope-regular-full.svg');
-    background-repeat: no-repeat;
-    background-position: 230px center;
-    background-size: 18px 18px;
+  border: 1px solid #ccc;
+  background-image: url('../assets/icons/envelope-regular-full.svg');
+  background-repeat: no-repeat;
+  background-position: 230px center;
+  background-size: 18px 18px;
 }
 
 .password-input {
-    border: 1px solid #ccc;
-    background-image: url('../assets/icons/lock-solid-full.svg');
-    background-repeat: no-repeat;
-    background-position: 230px center;
-    background-size: 18px 18px;
+  border: 1px solid #ccc;
+  background-image: url('../assets/icons/lock-solid-full.svg');
+  background-repeat: no-repeat;
+  background-position: 230px center;
+  background-size: 18px 18px;
 }
 
-
-
 .login-button {
-    color: white;
-    background-color: #2a3647;
-    border-radius: 8px;
-    width: 60px;
+  color: white;
+  background-color: #2a3647;
+  border-radius: 8px;
+  width: 60px;
 }
 
 .guest-button {
-    border-radius: 8px;
-    border-width: 1px;
-    width: 100px;
+  border-radius: 8px;
+  border-width: 1px;
+  width: 100px;
 
 }
 
 .buttons-section {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    height: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  height: 30px;
 
 }
 
 button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 button p {
-    font-family: sans-serif;
-    font-weight: bold;
-    font-size: 14px;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 14px;
 }
 
-
 footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    text-align: center;
-
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  text-align: center;
 }
 
 footer p {
-    font-size: 14px;
-    font-weight: bold;
-    font-family: sans-serif;
-    color: #afb8c5;
-
+  font-size: 14px;
+  font-weight: bold;
+  font-family: sans-serif;
+  color: #afb8c5;
 }
 
 .footer-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 /* contact css */
 
 .contactside_section {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 61px;
-    height: 93vh;
-    width: 367px;
-    background: white;
-    margin-left: 222px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 61px;
+  height: 93vh;
+  width: 367px;
+  background: white;
+  margin-left: 222px;
 }
 
 .contact_list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    height: fit-content;
-    width: 367px;
-    background-color: white;
-    overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: fit-content;
+  width: 367px;
+  background-color: white;
+  overflow-y: auto;
 }
 
 .body_contacts {
-    display: flex;
-    height: 100vh;
-    background-color: #F6F7F8;
+  display: flex;
+  height: 100vh;
+  background-color: #F6F7F8;
 }
 
 .contact_slogan {
-    font-size: 25px;
-    display: flex;
-    align-items: flex-start;
-    margin-top: 156px;
-    gap: 30px;
-    padding-left: 60px;
+  font-size: 25px;
+  display: flex;
+  align-items: flex-start;
+  margin-top: 156px;
+  gap: 30px;
+  padding-left: 60px;
 }
 
 .hr_line_contacts {
-    border: 1px solid #29ABE2;
-    height: 60px;
+  border: 1px solid #29ABE2;
+  height: 60px;
 }
 
 .contact_btn_addNew {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #2A3647;
-    height: 50px;
-    width: 325px;
-    border-radius: 8px;
-    color: white;
-    margin: 30px auto;
-    gap: 10px;
-    font-size: 21px;
-    cursor: pointer;
-    font-weight: 700;
-    padding: 15px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2A3647;
+  height: 50px;
+  width: 325px;
+  border-radius: 8px;
+  color: white;
+  margin: 30px auto;
+  gap: 10px;
+  font-size: 21px;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 15px 15px;
 }
 
 .contact_slogan p {
-    font-size: 27px;
-    font-weight: 400;
-    padding-top: 20px;
-    color: #2A3647;
+  font-size: 27px;
+  font-weight: 400;
+  padding-top: 20px;
+  color: #2A3647;
 }
 
 .contact_addBtn_logo {
-    height: 20.91px;
-    width: 29.33px;
+  height: 20.91px;
+  width: 29.33px;
 }
 
 .hr_contactList {
-    border: 1px solid #D9D9D9;
-    width: 325px;
-    margin: 0 auto;
+  border: 1px solid #D9D9D9;
+  width: 325px;
+  margin: 0 auto;
 }
 
 .labelfor_contactList {
-    padding-left: 20px;
-    font-size: 20px;
-    font-weight: 400;
-    color: #000000;
-    padding-bottom: 15px;
+  padding-left: 20px;
+  font-size: 20px;
+  font-weight: 400;
+  color: #000000;
+  padding-bottom: 15px;
 }
 
 /* sidebar */
@@ -368,7 +362,7 @@ footer p {
 
 /* nav hover color  */
 .nav-item:hover {
-    background: #091931;
+  background: #091931;
 }
 
 .nav-item {
@@ -404,19 +398,28 @@ footer p {
 
 
 /* header */
+header {
 
-.topbar {
   height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px 0px 60px;
+  width: 100%;
+  margin: 0 0 0 220px;
+}
+.topbar {
+  height: 60px;
+  /* display: flex;
+  justify-content: space-between;
+  align-items: center; */
+  padding: 0 0px 0px 60px;
   background: white;
   border-bottom: 1px solid #e5e5e5;
   position: fixed;
   top: 0px;
+  max-width: 1220px;
   width: 100%;
- 
+
 }
 
 .topbar-left {
@@ -462,11 +465,11 @@ footer p {
 }
 
 .summary_pencil {
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 }
 
 .summary_check {
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 }
