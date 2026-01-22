@@ -265,6 +265,10 @@ footer p {
     gap: 20px;
 }
 
+.footer {
+    color: #aaa;
+}
+
 /* contact css */
 
 .contactside_section {
