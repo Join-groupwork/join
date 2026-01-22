@@ -1,23 +1,3 @@
-export function getSidebarTemplate() {
-  return `
-      <div class="logo">
-        <img src="/assets/img/logo-bright.svg" alt="" >
-      </div>
-
-      <nav class="nav">
-        <a class="nav-item" href="/member/summary-guest.html"><img src="/assets/icons/side-menu/add-task-icon.svg" alt="Summary" class="nav-icon">Summary</a>
-        <a class="nav-item" href="/member/add-task.html"><img src="/assets/icons/side-menu/add-task-icon.svg" alt="Add Task" class="nav-icon">Add Task</a>
-        <a class="nav-item" href="/member/board.html"><img src="/assets/icons/side-menu/add-task-icon.svg" alt="Board" class="nav-icon">Board</a>
-        <a class="nav-item" href="/member/contacts.html"><img src="/assets/icons/side-menu/add-task-icon.svg" alt="Contacts" class="nav-icon">Contacts</a>
-      </nav>
-
-      <div class="legal">
-        <a href="/member/privacy_policy.html">Privacy Policy</a>
-        <a href="/member/legal_notice.html">Legal Notice</a>
-      </div>
-    `;
-}
-
 export function getHeaderTemplate() {
   return `
         <header>
@@ -43,6 +23,26 @@ export function getHeaderTemplate() {
           </div>
         </header>
       `;
+}
+
+export function getSidebarTemplate() {
+  return `
+      <div class="logo">
+        <img src="/assets/img/logo-bright.svg" alt="" >
+      </div>
+
+      <nav class="nav">
+        <a class="nav-item" href="/member/summary-guest.html"><img src="/assets/icons/side-menu/summary-icon.svg" alt="Summary" class="nav-icon">Summary</a>
+        <a class="nav-item" href="/member/add-task.html"><img src="/assets/icons/side-menu/add-task-icon.svg" alt="Add Task" class="nav-icon">Add Task</a>
+        <a class="nav-item" href="/member/board.html"><img src="/assets/icons/side-menu/board-icon.svg" alt="Board" class="nav-icon">Board</a>
+        <a class="nav-item" href="/member/contacts.html"><img src="/assets/icons/side-menu/contacts-icon.svg" alt="Contacts" class="nav-icon">Contacts</a>
+      </nav>
+
+      <div class="legal">
+        <a href="/member/privacy_policy.html">Privacy Policy</a>
+        <a href="/member/legal_notice.html">Legal Notice</a>
+      </div>
+    `;
 }
 
 export function getTaskTemplate() {
@@ -102,8 +102,6 @@ export function getTaskTemplate() {
     `;
 }
 
-
-
 // contact overlays einbinden --->id="editC_overlay" oder id="addC_overlay" in den <body> einfügen,
 // (siehe contact_add_overlay.html/contact_edit_overlay.html <-- können danach gelöscht werden)
 // je nachdem welches overlay gebraucht wird --- ansonsten bis auf css fertig
@@ -152,7 +150,6 @@ export function getEditOverlayTemplate() {
     </main>
     `;
 }
-
 
 export function getAddOverlayTemplate() {
   return `
