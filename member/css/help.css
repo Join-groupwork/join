@@ -1,5 +1,5 @@
 .help {
-  padding-left: 80px;
+  padding: 120px 96px 0 107px;
 }
 
 .help__head {
@@ -8,8 +8,6 @@
   justify-content: space-between;
   align-items: center;
 }
-
-
 
 .guide-content {
   display: flex;

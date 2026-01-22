@@ -1,7 +1,7 @@
 export function getHeaderTemplate() {
   return `
         <header>
-          <div class="topbar-left">Kanban Project Management Tool</div>
+          <div class="topbar-left f-s-20">Kanban Project Management Tool</div>
           <div class="topbar-right">
               <a href="/member/help.html"class="help-circle" title="Help">?</a>
               <div id="headerMenue" class="profile">

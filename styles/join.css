@@ -1,5 +1,7 @@
 html,
 body {
+  width: 100%;
+  max-width: 1440px;
   margin: 0;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
@@ -11,7 +13,8 @@ body {
 /* flex-direction: column; */
 /* conflict with body_contacts, vorübergehend herausgenommen */
 body {
-  max-width: 1440px;
+  /* width: 100%; */
+  /* max-width: 1440px; */
   line-height: 1.2;
   letter-spacing: 0;
   display: flex;
@@ -81,7 +84,7 @@ h2 {
   font-size: 60px;
 }
 
-.link--color {
+.text__color--light-blue {
   color: #29ABE2
 }
 
@@ -323,7 +326,7 @@ footer p {
 
 
 .sidebar {
-  width: 220px;
+  width: 230px;
   /* height ergänzt wegen add_task */
   height: 100%;
   background: #1a2c47;
@@ -340,9 +343,7 @@ footer p {
 }
 
 .logo {
-  margin-left: 20px;
-  margin-top: 12px;
-  margin-bottom: 8px;
+  margin: 12px auto 8px auto;
 }
 
 .nav {
@@ -372,14 +373,14 @@ footer p {
 }
 
 .nav-icon {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   object-fit: contain;
 }
 
 .legal a {
   display: block;
-  font-size: 14px;
+  font-size: 16px;
   color: #abb0b3;
   cursor: pointer;
   width: calc(100% + 80px);
@@ -399,34 +400,34 @@ footer p {
 
 /* header */
 header {
-
   height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 0 0 0 220px;
+  /* margin: 0 0 0 220px; */
 }
+
 .topbar {
-  height: 60px;
+  height: 96px;
   /* display: flex;
   justify-content: space-between;
   align-items: center; */
-  padding: 0 0px 0px 60px;
   background: white;
   border-bottom: 1px solid #e5e5e5;
   position: fixed;
   top: 0px;
-  max-width: 1220px;
+  max-width: 1440px;
   width: 100%;
 
 }
 
 .topbar-left {
-  padding-left: 279px;
+  padding-left: 350px;
 }
 
 .topbar-right {
+  padding: 0 40px 0 0;
   display: flex;
   align-items: center;
   gap: 8px;
