@@ -39,8 +39,8 @@ export function getSidebarTemplate() {
       </nav>
 
       <div class="legal">
-        <a href="/member/privacy_policy.html">Privacy Policy</a>
-        <a href="/member/legal_notice.html">Legal Notice</a>
+        <a href="/member/privacy-policy-user.html">Privacy Policy</a>
+        <a href="/member/legal-notice-user.html">Legal Notice</a>
       </div>
     `;
 }
