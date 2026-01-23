@@ -12,8 +12,8 @@ function render() {
   renderHeader();
   renderSidebar();
   renderAddTask();
-  // renderContactAddOverlay();   <-- Aktivieren, um das Overlay zum Hinzufügen von Kontakten anzuzeigen
-  // renderContactEditOverlay(); Contact
+ renderContactAddOverlay();   // Aktivieren, um das Overlay zum Hinzufügen von Kontakten anzuzeigen
+renderContactEditOverlay();  //  Contact
 }
 
 function renderHeader() {
