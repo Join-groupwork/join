@@ -156,6 +156,8 @@
 
 .arrow-left{
     margin-left: -85px;
+    width: 25px;
+    height: 25px;
 }
 
 h2{
@@ -181,6 +183,7 @@ h2::after {
     height: 40px;
     border-radius: 8px;
     width: 90px;
+    cursor: pointer;
 }
 
 .btn-signup p {
@@ -248,3 +251,8 @@ footer p {
     font-family: sans-serif;
     font-size: 14px;
 }
+
+.checkbox {
+    cursor: pointer;
+}
+
