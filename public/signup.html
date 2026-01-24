@@ -21,8 +21,11 @@
 
   <body>
 
-    <div >
-      <img class="join-icon" src="/assets/img/logo-dark.svg" alt="Join-logo" />
+    <main class="main_index">
+    <div class="menu">
+      <div>
+        <img class="join-icon" src="/assets/img/logo-dark.svg" alt="Join-logo" />
+      </div>
     </div>
 
     <section class="signup-content">
@@ -71,18 +74,21 @@
             placeholder="Confirm Password"
             required
           />
-          <div>
+          <div class="checkbox-content">
             <input type="checkbox" name="termsCheckbox" id="termsCheckbox" />
+             <p>I accept the <a href="/public/privacy-policy-public.html">Privacy Policy</a>
           </div>
           <button class="btn-signup" id="signupBtn" type="submit" disabled>
-            Sign Up
+            <p>Sign Up</p>
           </button>
         </form>
       </div>
     </section>
-    <footer>
-      <a href="/public/privacy-policy-public.html">Privacy Policy</a>
-      <a href="/public/legal-notice-public.html">Legal notice</a>
-    </footer>
+  <footer>
+    <div class="footer-container">
+      <p ><a class="footer" href="/pages/privacy_policy_guest.html">Privacy Policy</a></p>
+      <p ><a class="footer" href="/pages/legal_notice_guest.html">Legal Notice</a></p>
+    </div>
+  </footer>
   </body>
 </html>
