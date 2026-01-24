@@ -5,19 +5,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Join</title>
-  <link rel="shortcut icon" href="assets/img/Logo for Favicon construction.svg" type="image/x-icon">
-  <link rel="stylesheet" href="styles/standard.css">
-  <link rel="stylesheet" href="styles/assets.css">
-  <link rel="stylesheet" href="styles/colors.css">
-  <link rel="stylesheet" href="styles/fonts.css">
-  <link rel="stylesheet" href="styles/join.css">
-  <script type="module" src="scripts/firebase/get-firebase.js"></script>
-  <script type="module" src="login/login.js"></script>
+  <link rel="icon" href="/assets/img/logo-bright.svg" type="image/svg+xml">
+
+  <!--   <link rel="stylesheet" href="/styles/standard.css">
+  <link rel="stylesheet" href="/styles/assets.css">
+  <link rel="stylesheet" href="/styles/colors.css">
+  <link rel="stylesheet" href="/styles/fonts.css">
+  <link rel="stylesheet" href="/styles/join.css"> -->
+  <link rel="stylesheet" href="/public/css/index.css">
+
+  
+  <script type="module" src="/scripts/firebase/firebase.js"></script>
+  <script type="module" src="/login/login.js"></script>
   <!-- <script type="module" src="/public/js/public_templates.js"></script> -->
 </head>
-<!-- added <main>tag for fixing index - contacts body conflict -->
+
 
 <body>
+
   <main class="main_index">
     <div class="menu">
       <div class="board">
@@ -25,11 +30,14 @@
         <a href="/public/sign_Up.html"><button class="signup-button">Sign up</button></a>
       </div>
       <div>
-        <img class="join-icon" src="/assets/icons/Capa2.png" alt="Join-logo" />
+        <img class="join-icon" src="/assets/img/logo-dark.svg" alt="Join-logo" />
       </div>
     </div>
 
-    <div class="section-1">
+
+
+
+    <section class="section-1">
       <div class="login-container">
         <h2>Log in</h2>
 
@@ -45,12 +53,12 @@
           </div>
         </form>
       </div>
-    </div>
+    </section>
   </main>
   <footer>
     <div class="footer-container">
-      <p><a href="/pages/privacy_policy_guest.html">Privacy Policy</a></p>
-      <p><a href="/pages/legal_notice_guest.html">Legal Notice</a></p>
+      <p ><a class="footer" href="/pages/privacy_policy_guest.html">Privacy Policy</a></p>
+      <p ><a class="footer" href="/pages/legal_notice_guest.html">Legal Notice</a></p>
     </div>
   </footer>
 </body>
