@@ -26,7 +26,7 @@
   --color-avatar-golden-orange: #FFBB2B;
   --color-danger: #E60026;
   --color-border: #29ABE2;
-  --color-button-hover: #29ABE2;
+  --color-button-hover: #29aae2;
 }
 
 .bg-primary {
@@ -34,6 +34,7 @@
 }
 
 .bg-menue {
+  /* color: var(--color-menu-bg); */
   background-color: #2a3647;
 }
 
