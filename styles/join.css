@@ -143,6 +143,7 @@ h2 {
     width: 100px;
     height: 120px;
 }
+
 /* 
 form {
     display: flex;
@@ -329,41 +330,41 @@ footer p {
 
 
 .sidebar {
-  width: 220px;
-  /* height ergänzt wegen add_task */
-  height: 100%;
-  background: #1a2c47;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 40px;
-  /* ergänzt für add_task */
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: +1;
+    width: 220px;
+    /* height ergänzt wegen add_task */
+    height: 100%;
+    background: #1a2c47;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 40px;
+    /* ergänzt für add_task */
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: +1;
 }
 
 .logo {
-  margin-left: 20px;
-  margin-top: 12px;
-  margin-bottom: 8px;
+    margin-left: 20px;
+    margin-top: 12px;
+    margin-bottom: 8px;
 }
 
 .nav {
-  margin-top: 88px;
-  display: flex;
-  flex-direction: column;
+    margin-top: 88px;
+    display: flex;
+    flex-direction: column;
 }
 
 .nav-item {
-  width: calc(100% + 80px);
-  margin-left: -40px;
-  margin-right: -40px;
-  padding: 10px 40px;
-  cursor: pointer;
-  color: #ced1d7;
+    width: calc(100% + 80px);
+    margin-left: -40px;
+    margin-right: -40px;
+    padding: 10px 40px;
+    cursor: pointer;
+    color: #ced1d7;
 }
 
 /* nav hover color  */
@@ -372,33 +373,33 @@ footer p {
 }
 
 .nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .nav-icon {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
 .legal a {
-  display: block;
-  font-size: 14px;
-  color: #abb0b3;
-  cursor: pointer;
-  width: calc(100% + 80px);
-  margin-left: -40px;
-  margin-right: -40px;
-  padding: 10px 40px;
-  box-sizing: border-box;
-  border-radius: 4px;
+    display: block;
+    font-size: 14px;
+    color: #abb0b3;
+    cursor: pointer;
+    width: calc(100% + 80px);
+    margin-left: -40px;
+    margin-right: -40px;
+    padding: 10px 40px;
+    box-sizing: border-box;
+    border-radius: 4px;
 }
 
 .legal a:hover {
-  background: #091931;
-  color: #ffffff;
+    background: #091931;
+    color: #ffffff;
 }
 
 
@@ -406,59 +407,59 @@ footer p {
 /* header */
 
 .topbar {
-  height: 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px 0px 60px;
-  background: white;
-  border-bottom: 1px solid #e5e5e5;
-  position: fixed;
-  top: 0px;
-  width: 100%;
- 
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 0px 60px;
+    background: white;
+    border-bottom: 1px solid #e5e5e5;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+
 }
 
 .topbar-left {
-  padding-left: 279px;
+    padding-left: 279px;
 }
 
 .topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .help-circle {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: 1px solid #aaaaaa;
-  color: #aaaaaa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 12px;
-  cursor: default;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #aaaaaa;
+    color: #aaaaaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: default;
 }
 
 .profile {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  border: 2px solid;
-  border-color: #252b41;
-  color: #2eabe2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border: 2px solid;
+    border-color: #252b41;
+    color: #2eabe2;
 }
 
 .legal {
-  margin-top: auto;
+    margin-top: auto;
 }
 
 .summary_pencil {
@@ -507,6 +508,7 @@ footer p {
     grid-column-start: 2;
     grid-row-start: 3;
     margin-left: 226px;
+    width: 107%;
 }
 
 .overlay_add_task {
@@ -533,15 +535,16 @@ footer p {
     flex-direction: column;
     margin: auto;
     padding-right: 40px;
-    width: 280px;
+    width: 440px;
 }
 
 .select_add_task {
     display: flex;
     flex-direction: column;
     padding-left: 40px;
-    min-width: 317px;
-    gap: 5px;
+    gap:5px;
+    min-width: 440px;
+    
 }
 
 .section_priority {
@@ -549,15 +552,14 @@ footer p {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    margin-bottom: 40px;
-    gap: 5px;
-    width: 300px;
+    margin-bottom: 20px;
+    width: 100%;
 }
 
 .priority {
     display: flex;
     justify-content: space-between;
-    width: 277px;
+    width: 100%;
     gap: 8px;
 }
 
@@ -578,11 +580,13 @@ footer p {
     padding: 5px;
     font-size: 16px;
     margin-bottom: 30px;
+    width: 100%;
+    height: 45px;
 }
 
 .textarea_add_task {
     margin-bottom: 30px;
-    height: 80px;
+    height: 120px;
     border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 16px;
@@ -599,7 +603,7 @@ footer p {
 }
 
 .margin_bottom_add_task {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .priority_button {
@@ -608,7 +612,7 @@ footer p {
     align-items: center;
     border: 1px solid #cccccc7f;
     background-color: #ffffff;
-    width: 100px;
+    width: 136px;
     height: 40px;
 
     border-radius: 8px;
@@ -619,9 +623,9 @@ footer p {
     justify-content: center;
     align-items: center;
     background-color: #ffffff;
-    border: 1px solid #cccccc7f;
+    border: 1px solid #2A3647;
     border-radius: 8px;
-    width: 80px;
+    width: 100px;
     height: 40px;
     font-size: 14px;
     color: #2A3647;
@@ -744,7 +748,7 @@ footer p {
     gap: 20px;
     margin-top: 20px;
     padding-right: 80px;
-    
+
     margin-bottom: 100px;
 
 }
