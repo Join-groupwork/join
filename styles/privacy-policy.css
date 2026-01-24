@@ -13,9 +13,10 @@ body {
 
 /* Content area */
 .legal-page {
-  width: 100%;
-  padding: 48px 64px;
-  background-color: #ffffff;
+    width: 100%;
+    padding: 48px 64px 150px 300px;
+    background-color: #ffffff;
+    margin: 60px 0px 0px 0px;
 }
 
 /* Headings */
