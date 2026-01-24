@@ -24,27 +24,40 @@
     margin-top: 30px;
     padding-left: 10px;
     box-sizing: border-box;
+    border-radius: 5px;
+    border-width: 1px;
+    width: 250px;
+    height: 20px;
 }
 
 .email-input-signup {
     border: 1px solid #ccc;
-    background-image: url('../assets/icons/addContact-Login-signUp/mail.svg');
+    background-image: url('/assets/icons/mail-icon.svg');
     background-repeat: no-repeat;
     background-position: 222px center;
     background-size: 18px 18px;
     padding-left: 10px;
     box-sizing: border-box;
+    border-radius: 5px;
+    border-width: 1px;
+    width: 250px;
+    height: 20px;
 }
 
 .password-input-signup{
     border: 1px solid #ccc;
-    background-image: url('../assets/icons/addContact-Login-signUp/lock.svg');
+    background-image: url('/assets/icons/lock-icon.svg');
     background-repeat: no-repeat;
     background-position: 222px center;
     background-size: 18px 18px;
     padding-left: 10px;
     box-sizing: border-box;
+    border-radius: 5px;
+    border-width: 1px;
+    width: 250px;
+    height: 20px;
 }
+
 
 
 .h2-signup {
@@ -145,7 +158,9 @@ a {
     align-items: center;
     gap: 20px;
     padding-top: 40px;
+    
 }
+
 
 .arrow-left{
      margin-left: -116px; 
