@@ -1,0 +1,55 @@
+.main-content {
+    margin-left: 250px;
+    padding: 110px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.input-feld{
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 250px;
+    height: 44px;
+    background-image: url('/assets/icons/search.svg');
+    background-repeat: no-repeat;
+    background-position: right 10px center; 
+    background-size: 18px 18px;
+
+    
+}
+
+.input-section{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-task-Button{
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #2a3647; 
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;      
+    align-items: center;       
+    gap: 8px;  
+}
+
+.border{
+    width: 1px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 2px;
+    transform: translateX(222px);  
+}
+
+.plus-icon {
+  width: 24px;                
+  height: 24px;
+}
