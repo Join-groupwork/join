@@ -1,15 +1,4 @@
 :root {
-  --color-menu-bg: #2a3647;
-  --color-text-primary: #000000;
-  --color-text-secondary: #CDCDCD;
-  --color-text-tertiary: #29ABE2;
-  --color-text-mail: #007CEE;
-  --color-text-button: #FFFFFF;
-  --color-priority-urgent: #FF0000;
-  --color-priority-medium: #FFA800;
-  --color-priority-low: #7AE229;
-  --color-category-user-story: #0038FF;
-  --color-category-technical-task: #1FD7C1;
   --color-avatar-orange: #FF7A00;
   --color-avatar-pink: #FF5EB3;
   --color-avatar-purple-dark: #6E52FF;
@@ -25,15 +14,26 @@
   --color-avatar-yellow: #FFE62B;
   --color-avatar-red: #FF4646;
   --color-avatar-golden-orange: #FFBB2B;
-  --color-danger: #E60026;
-  --color-border: #29ABE2;
-  --color-button-hover: #29aae2;
-  --color-nav-hover: #091931;
-  --color-sidemenu-active: #1a2c47;
-  --color-footer: #aaa;
-  --color-footer-p: #afb8c5;
   --color-background-primary: #f6f7f8;
   --color-background-input: #ffffff;
+  --color-button-hover: #29aae2;
+  --color-border: #29ABE2;
+  --color-category-user-story: #0038FF;
+  --color-category-technical-task: #1FD7C1;
+  --color-danger: #E60026;
+  --color-footer: #aaa;
+  --color-footer-p: #afb8c5;
+  --color-menu-bg: #2a3647;
+  --color-nav-hover: #091931;
+  --color-priority-urgent: #FF0000;
+  --color-priority-medium: #FFA800;
+  --color-priority-low: #7AE229;
+  --color-sidemenu-active: #1a2c47;
+  --color-text-primary: #000000;
+  --color-text-secondary: #CDCDCD;
+  --color-text-tertiary: #29ABE2;
+  --color-text-mail: #007CEE;
+  --color-text-button: #FFFFFF;
 }
 
 .bg-primary {
