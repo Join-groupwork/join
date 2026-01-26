@@ -1,9 +1,50 @@
 /* Buttons */
 .btn:hover {
-    background-color: #29abe2;
+  background-color: #29abe2;
 }
 
 .btn-s-40 {
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button p {
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.guest-button {
+  border-radius: 8px;
+  border-width: 1px;
+  width: 100px;
+  font-weight: bold;
+
+}
+
+.login-button {
+  color: var(--color-text-button);
+  /* color: white; */
+  background-color: var(--color-menu-bg);
+  /* background-color: #2a3647; */
+  border-radius: 8px;
+  width: 60px;
+  font-weight: bold;
+}
+
+.signup-button {
+  background-color: #2a3647;
+  color: white;
+  height: 35px;
+  border-radius: 8px;
 }
