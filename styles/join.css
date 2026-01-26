@@ -38,10 +38,6 @@ body {
   background-color: #F6F7F8;
 }
 
-
-
-body {}
-
 /* fonts */
 h2 {
   font-size: 30px;
@@ -335,12 +331,12 @@ footer p {
 
 /* sidebar */
 
-
 .sidebar {
   width: 230px;
   /* height ergänzt wegen add_task */
   height: 100%;
-  background: #1a2c47;
+  background: var(--color-sidemenu-active);
+  /* background: #1a2c47; */
   color: white;
   display: flex;
   flex-direction: column;
@@ -374,7 +370,8 @@ footer p {
 
 /* nav hover color  */
 .nav-item:hover {
-  background: #091931;
+  background: var(--color-nav-hover);
+  /* background: #091931; */
 }
 
 .nav-item {

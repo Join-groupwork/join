@@ -4,6 +4,7 @@
   --color-text-secondary: #CDCDCD;
   --color-text-tertiary: #29ABE2;
   --color-text-mail: #007CEE;
+  --color-text-button: #FFFFFF;
   --color-priority-urgent: #FF0000;
   --color-priority-medium: #FFA800;
   --color-priority-low: #7AE229;
@@ -27,10 +28,17 @@
   --color-danger: #E60026;
   --color-border: #29ABE2;
   --color-button-hover: #29aae2;
+  --color-nav-hover: #091931;
+  --color-sidemenu-active: #1a2c47;
+  --color-footer: #aaa;
+  --color-footer-p: #afb8c5;
+  --color-background-primary: #f6f7f8;
+  --color-background-input: #ffffff;
 }
 
 .bg-primary {
-  background-color: #f6f7f8;
+  background-color: var(--color-background-primary);
+  /* background-color: #f6f7f8; */
 }
 
 .bg-menue {
