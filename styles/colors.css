@@ -16,8 +16,7 @@
   --color-avatar-golden-orange: #FFBB2B;
   --color-background-primary: #f6f7f8;
   --color-background-input: #ffffff;
-  --color-button-hover: #29aae2;
-  --color-border: #29ABE2;
+  --color-hover: #29ABE2;
   --color-category-user-story: #0038FF;
   --color-category-technical-task: #1FD7C1;
   --color-danger: #E60026;
@@ -64,8 +63,9 @@
 
 .bg-contact {
   background-color: var(--color-background-input);
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
 }
+
 /*  Perhaps an overlay for user avatars would be an option? */
 /*  Vielleicht wäre ein overlay für die user avatare eine option?*/
 .bg-menue-user-profil:hover {
