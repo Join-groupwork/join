@@ -28,6 +28,7 @@
   --color-priority-urgent: #FF0000;
   --color-priority-medium: #FFA800;
   --color-priority-low: #7AE229;
+  --color-scrollbar: #4589FF;
   --color-sidemenu-active: #1a2c47;
   --color-text-primary: #000000;
   --color-text-secondary: #CDCDCD;
@@ -47,21 +48,26 @@
 }
 
 .bg-card {
-  background-color: #ffffff;
+  background-color: var(--color-background-input);
+  /* background-color: #ffffff; */
 }
 
 .bg-card-us {
-  background-color: #0038FF;
+  background-color: var(--color-avatar-blue-dark);
+  /* background-color: #0038FF; */
 }
 
 .bg-card-tt {
-  background-color: #1FD7C1;
+  background-color: var(--color-avatar-turquise);
+  /* background-color: #1FD7C1; */
 }
 
 .bg-contact {
+  background-color: var(--color-background-input);
   background-color: #ffffff;
 }
-
+/*  Perhaps an overlay for user avatars would be an option? */
+/*  Vielleicht wäre ein overlay für die user avatare eine option?*/
 .bg-menue-user-profil:hover {
   background-color: #E1E6BC;
 }
@@ -71,17 +77,21 @@
 }
 
 .color-menue {
-  color: #cdcdcd;
+  color: var(--color-text-secondary);
+  /* color: #cdcdcd; */
 }
 
 .scrollbar-color {
-  scrollbar-color: #4589FF;
+  scrollbar-color: var(--color-scrollbar);
+  /* scrollbar-color: #4589FF; */
 }
 
 .color__text--light-blue {
-  color: #29ABE2
+  color: var(--color-text-tertiary);
+  /* color: #29ABE2 */
 }
 
 .nav-menue:hover {
-  background-color: #091931;
+  background-color: var(--color-nav-hover);
+  /* background-color: #091931; */
 }
