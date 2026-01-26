@@ -1,9 +1,5 @@
-.main_index {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background-color: var(--color-background-primary);
-  /* background-color: #F6F7F8; */
+body {
+  display: block;
 }
 
 h2 {
@@ -24,27 +20,9 @@ h2::after {
   background-color: #3d97f1;
 }
 
-.menu {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 70px;
-  padding-bottom: 140px;
-}
-
-.board {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.board p {
-  font-size: 19px;
-  font-family: sans-serif;
-}
-
 .login-container {
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -57,34 +35,18 @@ h2::after {
   height: 310px;
 }
 
-.form-section {
+.menu {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 15px;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 70px;
+  padding-bottom: 140px;
 }
 
 .section-1 {
   display: grid;
   place-items: center;
-}
-
-.join-icon {
-  width: 100px;
-  height: 120px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-input {
-  border-radius: 5px;
-  border-width: 1px;
-  width: 250px;
-  height: 20px;
 }
 
 .email-input {
@@ -110,39 +72,4 @@ input {
 input::placeholder {
   padding-left: 10px;
   color: #aaa;
-}
-
-.buttons-section {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  height: 30px;
-}
-
-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  text-align: center;
-}
-
-footer p {
-  font-size: 14px;
-  font-weight: bold;
-  font-family: sans-serif;
-  color: var(--color-pooter-p);
-  color: #afb8c5;
-}
-
-.footer-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.footer {
-  color: var(--color-footer);
-  /* color: #aaa; */
 }

@@ -26,7 +26,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #F6F7F8;
+  background-color: var(--color-background-primary);
+  /* background-color: #F6F7F8; */
 }
 
 /* fonts */
@@ -93,25 +94,11 @@ h2 {
   display: flex;
   gap: 10px;
   align-items: center;
-
 }
 
 .board p {
   font-size: 19px;
   font-family: sans-serif;
-}
-
-.login-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px 10px rgba(0, 0, 0, 0.1);
-  width: 400px;
-  height: 310px;
-
 }
 
 .form-section {
@@ -121,10 +108,7 @@ h2 {
   gap: 15px;
 }
 
-
-
 .section-1 {
-
   margin: 50px auto;
 }
 
@@ -144,7 +128,7 @@ form {
   display: flex;
   flex-direction: column;
   gap: 60px;
-
+  /* gap: 30px; //der gap ist aus der index.css */
 }
 
 input {
@@ -181,7 +165,6 @@ input {
   border-radius: 8px;
   border-width: 1px;
   width: 100px;
-
 }
 
 .buttons-section {
@@ -189,7 +172,6 @@ input {
   justify-content: center;
   gap: 20px;
   height: 30px;
-
 }
 
 button {
@@ -221,7 +203,8 @@ footer p {
   font-size: 14px;
   font-weight: bold;
   font-family: sans-serif;
-  color: #afb8c5;
+  color: var(--color-pooter-p);
+  /* color: #afb8c5; */
 }
 
 .footer-container {
@@ -231,7 +214,8 @@ footer p {
 }
 
 .footer {
-  color: #aaa;
+  color: var(--color-footer);
+  /* color: #aaa; */
 }
 
 /* contact css */
@@ -395,8 +379,6 @@ footer p {
   color: #ffffff;
 }
 
-
-
 /* header */
 header {
   height: 60px;
@@ -418,7 +400,6 @@ header {
   top: 0px;
   max-width: 1440px;
   width: 100%;
-
 }
 
 .topbar-left {
