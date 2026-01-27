@@ -1,9 +1,11 @@
 .main-content {
-    margin-left: 250px;
-    padding: 110px;
+    margin-top: 120px;
+    margin-left: 228px;
     display: flex;
     justify-content: space-between;
     text-align: center;
+    padding: 50px;
+    
 }
 
 .input-feld{
@@ -52,4 +54,8 @@
 .plus-icon {
   width: 24px;                
   height: 24px;
+}
+
+.board-h1 {
+    font-size: 50px;  
 }
