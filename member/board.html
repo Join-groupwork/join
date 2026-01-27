@@ -33,6 +33,29 @@
         </div>
     </section>
 
+    <main class="board-main">
+        <section class="column" data-status="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div><h3>To Do</h3><img class="plus-icon" src="/assets/icons/plus-solid-full.svg" alt="plus-icon"></div>
+
+        <article class="card" draggable="true" ondragstart="drag(event)" id="task1">
+        Task 1
+        </article>
+         </section>
+
+        <section class="column" data-status="progress" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h3>In Progress</h3>
+        </section>
+
+        <section class="column" data-status="feedback" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h3>Await Feedback</h3>
+        </section>
+
+        <section class="column" data-status="done" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h3>Done</h3>
+        </section>
+    </main>
+
+
     <script type="module" src="/assets/templates/sideBar.js"></script>
     <script type="module" src="/assets/templates/header.js"></script>
 </body>

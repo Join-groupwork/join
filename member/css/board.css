@@ -59,3 +59,21 @@
 .board-h1 {
     font-size: 50px;  
 }
+
+.board-main {
+    margin-top: 50px;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 230px;
+}
+
+.column {
+  width: 220px;
+  min-height: 300px;
+  background: #f4f4f4;
+  padding: 10px;
+  border-radius: 8px;
+}
+
