@@ -18,6 +18,13 @@ button:hover {
   cursor: pointer;
 }
 
+.signup-button {
+  background-color: #2a3647;
+  color: white;
+  height: 35px;
+  border-radius: 8px;
+}
+
 button p {
   font-family: sans-serif;
   font-weight: bold;
@@ -47,4 +54,9 @@ button p {
   color: white;
   height: 35px;
   border-radius: 8px;
+}
+
+/* checkboxes */
+.checkbox {
+  cursor: pointer;
 }

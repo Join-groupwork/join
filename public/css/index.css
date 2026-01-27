@@ -2,6 +2,45 @@ body {
   display: block;
 }
 
+.menu {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 70px;
+  padding-bottom: 140px;
+}
+
+.board {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.board p {
+  font-size: 19px;
+  font-family: sans-serif;
+}
+
+.section-1 {
+  margin: 50px auto;
+  display: grid;
+  place-items: center;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-background-input);
+  /* background-color: #ffffff; */
+  border-radius: 10px;
+  box-shadow: 0 2px 10px 10px rgba(0, 0, 0, 0.1);
+  width: 450px;
+  height: 310px;
+}
+
 h2 {
   font-size: 45px;
   margin-block-start: -18px;
@@ -18,35 +57,6 @@ h2::after {
   width: 80%;
   height: 3px;
   background-color: #3d97f1;
-}
-
-.login-container {
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--color-background-input);
-  /* background-color: #ffffff; */
-  border-radius: 10px;
-  box-shadow: 0 2px 10px 10px rgba(0, 0, 0, 0.1);
-  width: 450px;
-  height: 310px;
-}
-
-.menu {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 70px;
-  padding-bottom: 140px;
-}
-
-.section-1 {
-  display: grid;
-  place-items: center;
 }
 
 .email-input {
