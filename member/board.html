@@ -34,38 +34,38 @@
     </section>
 
     <main class="board-main">
-        <div>
-            <div class="card-bar"><h3 class="cards-h3">To do</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="plus-icon"></div>
+        <section>
+            <div class="card-bar">
+                <h3 class="cards-h3">To do</h3>
+                <img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="Add task">
+            </div>
 
-            <section class="column" data-status="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
-            
-            <article class="card" draggable="true" ondragstart="drag(event)" id="task1">
-                <p class="card-p">No tasks to do</p>
-           
-            </article>
-            </section>
-        </div>
+            <div class="column" data-status="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <p class="card-placeholder">No tasks to do</p>
+            </div>
+        </section>
 
-        <div>
+
+        <section>
             <div class="card-bar"><h3 class="cards-h3">In Progress</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="plus-icon"></div>
-            <section class="column" data-status="progress" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="column" data-status="progress" ondrop="drop(event)" ondragover="allowDrop(event)">
                 <p class="card-p">No tasks to do</p>
-            </section>
-        </div>
+            </div>
+        </section>
 
-        <div>
+        <section>
             <div class="card-bar"><h3 class="cards-h3">Await Feedback</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="plus-icon"></div>
-            <section class="column" data-status="feedback" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="column" data-status="feedback" ondrop="drop(event)" ondragover="allowDrop(event)">
                 <p class="card-p">No tasks to do</p>
-                </section>
-        </div>
+            </div>
+        </section>
 
-        <div>
+        <section>
             <div class="card-bar"><h3 class="cards-h3 padding-bottom">Done</h3></div>
-            <section class="column" data-status="done" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="column" data-status="done" ondrop="drop(event)" ondragover="allowDrop(event)">
             <p class="card-p">No tasks to do</p>     
-            </section>
-        </div>
+            </div>
+        </section>
     </main>
 
 
