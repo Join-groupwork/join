@@ -2,6 +2,8 @@ html,
 body {
   width: 100%;
   max-width: 1440px;
+  margin-right: auto;
+  margin-left: auto;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -21,16 +23,6 @@ body {
 }
 
 /* fonts */
-h2 {
-  font-size: 30px;
-}
-
-h2 {
-  font-size: 45px;
-  margin-block-start: -18px;
-  font-family: sans-serif;
-}
-
 .inter-400-regular {
   font-family: 'Inter';
   font-weight: 400;
@@ -51,7 +43,7 @@ h2 {
   font-weight: 700;
 }
 
-.f-s {
+.f-s-20 {
   font-size: 20px;
 }
 
