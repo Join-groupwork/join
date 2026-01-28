@@ -1,13 +1,4 @@
 /* Buttons */
-.btn:hover {
-  background-color: #29abe2;
-}
-
-.btn-s-40 {
-  width: 40px;
-  height: 40px;
-}
-
 button {
   display: flex;
   justify-content: center;
@@ -18,17 +9,19 @@ button:hover {
   cursor: pointer;
 }
 
-.signup-button {
-  background-color: #2a3647;
-  color: white;
-  height: 35px;
-  border-radius: 8px;
-}
-
 button p {
   font-family: sans-serif;
   font-weight: bold;
   font-size: 14px;
+}
+
+.btn:hover {
+  background-color: #29abe2;
+}
+
+.btn-s-40 {
+  width: 40px;
+  height: 40px;
 }
 
 .guest-button {
@@ -36,7 +29,6 @@ button p {
   border-width: 1px;
   width: 100px;
   font-weight: bold;
-
 }
 
 .login-button {
@@ -49,14 +41,4 @@ button p {
   font-weight: bold;
 }
 
-.signup-button {
-  background-color: #2a3647;
-  color: white;
-  height: 35px;
-  border-radius: 8px;
-}
-
-/* checkboxes */
-.checkbox {
-  cursor: pointer;
-}
+/* Logo */

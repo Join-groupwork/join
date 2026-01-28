@@ -86,12 +86,12 @@ form {
   /* gap: 30px; //der gap ist aus der index.css */
 }
 
-input {
+/* input {
   border-radius: 5px;
   border-width: 1px;
   width: 250px;
   height: 20px;
-}
+} */
 
 .email-input {
   border: 1px solid #ccc;
@@ -129,21 +129,7 @@ input {
   height: 30px;
 }
 
-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-button:hover {
-  cursor: pointer;
-}
-
-button p {
-  font-family: sans-serif;
-  font-weight: bold;
-  font-size: 14px;
-}
 
 footer {
   width: 100%;
