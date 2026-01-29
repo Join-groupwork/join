@@ -7,7 +7,7 @@ export function getHeaderTemplate() {
                 SM
                 <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
                     <ul>
-                        <a href="/pubpic/legal-notice-public.html">Legal Notice</a>
+                        <a href="/public/legal-notice-public.html">Legal Notice</a>
                     </ul>
                     <ul>
                         <a href="/public/privacy-policy-public.html">Privacy Policy</a>
@@ -36,7 +36,7 @@ export function getHeaderTemplate() {
       </nav>
 
       <div class="legal">
-        <a href="/public/privacy-policy-public.html">Privacy Policy</a>
+        <a href="/public/privacy-policy-public.html">1Privacy Policy</a>
         <a href="/public/legal-notice-public.html">Legal Notice</a>
       </div>
     `;
