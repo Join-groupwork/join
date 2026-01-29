@@ -95,7 +95,6 @@ form {
 
 .email-input {
   border: 1px solid #ccc;
-  background-image: url('../assets/icons/envelope-regular-full.svg');
   background-repeat: no-repeat;
   background-position: 230px center;
   background-size: 18px 18px;
@@ -103,7 +102,6 @@ form {
 
 .password-input {
   border: 1px solid #ccc;
-  background-image: url('../assets/icons/lock-solid-full.svg');
   background-repeat: no-repeat;
   background-position: 230px center;
   background-size: 18px 18px;
@@ -127,38 +125,6 @@ form {
   justify-content: center;
   gap: 20px;
   height: 30px;
-}
-
-
-
-footer {
-  width: 100%;
-  height: 60px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  color: var(--color-footer);
-  text-align: center;
-}
-
-footer p {
-  font-size: 14px;
-  font-weight: bold;
-  /* font-family: sans-serif; */
-  color: var(--color-pooter-p);
-  /* color: #afb8c5; */
-}
-
-.footer-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.footer {
-  text-decoration: none;
-  color: var(--color-footer);
-  /* color: #aaa; */
 }
 
 /* contact css */
@@ -395,4 +361,42 @@ header {
 .summary_check {
   width: 40px;
   height: 40px;
+}
+
+/* Logo */
+.join__logo {
+  width: 100px;
+  margin: 80px 0 0 76px;
+}
+
+/* FOOTER */
+footer {
+  width: 100%;
+  height: 60px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: var(--color-footer);
+  text-align: center;
+}
+
+footer p {
+  font-size: 14px;
+  font-weight: bold;
+  /* font-family: sans-serif; */
+  color: var(--color-pooter-p);
+  /* color: #afb8c5; */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 14px;
+}
+
+.footer {
+  text-decoration: none;
+  color: var(--color-footer);
+  /* color: #aaa; */
 }

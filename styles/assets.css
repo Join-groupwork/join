@@ -1,12 +1,42 @@
 /* Buttons */
-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.button {
+  height: 45px;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 8px;
 }
 
 button:hover {
   cursor: pointer;
+  background-color: var(--color-hover);
+}
+
+.button__index--signup {
+  width: 90px;
+  height: 50px;
+  margin-right: 120px;
+  font-size: 16px;
+  color: var(--color-text-button);
+  background-color: var(--color-menu-bg);
+}
+
+.button__login {
+  color: var(--color-text-button);
+  background-color: var(--color-menu-bg);
+}
+
+.button__login--guest {
+  border: 1px solid var(--color-menu-bg);
+  color: var(--color-menu-bg);
+  background-color: var(--color-background-input);
+}
+
+.button__signup {
+  width: 120px;
+  height: 55px;
+  background-color: var(--color-menu-bg);
+  border-radius: 10px;
+  color: var(--color-text-button);
 }
 
 button p {
@@ -15,30 +45,9 @@ button p {
   font-size: 14px;
 }
 
-.btn:hover {
-  background-color: #29abe2;
-}
-
 .btn-s-40 {
   width: 40px;
   height: 40px;
-}
-
-.guest-button {
-  border-radius: 8px;
-  border-width: 1px;
-  width: 100px;
-  font-weight: bold;
-}
-
-.login-button {
-  color: var(--color-text-button);
-  /* color: white; */
-  background-color: var(--color-menu-bg);
-  /* background-color: #2a3647; */
-  border-radius: 8px;
-  width: 60px;
-  font-weight: bold;
 }
 
 /* Logo */

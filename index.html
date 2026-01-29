@@ -18,32 +18,28 @@
 
 <body>
   <main>
-    <div class="menu">
-      <div class="board">
+    <div class="index__header">
+      <img class="join__logo join-icon" src="/assets/img/logo-dark.svg" alt="Join-logo" />
+      <div class="index__menu">
         <p>Not a Join user ?</p>
-        <a href="/public/signup.html"><button class="signup-button">Sign up</button></a>
-      </div>
-      <div>
-        <img class="join-icon" src="/assets/img/logo-dark.svg" alt="Join-logo" />
+        <a href="/public/signup.html">
+          <button class="button button__index--signup">Sign up</button>
+        </a>
       </div>
     </div>
-
-    <section class="section-1">
-      <div class="login-container">
-        <h2>Log in</h2>
-
-        <form>
-          <div class="form-section">
-            <input id="email" class="email-input" type="email" autocomplete="email" placeholder="Email" required />
-            <input id="password" class="password-input" type="password" autocomplete="current-password"
-              placeholder="Password" required />
-          </div>
-          <div class="buttons-section">
-            <button id="loginBtn" class="login-button" type="submit">Log in</button>
-            <button id="guestBtn" class="guest-button" type="button">Guest Log in</button>
-          </div>
-        </form>
-      </div>
+    <section class="login">
+      <h2 class="login__title">Log in</h2>
+      <form>
+        <div class="login__form">
+          <input id="email" class="login__input login__input--email" type="email" autocomplete="email" placeholder="Email" required />
+          <input id="password" class="login__input login__input--password" type="password" autocomplete="current-password"
+            placeholder="Password" required />
+        </div>
+        <div class="buttons-section">
+          <button id="loginBtn" class="button button__login" type="submit">Log in</button>
+          <button id="guestBtn" class="button button__login--guest" type="button">Guest Log in</button>
+        </div>
+      </form>
     </section>
   </main>
   <footer>
