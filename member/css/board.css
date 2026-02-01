@@ -104,8 +104,9 @@
 }
 
 .card {
-    display: block;        /* sorgt dafür, dass jede Karte untereinander ist */
-    margin-bottom: 10px;   /* Abstand zwischen Karten */
+    width: 220px;
+    display: block;        
+    margin-bottom: 10px;   
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
