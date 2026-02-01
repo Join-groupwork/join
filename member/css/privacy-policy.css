@@ -14,21 +14,21 @@ body {
 /* Content area */
 .legal-page {
   width: 100%;
-  padding: 48px 64px;
+  padding: 140px 160px 150px 120px;
   background-color: #ffffff;
 }
 
 /* Headings */
 .legal-page h1 {
   font-size: 2rem;
-  margin-bottom: 24px;
-  border-bottom: 1px solid #e5e7eb;
-  padding-bottom: 12px;
+  /* margin-bottom: 24px; */
+  /* border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 12px; */
 }
 
 .legal-page h2 {
   font-size: 1.25rem;
-  margin-top: 32px;
+  margin-top: 8px;
   margin-bottom: 12px;
 }
 
