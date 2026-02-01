@@ -37,10 +37,11 @@
         <section>
             <div class="card-bar">
                 <h3 class="cards-h3">To do</h3>
+                
                 <img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="Add task">
             </div>
 
-            <div class="column" data-status="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div id="todo" class="column" data-status="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
                 <p class="card-placeholder">No tasks to do</p>
             </div>
         </section>
@@ -48,14 +49,14 @@
 
         <section>
             <div class="card-bar"><h3 class="cards-h3">In Progress</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="plus-icon"></div>
-            <div class="column" data-status="progress" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div  id="progress" class="column" data-status="progress" ondrop="drop(event)" ondragover="allowDrop(event)">
                 <p class="card-p">No tasks to do</p>
             </div>
         </section>
 
         <section>
             <div class="card-bar"><h3 class="cards-h3">Await Feedback</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="plus-icon"></div>
-            <div class="column" data-status="feedback" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div id="feedback" class="column" data-status="feedback" ondrop="drop(event)" ondragover="allowDrop(event)">
                 <p class="card-p">No tasks to do</p>
             </div>
         </section>
@@ -63,12 +64,12 @@
         <section>
             <div class="card-bar"><h3 class="cards-h3 padding-bottom">Done</h3></div>
             <div class="column" data-status="done" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <p class="card-p">No tasks to do</p>     
+             <p class="card-p">No tasks to do</p>     
             </div>
         </section>
     </main>
 
-
+    <script type="module" src="/member/js/board.js"></script>
     <script type="module" src="/assets/templates/sideBar.js"></script>
     <script type="module" src="/assets/templates/header.js"></script>
 </body>

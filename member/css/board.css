@@ -102,3 +102,12 @@
     text-align: center; 
     font-size: 16px;
 }
+
+.card {
+    display: block;        /* sorgt dafür, dass jede Karte untereinander ist */
+    margin-bottom: 10px;   /* Abstand zwischen Karten */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+}
