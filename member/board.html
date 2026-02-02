@@ -2,28 +2,90 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join - Board</title>
-    <link rel="icon" href="/assets/img/logo-dark.svg" type="image/svg" />
-    <link rel="stylesheet" href="/styles/standard.css">
-    <link rel="stylesheet" href="/styles/join.css">
-    <link rel="stylesheet" href="/styles/fonts.css">
-    <link rel="stylesheet" href="/styles/colors.css">
-    <link rel="stylesheet" href="/styles/assets.css">
-    <link rel="stylesheet" href="/member/css/board.css">
-    <script type="module" src="/scripts/firebase/firebase.js"></script>
-    <script type="module" src="/login/auth-guard.js"></script>
-    <script type="module" src="/member/js/member-templates.js"></script>
-    <script type="module" src="/member/js/member-script.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join - Board</title>
+  <link rel="icon" href="/assets/img/logo-dark.svg" type="image/svg" />
+  <link rel="stylesheet" href="/styles/standard.css">
+  <link rel="stylesheet" href="/styles/join.css">
+  <link rel="stylesheet" href="/styles/fonts.css">
+  <link rel="stylesheet" href="/styles/colors.css">
+  <link rel="stylesheet" href="/styles/assets.css">
+  <link rel="stylesheet" href="/member/css/board.css">
+  <script type="module" src="/scripts/firebase/firebase.js"></script>
+  <script type="module" src="/login/auth-guard.js"></script>
+  <script type="module" src="/member/js/member-templates.js"></script>
+  <script type="module" src="/member/js/member-script.js"></script>
+  <script type="module" src="/member/js/drag-n-drop.js"></script>
 </head>
 
 <body>
 
-    <header class="topbar" id="header"></header>
-    <aside class="sidebar" id="sidebar"></aside>
+  <header class="topbar" id="header"></header>
+  <aside class="sidebar" id="sidebar"></aside>
 
+  <main>
+    <section name="todo">
 
+      <div class="card" id="test1" name="test-card" draggable="true">
+        <span class="card__category">user story</span><br>
+        <h4 class="card__title">Kochwelt Page & Recipe Recommender</h4><br>
+        <p>Build start page with recipe recommendation</p><br>
+        <div class="card__bar">
+          <progress></progress>
+        </div><br>
+        <div class="card__footer">
+          <div>users</div>
+          <img src="/assets/icons/medium-prio-icon.svg" alt="">
+        </div>
+      </div>
+    </section>
+
+    <section name="in-progress">
+      <div class="card" id="test2" name="test-card" draggable="true">
+        <h3>user story</h3><br>
+        <h4>Kochwelt Page & Recipe Recommender</h4><br>
+        <p>Build start page with recipe recommendation</p><br>
+        <div>
+          <progress></progress>
+        </div><br>
+        <div>
+          <div>users</div>
+          <img src="/assets/icons/medium-prio-icon.svg" alt="">
+        </div>
+      </div>
+    </section>
+
+    <section name="await-feedback">
+      <div class="card" id="test3" name="test-card" draggable="true">
+        <h3>user story</h3><br>
+        <h4>Kochwelt Page & Recipe Recommender</h4><br>
+        <p>Build start page with recipe recommendation</p><br>
+        <div>
+          <progress></progress>
+        </div><br>
+        <div>
+          <div>users</div>
+          <img src="/assets/icons/medium-prio-icon.svg" alt="">
+        </div>
+      </div>
+    </section>
+
+    <section name="done">
+      <div class="card" id="test4" name="test-card" draggable="true">
+        <h3>user story</h3><br>
+        <h4>Kochwelt Page & Recipe Recommender</h4><br>
+        <p>Build start page with recipe recommendation</p><br>
+        <div>
+          <progress></progress>
+        </div><br>
+        <div>
+          <div>users</div>
+          <img src="/assets/icons/medium-prio-icon.svg" alt="">
+        </div>
+      </div>
+    </section>
+  </main>
 </body>
 
 </html>
