@@ -4,6 +4,7 @@ const columns = {
     todo: document.getElementById('todo'),
     progress: document.getElementById('progress'),
     feedback: document.getElementById('feedback'),
+    done: document.getElementById('done'),
    
 };
 
