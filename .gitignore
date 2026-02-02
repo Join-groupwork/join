@@ -3,3 +3,9 @@
 .env*
 !example.env
 firebase.js
+
+# config files
+*.vscode
+.vscode*
+.editorconfig
+.eslintrc.js

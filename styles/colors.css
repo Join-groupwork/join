@@ -1,42 +1,100 @@
+:root {
+  --color-avatar-1: #FF7A00;
+  --color-avatar-2: #FF5EB3;
+  --color-avatar-3: #6E52FF;
+  --color-avatar-4: #9327FF;
+  --color-avatar-5: #00BEE8;
+  --color-avatar-6: #1FD7C1;
+  --color-avatar-7: #FF745E;
+  --color-avatar-8: #FFA35E;
+  --color-avatar-9: #FC71FF;
+  --color-avatar-10: #FFC701;
+  --color-avatar-11: #0038FF;
+  --color-avatar-12: #C3FF2B;
+  --color-avatar-13: #FFE62B;
+  --color-avatar-14: #FF4646;
+  --color-avatar-15: #FFBB2B;
+  --color-background-primary: #F6F7F8;
+  --color-background-input: #FFFFFF;
+  --color-hover: #29ABE2;
+  --color-category-user-story: #0038FF;
+  --color-category-technical-task: #1FD7C1;
+  --color-danger: #E60026;
+  --color-footer: #AAA;
+  --color-footer-p: #AFB8C5;
+  --color-menu-bg: #2A3647;
+  --color-nav-hover: #091931;
+  --color-priority-urgent: #FF0000;
+  --color-priority-medium: #FFA800;
+  --color-priority-low: #7AE229;
+  --color-shadow-signup: #0000000a;
+  --color-scrollbar: #4589FF;
+  --color-sidemenu-active: #1A2C47;
+  --color-text-primary: #000000;
+  --color-text-secondary: #CDCDCD;
+  --color-text-tertiary: #29ABE2;
+  --color-text-mail: #007CEE;
+  --color-text-button: #FFFFFF;
+  --color-input-placeholder: #D1D1D1;
+  --color-input-icon: #A8A8A8;
+}
+
 .bg-primary {
-    background-color: #f6f7f8;
+  background-color: var(--color-background-primary);
+  /* background-color: #f6f7f8; */
 }
 
 .bg-menue {
-    background-color: #2a3647;
+  /* color: var(--color-menu-bg); */
+  background-color: #2a3647;
 }
 
 .bg-card {
-    background-color: #ffffff;
+  background-color: var(--color-background-input);
+  /* background-color: #ffffff; */
 }
 
 .bg-card-us {
-    background-color: #0038FF;
+  background-color: var(--color-avatar-blue-dark);
+  /* background-color: #0038FF; */
 }
 
 .bg-card-tt {
-    background-color: #1FD7C1;
+  background-color: var(--color-avatar-turquise);
+  /* background-color: #1FD7C1; */
 }
 
 .bg-contact {
-    background-color: #ffffff;
+  background-color: var(--color-background-input);
+  /* background-color: #ffffff; */
 }
-.bg-menue-user-profil:hover{
-    background-color: #E1E6BC;
+
+/*  Perhaps an overlay for user avatars would be an option? */
+/*  Vielleicht wäre ein overlay für die user avatare eine option?*/
+.bg-menue-user-profil:hover {
+  background-color: #E1E6BC;
 }
+
 .bg-contact:hover {
-    background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
+  background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
 }
-.color-menue{
-    color: #cdcdcd;
+
+.color-menue {
+  color: var(--color-text-secondary);
+  /* color: #cdcdcd; */
 }
+
 .scrollbar-color {
-    scrollbar-color: #4589FF;
+  scrollbar-color: var(--color-scrollbar);
+  /* scrollbar-color: #4589FF; */
 }
 
 .color__text--light-blue {
-    color: #29ABE2
+  color: var(--color-text-tertiary);
+  /* color: #29ABE2 */
 }
+
 .nav-menue:hover {
-    background-color: #091931;
+  background-color: var(--color-nav-hover);
+  /* background-color: #091931; */
 }
