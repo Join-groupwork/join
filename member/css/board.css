@@ -17,13 +17,22 @@ main {
   background-color: var(--color-background-input);
 }
 
-.card__category {
+.card__category--user {
   color: var(--color-secondary);
   background-color: var(--background__task--user);
 }
 
+.card__category--technical {
+  color: var(--color-secondary);
+  background-color: var(--background__task--technical);
+}
+
 .card__title {
   font-weight: 700;
+}
+
+.card__text {
+  color: var(--color-input-icon);
 }
 
 .card__bar {
