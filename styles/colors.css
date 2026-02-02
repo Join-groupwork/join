@@ -16,6 +16,10 @@
   --color-avatar-15: #FFBB2B;
   --color-background-primary: #F6F7F8;
   --color-background-input: #FFFFFF;
+  --background-primary: #F6F7F8;
+  --background-secondary: #FFFFFF;
+  --background__task--user: #0038FF;
+  --background__task--technical: #1FD7C1;
   --color-hover: #29ABE2;
   --color-category-user-story: #0038FF;
   --color-category-technical-task: #1FD7C1;
@@ -34,6 +38,7 @@
   --color-text-secondary: #CDCDCD;
   --color-text-tertiary: #29ABE2;
   --color-text-mail: #007CEE;
+  --color-secondary: #FFFFFF;
   --color-text-button: #FFFFFF;
   --color-input-placeholder: #D1D1D1;
   --color-input-icon: #A8A8A8;
