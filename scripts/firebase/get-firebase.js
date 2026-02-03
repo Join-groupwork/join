@@ -11,21 +11,30 @@ async function loadData(){
     
 }
 
-// Neue Funktion nur zum Laden von Tasks
+
+
 export async function loadTasks() {
-    try {
-        const res = await fetch(BASE_URL + "tasks.json");
-        const data = await res.json();
+    const response = await fetch(`${BASE_URL}tasks.json`);
 
-        if (!data) return [];
+    const data = await response.json();
 
-        // Array aus Tasks mit Key
-        return Object.entries(data).map(([key, value]) => ({ key, ...value }));
-
-    } catch (err) {
-        console.error("Fehler beim Laden der Tasks:", err);
-        return [];
+    // Check if there is any data
+    if (!data) {
+        console.log("No Tasks");   // If there are no tasks, log a message
+        return [];                 // Return an empty array so renderBoard() won't crash
     }
+    // Prepare the global array to store the tasks
+    tasks = [];  
+    for (let key in data) {
+        // Push each task into the array
+        // key = task ID, data[key] = all task details
+        tasks.push({
+            key,          
+            ...data[key]  
+        });
+    }
+    return tasks;
 }
 
+loadTasks();
 loadData();

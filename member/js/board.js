@@ -18,33 +18,30 @@ function getCardTemplate(task) {
     `;
 }
 
+
 async function renderBoard() {
 
-    const tasks = await loadTasks();
+    const tasksData = await loadTasks(); 
 
-    // Alle Columns leeren und Platzhalter setzen
-    Object.values(columns).forEach(col => {
-        col.innerHTML = '<p class="card-placeholder">No tasks to do</p>';
-    });
+    for (let i = 0; i < tasksData.length; i++) {
+        const task = tasksData[i]; // get the current task
 
-    // Tasks einfügen
-    tasks.forEach(task => {
-        const column = columns[task.status];
-        if (!column) return;
+        // Find the correct column based on task status
+        const column = columns[task.status]; 
+        if (!column) continue; // skip if the column doesn't exist
 
-        // Placeholder entfernen, falls vorhanden
+        // Remove the placeholder text if it exists
         const placeholder = column.querySelector('.card-placeholder');
         if (placeholder) placeholder.remove();
 
-        // Task untereinander einfügen
+        // 5️⃣ Add the task card to the column
         column.innerHTML += getCardTemplate(task);
 
-        // Column-Klasse entfernt, um Layoutprobleme bei mehreren Tasks zu vermeiden
+        // Remove the column's class to prevent layout issues when multiple tasks are added
         column.removeAttribute('class');
-    });
+    }
 }
 
 
 
-// Board rendern, sobald DOM geladen ist
-window.addEventListener('DOMContentLoaded', renderBoard);
+renderBoard();
