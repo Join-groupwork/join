@@ -205,5 +205,22 @@ export function signupMassegeTemplate() {
                 You Signed Up successfully
             </p>
         </aside>
-    `
+    `;
+}
+
+export function generateTodoHTML(element) {
+  return `
+            <div class="card" id="${element.id}" name="test-card" draggable="true">
+              <span class="card__category--user">user story</span><br>
+              <h4 class="card__title">Kochwelt Page & Recipe Recommender</h4><br>
+              <p class="card__text">Build start page with recipe recommendation</p><br>
+              <div class="card__bar">
+                <progress></progress>
+              </div><br>
+              <div class="card__footer">
+                <div>users</div>
+                <img src="/assets/icons/medium-prio-icon.svg" alt="">
+              </div>
+            </div>
+          `;
 }

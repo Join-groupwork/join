@@ -14,6 +14,7 @@ function render() {
   renderAddTask();
   // renderContactAddOverlay();   <-- Aktivieren, um das Overlay zum Hinzufügen von Kontakten anzuzeigen
   // renderContactEditOverlay(); Contact
+  renderBoard();
 }
 
 function renderHeader() {
@@ -79,3 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 })
+
+async function renderBoard() {
+
+}
