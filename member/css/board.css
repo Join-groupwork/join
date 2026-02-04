@@ -9,7 +9,7 @@ main {
   gap: 50px;
 }
 
-.card {
+.task {
   width: 250px;
   padding: 20px;
   border: 1px solid #ccc;
@@ -18,29 +18,33 @@ main {
   background-color: var(--color-background-input);
 }
 
-.card__category--user {
+.task__category--user-story {
   color: var(--color-secondary);
+  padding: 2px 8px;
   background-color: var(--background__task--user);
+  border-radius: 5px;
 }
 
-.card__category--technical {
+.task__category--technical-task {
   color: var(--color-secondary);
+  padding: 2px 8px;
   background-color: var(--background__task--technical);
+  border-radius: 10px;
 }
 
-.card__title {
+.task__title {
   font-weight: 700;
 }
 
-.card__text {
+.task__text {
   color: var(--color-input-icon);
 }
 
-.card__bar {
+.task__bar {
   height: 16px;
 }
 
-.card__footer {
+.task__footer {
   height: 32px;
   display: flex;
   justify-content: space-between;

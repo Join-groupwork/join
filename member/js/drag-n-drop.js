@@ -40,8 +40,8 @@ let todos = [
     date: '',
     priority: 'urgent',
     assignedTo: '',
-    category: 'done',
-    subtask: 'technical-task'
+    category: 'technical-task',
+    subtask: 'done'
   }
 ];
 
