@@ -211,9 +211,9 @@ export function signupMassegeTemplate() {
 export function generateTodoHTML(element) {
   return `
             <div class="card" id="${element.id}" name="test-card" draggable="true">
-              <span class="card__category--user">user story</span><br>
-              <h4 class="card__title">Kochwelt Page & Recipe Recommender</h4><br>
-              <p class="card__text">Build start page with recipe recommendation</p><br>
+              <span class="card__category--user">${element['category']}</span><br>
+              <h4 class="card__title">${element['title']}</h4><br>
+              <p class="card__text">${element['description']}</p><br>
               <div class="card__bar">
                 <progress></progress>
               </div><br>
