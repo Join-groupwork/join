@@ -3,6 +3,8 @@ import { generateTodoHTML } from './member-templates.js'
 // TODO Hinzufügen einer Drag and Drop Funktion
 // TODO variable für id hinzufügen
 // TODO
+// [ ] firebase update hinzufügen
+// [ ] daten von firebase abrufen und in todos anzeigen lassen
 
 let categorys = ['user-story', 'technical-task'];
 let todos = [

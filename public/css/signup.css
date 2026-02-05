@@ -49,8 +49,6 @@ body {
   cursor: pointer;
 }
 
-
-
 .signup__form {
   display: flex;
   flex-direction: column;
