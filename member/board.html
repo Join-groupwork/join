@@ -24,7 +24,54 @@
   <header class="topbar" id="header"></header>
   <aside class="sidebar" id="sidebar"></aside>
 
-  <main>
+  <main class="board-main">
+    <!-- INFO Der inlinestyle ist nur zum designen -->
+    <section name="todo" style="border: 1px solid aqua;">
+      <div class="card-bar">
+        <h3 class="cards-h3">To do</h3>
+        <img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="Add task">
+      </div>
+
+      <div class="column" class="drag__area" id="todo" data-status="todo" ondrop="drop(event)"
+        ondragover="allowDrop(event)">
+        <p class="card-placeholder">No tasks to do</p>
+      </div>
+    </section>
+
+
+    <section>
+      <div class="card-bar">
+        <h3 class="cards-h3">In Progress</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg"
+          alt="plus-icon">
+      </div>
+      <div class="column" class="drag__area" id="inProgress" data-status="progress" ondrop="drop(event)"
+        ondragover="allowDrop(event)">
+        <p class="card-p">No tasks to do</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card-bar">
+        <h3 class="cards-h3">Await Feedback</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg"
+          alt="plus-icon">
+      </div>
+      <div class="column" class="drag__area" id="awaitFeedback" data-status="feedback" ondrop="drop(event)"
+        ondragover="allowDrop(event)">
+        <p class="card-p">No tasks to do</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card-bar">
+        <h3 class="cards-h3 padding-bottom">Done</h3>
+      </div>
+      <div class="column drag__area" id="done" data-status="done" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <p class="card-p">No tasks to do</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- <main>
     <section name="todo">
       <div>
         <h2>Todo</h2>
@@ -32,18 +79,7 @@
       </div>
       <div class="drag__area" id="todo" ondragstart="startDragging(id)" ondragover="highlightStart(subtask)" ondragleave="highlightStop(subtask)">
 
-        <!-- <div class="card" id="test1" name="test-card" draggable="true">
-          <span class="task__category--user">user story</span><br>
-          <h4 class="card__title">Kochwelt Page & Recipe Recommender</h4><br>
-          <p class="card__text">Build start page with recipe recommendation</p><br>
-          <div class="card__bar">
-            <progress></progress>
-          </div><br>
-          <div class="card__footer">
-            <div>users</div>
-            <img src="/assets/icons/medium-prio-icon.svg" alt="">
-          </div>
-        </div> -->
+
 
       </div>
     </section>
@@ -55,18 +91,6 @@
       </div>
       <div class="drag__area" id="inProgress" ondragstart="startDragging(id)" ondragover="highlightStart(subtask)" ondragleave="highlightStop(subtask)">
 
-        <!-- <div class="card" id="test2" name="test-card" draggable="true">
-          <span class="card__category--technical">technical</span><br>
-          <h4>Kochwelt Page & Recipe Recommender</h4><br>
-          <p class="card__text">Build start page with recipe recommendation</p><br>
-          <div class="card__bar">
-            <progress></progress>
-          </div><br>
-          <div class="card__footer">
-            <div>users</div>
-            <img src="/assets/icons/medium-prio-icon.svg" alt="">
-          </div>
-        </div> -->
 
       </div>
     </section>
@@ -78,18 +102,7 @@
       </div>
       <div class="drag__area" id="awaitFeedback" ondragstart="startDragging(id)" ondragover="highlightStart(subtask)" ondragleave="highlightStop(subtask)">
 
-        <!-- <div class="card" id="test3" name="test-card" draggable="true">
-          <h3>user story</h3><br>
-          <h4>Kochwelt Page & Recipe Recommender</h4><br>
-          <p>Build start page with recipe recommendation</p><br>
-          <div>
-            <progress></progress>
-          </div><br>
-          <div>
-            <div>users</div>
-            <img src="/assets/icons/medium-prio-icon.svg" alt="">
-          </div>
-        </div> -->
+
 
       </div>
     </section>
@@ -101,22 +114,11 @@
       </div>
       <div class="drag__area" id="done" ondragstart="startDragging(id)" ondragover="highlightStart(subtask)" ondragleave="highlightStop(subtask)">
 
-        <!-- <div class="card" id="test4" name="test-card" draggable="true">
-          <h3>user story</h3><br>
-          <h4>Kochwelt Page & Recipe Recommender</h4><br>
-          <p>Build start page with recipe recommendation</p><br>
-          <div>
-            <progress></progress>
-          </div><br>
-          <div>
-            <div>users</div>
-            <img src="/assets/icons/medium-prio-icon.svg" alt="">
-          </div>
-        </div> -->
+
 
       </div>
     </section>
-  </main>
+  </main> -->
 </body>
 
 </html>
