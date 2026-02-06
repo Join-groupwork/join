@@ -4,73 +4,12 @@
   padding: 0;
 }
 
-.legal {
+.policy {
   width: 100%;
   padding: 48px 64px;
 }
 
-.legal__title {
+.policy__title {
   font-size: 60px;
   font-weight: 700;
-}
-
-/* Base */
-
-/* Content area */
-.legal-page {
-  width: 100%;
-
-}
-
-/* Headings */
-.legal-page h2 {
-  font-size: 1.25rem;
-  margin-top: 32px;
-  margin-bottom: 12px;
-}
-
-.legal-page h3 {
-  font-size: 1rem;
-  margin-top: 20px;
-  margin-bottom: 8px;
-}
-
-/* Text */
-.legal-page p {
-  margin-bottom: 16px;
-  line-height: 1.6;
-}
-
-.legal-page ul {
-  margin-left: 20px;
-  margin-bottom: 16px;
-}
-
-.legal-page li {
-  margin-bottom: 6px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .legal-page {
-    padding: 32px 24px;
-  }
-}
-
-.legal a {
-  display: block;
-  font-size: 16px;
-  color: #abb0b3;
-  cursor: pointer;
-  width: calc(100% + 80px);
-  margin-left: -40px;
-  margin-right: -40px;
-  padding: 10px 40px;
-  box-sizing: border-box;
-  border-radius: 4px;
-}
-
-.legal a:hover {
-  background: #091931;
-  color: #ffffff;
 }
