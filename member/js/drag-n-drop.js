@@ -3,8 +3,12 @@ import { generateTodoHTML } from './member-templates.js'
 // TODO Hinzufügen einer Drag and Drop Funktion
 // TODO variable für id hinzufügen
 // TODO
+// [x] updateHTML Funktion erstellen, Beispiele für erste Tests
+// [ ] DragnDrop testen
+// [ ] Drag n Drop stylen
 // [ ] firebase update hinzufügen
 // [ ] daten von firebase abrufen und in todos anzeigen lassen
+// [ ] Funktion mit den Firebase daten testen
 
 let categorys = ['user-story', 'technical-task'];
 let todos = [
@@ -49,11 +53,8 @@ let todos = [
 
 let currentId;
 
-// INFO erster Versuch
-// function dragAndDrop() {
-
-// }
-
+// INFO diese Funktion ist nur vorübergehend, bis das erste testen abgeshlossen ist.
+// INFO Danach wird diese Funktion ersetzt und die Todos werden von Firebase geladen.
 export function updateHTML() {
   if (!document.getElementById('todo')) {
     return
@@ -86,6 +87,12 @@ export function updateHTML() {
     document.getElementById('done').innerHTML += generateTodoHTML(element);
   }
 }
+// INFO erster Versuch
+function dragStart() {
+
+}
+
+
 
 function highlightStart(category) {
 
