@@ -16,6 +16,7 @@
 
 import { database, auth } from '/scripts/firebase/firebase.js';
 import { ref, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import { getAddOverlayTemplate } from '/member/js/member-templates.js';
 
 let contacts = {};
 let tasks = {};
@@ -191,3 +192,24 @@ function getAvatarColor(name) {
 
     return colors[Math.abs(hash) % colors.length];
 }
+
+export function showAddContactOverlay() {
+    const overlay = document.getElementById('contact-add-overlay');
+    if (!overlay) return;
+    
+    overlay.innerHTML = getAddOverlayTemplate();
+    overlay.style.display = 'flex';
+}
+
+export function hideAddContactOverlay() {
+    const overlay = document.getElementById('contact-add-overlay');
+    if (!overlay) return;
+    
+    overlay.style.display = 'none';
+    overlay.innerHTML = '';
+}
+
+
+// Make functions globally accessible
+window.showAddContactOverlay = showAddContactOverlay;
+window.hideAddContactOverlay = hideAddContactOverlay;

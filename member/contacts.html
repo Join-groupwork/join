@@ -32,17 +32,24 @@
 
     <section class="contactside_section" id="contacts_container">
         <div class="contact_list" id="contact_list">
-            <button class="contact_btn_addNew">Add new Contact
+            <button class="contact_btn_addNew" onclick="showAddContactOverlay()">Add new Contact
                 <img class="contact_addBtn_logo" src="/assets/icons/add-person-icon.svg">
             </button>
         </div>
     </section>
-
+    <div>
     <section class="contact_slogan">
         <h1>Contacts</h1>
         <hr class="hr_line_contacts">
         <p>Better with a team</p>
     </section>
+
+    <section class="contact-add-section">
+        <div class="contact-add-overlay" id="contact-add-overlay">
+            <!-- Add Contact Overlay will be injected here -->
+        </div>
+    </section>
+    </div>
 </body>
 
 </html>

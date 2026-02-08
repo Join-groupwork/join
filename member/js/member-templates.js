@@ -158,22 +158,23 @@ export function getAddOverlayTemplate() {
           <section class="overlay_add_contact">
 
             <div class="overlay_add_contact_left">
-                <img class="join_logo_overlay" src="assets/img/joinlogo.png" alt="Join Logo">
+                <img class="join_logo_overlay" src="/assets/img/logo-bright.svg" alt="Join Logo">
                 <div>
                 <h2 class="heading_add_contact">Add Contact</h2>
                 <p>Tasks are better with a team!</p>
-                <img class="h2_underline" style="margin: unset; height: unset; width: 90px;" src="assets/icons/Vector 5.svg" alt="">
+                <img class="h2_underline" style="margin: unset; height: unset; width: 90px;" src="/assets/icons/underline-blue.svg" alt="">
                 </div>
             </div>
 
             <div class="overlay_add_contact_right">
+            
                 <div class="close_overlay_icon_container">
-                    <img class="close_overlay_icon" src="assets/icons/x_cancel.svg" alt="Close Overlay Icon">
+                    <img class="close_overlay_icon" src="/assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="hideAddContactOverlay()">
                 </div>
                 <div class="addContact_form_container">
 
                     <div>
-                        <img src="/assets/icons/Contact_icon.svg" alt="Contact Icon">
+                        <img src="/assets/icons/contact-icon.svg" alt="Contact Icon">
                     </div>
                     <form class="form_add_contact" action="">
                         <input type="text" id="contact_name" name="contact_name" class="input_add_contact"
@@ -186,8 +187,8 @@ export function getAddOverlayTemplate() {
                 </div>
 
                 <div class="buttons_add_contact">
-                    <button type="submit" class="btn_save_contact">Cancel <img src="assets/icons/x_cancel.svg" alt=""></button>
-                    <button type="button" class="btn_cancel_contact">Create contact <img src="assets/icons/check.svg" alt=""></button>
+                    <button type="submit" class="btn_save_contact">Cancel <img src="/assets/icons/close-icon.svg" alt=""></button>
+                    <button type="button" class="btn_cancel_contact">Create contact <img src="/assets/icons/check-icon-white.svg" alt=""></button>
                 </div>
 
             </div>
