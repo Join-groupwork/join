@@ -1,0 +1,48 @@
+.contact_item {
+    list-style: none;
+    margin-bottom: 8px;
+}
+
+.contact_container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 85%;
+    transition: background-color 0.2s;
+}
+
+.contact_container:hover {
+    background-color: #f6f7f8;
+}
+
+.contact_avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.contact_info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.contact_name {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+}
+
+.contact_email {
+    font-size: 14px;
+    color: #007CEE;
+}

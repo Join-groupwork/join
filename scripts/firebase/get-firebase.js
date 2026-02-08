@@ -31,8 +31,10 @@ auth.onAuthStateChanged((user) => {
     }
 });
 
+// Daten laden
 function loadData() {
     const contactsRef = ref(database, 'contacts');
+    // contacts auslesen
     onValue(contactsRef, (firebaseData) => {
         contacts = firebaseData.val() || {};
         console.log('Contacts loaded:', contacts);
@@ -45,12 +47,14 @@ function loadData() {
     });
 
     const tasksRef = ref(database, 'tasks');
+    // tasks auslesen
     onValue(tasksRef, (firebaseData) => {
         tasks = firebaseData.val() || {};
         console.log('Tasks loaded:', tasks);
     });
 
     const categoryRef = ref(database, 'category');
+    // category auslesen
     onValue(categoryRef, (firebaseData) => {
         category = firebaseData.val() || {};
         console.log('Category loaded:', category);
@@ -60,7 +64,7 @@ function loadData() {
 
 function groupContactsByLetter(contactsObjects) {
     const grouped = {};
-
+    // gruppieren nach erstem buchstaben
     Object.entries(contactsObjects).forEach(([id, contact]) => {
         const firstLetter = contact.name.charAt(0).toUpperCase();
 
@@ -93,40 +97,60 @@ function renderContactsList(contactsObjects) {
     if (!contactList) return;
 
     const groupedContacts = groupContactsByLetter(contactsObjects);
+    resetContactListExceptAddButton(contactList);
+    renderAlphabeticalContactSections(contactList, groupedContacts);
+}
 
+function resetContactListExceptAddButton(contactList) {
     const addButton = contactList.querySelector('.contact_btn_addNew');
     contactList.innerHTML = '';
     if (addButton) {
         contactList.appendChild(addButton);
     }
+}
 
+
+function renderAlphabeticalContactSections(contactList, groupedContacts) {
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-
+    
     alphabet.forEach(letter => {
-        const label = document.createElement('label');
-        label.className = 'labelfor_contactList';
-        label.setAttribute('for', 'alphabet');
-        label.textContent = letter;
-        contactList.appendChild(label);
-
-        const hr = document.createElement('hr');
-        hr.className = 'hr_contactList';
-        contactList.appendChild(hr);
-
-        if (groupedContacts[letter]) {
-            const ol = document.createElement('ol');
-
-            groupedContacts[letter].forEach(contact => {
-                const li = document.createElement('li');
-                li.className = 'contact_item';
-                li.innerHTML = getContactItemTemplate(contact);
-                ol.appendChild(li);
-            });
-
-            contactList.appendChild(ol);
-        }
+        createLetterSectionHeader(contactList, letter);
+        renderContactsUnderLetter(contactList, letter, groupedContacts);
     });
 }
+
+function createLetterSectionHeader(contactList, letter) {
+    const letterLabel = document.createElement('label');
+    letterLabel.className = 'labelfor_contactList';
+    letterLabel.setAttribute('for', 'alphabet');
+    letterLabel.textContent = letter;
+    contactList.appendChild(letterLabel);
+
+    const divider = document.createElement('hr');
+    divider.className = 'hr_contactList';
+    contactList.appendChild(divider);
+}
+
+function renderContactsUnderLetter(contactList, letter, groupedContacts) {
+    if (!groupedContacts[letter]) return;
+
+    const contactsOrderedList = document.createElement('ol');
+    
+    groupedContacts[letter].forEach(contact => {
+        const contactItem = buildContactListItem(contact);
+        contactsOrderedList.appendChild(contactItem);
+    });
+
+    contactList.appendChild(contactsOrderedList);
+}
+
+function buildContactListItem(contact) {
+    const listItem = document.createElement('li');
+    listItem.className = 'contact_item';
+    listItem.innerHTML = getContactItemTemplate(contact);
+    return listItem;
+}
+
 
 function getContactItemTemplate(contact) {
     const initials = getInitials(contact.name);
