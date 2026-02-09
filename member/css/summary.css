@@ -1,0 +1,217 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: OpenSans, sans-serif;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+
+.main {
+  flex: 1;
+  background: #f6f7f8;
+  overflow-y: auto;
+}
+
+.dashboard {
+ padding: 186px 0px 0px 340px;
+}
+
+.cards {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+/* Dashboard two-column layout: left = cards, right = greeting (50% / 50%) */
+.dashboard-top {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+  width: calc(100% - 60px);
+}
+
+.dashboard-left {
+  flex: 0 0 50%;
+}
+
+.dashboard-right {
+  flex: 0 0 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start
+}
+
+.greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  padding-left: 24px;
+}
+
+.greeting-line {
+  font-size: 32px;
+  color: #2c374b;
+}
+
+.greeting-name {
+  font-size: 38px;
+  font-weight: 700;
+  color: #45a0c5;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.heading-join {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 56px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+.heading-join h1,
+.heading-join h3 {
+  margin: 0;
+}
+
+.divider-blue {
+  width: 2px;
+  height: 36px;
+  background: #2fa9db;
+  align-self: center;
+  border-radius: 8px;
+}
+
+/* Cards that show an icon on the left and content on the right */
+.icon-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.card-left-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.card-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-row {
+  margin-top: 16px;
+  display: flex;
+  gap: 20px;
+}
+
+.urgent-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 16px;
+  width: 100%;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.urgent-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.divider {
+  width: 2px;
+  height: 80px;
+  background: #d1d1d1;
+  align-self: center;
+}
+
+.urgent-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.urgent-right .date {
+  font-size: 20px;
+  color: #2b3546;
+  font-weight: 600;
+}
+
+.urgent-right .small-sub {
+  color: #2b3544;
+  margin-top: 6px;
+}
+
+.card-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.card-sub {
+  color: #2b3544;
+}
+
+.card.urgent {
+  border-left: 4px solid red;
+}
+
+.small-cards {
+  margin-top: 25px;
+  display: flex;
+  gap: 20px;
+}
+
+.small-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.big {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.label {
+  margin-top: 5px;
+  color: #2b3544;
+}
