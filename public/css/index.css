@@ -1,0 +1,78 @@
+body {
+  display: block;
+}
+
+.index__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.index__menu {
+  font-size: 20px;
+  font-weight: 400;
+  display: flex;
+  gap: 35px;
+  align-items: center;
+}
+
+.login {
+  width: 550px;
+  height: 450px;
+  margin: 50px auto 0px auto;
+  background-color: var(--color-background-input);
+  border-radius: 30px;
+  box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login__title {
+  margin: 0px auto 0px auto;
+  font-size: 60px;
+  font-weight: 700;
+}
+
+.login__title::after {
+  content: "";
+  position: absolute;
+  margin: 87px auto 0px auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 3px;
+  background-color: var(--color-text-tertiary);
+}
+
+.login__form {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.login__input {
+  width: 420px;
+  height: 45px;
+  font-size: 20px;
+  border: 1px solid var(--color-input-placeholder);
+  border-radius: 10px;
+  padding-left: 20px;
+  background-repeat: no-repeat;
+  background-position: 380px;
+}
+
+.login__input::placeholder {
+  font-size: 20px;
+  color: var(--color-input-placeholder);
+}
+
+.login__input--email {
+  background-image: url('/assets/icons/mail-icon.svg');
+}
+
+.login__input--password {
+  background-image: url('/assets/icons/lock-icon.svg');
+}

@@ -1,13 +1,17 @@
-.help-head {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+.help {
+  padding: 120px 96px 0 107px;
+}
+
+.help__head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .guide-content {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 35px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 35px;
 }
