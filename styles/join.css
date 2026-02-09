@@ -11,12 +11,6 @@ body {
   background-color: var(--color-background-primary);
 }
 
-body {
-  width: 100%;
-  display: flex;
-  min-height: 100vh;
-  background-color: var(--color-background-primary);
-}
 
 .main {
   margin: 60px 0 0 220px;

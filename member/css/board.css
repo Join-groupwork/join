@@ -1,0 +1,104 @@
+.main-content {
+    margin-top: 120px;
+    margin-left: 228px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    padding: 50px;
+    
+}
+
+.input-feld{
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 250px;
+    height: 44px;
+    background-image: url('/assets/icons/search.svg');
+    background-repeat: no-repeat;
+    background-position: right 10px center; 
+    background-size: 18px 18px;
+
+    
+}
+
+.input-section{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-task-Button{
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #2a3647; 
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;      
+    align-items: center;       
+    gap: 8px;  
+}
+
+.border{
+    width: 1px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 2px;
+    transform: translateX(222px);  
+}
+
+.plus-icon {
+  width: 24px;                
+  height: 24px;
+}
+
+.board-h1 {
+    font-size: 50px;  
+}
+
+.board-main {
+    margin-top: 50px;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 230px;
+}
+
+.column {
+  width: 220px;
+  min-height: 45px;
+  background: #f4f4f4;
+  padding: 10px;
+  margin-bottom: 6px;
+  border-radius: 10px;
+}
+
+.circle-plus-icon {
+  width: 30px;                
+  height: 30px;
+  cursor: pointer;
+}
+
+.card-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cards-h3 {
+    margin-left: 5px;
+}
+
+.padding-bottom {
+    padding-bottom: 8px;
+}
+
+.card-p {
+    text-align: center; 
+    font-size: 16px;
+}
