@@ -52,14 +52,6 @@ function renderContactEditOverlay() {
   }
 }
 
-function renderContactAddOverlay() {
-  const addContactRef = document.getElementById('addC_overlay');
-  if (addContactRef) {
-    addContactRef.innerHTML = getAddOverlayTemplate();
-  } else {
-    console.error('ContactOverlay-Element nicht gefunden!');
-  }
-}
 
 document.addEventListener('DOMContentLoaded', () => {
   const profileBtn = document.getElementById('headerMenue');
