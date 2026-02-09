@@ -15,8 +15,9 @@
   <script type="module" src="/scripts/firebase/firebase.js"></script>
   <script type="module" src="/login/auth-guard.js"></script>
   <script type="module" src="/member/js/member-templates.js"></script>
-  <script type="module" src="/member/js/member-script.js"></script>
   <script type="module" src="/member/js/drag-n-drop.js"></script>
+  <script type="module" src="/member/js/member-script.js"></script>
+
 </head>
 
 <body>
@@ -32,10 +33,8 @@
         <img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="Add task">
       </div>
 
-      <div class="column" class="drag__area" id="todo" data-status="todo" ondrop="drop(event)"
-        ondragover="allowDrop(event)" ondragstart="startDragging(id)" ondragover="highlightStart(subtask)"
-        ondragleave="highlightStop(subtask)">
-        <p class="card-placeholder">No tasks to do</p>
+      <div class="column" class="drag__area" id="todo" data-status="todo">
+        <!-- <p class="card-placeholder">No tasks to do</p> -->
       </div>
     </section>
 
@@ -45,9 +44,8 @@
         <h3 class="cards-h3">In Progress</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg"
           alt="plus-icon">
       </div>
-      <div class="column" class="drag__area" id="inProgress" data-status="progress" ondrop="drop(event)"
-        ondragover="allowDrop(event)">
-        <p class="card-p">No tasks to do</p>
+      <div class="column" class="drag__area" id="inProgress" data-status="progress">
+        <!-- <p class="card-p">No tasks to do</p> -->
       </div>
     </section>
 
@@ -56,9 +54,8 @@
         <h3 class="cards-h3">Await Feedback</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg"
           alt="plus-icon">
       </div>
-      <div class="column" class="drag__area" id="awaitFeedback" data-status="feedback" ondrop="drop(event)"
-        ondragover="allowDrop(event)">
-        <p class="card-p">No tasks to do</p>
+      <div class="column" class="drag__area" id="awaitFeedback" data-status="feedback">
+        <!-- <p class="card-p">No tasks to do</p> -->
       </div>
     </section>
 
@@ -66,60 +63,11 @@
       <div class="card-bar">
         <h3 class="cards-h3 padding-bottom">Done</h3>
       </div>
-      <div class="column drag__area" id="done" data-status="done" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <p class="card-p">No tasks to do</p>
+      <div class="column drag__area" id="done" data-status="done">
+        <!-- <p class="card-p">No tasks to do</p> -->
       </div>
     </section>
   </main>
-
-  <!-- <main>
-    <section name="todo">
-      <div>
-        <h2>Todo</h2>
-        <img src="" alt="">
-      </div>
-      <div class="drag__area" id="todo" ondragstart="startDragging(id)" ondragover="highlightStart(subtask)" ondragleave="highlightStop(subtask)">
-
-
-
-      </div>
-    </section>
-
-    <section name="in-progress">
-      <div>
-        <h2>in Progress</h2>
-        <img src="" alt="">
-      </div>
-      <div class="drag__area" id="inProgress" ondragstart="startDragging(id)" ondragover="highlightStart(subtask)" ondragleave="highlightStop(subtask)">
-
-
-      </div>
-    </section>
-
-    <section name="await-feedback">
-      <div>
-        <h2>Await Feedback</h2>
-        <img src="" alt="">
-      </div>
-      <div class="drag__area" id="awaitFeedback" ondragstart="startDragging(id)" ondragover="highlightStart(subtask)" ondragleave="highlightStop(subtask)">
-
-
-
-      </div>
-    </section>
-
-    <section name="done">
-      <div>
-        <h2>Done</h2>
-        <img src="" alt="">
-      </div>
-      <div class="drag__area" id="done" ondragstart="startDragging(id)" ondragover="highlightStart(subtask)" ondragleave="highlightStop(subtask)">
-
-
-
-      </div>
-    </section>
-  </main> -->
 </body>
 
 </html>

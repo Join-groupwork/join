@@ -11,6 +11,7 @@ import { generateTodoHTML } from './member-templates.js'
 // [ ] Funktion mit den Firebase daten testen
 
 let categorys = ['user-story', 'technical-task'];
+let subtask = ['todo', 'in-progress', 'await-feedback', 'done'];
 let todos = [
   {
     id: 1,
@@ -51,7 +52,7 @@ let todos = [
   }
 ];
 
-let currentId;
+let currentDraggedElement;
 
 // INFO diese Funktion ist nur vorübergehend, bis das erste testen abgeshlossen ist.
 // INFO Danach wird diese Funktion ersetzt und die Todos werden von Firebase geladen.
@@ -88,16 +89,23 @@ export function updateHTML() {
   }
 }
 // INFO erster Versuch
-function dragStart() {
-
+export function startDragging(id) {
+  currentDraggedElement = id;
 }
 
-
-
-function highlightStart(category) {
-
+export function allowDrop(ev) {
+  ev.preventDefault();
 }
 
-function highlightStop(category) {
+export function moveTo(subtask) {
+  todos[currentDraggedElement].subtask = subtask; // INFO Der Subtask ändert sich zu dem subtask wohin es verschoben wird.
+  updateHTML();
+}
 
+export function highlightStart(subtask) {
+  return
+}
+
+export function highlightStop(subtask) {
+  return
 }
