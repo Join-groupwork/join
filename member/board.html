@@ -2,28 +2,89 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join - Board</title>
-    <link rel="icon" href="/assets/img/logo-dark.svg" type="image/svg" />
-    <link rel="stylesheet" href="/styles/standard.css">
-    <link rel="stylesheet" href="/styles/join.css">
-    <link rel="stylesheet" href="/styles/fonts.css">
-    <link rel="stylesheet" href="/styles/colors.css">
-    <link rel="stylesheet" href="/styles/assets.css">
-    <link rel="stylesheet" href="/member/css/board.css">
-    <script type="module" src="/scripts/firebase/firebase.js"></script>
-    <script type="module" src="/login/auth-guard.js"></script>
-    <script type="module" src="/member/js/member-templates.js"></script>
-    <script type="module" src="/member/js/member-script.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join - Board</title>
+  <link rel="icon" href="/assets/img/logo-dark.svg" type="image/svg" />
+  <link rel="stylesheet" href="/styles/standard.css">
+  <link rel="stylesheet" href="/styles/join.css">
+  <link rel="stylesheet" href="/styles/fonts.css">
+  <link rel="stylesheet" href="/styles/colors.css">
+  <link rel="stylesheet" href="/styles/assets.css">
+  <link rel="stylesheet" href="/member/css/board.css">
+  <script type="module" src="/scripts/firebase/firebase.js"></script>
+  <script type="module" src="/login/auth-guard.js"></script>
+  <script type="module" src="/member/js/member-templates.js"></script>
+  <script type="module" src="/member/js/drag-n-drop.js"></script>
+  <script type="module" src="/member/js/member-script.js"></script>
+
 </head>
 
 <body>
 
-    <header class="topbar" id="header"></header>
-    <aside class="sidebar" id="sidebar"></aside>
+  <header class="topbar" id="header"></header>
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <main class="task">
+
+    <section name="todo" class="task__section">
+      <div class="card-bar">
+        <h3 class="cards-h3">To do</h3>
+        <img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="Add task">
+      </div>
+
+      <!-- <div class="task__area" class="drag__area" data-status="todo"> -->
+      <div class="task__area" class="drag__area" id="todo" data-status="todo">
+        <p class="task__card--placeholder">No tasks to do</p>
+
+        <!-- <div class="task__card" id="${element.id}" draggable="true" ondragstart="startDragging(${element['id']})"
+          ondrop="moveTo('${element.subtask}')" ondragover="allowDrop(ev)">
+          <span class="task__category--${element.category}">${element.category}</span><br>
+          <h4 class="task__title">${element.title}</h4><br>
+          <p class="task__text">${element.description}</p><br>
+          <div class="task__bar">
+            <progress></progress>
+          </div><br>
+          <div class="task__footer">
+            <div>users</div>
+            <img src="/assets/icons/${element.priority}-prio-icon.svg" alt="">
+          </div>
+        </div> -->
+      </div>
 
 
+    </section>
+
+
+    <section>
+      <div class="card-bar">
+        <h3 class="cards-h3">In Progress</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg"
+          alt="plus-icon">
+      </div>
+      <div class="column" class="drag__area" id="inProgress" data-status="progress">
+        <p class="card-p">No tasks to do</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card-bar">
+        <h3 class="cards-h3">Await Feedback</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg"
+          alt="plus-icon">
+      </div>
+      <div class="column" class="drag__area" id="awaitFeedback" data-status="feedback">
+        <p class="card-p">No tasks to do</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card-bar">
+        <h3 class="cards-h3 padding-bottom">Done</h3>
+      </div>
+      <div class="column drag__area" id="done" data-status="done">
+        <p class="card-p">No tasks to do</p>
+      </div>
+    </section>
+  </main>
 </body>
 
 </html>
