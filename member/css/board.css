@@ -1,6 +1,5 @@
 main {
-  width: 100%;
-  margin: 96px 0 0 230px;
+  margin: 96px 60px 0 230px;
   padding: 50px 0 0 50px;
   display: flex;
   flex-direction: row;
@@ -9,14 +8,36 @@ main {
   gap: 50px;
 }
 
+.card-bar {
+  padding-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .task {
+  /* margin-top: 50px;
+  margin-left: 230px; */
+}
+
+.task__section {
+  width: 256px;
+  border: 3px solid aqua; // INFO border dient nur zum designen und ausrichten der spalten
+}
+
+.task__area {
+  /* margin: 16px 0; ; */
+}
+
+.task__card {
   width: 250px;
   padding: 20px;
-  border: 1px solid #ccc;
   border-radius: 24px;
   font-weight: 400;
   background-color: var(--color-background-input);
 }
+
+.task__card--placeholder {}
 
 .task__category--user-story {
   color: var(--color-secondary);
@@ -34,6 +55,10 @@ main {
 
 .task__title {
   font-weight: 700;
+}
+
+.cards-h3 {
+  margin-left: 5px;
 }
 
 .task__text {
@@ -77,42 +102,10 @@ main {
   height: 24px;
 }
 
-.board-h1 {
-  font-size: 50px;
-}
-
-.board-main {
-  margin-top: 50px;
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  align-items: flex-start;
-  margin-left: 230px;
-}
-
-.column {
-  width: 220px;
-  min-height: 45px;
-  background: #f4f4f4;
-  padding: 10px;
-  margin-bottom: 6px;
-  border-radius: 10px;
-}
-
 .circle-plus-icon {
   width: 30px;
   height: 30px;
   cursor: pointer;
-}
-
-.card-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.cards-h3 {
-  margin-left: 5px;
 }
 
 .padding-bottom {
