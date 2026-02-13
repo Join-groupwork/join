@@ -1,4 +1,5 @@
 :root {
+  /* Avatar-Colors */
   --color-avatar-1: #FF7A00;
   --color-avatar-2: #FF5EB3;
   --color-avatar-3: #6E52FF;
@@ -14,31 +15,35 @@
   --color-avatar-13: #FFE62B;
   --color-avatar-14: #FF4646;
   --color-avatar-15: #FFBB2B;
-  --color-background-primary: #F6F7F8;
-  --color-background-input: #FFFFFF;
-  --background__secondary: #FFFFFF;
+  /* Font-Colors */
+  --color-text-primary: #000000;
+  --color-text-secondary: #CDCDCD;
+  --color-text-tertiary: #29ABE2;
+  --color-text-mail: #007CEE;
+  --color-text-button: #FFFFFF;
   --color-hover: #29ABE2;
-  --color-category-user-story: #0038FF;
-  --color-category-technical-task: #1FD7C1;
   --color-danger: #E60026;
   --color-footer: #AAA;
   --color-footer-p: #AFB8C5;
   --color-menu-bg: #2A3647;
   --color-nav-hover: #091931;
-  --color-priority-urgent: #FF0000;
-  --color-priority-medium: #FFA800;
-  --color-priority-low: #7AE229;
   --color-shadow-signup: #0000000a;
   --color-scrollbar: #4589FF;
   --color-sidemenu-active: #1A2C47;
-  --color-text-primary: #000000;
-  --color-text-secondary: #CDCDCD;
-  --color-text-tertiary: #29ABE2;
-  --color-text-mail: #007CEE;
   --color-secondary: #FFFFFF;
-  --color-text-button: #FFFFFF;
   --color-input-placeholder: #D1D1D1;
   --color-input-icon: #A8A8A8;
+  /* Background-Colors */
+  --color-background-primary: #F6F7F8;
+  --color-background-input: #FFFFFF;
+  --background__primary: #F6F7F8;
+  --background__secondary: #FFFFFF;
+  --background__task--placeholder: #E7E7E7;
+  --background__task--user-story: #0038FF;
+  --background__task--technical-task: #1FD7C1;
+  --priority-urgent: #FF0000;
+  --priority-medium: #FFA800;
+  --priority-low: #7AE229;
 }
 
 .bg-primary {
