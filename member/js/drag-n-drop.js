@@ -14,7 +14,7 @@ let categorys = ['user-story', 'technical-task'];
 let subtask = ['todo', 'in-progress', 'await-feedback', 'done'];
 let todos = [
   {
-    id: 1,
+    id: 0,
     title: 'Kochwelt',
     description: 'Eine Kochwelt App erstellen',
     date: '2026-02-08',
@@ -23,16 +23,16 @@ let todos = [
     category: 'user-story',
     subtask: 'todo'
   }, {
-    id: 2,
+    id: 1,
     title: 'Impressum',
-    description: 'Das Imoressum erstellen',
+    description: 'Das Impressum erstellen',
     date: '',
     priority: 'medium',
     assignedTo: '',
     category: 'user-story',
     subtask: 'in-progress'
   }, {
-    id: 3,
+    id: 2,
     title: 'Rezept Seite',
     description: 'Rezept Seite Designen',
     date: '',
@@ -41,7 +41,7 @@ let todos = [
     category: 'technical-task',
     subtask: 'await-feedback'
   }, {
-    id: 4,
+    id: 3,
     title: 'Startseite erstellen',
     description: 'Erster Aufbau der Starsteite erstellen',
     date: '',

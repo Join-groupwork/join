@@ -17,7 +17,6 @@
   <script type="module" src="/member/js/member-templates.js"></script>
   <script type="module" src="/member/js/drag-n-drop.js"></script>
   <script type="module" src="/member/js/member-script.js"></script>
-
 </head>
 
 <body>
@@ -29,13 +28,12 @@
 
     <section name="todo" class="task__section">
       <div class="card-bar">
-        <h3 class="cards-h3">To do</h3>
+        <h3 class="task__title cards-h3">To do</h3>
         <img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="Add task">
       </div>
 
-      <!-- <div class="task__area" class="drag__area" data-status="todo"> -->
-      <div class="task__area" class="drag__area" id="todo" data-status="todo">
-        <p class="task__card--placeholder">No tasks to do</p>
+      <div class="task__area drag__area" id="todo" data-status="todo">
+        <p class="task__card::placeholder">No tasks to do</p>
 
         <!-- <div class="task__card" id="${element.id}" draggable="true" ondragstart="startDragging(${element['id']})"
           ondrop="moveTo('${element.subtask}')" ondragover="allowDrop(ev)">
@@ -58,30 +56,30 @@
 
     <section>
       <div class="card-bar">
-        <h3 class="cards-h3">In Progress</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg"
-          alt="plus-icon">
+        <h3 class="task__title cards-h3">In Progress</h3><img class="circle-plus-icon"
+          src="/assets/icons/square-plus.svg" alt="plus-icon">
       </div>
-      <div class="column" class="drag__area" id="inProgress" data-status="progress">
-        <p class="card-p">No tasks to do</p>
-      </div>
-    </section>
-
-    <section>
-      <div class="card-bar">
-        <h3 class="cards-h3">Await Feedback</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg"
-          alt="plus-icon">
-      </div>
-      <div class="column" class="drag__area" id="awaitFeedback" data-status="feedback">
-        <p class="card-p">No tasks to do</p>
+      <div class="task__area drag__area" id="inProgress" data-status="progress">
+        <p class="task__card::placeholder">No tasks to do</p>
       </div>
     </section>
 
     <section>
       <div class="card-bar">
-        <h3 class="cards-h3 padding-bottom">Done</h3>
+        <h3 class="task__title cards-h3">Await Feedback</h3><img class="circle-plus-icon"
+          src="/assets/icons/square-plus.svg" alt="plus-icon">
       </div>
-      <div class="column drag__area" id="done" data-status="done">
-        <p class="card-p">No tasks to do</p>
+      <div class="task__area drag__area" id="awaitFeedback" data-status="feedback">
+        <p class="task__card::placeholder">No tasks to do</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card-bar">
+        <h3 class="task__title cards-h3">Done</h3>
+      </div>
+      <div class="task__area drag__area" id="done" data-status="done">
+        <p class="task__card::placeholder">No tasks to do</p>
       </div>
     </section>
   </main>
