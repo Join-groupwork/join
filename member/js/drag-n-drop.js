@@ -128,7 +128,7 @@ function togglePlaceholder(dropZone) {
 // CHECK beim zeihen müssen die cards sich leicht eindrehen
 // [x] dragstart coden
 document.addEventListener("dragstart", function (event) {
-  if (event.target.classList.contains(".task__card")) {
+  if (event.target.classList.contains("task__card")) {
     currentDraggedElement = event.target.id; // INFO mit event.target.id merken wir uns die ID
     event.target.classList.add("task__card--dragging"); // INFO wir fügen für das verschieben eine css klasse ein, damit es visuell zum design passt.
   }
