@@ -208,18 +208,18 @@ export function signupMassegeTemplate() {
     `;
 }
 
-export function generateTodoHTML(element) {
+export function generateTodosHTML(id, title, category, description, priority) {
   return `
-            <div class="task__card" id="${element['id']}" draggable="true">
-              <span class="task__category--${element['category']}">${element['category']}</span><br>
-              <h4 class="task__title">${element['title']}</h4><br>
-              <p class="task__text">${element['description']}</p><br>
+            <div class="task__card" id="${id}" draggable="true">
+              <span class="task__category--${category}">${category}</span><br>
+              <h4 class="task__title">${title}</h4><br>
+              <p class="task__text">${description}</p><br>
               <div class="task__bar">
                 <progress></progress>
               </div><br>
               <div class="task__footer">
                 <div>users</div>
-                <img src="/assets/icons/${element['priority']}-prio-icon.svg" alt="">
+                <img src="/assets/icons/${priority}-prio-icon.svg" alt="">
               </div>
             </div>
           `;
