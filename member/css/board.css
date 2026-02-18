@@ -38,6 +38,11 @@ main {
   background-color: var(--color-background-input);
 }
 
+.task__card--dragging {
+  opacity: 0.7;
+  transform: rotate(-15eg);
+}
+
 .task__card::placeholder {
   text-align: center;
 }
