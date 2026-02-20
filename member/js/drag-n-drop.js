@@ -1,18 +1,16 @@
 import { generateTodosHTML } from './member-templates.js'
 // import { renderBoard } from'./member-script.js';
-// TODO Hinzufügen einer Drag and Drop Funktion
-// TODO variable für id hinzufügen
-// TODO
-// [x] updateHTML Funktion erstellen, Beispiele für erste Tests
-// [ ] DragnDrop testen
-// [ ] Drag n Drop stylen
-// [ ] firebase update hinzufügen
-// [ ] daten von firebase abrufen und in todos anzeigen lassen
-// [ ] Funktion mit den Firebase daten testen
 
-let categorys = ['user-story', 'technical-task'];
-let subtask = ['todo', 'in-progress', 'await-feedback', 'done'];
-// INFO  let = todos wird später erstetzt, das die daten von firebase geladen werden
+// [x]Create updateHTML function, examples for initial testing
+// [x] Test drag and drop
+// [ ] Style drag and drop
+// [ ] Add Firebase update
+// [ ] Retrieve data from Firebase and display in to-dos
+// [ ] Test function with Firebase data
+
+// let categorys = ['user-story', 'technical-task'];
+// let subtask = ['todo', 'in-progress', 'await-feedback', 'done'];
+// INFO  let = todos will be replaced later when the data is loaded from Firebase.
 let todos = {
   "0": {
     title: 'Kochwelt',
@@ -51,30 +49,17 @@ let todos = {
     subtask: 'done'
   }
 };
+
 let currentDraggedElement;
 
-// INFO diese Funktion ist nur vorübergehend, bis das erste testen abgeshlossen ist.
-// INFO Danach wird diese Funktion ersetzt und die Todos werden von Firebase geladen.
+// INFO This function is only temporary until the first test is completed.
+// INFO After that, this function will be replaced and the to-dos will be loaded from Firebase.
 export function updateHTML() {
   updateTodo();
   updateInProgress();
   updateAwaitFeedback();
   updateDone();
-  // if (!document.getElementById('todo')) {
-  //   return
-  // }
-
-  // if (!document.getElementById('inProgress')) {
-  //   return
-  // }
-
-  // if (!document.getElementById('awaitFeedback')) {
-  //   return
-  // }
-
-  // if (!document.getElementById('done')) {
-  //   return
-  // }
+  togglePlaceholder();
 };
 
 function updateTodo() {
@@ -112,41 +97,48 @@ function updateDone() {
     }
   }
 };
-// [ ]
-function togglePlaceholder(dropZone) {
-  const placeholder = dropZone.querySelector('task__card');
-  if (dropZone.children.length > 1) {
-    placeholder.classList.add('d-none');
-  } else {
-    placeholder.classList.remove('d-none');
-  }
+// INFO Used to show and hide a placeholder when no task is available. Used to show and hide a placeholder when no task is available.
+// [ ] if no task, show
+// [ ] if at least 1 task is hidden
+function togglePlaceholder() {
+  const taskAres = document.querySelectorAll('.task__area');
+  taskAres.forEach(area => {
+    let status = area.dataset.status;
+    const placeholder = area.querySelector('.task__area--placeholder');
+    let hasTask = Object.values(todos).some(task => task.subtask === status);
+    if (hasTask) {
+      placeholder.classList.add('d-none')
+    } else {
+      placeholder.classList.remove('d-none');
+    }
+  });
 };
 
-// [x] es muss mit eventlistener gearbeitet werden, da mit modulen gearbeitet wird.
-// CHECK es müssen vermutlich alle IDs als mit if in die function eingefügt werden!
-// CHECK wo werden animationen oder transform eingegeben?
-// CHECK beim zeihen müssen die cards sich leicht eindrehen
+// [x] You have to work with event listeners because you are working with modules.
+// CHECK Where are animations or transforms entered?
+// CHECK When drawing, the cards must turn slightly.
 // [x] dragstart coden
 document.addEventListener("dragstart", function (event) {
   if (event.target.classList.contains("task__card")) {
-    currentDraggedElement = event.target.id; // INFO mit event.target.id merken wir uns die ID
-    event.target.classList.add("task__card--dragging"); // INFO wir fügen für das verschieben eine css klasse ein, damit es visuell zum design passt.
+    currentDraggedElement = event.target.id; // INFO We remember the ID with event.target.id.
+    event.target.classList.add("task__card--dragging"); // INFO We add a CSS class for the move so that it visually matches the design.
   }
 });
 document.addEventListener("dragend", function (event) {
   if (event.target.classList.contains("task__card")) {
-    event.target.classList.remove("task__card--dragging"); // INFO entfernt die css klasse für das visuielle beim verschieben.
+    event.target.classList.remove("task__card--dragging"); // INFO Removes the CSS class for the visual appearance when moving.
   }
 });
 // [x] dragover coden
 document.addEventListener("dragover", function (event) {
-  event.preventDefault(); //INFO hiermit wird verhindert, das der browser das droppen blockiert
-  const dropZone = event.target.closest(".task__area"); //INFO auch bei Kind-Elementen werden die Spalten gefunden.
-  if (!dropZone) return; // INFO wenn es keine dropZone gibt, abbrechen.
-  //  [ ] visuelles Feedback für die Dropzone wo es rein geschoben wird muss hier bestimmt werden, über classlist.add
+  event.preventDefault(); //INFO This prevents the browser from blocking the drop.
+  const dropZone = event.target.closest(".task__area"); //INFO aThe columns are also found for child elements.
+  if (!dropZone) return; // INFO If there is no drop zone, cancel.
+  //  [ ] Visual feedback for the drop zone where it is pushed in must be determined here, via classlist.add.
   dropZone.classList.add("task__area--highlight");
 });
-// [ ] drop coden
+// [x] drop coden
+// [ ] togglePlaceholder() is on function?
 document.addEventListener("drop", function (event) {
   event.preventDefault();
   const dropZone = event.target.closest(".task__area");
@@ -155,11 +147,11 @@ document.addEventListener("drop", function (event) {
   dropZone.classList.remove("task__area--highlight");
   todos[currentDraggedElement].subtask = newSubtask;
   updateHTML();
-  togglePlaceholder(dropZone);
+  togglePlaceholder();
 }
 );
 // [x] dragleave coden
-// [ ] prüfen das "task__area--highlight" entfernt wird.
+// [ ] Check that “task__area--highlight” is removed.
 document.addEventListener("dragleave", function (event) {
   const dropZone = event.target.closest(".task__area");
   if (!dropZone) return;
