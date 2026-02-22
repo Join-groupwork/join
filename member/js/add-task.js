@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         priority: selectedPriority || 'low',
         assigned_to: assignedSelect?.value || '',
         category: categorySelect?.value || '',
-        subtasks: subtaskInput?.value ? subtaskInput.value.split(',').map(s => s.trim()).filter(Boolean) : [],
+        subtask: subtaskInput?.value?.trim() || "",
         createdAt: new Date().toISOString()
       };
       try {
