@@ -15,7 +15,7 @@
 
 
 import { database, auth } from '/scripts/firebase/firebase.js';
-import { ref, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import { ref, onValue, push, set } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 import { getAddOverlayTemplate } from '/member/js/member-templates.js';
 
 let contacts = {};
@@ -63,9 +63,10 @@ function loadData() {
 }
 
 
+
+
 function groupContactsByLetter(contactsObjects) {
     const grouped = {};
-    // gruppieren nach erstem buchstaben
     Object.entries(contactsObjects).forEach(([id, contact]) => {
         const firstLetter = contact.name.charAt(0).toUpperCase();
 
@@ -84,7 +85,6 @@ function groupContactsByLetter(contactsObjects) {
 
         });
     });
-
     Object.keys(grouped).forEach(letter => {
         grouped[letter].sort((a, b) => a.name.localeCompare(b.name));
     });
@@ -96,7 +96,6 @@ function groupContactsByLetter(contactsObjects) {
 function renderContactsList(contactsObjects) {
     const contactList = document.getElementById('contact_list');
     if (!contactList) return;
-
     const groupedContacts = groupContactsByLetter(contactsObjects);
     resetContactListExceptAddButton(contactList);
     renderAlphabeticalContactSections(contactList, groupedContacts);
@@ -209,7 +208,76 @@ export function hideAddContactOverlay() {
     overlay.innerHTML = '';
 }
 
+// Kontakt in Firebase speichern
+async function handleAddContact(event) {
+    if (event) {
+        event.preventDefault();
+    }
+    // Werte holen
+    const nameInput = document.getElementById('contact_name');
+    const emailInput = document.getElementById('contact_email');
+    const phoneInput = document.getElementById('contact_phone');
+    
+    if (!nameInput || !emailInput) {
+        alert('Formular-Felder nicht gefunden!');
+        return;
+    }
+    
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const phone = phoneInput ? phoneInput.value.trim() : '';
+    
+    
+    if (!name || !email) {
+        alert('Bitte Name und E-Mail ausfüllen!');
+        return;
+    }
+    
+    // Prüfen ob User eingeloggt 
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+        alert('Sie müssen eingeloggt sein!');
+        return;
+    }
+    
+    try {
+        // Kontakt in Firebase speichern
+        const contactsRef = ref(database, 'contacts');
+        const newContactRef = push(contactsRef);
+        const newContact = {
+            name: name,
+            email: email,
+            phone: phone,
+            createdAT: Date.now(),
+            uid: currentUser.uid
+        };
+        
+        await set(newContactRef, newContact);
+        hideAddContactOverlay();
+        showSuccessMessage('Contact successfully created!');
+        
+    } catch (error) {
+        alert('Fehler beim Speichern: ' + error.message);
+    }
+}
+
+
+function showSuccessMessage(message) {
+    const successDiv = document.createElement('div');
+    successDiv.className = 'success_message';
+    successDiv.textContent = message;
+
+    
+    document.body.appendChild(successDiv);
+    
+    setTimeout(() => {
+        successDiv.remove();
+    }, 500);
+}
+
+
 
 // Make functions globally accessible
 window.showAddContactOverlay = showAddContactOverlay;
 window.hideAddContactOverlay = hideAddContactOverlay;
+window.handleAddContact = handleAddContact; 

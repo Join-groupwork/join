@@ -63,7 +63,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     gap: 20px;
     border-radius: 16px;
-   
+
 }
 
 
@@ -81,7 +81,7 @@
     z-index: 1000;
     justify-content: center;
     align-items: center;
-  
+
 }
 
 
@@ -238,4 +238,19 @@
 
 .close_overlay_icon:hover {
     opacity: 0.7;
+}
+
+
+.success_message {
+    position: fixed;
+    bottom: 10%;
+    left: 60%;
+    transform: translateX(-50%);
+    background: #2A3647;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 3000;
+    font-size: 18px;
 }
