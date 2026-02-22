@@ -38,7 +38,7 @@ export function getSidebarTemplate() {
         <a class="nav-item" href="/member/contacts.html"><img src="/assets/icons/side-menu/contacts-icon.svg" alt="Contacts" class="nav-icon">Contacts</a>
       </nav>
 
-      <div class="legal">
+      <div class="footer">
         <a href="/member/privacy-policy-user.html">Privacy Policy</a>
         <a href="/member/legal-notice-user.html">Legal Notice</a>
       </div>
@@ -205,5 +205,22 @@ export function signupMassegeTemplate() {
                 You Signed Up successfully
             </p>
         </aside>
-    `
+    `;
+}
+
+export function generateTodosHTML(id, title, category, description, priority) {
+  return `
+            <div class="task__card" id="${id}" draggable="true">
+              <span class="task__category--${category}">${category}</span><br>
+              <h4 class="task__title">${title}</h4><br>
+              <p class="task__text">${description}</p><br>
+              <div class="task__bar">
+                <progress></progress>
+              </div><br>
+              <div class="task__footer">
+                <div>users</div>
+                <img src="/assets/icons/${priority}-prio-icon.svg" alt="">
+              </div>
+            </div>
+          `;
 }

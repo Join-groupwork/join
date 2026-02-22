@@ -1,47 +1,125 @@
-.signup-content {
-    width: 600px;
-    margin-top: auto;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
-    display: flex;
-    flex-direction: column;
+body {
+  display: block;
 }
 
-.signup-head {
-    display: flex;
+.signup {
+  width: 600px;
+  height: 630px;
+  margin: 0px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 30px;
+  box-shadow: 0px 0px 14px 3px var(--color-shadow-signup);
 }
 
-.signup-form {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+/* FIXME Der title und das back-icon müssen noch richtig positioniert werden. */
+.signup__header {
+  width: 100%;
+  display: flex;
 }
 
-.signup-input {
-    border: 1px solid #d1d1d1;
+.signup__title {
+  margin: 50px auto 45px auto;
+  position: relative;
+  font-size: 60px;
 }
 
-/* Buttons */
-.btn-signup {
-    width: 125px;
-    height: 55px;
-    border-radius: 8px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #2A3647;
-    color: white;
-    font-weight: 700;
-    font-size: 21px;
+.signup__title::after {
+  content: "";
+  position: absolute;
+  bottom: -17px;
+  margin: 0px auto 0px auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 3px;
+  background-color: var(--color-text-tertiary);
 }
 
-#signupBtn:disabled {
-    background-color: #2A3647;
-    cursor: not-allowed;
-    opacity: 0.6;
+.signup__return {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  margin: 65px 0 0 20px;
 }
 
-#signupBtn:not(:disabled) {
-    background-color: #2A3647;
-    cursor: pointer;
+.signup__return:hover {
+  cursor: pointer;
 }
+
+.signup__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.signup__input {
+  width: 420px;
+  height: 46px;
+  font-size: 20px;
+  margin: 2px auto 2px auto;
+  padding-left: 20px;
+  border: 1px solid var(--color-input-placeholder);
+  border-radius: 16px;
+  background-repeat: no-repeat;
+  background-position: 380px;
+}
+
+.signup__input::placeholder {
+  font-size: 20px;
+  color: var(--color-input-placeholder);
+}
+
+/* TODO Farbe der Icon noch anpassen */
+.signup__input--name {
+  background-image: url('/assets/icons/person-icon.svg');
+}
+
+.signup__input--email {
+  background-image: url('/assets/icons/mail-icon.svg');
+}
+
+.signup__input--password,
+.signup__input--confirm-password {
+  background-image: url('/assets/icons/lock-icon.svg');
+}
+
+.signup__terms {
+  width: 100%;
+  height: 24px;
+  margin: 18px auto 0 auto;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.terms-checkbox-p {
+  color: #aaa;
+}
+
+.terms-checkbox-a {
+  color: var(--color-text-tertiary);
+}
+
+.terms-checkbox input:checked+.checkmark::after {
+  content: "✓";
+  position: absolute;
+  left: 2px;
+  top: -2px;
+  font-size: 14px;
+  color: #3d97f1;
+}
+
+/* .checkmark {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #000000;
+  border-radius: 3px;
+  display: inline-block;
+  position: relative;
+} */
