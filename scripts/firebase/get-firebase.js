@@ -15,9 +15,7 @@ async function loadData(){
 
 export async function loadTasks() {
     const response = await fetch(`${BASE_URL}tasks.json`);
-
     const data = await response.json();
-
     // Check if there is any data
     if (!data) {
         console.log("No Tasks");   // If there are no tasks, log a message
