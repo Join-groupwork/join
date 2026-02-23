@@ -11,9 +11,11 @@ const columns = {
 function getCardTemplate(task) {
     return `
     <div class="card" id="${task.key}" draggable="true">
-        <h4>${task.title}</h4>
+        <h4>${task.category}</h4>
+        <p>${task.title}</p>
         <p>${task.description}</p>
-        <span class="priority ${task.priority}">${task.priority}</span>
+        <p>${task.assigned_to}</p>
+    
     </div>
     `;
 }
