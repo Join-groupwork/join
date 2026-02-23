@@ -1,6 +1,12 @@
 import { database } from '/scripts/firebase/firebase.js';
 import { ref, push } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
+/**
+ * Function to push task to firefabe
+ *
+ * @param {Array} taskData
+ * @returns
+ */
 export async function pushTask(taskData) {
     try {
         const tasksRef = ref(database, "tasks");

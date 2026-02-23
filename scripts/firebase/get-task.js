@@ -1,4 +1,6 @@
-const BASE_URL = "https://join-ae525-default-rtdb.europe-west1.firebasedatabase.app/";
+import { database } from '/scripts/firebase/firebase.js';
+
+const BASE_URL = database.databaseURL;
 
 let contacts = [];
 let tasks = [];
@@ -8,7 +10,7 @@ async function loadData(){
     let contacts = await fetch (BASE_URL + ".json");
     let contactsToJson = await contacts.json();
     console.log(contactsToJson);
-    
+
 }
 
 
@@ -24,13 +26,13 @@ export async function loadTasks() {
         return [];                 // Return an empty array so renderBoard() won't crash
     }
     // Prepare the global array to store the tasks
-    tasks = [];  
+    tasks = [];
     for (let key in data) {
         // Push each task into the array
         // key = task ID, data[key] = all task details
         tasks.push({
-            key,          
-            ...data[key]  
+            key,
+            ...data[key]
         });
     }
     return tasks;
