@@ -208,8 +208,9 @@ export function signupMassegeTemplate() {
     `;
 }
 /**
+ * Generate Task in Bord.html
  *
- * @param {string} id
+ * @param {string} id - task ID
  * @param {string} title
  * @param {string} category
  * @param {string} description
