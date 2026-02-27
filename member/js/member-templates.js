@@ -1,3 +1,8 @@
+/**
+ * Generate a Header as HTML string for member sides.
+ *
+ * @returns {string} HTML string representing the header
+ */
 export function getHeaderTemplate() {
   return `
         <header>
@@ -24,7 +29,10 @@ export function getHeaderTemplate() {
         </header>
       `;
 }
-
+/**
+ * Generate a sidemenu for member sides.
+ * @returns {string} HTML string representing the sidemenu
+ */
 export function getSidebarTemplate() {
   return `
       <div class="logo">
@@ -44,7 +52,10 @@ export function getSidebarTemplate() {
       </div>
     `;
 }
-
+/**
+ *
+ * @returns {string} HTML string representing
+ */
 export function getTaskTemplate() {
   return `
      <section class="overlay_add_task">
@@ -105,7 +116,10 @@ export function getTaskTemplate() {
 // contact overlays einbinden --->id="editC_overlay" oder id="addC_overlay" in den <body> einfügen,
 // (siehe contact_add_overlay.html/contact_edit_overlay.html <-- können danach gelöscht werden)
 // je nachdem welches overlay gebraucht wird --- ansonsten bis auf css fertig
-
+/**
+ *
+ * @returns {string} HTML string
+ */
 export function getEditOverlayTemplate() {
   return `
  <main class="addContact_overlay" >
@@ -150,7 +164,10 @@ export function getEditOverlayTemplate() {
     </main>
     `;
 }
-
+/**
+ *
+ * @returns {string} HTML string
+ */
 export function getAddOverlayTemplate() {
   return `
 
@@ -197,7 +214,11 @@ export function getAddOverlayTemplate() {
     </main>
     `;
 }
-
+/**
+ * Generate a massege for successfull signup.
+ *
+ * @returns {string} HTML string representing info message to succesfull signup
+ */
 export function signupMassegeTemplate() {
   return `
         <aside class="signup-massege-box">
@@ -208,14 +229,14 @@ export function signupMassegeTemplate() {
     `;
 }
 /**
- * Generate Task in Bord.html
+ * Generate a task card as HTML string for board.html.
  *
- * @param {string} id - task ID
- * @param {string} title
- * @param {string} category
- * @param {string} description
- * @param {string} priority
- * @returns {T}
+ * @param {string} id - Task ID
+ * @param {string} title - Task title
+ * @param {category} category - Task category
+ * @param {string} description - Task description
+ * @param {priority} priority Task priority level
+ * @returns {string} HTML string representing the task card
  */
 export function generateTodosHTML(id, title, category, description, priority) {
   return `

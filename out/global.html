@@ -314,7 +314,7 @@ Will later be replaced by Firebase data.
     
 
     
-    <h4 class="name" id="generateTodosHTML"><span class="type-signature"></span>generateTodosHTML<span class="signature">(id, title, category, description, priority)</span><span class="type-signature"> &rarr; {T}</span></h4>
+    <h4 class="name" id="generateTodosHTML"><span class="type-signature"></span>generateTodosHTML<span class="signature">(id, title, category, description, priority)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -322,7 +322,7 @@ Will later be replaced by Firebase data.
 
 
 <div class="description">
-    Generate Task in Bord.html
+    Generate a task card as HTML string for board.html.
 </div>
 
 
@@ -374,7 +374,7 @@ Will later be replaced by Firebase data.
 
             
 
-            <td class="description last">task ID</td>
+            <td class="description last">Task ID</td>
         </tr>
 
     
@@ -397,7 +397,7 @@ Will later be replaced by Firebase data.
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Task title</td>
         </tr>
 
     
@@ -410,7 +410,7 @@ Will later be replaced by Firebase data.
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">category</span>
 
 
             
@@ -420,7 +420,7 @@ Will later be replaced by Firebase data.
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Task category</td>
         </tr>
 
     
@@ -443,7 +443,7 @@ Will later be replaced by Firebase data.
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Task description</td>
         </tr>
 
     
@@ -456,7 +456,7 @@ Will later be replaced by Firebase data.
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">priority</span>
 
 
             
@@ -466,7 +466,7 @@ Will later be replaced by Firebase data.
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Task priority level</td>
         </tr>
 
     
@@ -507,7 +507,7 @@ Will later be replaced by Firebase data.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line220">line 220</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line241">line 241</a>
     </li></ul></dd>
     
 
@@ -535,6 +535,10 @@ Will later be replaced by Firebase data.
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    HTML string representing the task card
+</div>
+
 
 
 <dl>
@@ -543,7 +547,7 @@ Will later be replaced by Firebase data.
     </dt>
     <dd>
         
-<span class="param-type">T</span>
+<span class="param-type">string</span>
 
 
     </dd>
@@ -561,7 +565,113 @@ Will later be replaced by Firebase data.
     
 
     
-    <h4 class="name" id="getCardTemplate"><span class="type-signature"></span>getCardTemplate<span class="signature">(task)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getAddOverlayTemplate"><span class="type-signature"></span>getAddOverlayTemplate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line171">line 171</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    HTML string
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getCardTemplate"><span class="type-signature"></span>getCardTemplate<span class="signature">(task)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -686,7 +796,23 @@ Will later be replaced by Firebase data.
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    HTML string
+</div>
 
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
 
     
 
@@ -700,7 +826,333 @@ Will later be replaced by Firebase data.
     
 
     
-    <h4 class="name" id="getTask"><span class="type-signature">(async) </span>getTask<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getEditOverlayTemplate"><span class="type-signature"></span>getEditOverlayTemplate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line123">line 123</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    HTML string
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getHeaderTemplate"><span class="type-signature"></span>getHeaderTemplate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Generate a Header as HTML string for member sides.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    HTML string representing the header
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getSidebarTemplate"><span class="type-signature"></span>getSidebarTemplate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Generate a sidemenu for member sides.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line36">line 36</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    HTML string representing the sidemenu
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getTask"><span class="type-signature">(async) </span>getTask<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
@@ -777,6 +1229,124 @@ Will later be replaced by Firebase data.
 
         
 
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getTaskTemplate"><span class="type-signature"></span>getTaskTemplate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line59">line 59</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    HTML string representing
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
 
     
 
@@ -1478,6 +2048,116 @@ Will later be replaced by Firebase data.
 
         
 
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="signupMassegeTemplate"><span class="type-signature"></span>signupMassegeTemplate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Generate a massege for successfull signup.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line222">line 222</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    HTML string representing info message to succesfull signup
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
 
     
 
@@ -2637,13 +3317,13 @@ Will later be replaced by Firebase data.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#app">app</a></li><li><a href="global.html#currentDraggedElement">currentDraggedElement</a></li><li><a href="global.html#generateTodosHTML">generateTodosHTML</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#handleSignup">handleSignup</a></li><li><a href="global.html#loginAsGuest">loginAsGuest</a></li><li><a href="global.html#loginWithEmail">loginWithEmail</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#pushTask">pushTask</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#togglePlaceholder">togglePlaceholder</a></li><li><a href="global.html#updateAwaitFeedback">updateAwaitFeedback</a></li><li><a href="global.html#updateDone">updateDone</a></li><li><a href="global.html#updateHTML">updateHTML</a></li><li><a href="global.html#updateInProgress">updateInProgress</a></li><li><a href="global.html#updateTodo">updateTodo</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#app">app</a></li><li><a href="global.html#currentDraggedElement">currentDraggedElement</a></li><li><a href="global.html#generateTodosHTML">generateTodosHTML</a></li><li><a href="global.html#getAddOverlayTemplate">getAddOverlayTemplate</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getEditOverlayTemplate">getEditOverlayTemplate</a></li><li><a href="global.html#getHeaderTemplate">getHeaderTemplate</a></li><li><a href="global.html#getSidebarTemplate">getSidebarTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#getTaskTemplate">getTaskTemplate</a></li><li><a href="global.html#handleSignup">handleSignup</a></li><li><a href="global.html#loginAsGuest">loginAsGuest</a></li><li><a href="global.html#loginWithEmail">loginWithEmail</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#pushTask">pushTask</a></li><li><a href="global.html#signupMassegeTemplate">signupMassegeTemplate</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#togglePlaceholder">togglePlaceholder</a></li><li><a href="global.html#updateAwaitFeedback">updateAwaitFeedback</a></li><li><a href="global.html#updateDone">updateDone</a></li><li><a href="global.html#updateHTML">updateHTML</a></li><li><a href="global.html#updateInProgress">updateInProgress</a></li><li><a href="global.html#updateTodo">updateTodo</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Feb 27 2026 15:33:39 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Feb 27 2026 16:00:09 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>
