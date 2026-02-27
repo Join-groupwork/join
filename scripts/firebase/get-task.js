@@ -5,7 +5,7 @@ let todos = [];
 
 /**
  *
- * @returns
+ * @returns {void}
  */
 async function getTask() {
   try {

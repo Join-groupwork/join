@@ -11,7 +11,7 @@ const columns = {
  *
  *
  * @param {string} task
- * @returns
+ * @returns {string} HTML string
  */
 function getCardTemplate(task) {
     return `
