@@ -94,6 +94,216 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="app"><span class="type-signature">(constant) </span>app<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_firebase_firebase.js.html">scripts/firebase/firebase.js</a>, <a href="scripts_firebase_firebase.js.html#line23">line 23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="currentDraggedElement"><span class="type-signature"></span>currentDraggedElement<span class="type-signature"> :string|undefined</span></h4>
+
+
+
+
+<div class="description">
+    For temporary ID saving for toggle task on board UI section.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line95">line 95</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="todos"><span class="type-signature"></span>todos<span class="type-signature"> :Object.&lt;string, <a href="global.html#Todo">Todo</a>></span></h4>
+
+
+
+
+<div class="description">
+    Task collection indexed by id.
+Will later be replaced by Firebase data.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object.&lt;string, <a href="global.html#Todo">Todo</a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line52">line 52</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -883,7 +1093,7 @@
 
             
 
-            <td class="description last">Mail adress for login</td>
+            <td class="description last">Email adress for login</td>
         </tr>
 
     
@@ -1281,12 +1491,16 @@
     
 
     
-    <h4 class="name" id="togglePlaceholder"><span class="type-signature"></span>togglePlaceholder<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="togglePlaceholder"><span class="type-signature"></span>togglePlaceholder<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
 
 
+
+<div class="description">
+    Show or hides placeholder depending on whether a column contains task.
+</div>
 
 
 
@@ -1329,7 +1543,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line118">line 118</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line172">line 172</a>
     </li></ul></dd>
     
 
@@ -1354,6 +1568,24 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1365,12 +1597,16 @@
     
 
     
-    <h4 class="name" id="updateAwaitFeedback"><span class="type-signature"></span>updateAwaitFeedback<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateAwaitFeedback"><span class="type-signature"></span>updateAwaitFeedback<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
 
 
+
+<div class="description">
+    Trigger updates for section "Await Feedback" on board UI
+</div>
 
 
 
@@ -1413,7 +1649,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line92">line 92</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line142">line 142</a>
     </li></ul></dd>
     
 
@@ -1438,6 +1674,24 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1449,12 +1703,16 @@
     
 
     
-    <h4 class="name" id="updateDone"><span class="type-signature"></span>updateDone<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateDone"><span class="type-signature"></span>updateDone<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
 
 
+
+<div class="description">
+    Trigger updates for section "Done" on board UI
+</div>
 
 
 
@@ -1497,7 +1755,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line103">line 103</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line155">line 155</a>
     </li></ul></dd>
     
 
@@ -1522,6 +1780,24 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1533,12 +1809,16 @@
     
 
     
-    <h4 class="name" id="updateHTML"><span class="type-signature"></span>updateHTML<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateHTML"><span class="type-signature"></span>updateHTML<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
 
 
+
+<div class="description">
+    Update board sections and toggles placeholder visibility.
+</div>
 
 
 
@@ -1581,7 +1861,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line60">line 60</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line104">line 104</a>
     </li></ul></dd>
     
 
@@ -1606,6 +1886,24 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1617,12 +1915,16 @@
     
 
     
-    <h4 class="name" id="updateInProgress"><span class="type-signature"></span>updateInProgress<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateInProgress"><span class="type-signature"></span>updateInProgress<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
 
 
+
+<div class="description">
+    Trigger updates for section "In Progrss" on board UI
+</div>
 
 
 
@@ -1665,7 +1967,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line81">line 81</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line129">line 129</a>
     </li></ul></dd>
     
 
@@ -1690,6 +1992,24 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1701,12 +2021,16 @@
     
 
     
-    <h4 class="name" id="updateTodo"><span class="type-signature"></span>updateTodo<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateTodo"><span class="type-signature"></span>updateTodo<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
 
 
+
+<div class="description">
+    Trigger updates for section "Todo" on board UI
+</div>
 
 
 
@@ -1749,7 +2073,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line70">line 70</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line116">line 116</a>
     </li></ul></dd>
     
 
@@ -1774,6 +2098,24 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1782,6 +2124,506 @@
         
     
 
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+<h4 class="name" id="Category">Category</h4>
+
+
+
+
+<div class="description">
+    Possible task categories.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">"user-story"</span>
+|
+
+<span class="param-type">"technical-task"</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line12">line 12</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="Priority">Priority</h4>
+
+
+
+
+<div class="description">
+    Possible priority values.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">"low"</span>
+|
+
+<span class="param-type">"medium"</span>
+|
+
+<span class="param-type">"urgent"</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line17">line 17</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="SubtaskStatus">SubtaskStatus</h4>
+
+
+
+
+<div class="description">
+    Possible board states.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">"todo"</span>
+|
+
+<span class="param-type">"in-progress"</span>
+|
+
+<span class="param-type">"await-feedback"</span>
+|
+
+<span class="param-type">"done"</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="Todo">Todo</h4>
+
+
+
+
+<div class="description">
+    Represent a board task.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>date</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>priority</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Priority">Priority</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>assignedTo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>category</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Category">Category</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>subtask</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SubtaskStatus">SubtaskStatus</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
     
 
     
@@ -1795,13 +2637,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#generateTodosHTML">generateTodosHTML</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#handleSignup">handleSignup</a></li><li><a href="global.html#loginAsGuest">loginAsGuest</a></li><li><a href="global.html#loginWithEmail">loginWithEmail</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#pushTask">pushTask</a></li><li><a href="global.html#togglePlaceholder">togglePlaceholder</a></li><li><a href="global.html#updateAwaitFeedback">updateAwaitFeedback</a></li><li><a href="global.html#updateDone">updateDone</a></li><li><a href="global.html#updateHTML">updateHTML</a></li><li><a href="global.html#updateInProgress">updateInProgress</a></li><li><a href="global.html#updateTodo">updateTodo</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#app">app</a></li><li><a href="global.html#currentDraggedElement">currentDraggedElement</a></li><li><a href="global.html#generateTodosHTML">generateTodosHTML</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#handleSignup">handleSignup</a></li><li><a href="global.html#loginAsGuest">loginAsGuest</a></li><li><a href="global.html#loginWithEmail">loginWithEmail</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#pushTask">pushTask</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#togglePlaceholder">togglePlaceholder</a></li><li><a href="global.html#updateAwaitFeedback">updateAwaitFeedback</a></li><li><a href="global.html#updateDone">updateDone</a></li><li><a href="global.html#updateHTML">updateHTML</a></li><li><a href="global.html#updateInProgress">updateInProgress</a></li><li><a href="global.html#updateTodo">updateTodo</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Feb 27 2026 14:43:07 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Feb 27 2026 15:33:39 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

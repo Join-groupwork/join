@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: scripts/firebase/get-task.js</title>
+    <title>JSDoc: Source: scripts/firebase/firebase.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: scripts/firebase/get-task.js</h1>
+    <h1 class="page-title">Source: scripts/firebase/firebase.js</h1>
 
     
 
@@ -26,27 +26,33 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { firebaseConfig } from "/scripts/firebase/firebase.js";
+            <pre class="prettyprint source linenums"><code>import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+// import { firebaseConfig } from '../../env.js';
 
-const BASE_URL = firebaseConfig.databaseURL;
-let todos = [];
-
-/**
- *
- * @returns
- */
-async function getTask() {
-  try {
-    let tasks = await fetch(BASE_URL + ".json");
-    let tasksToJson = await tasks.json();
-    console.log(tasksToJson);
-
-  } catch (error) {
-    return [];
-  }
+// 🔹 Firebase-Konfiguration
+export const firebaseConfig = {
+  apiKey: "AIzaSyCMfwkqntiepXstDBQzi42RSGVnwLuOqQc",
+  authDomain: "join-ae525.firebaseapp.com",
+  databaseURL: "https://join-ae525-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "join-ae525",
+  storageBucket: "join-ae525.firebasestorage.app",
+  messagingSenderId: "964887306998",
+  appId: "1:964887306998:web:a0f66c2b30a9207a42c2d7",
+  measurementId: "G-2PYNHVKRHH"
 };
 
-getTask();
+// 🔹 Firebase initialisieren
+/**
+ *
+ * @param
+ */
+const app = initializeApp(firebaseConfig);
+
+// 🔹 Auth &amp; Database exportieren
+export const auth = getAuth(app);
+export const database = getDatabase(app);
 </code></pre>
         </article>
     </section>

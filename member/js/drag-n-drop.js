@@ -1,5 +1,37 @@
+/**
+ * @file
+ */
 import { generateTodosHTML } from './member-templates.js'
 // import { renderBoard } from'./member-script.js';
+
+/**
+ * Possible board states.
+ * @typedef {"todo" | "in-progress" | "await-feedback" | "done"} SubtaskStatus
+ */
+
+/**
+ * Possible task categories.
+ * @typedef {"user-story" | "technical-task"} Category
+ */
+
+/**
+ * Possible priority values.
+ * @typedef {"low" | "medium" | "urgent"} Priority
+ */
+
+/**
+ * Represent a board task.
+ *
+ * @typedef {Object} Todo
+ * @property {string} title
+ * @property {string} description
+ * @property {string} date
+ * @property {Priority} priority
+ * @property {string} assignedTo
+ * @property {Category} category
+ * @property {SubtaskStatus} subtask
+ */
+
 
 // [x]Create updateHTML function, examples for initial testing
 // [x] Test drag and drop
@@ -11,6 +43,12 @@ import { generateTodosHTML } from './member-templates.js'
 // let categorys = ['user-story', 'technical-task'];
 // let subtask = ['todo', 'in-progress', 'await-feedback', 'done'];
 // INFO  let = todos will be replaced later when the data is loaded from Firebase.
+/**
+ * Task collection indexed by id.
+ * Will later be replaced by Firebase data.
+ *
+ * @type {Object.<string, Todo>}
+ */
 let todos = {
   "0": {
     title: 'Kochwelt',
@@ -49,11 +87,20 @@ let todos = {
     subtask: 'done'
   }
 };
-
+/**
+ * For temporary ID saving for toggle task on board UI section.
+ *
+ * @type {string | undefined}
+ */
 let currentDraggedElement;
 
 // INFO This function is only temporary until the first test is completed.
 // INFO After that, this function will be replaced and the to-dos will be loaded from Firebase.
+/**
+ * Update board sections and toggles placeholder visibility.
+ *
+ * @returns {void}
+ */
 export function updateHTML() {
   updateTodo();
   updateInProgress();
@@ -61,7 +108,11 @@ export function updateHTML() {
   updateDone();
   togglePlaceholder();
 };
-
+/**
+ * Trigger updates for section "Todo" on board UI
+ *
+ * @returns {void}
+ */
 function updateTodo() {
   document.getElementById('todo').innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
@@ -70,7 +121,11 @@ function updateTodo() {
     }
   }
 };
-
+/**
+ * Trigger updates for section "In Progrss" on board UI
+ *
+ * @returns {void}
+ */
 function updateInProgress() {
   document.getElementById('inProgress').innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
@@ -79,7 +134,11 @@ function updateInProgress() {
     }
   }
 };
-
+/**
+ * Trigger updates for section "Await Feedback" on board UI
+ *
+ * @returns {void}
+ */
 function updateAwaitFeedback() {
   document.getElementById('awaitFeedback').innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
@@ -88,7 +147,11 @@ function updateAwaitFeedback() {
     }
   }
 };
-
+/**
+ * Trigger updates for section "Done" on board UI
+ *
+ * @returns {void}
+ */
 function updateDone() {
   document.getElementById('done').innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
@@ -101,6 +164,11 @@ function updateDone() {
 // INFO Used to show and hide a placeholder when no task is available. Used to show and hide a placeholder when no task is available.
 // [ ] if no task, show
 // [ ] if at least 1 task is hidden
+/**
+ * Show or hides placeholder depending on whether a column contains task.
+ *
+ * @returns {void}
+ */
 function togglePlaceholder() {
   const taskAres = document.querySelectorAll('.task__area');
   taskAres.forEach(area => {
@@ -119,18 +187,36 @@ function togglePlaceholder() {
 // CHECK Where are animations or transforms entered?
 // CHECK When drawing, the cards must turn slightly.
 // [x] dragstart coden
+/**
+ * Handles dragstart event for task cards.
+ *
+ * @param {DragEvent} event
+ * @returns {void}
+ */
 document.addEventListener("dragstart", function (event) {
   if (event.target.classList.contains("task__card")) {
     currentDraggedElement = event.target.id; // INFO We remember the ID with event.target.id.
     event.target.classList.add("task__card--dragging"); // INFO We add a CSS class for the move so that it visually matches the design.
   }
 });
+/**
+ * Handles dragend event for task cards.
+ *
+ * @param {DragEvent} event
+ * @returns {void}
+ */
 document.addEventListener("dragend", function (event) {
   if (event.target.classList.contains("task__card")) {
     event.target.classList.remove("task__card--dragging"); // INFO Removes the CSS class for the visual appearance when moving.
   }
 });
 // [x] dragover coden
+/**
+ * Handles dragover event for task cards.
+ *
+ * @param {DragEvent} event
+ * @returns {void}
+ */
 document.addEventListener("dragover", function (event) {
   event.preventDefault(); //INFO This prevents the browser from blocking the drop.
   const dropZone = event.target.closest(".task__area"); //INFO aThe columns are also found for child elements.
@@ -140,6 +226,12 @@ document.addEventListener("dragover", function (event) {
 });
 // [x] drop coden
 // [ ] togglePlaceholder() is on function?
+/**
+ * Handles drop event for task cards.
+ *
+ * @param {DragEvent} event
+ * @returns {void}
+ */
 document.addEventListener("drop", function (event) {
   event.preventDefault();
   const dropZone = event.target.closest(".task__area");
@@ -153,6 +245,12 @@ document.addEventListener("drop", function (event) {
 );
 // [x] dragleave coden
 // [ ] Check that “task__area--highlight” is removed.
+/**
+ * Handles dragleave event for task cards.
+ *
+ * @param {DragEvent} event
+ * @returns {void}
+ */
 document.addEventListener("dragleave", function (event) {
   const dropZone = event.target.closest(".task__area");
   if (!dropZone) return;
