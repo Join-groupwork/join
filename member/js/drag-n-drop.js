@@ -97,6 +97,7 @@ function updateDone() {
     }
   }
 };
+
 // INFO Used to show and hide a placeholder when no task is available. Used to show and hide a placeholder when no task is available.
 // [ ] if no task, show
 // [ ] if at least 1 task is hidden

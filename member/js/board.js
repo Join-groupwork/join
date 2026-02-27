@@ -5,9 +5,14 @@ const columns = {
     inProgress: document.getElementById('inProgress'),
     awaitFeedback: document.getElementById('awaitFeedback'),
     done: document.getElementById('done'),
-   
-};
 
+};
+/**
+ *
+ *
+ * @param {string} task
+ * @returns
+ */
 function getCardTemplate(task) {
     return `
     <div class="card" id="${task.key}" draggable="true">
@@ -19,20 +24,19 @@ function getCardTemplate(task) {
     `;
 }
 
-
 async function renderBoard() {
-    const tasksData = await loadTasks(); 
+    const tasksData = await loadTasks();
     for (let i = 0; i < tasksData.length; i++) {
         const task = tasksData[i]; // get the current task
         // Find the correct column based on task status
-        const column = columns[task.status]; 
+        const column = columns[task.status];
         if (!column) continue; // skip if the column doesn't exist
         // Remove the placeholder text if it exists
         const placeholder = column.querySelector('.card-placeholder');
         if (placeholder) placeholder.remove();
         // 5️⃣ Add the task card to the column
         column.innerHTML += getCardTemplate(task);
-       
+
     }
 }
 

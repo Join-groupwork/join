@@ -207,7 +207,16 @@ export function signupMassegeTemplate() {
         </aside>
     `;
 }
-
+/**
+ * Generate Task in Bord.html
+ *
+ * @param {string} id - task ID
+ * @param {string} title
+ * @param {string} category
+ * @param {string} description
+ * @param {string} priority
+ * @returns {T}
+ */
 export function generateTodosHTML(id, title, category, description, priority) {
   return `
             <div class="task__card" id="${id}" draggable="true">

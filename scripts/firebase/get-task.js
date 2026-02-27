@@ -1,0 +1,21 @@
+import { firebaseConfig } from "/scripts/firebase/firebase.js";
+
+const BASE_URL = firebaseConfig.databaseURL;
+let todos = [];
+
+/**
+ *
+ * @returns
+ */
+async function getTask() {
+  try {
+    let tasks = await fetch(BASE_URL + ".json");
+    let tasksToJson = await tasks.json();
+    console.log(tasksToJson);
+
+  } catch (error) {
+    return [];
+  }
+};
+
+getTask();
