@@ -4,15 +4,29 @@ import { auth } from "/scripts/firebase/firebase.js";
 
 init();
 
+
+/**
+ *
+ * @returns {void}
+ */
 async function init() {
   render();
 }
 
+
+/**
+ *
+ * @returns {void}
+ */
 function render() {
   renderHeader();
   renderSidebar();
 }
 
+
+/**
+ *
+ */
 function renderHeader() {
   const headerRef = document.getElementById('header');
   if (headerRef) {

@@ -1,5 +1,7 @@
 /**
  * @file
+ *
+ * @module drag-and-drop
  */
 import { generateTodosHTML } from './member-templates.js'
 // import { renderBoard } from'./member-script.js';
@@ -23,13 +25,13 @@ import { generateTodosHTML } from './member-templates.js'
  * Represent a board task.
  *
  * @typedef {Object} Todo
- * @property {string} title
- * @property {string} description
- * @property {string} date
- * @property {Priority} priority
- * @property {string} assignedTo
- * @property {Category} category
- * @property {SubtaskStatus} subtask
+ * @property {string} title - Task title
+ * @property {string} description - Task description
+ * @property {string} date - Endtime from the task
+ * @property {Priority} priority - Task priority level
+ * @property {string} assignedTo - who is working on
+ * @property {Category} category - Task category
+ * @property {SubtaskStatus} subtask - status from the task
  */
 
 

@@ -1,6 +1,13 @@
 /**
- * Generate a Header as HTML string for member sides.
+ * All templates for member sites.
  *
+ * @module member-templates
+ */
+
+/**
+ * Generate a Header as HTML string for member sites.
+ *
+ * @module member-templates
  * @returns {string} HTML string representing the header
  */
 export function getHeaderTemplate() {

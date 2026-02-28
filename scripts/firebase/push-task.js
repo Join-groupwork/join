@@ -1,11 +1,18 @@
+/**
+ * @file
+ * Provides Firebasew Realtime Database utilities
+ * for storing task data.
+ *
+ * @module push-task
+ */
 import { database } from '/scripts/firebase/firebase.js';
 import { ref, push } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
 /**
- * Function to push task to firefabe
+ * Saves a task object to Firebase Realtime Database.
  *
- * @param {Array} taskData
- * @returns
+ * @param {Todo} taskData - Todo object to store
+ * @returns {Promise<string | null>} Firebase key of the created task
  */
 export async function pushTask(taskData) {
     try {

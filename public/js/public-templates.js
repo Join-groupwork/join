@@ -1,3 +1,14 @@
+/**
+ * All template for public sites.
+ *
+ * @module public-templates
+ */
+
+/**
+ *Generate a Header as HTML string for public sites.
+
+ * @returns {string} HTML string representing the header
+ */
 export function getHeaderTemplate() {
   return `
         <div class="topbar-left">Kanban Project Management Tool</div>
@@ -22,7 +33,13 @@ export function getHeaderTemplate() {
         </div>
       `;
 
-} export function getSidebarTemplate() {
+};
+
+/**
+ *
+ * @returns {string} HTML string representing sidemenu
+ */
+export function getSidebarTemplate() {
   return `
       <div class="logo">
         <img src="../assets/img/joinlogo.png" alt="" >
@@ -40,8 +57,12 @@ export function getHeaderTemplate() {
         <a href="/public/legal-notice-public.html">Legal Notice</a>
       </div>
     `;
-}
+};
 
+/**
+ *
+ * @returns {string} HTML string representing successfull signup massege
+ */
 export function signupMassegeTemplate() {
   return `
         <aside class="signup-massege-box">

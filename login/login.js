@@ -1,5 +1,7 @@
 /**
  * @file Handle authentication logic (email/password and anonymous login).
+ *
+ * @module join-login
  */
 import { auth } from "/scripts/firebase/firebase.js";
 import { signInWithEmailAndPassword, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";

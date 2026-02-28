@@ -1,3 +1,13 @@
+/**
+ * @file  Handles user registration including form validation,
+ * Firebase authentication and contact persistence.
+ *
+ * @module signup
+ */
+
+/**
+ *
+ */
 import { auth } from "/join/firebase.js";
 import { createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 import { pushContact } from '../../scripts/firebase/pushContact.js';
@@ -17,6 +27,11 @@ signupConfirmPassword.addEventListener('input', validateForm);
 termsCheckbox.addEventListener('change', validateForm);
 signupForm.addEventListener('submit', handleSignup);
 
+/**
+ * Validates the signup form inputs and enables or disables the submit button.
+ *
+ * @returns {void}
+ */
 function validateForm() {
   const nameFilled = signupName.value.trim() !== '';
   const emailFilled = signupEmail.value.trim() !== '';
@@ -36,9 +51,11 @@ function validateForm() {
   });
 }
 /**
+ * Handles the signup form submission.
+ * Create a Firebase user and stores additional contact data.
  *
- *
- * @param {*} event
+ * @param {SubmitEvent} event - Form submit event
+ * @returns {Promise<void>}
  */
 async function handleSignup(event) {
   event.preventDefault();

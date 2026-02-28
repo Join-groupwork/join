@@ -1,3 +1,8 @@
+/**
+ * @file Protect member pages by checking Firebase authentication state.
+ *
+ * @module member-auth-guard
+ */
 import { auth } from "/scripts/firebase/firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
