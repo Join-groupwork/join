@@ -73,26 +73,6 @@ form {
   background-size: 18px 18px;
 }
 
-.login-button {
-  color: white;
-  background-color: #2a3647;
-  border-radius: 8px;
-  width: 60px;
-}
-
-.guest-button {
-  border-radius: 8px;
-  border-width: 1px;
-  width: 100px;
-}
-
-.buttons-section {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  height: 30px;
-}
-
 /* contact css */
 
 .contactside_section {

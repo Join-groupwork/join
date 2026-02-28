@@ -41,6 +41,7 @@
   --background__task--placeholder: #E7E7E7;
   --background__task--user-story: #0038FF;
   --background__task--technical-task: #1FD7C1;
+  /* Priority level color */
   --priority-urgent: #FF0000;
   --priority-medium: #FFA800;
   --priority-low: #7AE229;
