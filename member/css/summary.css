@@ -96,7 +96,7 @@ body {
 } */
 
 .dashboard {
-    padding: 160px 0px 0px 110px;
+  padding: 160px 0px 0px 110px;
 }
 
 .cards {
@@ -344,8 +344,6 @@ h3 {
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
-
-
 
 .big {
   font-size: 72px;
