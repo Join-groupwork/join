@@ -8,9 +8,15 @@ const columns = {
 
 };
 /**
- *
+ * Generates the HTML template for a task card.
  *
  * @param {string} task
+ * @param {string|number} task.key
+ * @param {string} task.category
+ * @param {string} task.title
+ * @param {string} task.description
+ * @param {string} task.assigned_to
+ * 
  * @returns {string} HTML string
  */
 function getCardTemplate(task) {
@@ -24,6 +30,19 @@ function getCardTemplate(task) {
     `;
 }
 
+/**
+ * Fetches all tasks and renders them
+ * based on their status.
+ *
+ * This function:
+ * - Loads tasks from the Firebase
+ * - Matches each task to the appropriate column
+ * - Removes placeholder elements if present
+ * - Appends the generated task card HTML to the column
+ *
+ * @async
+ * @returns {Promise<void>} 
+ */
 async function renderBoard() {
     const tasksData = await loadTasks();
     for (let i = 0; i < tasksData.length; i++) {
