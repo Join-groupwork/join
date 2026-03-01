@@ -1,5 +1,16 @@
 import { pushTask } from '../../scripts/firebase/push-task.js';
 
+/**
+ * Initializes the task creation page after the DOM is fully loaded.
+ * 
+ * Sets up:
+ * - Priority button selection handling
+ * - Create task button logic (including validation and Firebase push)
+ * * - Cancel button navigation behavior
+ * 
+ * @event DOMContentLoaded
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
   const createBtn = document.querySelector('.Create_button_add_task');
   const cancelBtn = document.querySelector('.clear_button_add_task');
@@ -12,6 +23,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const priorityButtons = document.querySelectorAll('.priority_button');
 
   let selectedPriority = null;
+
+  /**
+   * Handles priority button selection.
+   * 
+   * Removes the "selected" class from all priority buttons,
+   * assigns it to the clicked button and stores the selected value.
+   * 
+   * @param {MouseEvent} e - The click event object.
+   */
+
   priorityButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -22,6 +43,19 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   if (createBtn) {
+
+    /**
+     * Handles the task creation process.
+     * 
+     * Validates input, constructs the task object,
+     * sends it to Firebase using pushTask(),
+     * and redirects to the board page on success.
+     * 
+     * @async
+     * @param {MouseEvent} e - The click event object.
+     * @returns {Promise<void>}
+     */
+
     createBtn.addEventListener('click', async (e) => {
       e.preventDefault();
       const title = titleInput?.value?.trim();
@@ -52,6 +86,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (cancelBtn) {
+
+    /**
+     * Handles cancel button click.
+     * 
+     * Prevents default behavior and navigates back
+     * to the previous page in browser history.
+     * 
+     * @param {MouseEvent} e - The click event object.
+     */
+
     cancelBtn.addEventListener('click', (e) => {
       e.preventDefault();
       window.history.back();
