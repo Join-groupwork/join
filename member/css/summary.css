@@ -1,34 +1,10 @@
 * {
-  margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Open Sans", sans-serif;
 }
 
 .app {
   display: flex;
   height: 100vh;
-}
-
-.sidebar {
-  width: 220px;
-  /* height ergänzt wegen add_task */
-  height: 100%;
-  background: #1a2c47;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 40px;
-  /* ergänzt für add_task */
-  /* erstmal für summary-page entfernt */
-  /* position: fixed;
-  left: 0;
-  top: 0;
-  z-index: +1; */
 }
 
 .logo {
@@ -96,7 +72,7 @@ body {
 } */
 
 .dashboard {
-    padding: 160px 0px 0px 110px;
+  padding: 160px 0px 0px 110px;
 }
 
 .cards {

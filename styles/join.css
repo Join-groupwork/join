@@ -52,27 +52,6 @@ form {
   /* gap: 30px; //der gap ist aus der index.css */
 }
 
-/* input {
-  border-radius: 5px;
-  border-width: 1px;
-  width: 250px;
-  height: 20px;
-} */
-
-.email-input {
-  border: 1px solid #ccc;
-  background-repeat: no-repeat;
-  background-position: 230px center;
-  background-size: 18px 18px;
-}
-
-.password-input {
-  border: 1px solid #ccc;
-  background-repeat: no-repeat;
-  background-position: 230px center;
-  background-size: 18px 18px;
-}
-
 /* contact css */
 
 .contactside_section {
@@ -278,13 +257,13 @@ header {
 }
 
 .summary_pencil {
-    width: 60px;
-    height: 60px;
+  width: 60px;
+  height: 60px;
 }
 
 .summary_check {
-    width: 60px;
-    height: 60px;
+  width: 60px;
+  height: 60px;
 }
 
 /* Logo */
