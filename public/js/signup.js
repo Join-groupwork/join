@@ -20,6 +20,10 @@ const termsCheckbox = document.getElementById('termsCheckbox');
 const signupBtn = document.getElementById('signupBtn');
 const signupForm = document.getElementById('signupForm');
 
+
+/**
+ * @event Eventlistener
+ */
 signupName.addEventListener('input', validateForm);
 signupEmail.addEventListener('input', validateForm);
 signupPassword.addEventListener('input', validateForm);
