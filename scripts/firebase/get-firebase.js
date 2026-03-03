@@ -15,12 +15,13 @@
 
 
 import { database, auth } from '/scripts/firebase/firebase.js';
-import { ref, onValue, push, set } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import { ref, onValue, push, set, update, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 import { getAddOverlayTemplate } from '/member/js/member-templates.js';
 
 let contacts = {};
 let tasks = {};
 let category = {};
+let activeContactId = null;
 
 //  authentifizierung 
 auth.onAuthStateChanged((user) => {
@@ -96,9 +97,15 @@ function groupContactsByLetter(contactsObjects) {
 function renderContactsList(contactsObjects) {
     const contactList = document.getElementById('contact_list');
     if (!contactList) return;
+
     const groupedContacts = groupContactsByLetter(contactsObjects);
     resetContactListExceptAddButton(contactList);
     renderAlphabeticalContactSections(contactList, groupedContacts);
+
+    // Falls bereits ein Kontakt aktiv war, Detailansicht neu rendern
+    if (activeContactId && contactsObjects[activeContactId]) {
+        renderActiveContactTemplate(contactsObjects[activeContactId]);
+    }
 }
 
 function resetContactListExceptAddButton(contactList) {
@@ -147,10 +154,40 @@ function renderContactsUnderLetter(contactList, letter, groupedContacts) {
 function buildContactListItem(contact) {
     const listItem = document.createElement('li');
     listItem.className = 'contact_item';
+    listItem.dataset.contactId = contact.id;
     listItem.innerHTML = getContactItemTemplate(contact);
+
+    if (contact.id === activeContactId) {
+        listItem.classList.add('contact_item--active');
+    }
+
+    listItem.addEventListener('click', () => {
+        setActiveContact(contact.id, contact);
+    });
+
     return listItem;
 }
 
+function setActiveContact(contactId, contactData) {
+    activeContactId = contactId;
+
+    document.querySelectorAll('.contact_item.contact_item--active')
+        .forEach(item => item.classList.remove('contact_item--active'));
+
+    const currentItem = document.querySelector(`.contact_item[data-contact-id="${contactId}"]`);
+    if (currentItem) {
+        currentItem.classList.add('contact_item--active');
+    }
+
+    renderActiveContactTemplate(contactData);
+}
+
+function renderActiveContactTemplate(contact) {
+    const detailContainer = getContactDetailContainer();
+    if (!detailContainer) return;
+
+    detailContainer.innerHTML = getActiveContactTemplate(contact);
+}
 
 function getContactItemTemplate(contact) {
     const initials = getInitials(contact.name);
@@ -168,6 +205,84 @@ function getContactItemTemplate(contact) {
         </section>
     `;
 }
+
+function getContactDetailContainer() {
+    return (
+        document.getElementById('contact_detail') ||
+        document.getElementById('contact-detail') ||
+        document.querySelector('.contact_detail')
+    );
+}
+
+function getActiveContactTemplate(contact) {
+    const initials = getInitials(contact.name || '');
+    const bgColor = getAvatarColor(contact.name || '');
+    const phone = contact.phone ? contact.phone : '-';
+
+    return `
+        <section class="contact_detail_card contact_detail_card--enter">
+            <div class="contact_detail_header">
+                <div class="contact_avatar contact_avatar--large" style="background-color: ${bgColor}">
+                    ${initials}
+                </div>
+                <div>
+                    <h2 class="contact_detail_name">${contact.name || ''}</h2>
+                    <div class="contact_detail_actions">
+                        <button type="button" class="link_btn" onclick="editContact('${contact.id}')">Edit</button>
+                        <button type="button" class="link_btn" onclick="deleteContact('${contact.id}')">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="contact_detail_subtitle">Contact Information</h3>
+
+            <div class="contact_detail_info">
+                <strong>Email</strong>
+                <a href="mailto:${contact.email || ''}">${contact.email || ''}</a>
+            </div>
+
+            <div class="contact_detail_info">
+                <strong>Phone</strong>
+                <a href="tel:${phone}">${phone}</a>
+            </div>
+        </section>
+    `;
+}
+
+function getEditOverlayTemplate(contactId, contact) {
+    return `
+        <section class="overlay_add_contact">
+            <div class="overlay_add_contact_left">
+                <img class="join_logo_overlay" src="assets/img/joinlogo.png" alt="Join Logo">
+                <h2 class="heading_add_contact">Edit Contact</h2>
+                <img class="h2_underline" src="assets/icons/Vector 5.svg" alt="">
+            </div>
+
+            <div class="overlay_add_contact_right">
+                <div class="addContact_form_container">
+                    <div>
+                        <img src="assets/icons/Contact_icon.svg" alt="Contact Icon">
+                    </div>
+
+                    <form class="form_add_contact" onsubmit="event.preventDefault()">
+                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact"
+                            placeholder="Name" value="${contact.name || ''}">
+                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact"
+                            placeholder="Email" value="${contact.email || ''}">
+                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact"
+                            placeholder="Phone" value="${contact.phone || ''}">
+                    </form>
+                </div>
+
+                <div class="buttons_add_contact">
+                    <button type="button" class="btn_save_contact" onclick="deleteContact('${contactId}')">Delete</button>
+                    <button type="button" class="btn_cancel_contact">Save <img src="assets/icons/check.svg" alt=""></button>
+                </div>
+            </div>
+        </section>
+    `;
+}
+
 
 function getInitials(name) {
     return name
@@ -213,13 +328,12 @@ async function handleAddContact(event) {
     if (event) {
         event.preventDefault();
     }
-    // Werte holen
     const nameInput = document.getElementById('contact_name');
     const emailInput = document.getElementById('contact_email');
     const phoneInput = document.getElementById('contact_phone');
     
     if (!nameInput || !emailInput) {
-        alert('Formular-Felder nicht gefunden!');
+        console.error('Formular-Felder nicht gefunden!');
         return;
     }
     
@@ -227,21 +341,16 @@ async function handleAddContact(event) {
     const email = emailInput.value.trim();
     const phone = phoneInput ? phoneInput.value.trim() : '';
     
-    
     if (!name || !email) {
-        alert('Bitte Name und E-Mail ausfüllen!');
         return;
     }
     
-    // Prüfen ob User eingeloggt 
     const currentUser = auth.currentUser;
     if (!currentUser) {
-        alert('Sie müssen eingeloggt sein!');
         return;
     }
     
     try {
-        // Kontakt in Firebase speichern
         const contactsRef = ref(database, 'contacts');
         const newContactRef = push(contactsRef);
         const newContact = {
@@ -257,10 +366,9 @@ async function handleAddContact(event) {
         showSuccessMessage('Contact successfully created!');
         
     } catch (error) {
-        alert('Fehler beim Speichern: ' + error.message);
+        console.error('Fehler beim Speichern:', error);
     }
 }
-
 
 function showSuccessMessage(message) {
     const successDiv = document.createElement('div');
@@ -275,9 +383,46 @@ function showSuccessMessage(message) {
     }, 500);
 }
 
+function getEmptyContactDetailTemplate() {
+    return `   
+    `;
+}
+
+async function deleteContact(contactId) {
+    if (!contactId) return;
+
+    try {
+        await remove(ref(database, `contacts/${contactId}`));
+
+        if (activeContactId === contactId) {
+            activeContactId = null;
+            const detailContainer = getContactDetailContainer();
+            if (detailContainer) detailContainer.innerHTML = getEmptyContactDetailTemplate();
+        }
+    } catch (error) {
+        console.error('Fehler beim Löschen des Kontakts:', error);
+    }
+}
+
+function editContact(contactId) {
+    const overlay = document.getElementById('contact-add-overlay');
+    if (!overlay) return;
+
+    const contact = contacts[contactId];
+    if (!contact) {
+        console.error('Kontakt nicht gefunden:', contactId);
+        return;
+    }
+
+    overlay.innerHTML = getEditOverlayTemplate(contactId, contact);
+    overlay.style.display = 'flex';
+}
 
 
 // Make functions globally accessible
+
+window.deleteContact = deleteContact;
 window.showAddContactOverlay = showAddContactOverlay;
 window.hideAddContactOverlay = hideAddContactOverlay;
+window.editContact = editContact;
 window.handleAddContact = handleAddContact; 
