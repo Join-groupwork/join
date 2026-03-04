@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: public/js/public-script.js</title>
+    <title>JSDoc: Source: member/js/member-script.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: public/js/public-script.js</h1>
+    <h1 class="page-title">Source: member/js/member-script.js</h1>
 
     
 
@@ -27,52 +27,62 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @file Public page bootstrapper: renders shared header/sidebar UI and wires up the header menu + logout.
+ * @file Member page bootstrapper: renders header/sidebar/task UI and wires up header menu + logout.
  *
- * This module injects templates into the public pages (e.g. summary-guest/public area)
- * and provides a logout button that signs out the current Firebase user.
+ * This module initializes the member UI by injecting HTML templates into the page,
+ * then triggers board rendering (currently via `updateHTML()` from the drag &amp; drop module).
  *
  * DOM requirements (IDs must exist in the HTML):
- * - `header`        : container for the header template
- * - `sidebar`       : container for the sidebar template
- * - `headerMenue`   : profile/menu button in the header
+ * - `header`       : container for the header template
+ * - `sidebar`      : container for the sidebar template
+ * - `add_task`     : container for the "add task" template
+ * - `editC_overlay`: (optional) container for contact edit overlay
+ * - `addC_overlay` : (optional) container for contact add overlay
+ * - `headerMenue`  : profile/menu button in the header
  * - `headerMenueNav`: dropdown/navigation container toggled by profile button
- * - `logoutBtn`     : logout button
+ * - `logoutBtn`    : logout button
  *
  * External dependencies:
- * - Template functions from `/public/js/public-templates.js`
+ * - Template functions from `member-templates.js`
+ * - `updateHTML()` from `drag-n-drop.js`
  * - Firebase Auth instance `auth` and `signOut()`
  *
- * @module public-ui
+ * @module member-ui
  */
-import { getHeaderTemplate, getSidebarTemplate } from '/public/js/public-templates.js';
+import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate, getAddOverlayTemplate, generateTodosHTML } from './member-templates.js';
+import { updateHTML } from './drag-n-drop.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { auth } from "/scripts/firebase/firebase.js";
+import { auth } from "../../scripts/firebase/firebase.js";
 
 init();
 
 
 /**
  * Entry point for module initialization.
- * Renders the UI on load.
+ * Renders all UI parts in sequence.
  *
- * NOTE: `render()` is synchronous; this function does not need to be `async`.
- *
- * @returns {void}
+ * @async
+ * @returns {Promise&lt;void>}
  */
 async function init() {
-  render();
+  await render();
+  // renderBoard();
 };
 
 
 /**
- * Renders all public UI sections.
+ * Renders all static UI sections and the board.
  *
- * @returns {void}
+ * @async
+ * @returns {Promise&lt;void>}
  */
-function render() {
-  renderHeader();
-  renderSidebar();
+async function render() {
+  await renderHeader();
+  await renderSidebar();
+  await renderAddTask();
+  // renderContactAddOverlay();   &lt;-- Aktivieren, um das Overlay zum Hinzufügen von Kontakten anzuzeigen
+  // renderContactEditOverlay(); Contact
+  await renderBoard();
 };
 
 
@@ -106,15 +116,9 @@ function renderSidebar() {
 };
 
 
+
 /**
- * Renders the "Add Task" section by injecting the task template into `#add_task`.
- *
- * DOM requirement:
- * - An element with id `add_task` must exist on the page.
- *
- * Dependencies:
- * - `getTaskTemplate()` must be available in scope (imported or defined elsewhere)
- *   and must return a HTML string.
+ * Injects the add-task template into `#add_task`.
  *
  * @returns {void}
  */
@@ -129,9 +133,39 @@ function renderAddTask() {
 
 
 /**
+ * Injects the contact edit overlay template into `#editC_overlay`.
+ *
+ * @returns {void}
+ */
+function renderContactEditOverlay() {
+  const editContactRef = document.getElementById('editC_overlay');
+  if (editContactRef) {
+    editContactRef.innerHTML = getEditOverlayTemplate();
+  } else {
+    console.error('ContactOverlay-Element nicht gefunden!');
+  }
+};
+
+
+/**
+ * Injects the contact add overlay template into `#addC_overlay`.
+ *
+ * @returns {void}
+ */
+function renderContactAddOverlay() {
+  const addContactRef = document.getElementById('addC_overlay');
+  if (addContactRef) {
+    addContactRef.innerHTML = getAddOverlayTemplate();
+  } else {
+    console.error('ContactOverlay-Element nicht gefunden!');
+  }
+};
+
+
+/**
  * Registers UI event listeners after the DOM is ready:
  * - Toggle header dropdown menu
- * - Sign out user and redirect to the public index page
+ * - Sign out user and redirect to index page
  *
  * @event DOMContentLoaded
  * @listens Document#DOMContentLoaded
@@ -148,13 +182,27 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const userCredential = signOut(auth);
       console.log("Logout erfolgreich:", userCredential.user);
-      window.location.href = "index.html"; // target page after Logout
+      window.location.href = "../index.html"; // target page after Logout
     } catch (error) {
       console.error("Logout Fehlgeschlagen:", error.message);
       alert("Logout fehlgeschlagen");
     }
   })
-})
+});
+
+
+/**
+ * Triggers the board rendering.
+ *
+ * Currently delegates to `updateHTML()` in `drag-n-drop.js`, which renders the
+ * board columns based on the current in-memory tasks.
+ *
+ * @async
+ * @returns {Promise&lt;void>}
+ */
+async function renderBoard() {
+  updateHTML();
+}
 </code></pre>
         </article>
     </section>

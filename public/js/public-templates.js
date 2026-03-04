@@ -1,13 +1,25 @@
 /**
- * All template for public sites.
+ * @file HTML template factory functions for public pages.
+ *
+ * Provides template helpers that return HTML strings for shared public UI parts:
+ * header, sidebar, and a signup success message.
  *
  * @module public-templates
  */
 
 /**
- *Generate a Header as HTML string for public sites.
-
- * @returns {string} HTML string representing the header
+ * Generates the header HTML for public pages.
+ *
+ * Includes:
+ * - Help icon (currently just a div, no link)
+ * - Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)
+ *
+ * DOM hooks created by this template:
+ * - `#headerMenue` (toggle button)
+ * - `#headerMenueNav` (dropdown container)
+ * - `#logoutBtn` (logout trigger)
+ *
+ * @returns {string} HTML string representing the public header.
  */
 export function getHeaderTemplate() {
   return `
@@ -35,9 +47,16 @@ export function getHeaderTemplate() {
 
 };
 
+
 /**
+ * Generates the sidebar HTML for public pages.
  *
- * @returns {string} HTML string representing sidemenu
+ * Includes:
+ * - Logo
+ * - Navigation links (Summary / Add Task / Board / Contacts)
+ * - Footer/legal links (Privacy Policy / Legal Notice)
+ *
+ * @returns {string} HTML string representing the public sidebar.
  */
 export function getSidebarTemplate() {
   return `
@@ -59,9 +78,11 @@ export function getSidebarTemplate() {
     `;
 };
 
+
 /**
+ * Generates a success message shown after a successful signup.
  *
- * @returns {string} HTML string representing successfull signup massege
+ * @returns {string} HTML string representing a signup success message.
  */
 export function signupMassegeTemplate() {
   return `
@@ -71,4 +92,4 @@ export function signupMassegeTemplate() {
             </p>
         </aside>
     `
-}
+};
