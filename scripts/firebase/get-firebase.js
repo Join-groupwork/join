@@ -279,9 +279,12 @@ function getAvatarColor(name) {
 export function showAddContactOverlay() {
     const overlay = document.getElementById('contact-add-overlay');
     if (!overlay) return;
-    
+
     overlay.innerHTML = getAddOverlayTemplate();
     overlay.style.display = 'flex';
+
+    const form = document.getElementById('add_contact_form');
+    if (form) form.onsubmit = handleAddContact;
 }
 
 export function hideAddContactOverlay() {
@@ -437,8 +440,14 @@ function getEditOverlayElement() {
     return document.getElementById('editC_overlay');
 }
 
+
+
 function renderEditOverlay(overlay, contactId) {
-    overlay.innerHTML = getEditOverlayTemplate(contactId, contacts[contactId]);
+    const contact = contacts[contactId];
+    const initials = getInitials(contact.name || '');
+    const color = getAvatarColor(contact.name || '');
+
+    overlay.innerHTML = getEditOverlayTemplate(contactId, contact, initials, color);
     overlay.classList.remove('d_none');
     overlay.onclick = closeEditOverlay;
 }

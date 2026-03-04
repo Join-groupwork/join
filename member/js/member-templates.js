@@ -128,19 +128,16 @@ export function getAddOverlayTemplate() {
                     <div>
                         <img src="/assets/icons/contact-icon.svg" alt="Contact Icon">
                     </div>
-                    <form class="form_add_contact" action="">
-                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact"
-                            placeholder="Name">
-                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact"
-                            placeholder="Email">
-                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact"
-                            placeholder="Phone">
+                    <form class="form_add_contact" id="add_contact_form">
+                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact" required>
+                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact" required>
+                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact">
                     </form>
                 </div>
 
                 <div class="buttons_add_contact">
                     <button type="button" class="btn_save_contact" onclick="hideAddContactOverlay()">Cancel <img src="/assets/icons/close-icon.svg" alt=""></button>
-                    <button type="button" class="btn_cancel_contact" onclick="handleAddContact(event)">Create contact <img src="/assets/icons/check-icon-white.svg" alt=""></button>
+                    <button type="submit" form="add_contact_form" class="btn_cancel_contact">Create contact <img src="/assets/icons/check-icon-white.svg" alt=""></button>
                 </div>
 
             </div>
@@ -192,7 +189,7 @@ export function getActiveContactTemplate(contact, initials, bgColor, phone) {
   `;
 }
 
-export function getEditOverlayTemplate(contactId, contact) {
+export function getEditOverlayTemplate(contactId, contact, initials, color) {
   return `
     <section class="overlay_add_contact" onclick="event.stopPropagation()">
       <div class="overlay_add_contact_left">
@@ -206,8 +203,9 @@ export function getEditOverlayTemplate(contactId, contact) {
                     <img class="close_overlay_icon" src="/assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="closeEditOverlay()">
                 </div>
         <div class="addContact_form_container">
-          <div><img src="/assets/icons/contact-icon.svg" alt="Contact Icon"></div>
-            
+            <div class="contact_avatar contact_avatar--large edit_overlay_avatar" style="background-color:${color}">
+                ${initials}
+            </div>
           <form class="form_add_contact" id="edit_contact_form">
             <input type="text" id="contact_name" class="input_add_contact" placeholder="Name" value="${contact.name || ''}" required>
             <input type="email" id="contact_email" class="input_add_contact" placeholder="Email" value="${contact.email || ''}" required>

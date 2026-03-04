@@ -48,7 +48,7 @@
 }
 
 
-/* Styles for the contact overlay  add + edit */
+
 
 .overlay_add_contact {
     display: flex;
@@ -77,7 +77,6 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Backdrop - dunkler Hintergrund */
     z-index: 1000;
     justify-content: center;
     align-items: center;
@@ -86,7 +85,7 @@
 
 
 .overlay_add_contact h2 {
-    font-size: 48px;
+    font-size: 58px;
     margin: unset;
     color: #ffffff;
 }
@@ -98,10 +97,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    /* justify-content: center; */
     border-right: 1px solid #e0e0e0;
-    padding-right: 20px;
-    padding-left: 40px;
     background-color: #2A3647;
     border-radius: 16px 0 0 16px;
 }
@@ -221,12 +217,12 @@
     display: flex;
     justify-content: flex-end;
     position: fixed;
-    top: 20px;
-    right: 25px;
+    top: 4%;
+    right: 2%;
 }
 
 .close_overlay_icon {
-    
+
     cursor: pointer;
     width: 16px;
     height: 16px;
@@ -274,7 +270,7 @@
 }
 
 
-/* Detail-Karte */
+
 .contact_detail_card {
     display: flex;
     flex-direction: column;
@@ -362,7 +358,7 @@
     text-decoration: underline;
 }
 
-/* Aktiver Kontakt links in der Liste */
+
 .contact_item--active .contact_container {
     background: #2a3647;
     color: #fff;
@@ -373,7 +369,7 @@
     color: #9fc8ff;
 }
 
-/* Optional: bessere Klickfläche */
+
 .contact_item {
     list-style: none;
     cursor: pointer;
@@ -382,13 +378,13 @@
 }
 
 
-/*test*/
+
 
 .d_none {
     display: none !important;
 }
 
-/* Overlay Hintergrund */
+
 .addContact_overlay {
     position: fixed;
     inset: 0;
@@ -400,7 +396,7 @@
     overflow: hidden;
 }
 
-/* Overlay Card */
+
 .overlay_add_contact {
     width: 100%;
     max-width: 1100px;
@@ -438,7 +434,7 @@
 
 .overlay_add_contact_right {
     width: 58%;
-    padding: 56px 48px;
+    padding: 4% 3% 4% 3%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -446,7 +442,7 @@
 
 .addContact_form_container {
     display: flex;
-    gap: 24px;
+    gap: 13%;
     align-items: flex-start;
 }
 
@@ -497,4 +493,34 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
+}
+
+
+.edit_overlay_avatar {
+    width: 160px;
+    height: 160px;
+    min-width: 160px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 47px;
+    font-weight: 500;
+    line-height: 1;
+    border: 3px solid #fff;
+    /* margin: 20px 55px 20px 33px; */
+}
+
+
+.overlay-form input {
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    font-size: 20px;
+    color: #2a3647;
+}
+
+.overlay-form input:focus {
+    border-color: #29abe2;
+    outline: none;
 }
