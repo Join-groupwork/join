@@ -47,17 +47,12 @@ import { generateTodosHTML } from './member-templates.js'
  */
 
 
-
-
 // [x]Create updateHTML function, examples for initial testing
 // [x] Test drag and drop
 // [ ] Style drag and drop
 // [ ] Add Firebase update
 // [ ] Retrieve data from Firebase and display in to-dos
 // [ ] Test function with Firebase data
-
-// let categorys = ['user-story', 'technical-task'];
-// let subtask = ['todo', 'in-progress', 'await-feedback', 'done'];
 // INFO  let = todos will be replaced later when the data is loaded from Firebase.
 
 /**
@@ -169,6 +164,8 @@ function updateAwaitFeedback() {
     }
   }
 };
+
+
 /**
  * Renders tasks with {@link Todo.subtask} === `"done"` into the `#done` column.
  *
@@ -228,6 +225,8 @@ document.addEventListener("dragstart", function (event) {
     event.target.classList.add("task__card--dragging"); // INFO We add a CSS class for the move so that it visually matches the design.
   }
 });
+
+
 /**
  * Handles `dragend` on `.task__card`.
  * Removes the visual dragging class.
@@ -241,6 +240,8 @@ document.addEventListener("dragend", function (event) {
     event.target.classList.remove("task__card--dragging"); // INFO Removes the CSS class for the visual appearance when moving.
   }
 });
+
+
 // [x] dragover coden
 /**
  * Handles `dragover` within a `.task__area` drop zone.
@@ -257,8 +258,10 @@ document.addEventListener("dragover", function (event) {
   //  [ ] Visual feedback for the drop zone where it is pushed in must be determined here, via classlist.add.
   dropZone.classList.add("task__area--highlight");
 });
+
+
 // [x] drop coden
-// [ ] togglePlaceholder() is on function?
+// [x] togglePlaceholder() is on function?
 /**
  * Handles `drop` within a `.task__area` drop zone.
  * Moves the dragged task into the drop zone's status and re-renders the board.
@@ -278,6 +281,8 @@ document.addEventListener("drop", function (event) {
   togglePlaceholder();
 }
 );
+
+
 // [x] dragleave coden
 // [ ] Check that “task__area--highlight” is removed.
 /**

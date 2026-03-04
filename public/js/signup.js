@@ -58,6 +58,7 @@ function validateForm() {
  * Handles the signup form submission.
  * Create a Firebase user and stores additional contact data.
  *
+ * @async
  * @param {SubmitEvent} event - Form submit event
  * @returns {Promise<void>}
  */
@@ -72,6 +73,10 @@ async function handleSignup(event) {
 
     const uid = userCredential.user.uid;
 
+    /**
+    * Contact data that will be stored in your database.
+    * @type {{ uid: string, name: string, email: string, createdAT: number }}
+    */
     const contactData = {
       uid: uid,
       name: signupName.value.trim(),

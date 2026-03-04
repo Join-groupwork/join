@@ -94,6 +94,89 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="columns"><span class="type-signature">(constant) </span>columns<span class="type-signature"> :Object</span></h4>
+
+
+
+
+<div class="description">
+    References to the DOM containers (board columns) where tasks are rendered.
+
+Why this exists:
+- You query the DOM *once* (instead of repeating `document.getElementById(...)` everywhere).
+- Your code becomes cleaner: `columns.todo` is easier to read than `"todo"` strings everywhere.
+- It centralizes the “IDs must exist” assumption in one place (good for debugging).
+
+Note: These can be `null` if the elements don’t exist in the current HTML page.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line20">line 20</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -349,7 +432,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line22">line 22</a>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -854,7 +937,14 @@
 
 
 <div class="description">
-    Fetches all tasks and renders thembased on their status.This function:- Loads tasks from the Firebase- Matches each task to the appropriate column- Removes placeholder elements if present- Appends the generated task card HTML to the column
+    Fetches all tasks and renders them
+based on their status.
+
+This function:
+- Loads tasks from the Firebase
+- Matches each task to the appropriate column
+- Removes placeholder elements if present
+- Appends the generated task card HTML to the column
 </div>
 
 
@@ -898,7 +988,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line46">line 46</a>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line64">line 64</a>
     </li></ul></dd>
     
 
@@ -1046,13 +1136,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-join-login.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#renderBoard">renderBoard</a></li><li><a href="global.html#renderHeader">renderHeader</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-join-login.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#renderBoard">renderBoard</a></li><li><a href="global.html#renderHeader">renderHeader</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 03 2026 19:59:36 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Mar 04 2026 10:59:16 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>
