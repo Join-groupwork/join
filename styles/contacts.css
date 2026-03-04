@@ -386,3 +386,119 @@
     padding: 2px 0;
     
 }
+
+
+/*test*/ 
+
+.d_none {
+  display: none !important;
+}
+
+/* Overlay Hintergrund */
+.addContact_overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.18);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+  overflow: hidden;
+}
+
+/* Overlay Card */
+.overlay_add_contact {
+  width: 100%;
+  max-width: 1100px;
+  min-height: 580px;
+  background: #ffffff;
+  border-radius: 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  display: flex;
+  overflow: hidden;
+  animation: overlaySlideInFromRight 260ms ease-out forwards;
+}
+
+@keyframes overlaySlideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(120px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.overlay_add_contact_left {
+  width: 42%;
+  background: #2a3647;
+  color: #fff;
+  padding: 64px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+}
+
+.overlay_add_contact_right {
+  width: 58%;
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.addContact_form_container {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.form_add_contact {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input_add_contact {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  padding: 0 16px;
+  font-size: 16px;
+  outline: none;
+}
+
+.input_add_contact:focus {
+  border-color: #29abe2;
+}
+
+.buttons_add_contact {
+  margin-top: 14px;
+  display: flex;
+  gap: 12px;
+}
+
+.btn_save_contact,
+.btn_cancel_contact {
+  height: 48px;
+  border-radius: 10px;
+  padding: 0 20px;
+  border: 1px solid #2a3647;
+  cursor: pointer;
+}
+
+.btn_save_contact {
+  background: #fff;
+  color: #2a3647;
+}
+
+.btn_cancel_contact {
+  background: #2a3647;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}

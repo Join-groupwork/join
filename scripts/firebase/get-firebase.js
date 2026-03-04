@@ -16,12 +16,13 @@
 
 import { database, auth } from '/scripts/firebase/firebase.js';
 import { ref, onValue, push, set, update, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
-import { getAddOverlayTemplate } from '/member/js/member-templates.js';
+import { getAddOverlayTemplate, getActiveContactTemplate, getEditOverlayTemplate } from '/member/js/member-templates.js';
 
 let contacts = {};
 let tasks = {};
 let category = {};
 let activeContactId = null;
+let editingContactId = null;
 
 //  authentifizierung 
 auth.onAuthStateChanged((user) => {
@@ -95,18 +96,30 @@ function groupContactsByLetter(contactsObjects) {
 
 
 function renderContactsList(contactsObjects) {
-    const contactList = document.getElementById('contact_list');
+    const contactList = getContactListElement();
     if (!contactList) return;
 
+    renderGroupedContacts(contactList, contactsObjects);
+    rerenderActiveContactDetail(contactsObjects);
+}
+
+function getContactListElement() {
+    return document.getElementById('contact_list');
+}
+
+function renderGroupedContacts(contactList, contactsObjects) {
     const groupedContacts = groupContactsByLetter(contactsObjects);
     resetContactListExceptAddButton(contactList);
     renderAlphabeticalContactSections(contactList, groupedContacts);
-
-    // Falls bereits ein Kontakt aktiv war, Detailansicht neu rendern
-    if (activeContactId && contactsObjects[activeContactId]) {
-        renderActiveContactTemplate(contactsObjects[activeContactId]);
-    }
 }
+
+function rerenderActiveContactDetail(contactsObjects) {
+    if (!activeContactId) return;
+    const activeContact = contactsObjects[activeContactId];
+    if (!activeContact) return;
+    renderActiveContactTemplate(activeContact);
+}
+
 
 function resetContactListExceptAddButton(contactList) {
     const addButton = contactList.querySelector('.contact_btn_addNew');
@@ -168,26 +181,50 @@ function buildContactListItem(contact) {
     return listItem;
 }
 
+
 function setActiveContact(contactId, contactData) {
+    setActiveContactId(contactId);
+    clearActiveContactClass();
+    activateContactListItem(contactId);
+    renderActiveContactDetail(contactData);
+}
+
+function setActiveContactId(contactId) {
     activeContactId = contactId;
+}
 
-    document.querySelectorAll('.contact_item.contact_item--active')
-        .forEach(item => item.classList.remove('contact_item--active'));
+function clearActiveContactClass() {
+    document.querySelectorAll('.contact_item--active')
+        .forEach(element => element.classList.remove('contact_item--active'));
+}
 
-    const currentItem = document.querySelector(`.contact_item[data-contact-id="${contactId}"]`);
-    if (currentItem) {
-        currentItem.classList.add('contact_item--active');
-    }
+function activateContactListItem(contactId) {
+    const item = getContactListItemById(contactId);
+    if (!item) return;
+    item.classList.add('contact_item--active');
+}
 
+function getContactListItemById(contactId) {
+    return document.querySelector(`[data-contact-id="${contactId}"]`);
+}
+
+function renderActiveContactDetail(contactData) {
     renderActiveContactTemplate(contactData);
 }
 
-function renderActiveContactTemplate(contact) {
-    const detailContainer = getContactDetailContainer();
-    if (!detailContainer) return;
 
-    detailContainer.innerHTML = getActiveContactTemplate(contact);
+function renderActiveContactTemplate(contact) {
+  const container = getContactDetailContainer();
+  if (!container) return;
+
+  const initials = getInitials(contact.name || '');
+  const bgColor = getAvatarColor(contact.name || '');
+  const phone = contact.phone || '-';
+
+  container.innerHTML = getActiveContactTemplate(contact, initials, bgColor, phone);
 }
+
+
 
 function getContactItemTemplate(contact) {
     const initials = getInitials(contact.name);
@@ -206,81 +243,13 @@ function getContactItemTemplate(contact) {
     `;
 }
 
+
 function getContactDetailContainer() {
     return (
         document.getElementById('contact_detail') ||
         document.getElementById('contact-detail') ||
         document.querySelector('.contact_detail')
     );
-}
-
-function getActiveContactTemplate(contact) {
-    const initials = getInitials(contact.name || '');
-    const bgColor = getAvatarColor(contact.name || '');
-    const phone = contact.phone ? contact.phone : '-';
-
-    return `
-        <section class="contact_detail_card contact_detail_card--enter">
-            <div class="contact_detail_header">
-                <div class="contact_avatar contact_avatar--large" style="background-color: ${bgColor}">
-                    ${initials}
-                </div>
-                <div>
-                    <h2 class="contact_detail_name">${contact.name || ''}</h2>
-                    <div class="contact_detail_actions">
-                        <button type="button" class="link_btn" onclick="editContact('${contact.id}')">Edit</button>
-                        <button type="button" class="link_btn" onclick="deleteContact('${contact.id}')">Delete</button>
-                    </div>
-                </div>
-            </div>
-
-            <h3 class="contact_detail_subtitle">Contact Information</h3>
-
-            <div class="contact_detail_info">
-                <strong>Email</strong>
-                <a href="mailto:${contact.email || ''}">${contact.email || ''}</a>
-            </div>
-
-            <div class="contact_detail_info">
-                <strong>Phone</strong>
-                <a href="tel:${phone}">${phone}</a>
-            </div>
-        </section>
-    `;
-}
-
-function getEditOverlayTemplate(contactId, contact) {
-    return `
-        <section class="overlay_add_contact">
-            <div class="overlay_add_contact_left">
-                <img class="join_logo_overlay" src="assets/img/joinlogo.png" alt="Join Logo">
-                <h2 class="heading_add_contact">Edit Contact</h2>
-                <img class="h2_underline" src="assets/icons/Vector 5.svg" alt="">
-            </div>
-
-            <div class="overlay_add_contact_right">
-                <div class="addContact_form_container">
-                    <div>
-                        <img src="assets/icons/Contact_icon.svg" alt="Contact Icon">
-                    </div>
-
-                    <form class="form_add_contact" onsubmit="event.preventDefault()">
-                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact"
-                            placeholder="Name" value="${contact.name || ''}">
-                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact"
-                            placeholder="Email" value="${contact.email || ''}">
-                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact"
-                            placeholder="Phone" value="${contact.phone || ''}">
-                    </form>
-                </div>
-
-                <div class="buttons_add_contact">
-                    <button type="button" class="btn_save_contact" onclick="deleteContact('${contactId}')">Delete</button>
-                    <button type="button" class="btn_cancel_contact">Save <img src="assets/icons/check.svg" alt=""></button>
-                </div>
-            </div>
-        </section>
-    `;
 }
 
 
@@ -325,50 +294,68 @@ export function hideAddContactOverlay() {
 
 // Kontakt in Firebase speichern
 async function handleAddContact(event) {
-    if (event) {
-        event.preventDefault();
-    }
-    const nameInput = document.getElementById('contact_name');
-    const emailInput = document.getElementById('contact_email');
-    const phoneInput = document.getElementById('contact_phone');
-    
-    if (!nameInput || !emailInput) {
-        console.error('Formular-Felder nicht gefunden!');
-        return;
-    }
-    
-    const name = nameInput.value.trim();
-    const email = emailInput.value.trim();
-    const phone = phoneInput ? phoneInput.value.trim() : '';
-    
-    if (!name || !email) {
-        return;
-    }
-    
-    const currentUser = auth.currentUser;
-    if (!currentUser) {
-        return;
-    }
-    
+    if (event) event.preventDefault();
+    const fields = getAddContactFields();
+    if (!hasRequiredAddContactFields(fields)) return;
+
+    const payload = buildAddContactPayload(fields);
+    if (!isValidAddContactPayload(payload)) return;
+
+    const uid = getCurrentUserId();
+    if (!uid) return;
+
+    await saveNewContact(payload, uid);
+    hideAddContactOverlay();
+    showSuccessMessage('Contact successfully created!');
+}
+
+function getAddContactFields() {
+    return {
+        nameInput: document.getElementById('contact_name'),
+        emailInput: document.getElementById('contact_email'),
+        phoneInput: document.getElementById('contact_phone')
+    };
+}
+
+function hasRequiredAddContactFields(fields) {
+    const hasFields = Boolean(fields.nameInput && fields.emailInput);
+    if (!hasFields) console.error('Formular-Felder nicht gefunden!');
+    return hasFields;
+}
+
+function buildAddContactPayload(fields) {
+    return {
+        name: fields.nameInput.value.trim(),
+        email: fields.emailInput.value.trim(),
+        phone: fields.phoneInput ? fields.phoneInput.value.trim() : ''
+    };
+}
+
+function isValidAddContactPayload(payload) {
+    return Boolean(payload.name && payload.email);
+}
+
+function getCurrentUserId() {
+    return auth.currentUser ? auth.currentUser.uid : null;
+}
+
+async function saveNewContact(payload, uid) {
+    const contactsRef = ref(database, 'contacts');
+    const newContactRef = push(contactsRef);
+    const newContact = {
+        ...payload,
+        createdAT: Date.now(),
+        uid: uid
+    };
+
     try {
-        const contactsRef = ref(database, 'contacts');
-        const newContactRef = push(contactsRef);
-        const newContact = {
-            name: name,
-            email: email,
-            phone: phone,
-            createdAT: Date.now(),
-            uid: currentUser.uid
-        };
-        
         await set(newContactRef, newContact);
-        hideAddContactOverlay();
-        showSuccessMessage('Contact successfully created!');
-        
     } catch (error) {
         console.error('Fehler beim Speichern:', error);
+        throw error;
     }
 }
+
 
 function showSuccessMessage(message) {
     const successDiv = document.createElement('div');
@@ -388,36 +375,163 @@ function getEmptyContactDetailTemplate() {
     `;
 }
 
+
+
 async function deleteContact(contactId) {
-    if (!contactId) return;
+    if (!isDeletableContact(contactId)) return;
 
     try {
-        await remove(ref(database, `contacts/${contactId}`));
-
-        if (activeContactId === contactId) {
-            activeContactId = null;
-            const detailContainer = getContactDetailContainer();
-            if (detailContainer) detailContainer.innerHTML = getEmptyContactDetailTemplate();
-        }
+        await removeContactFromDatabase(contactId);
+        clearActiveContactIfDeleted(contactId);
     } catch (error) {
-        console.error('Fehler beim Löschen des Kontakts:', error);
+        logDeleteContactError(error);
     }
 }
+
+function isDeletableContact(contactId) {
+    return Boolean(contactId);
+}
+
+async function removeContactFromDatabase(contactId) {
+    const contactRef = ref(database, `contacts/${contactId}`);
+    await remove(contactRef);
+}
+
+function clearActiveContactIfDeleted(contactId) {
+    if (activeContactId !== contactId) return;
+    resetActiveContactDetail();
+}
+
+function resetActiveContactDetail() {
+    activeContactId = null;
+    renderEmptyContactDetail();
+}
+
+function renderEmptyContactDetail() {
+    const detailContainer = getContactDetailContainer();
+    if (!detailContainer) return;
+    detailContainer.innerHTML = getEmptyContactDetailTemplate();
+}
+
+function logDeleteContactError(error) {
+    console.error('Fehler beim Löschen des Kontakts:', error);
+}
+
 
 function editContact(contactId) {
-    const overlay = document.getElementById('contact-add-overlay');
+    if (!isEditableContact(contactId)) return;
+
+    editingContactId = contactId;
+    const overlay = getEditOverlayElement();
     if (!overlay) return;
 
-    const contact = contacts[contactId];
-    if (!contact) {
-        console.error('Kontakt nicht gefunden:', contactId);
-        return;
-    }
-
-    overlay.innerHTML = getEditOverlayTemplate(contactId, contact);
-    overlay.style.display = 'flex';
+    renderEditOverlay(overlay, contactId);
+    bindEditFormSubmit();
 }
 
+function isEditableContact(contactId) {
+    return Boolean(contactId && contacts[contactId]);
+}
+
+function getEditOverlayElement() {
+    return document.getElementById('editC_overlay');
+}
+
+function renderEditOverlay(overlay, contactId) {
+    overlay.innerHTML = getEditOverlayTemplate(contactId, contacts[contactId]);
+    overlay.classList.remove('d_none');
+    overlay.onclick = closeEditOverlay;
+}
+
+function bindEditFormSubmit() {
+    const form = document.getElementById('edit_contact_form');
+    if (!form) return;
+
+    form.removeEventListener('submit', saveEditedContact);
+    form.addEventListener('submit', saveEditedContact);
+}
+
+
+
+function closeEditOverlay() {
+    const overlay = document.getElementById('editC_overlay');
+    if (!overlay) return;
+    overlay.classList.add('d_none');
+    overlay.innerHTML = '';
+    editingContactId = null;
+}
+
+
+
+
+async function saveEditedContact(event) {
+    preventDefaultIfPresent(event);
+    if (!canSaveEditedContact()) return;
+
+    const payload = getEditedContactPayload();
+    if (!isValidEditedContactPayload(payload)) return;
+
+    try {
+        await persistEditedContact(payload);
+        applyEditedContactLocally(payload);
+        rerenderAfterContactEdit();
+        closeEditOverlay();
+    } catch (error) {
+        logEditContactError(error);
+    }
+}
+
+function preventDefaultIfPresent(event) {
+    if (event) event.preventDefault();
+}
+
+function canSaveEditedContact() {
+    return Boolean(editingContactId);
+}
+
+function getEditedContactPayload() {
+    return {
+        name: getTrimmedInputValue('contact_name'),
+        email: getTrimmedInputValue('contact_email'),
+        phone: getTrimmedInputValue('contact_phone')
+    };
+}
+
+function getTrimmedInputValue(elementId) {
+    return document.getElementById(elementId)?.value.trim() || '';
+}
+
+function isValidEditedContactPayload(payload) {
+    return Boolean(payload.name && payload.email);
+}
+
+async function persistEditedContact(payload) {
+    const contactRef = ref(database, `contacts/${editingContactId}`);
+    await update(contactRef, payload);
+}
+
+function applyEditedContactLocally(payload) {
+    contacts[editingContactId] = {
+        ...contacts[editingContactId],
+        ...payload,
+        id: editingContactId
+    };
+}
+
+function rerenderAfterContactEdit() {
+    renderContactsList(contacts);
+    renderEditedContactDetail();
+}
+
+function renderEditedContactDetail() {
+    const contact = contacts[editingContactId];
+    if (!contact) return;
+    renderActiveContactTemplate(contact);
+}
+
+function logEditContactError(error) {
+    console.error('Edit fehlgeschlagen:', error);
+}
 
 // Make functions globally accessible
 
@@ -426,3 +540,5 @@ window.showAddContactOverlay = showAddContactOverlay;
 window.hideAddContactOverlay = hideAddContactOverlay;
 window.editContact = editContact;
 window.handleAddContact = handleAddContact; 
+window.closeEditOverlay = closeEditOverlay;
+window.saveEditedContact = saveEditedContact;
