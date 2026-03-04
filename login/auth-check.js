@@ -1,7 +1,20 @@
+/**
+ * @file Handles authentication state and user redirections.
+ *
+ * @module member-auth-check
+ */
 import { auth } from "/script/firebase/firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com7/firebasejs/10.7.1/firebase-auth.js";
 
-// Funktion zum Überprüfen des Authentifizierungsstatus
+/**
+ * Listens for Firebase authentication state changes
+ * and redirects depending on user type.
+ *
+ * @param {Object | null} user - Firebase user object or null if not logges in
+ * @property {boolean} [isAnonymous] - true if user is logged in as guest
+ * @property {string} [uid] - user's unique id
+ * @returns {void}
+ */
 onAuthStateChanged(auth, (user) => {
   if (user.isAnonymous === false) {
     // Weiterleitung geschützte Seite

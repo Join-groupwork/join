@@ -22,8 +22,6 @@ main {
 
 .task__section {
   width: 256px;
-  /* INFO border dient nur zum designen und ausrichten der spalten */
-  border: 3px solid aqua;
 }
 
 .task__area {

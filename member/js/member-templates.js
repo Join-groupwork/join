@@ -1,3 +1,40 @@
+/**
+ * @file HTML template factory functions for member pages.
+ *
+ * Provides functions that return HTML strings for commonly used UI parts:
+ * header, sidebar, add-task form, contact overlays, signup message, and board task cards.
+ *
+ * @module member-templates
+ */
+
+/**
+ * Task categories supported by the board UI.
+ * Used for CSS class naming (e.g. `task__category--user-story`).
+ *
+ * @typedef {"user-story" | "technical-task" | string} Category
+ */
+
+/**
+ * Priority values supported by the board UI.
+ * Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
+ *
+ * @typedef {"low" | "medium" | "urgent" | string} Priority
+ */
+
+/**
+ * Generates the header HTML for member pages.
+ *
+ * Includes:
+ * - Help link
+ * - Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)
+ *
+ * DOM hooks created by this template:
+ * - `#headerMenue` (toggle button)
+ * - `#headerMenueNav` (dropdown container)
+ * - `#logoutBtn` (logout trigger)
+ *
+ * @returns {string} HTML string representing the member header.
+ */
 export function getHeaderTemplate() {
   return `
         <header>
@@ -23,8 +60,19 @@ export function getHeaderTemplate() {
           </div>
         </header>
       `;
-}
+};
 
+
+/**
+ * Generates the sidebar HTML for member pages.
+ *
+ * Includes:
+ * - Logo
+ * - Navigation links (Summary / Add Task / Board / Contacts)
+ * - Footer links (Privacy Policy / Legal Notice)
+ *
+ * @returns {string} HTML string representing the member sidebar.
+ */
 export function getSidebarTemplate() {
   return `
       <div class="logo">
@@ -43,8 +91,18 @@ export function getSidebarTemplate() {
         <a href="/member/legal-notice-user.html">Legal Notice</a>
       </div>
     `;
-}
+};
 
+
+/**
+ * Generates the "Add Task" form HTML.
+ *
+ * NOTE:
+ * This function only returns markup. Event handling (submit, priority button selection,
+ * form validation, etc.) should be implemented in the page/controller script.
+ *
+ * @returns {string} HTML string representing the add-task form section.
+ */
 export function getTaskTemplate() {
   return `
      <section class="overlay_add_task">
@@ -100,12 +158,18 @@ export function getTaskTemplate() {
         </section>
     </section>
     `;
-}
+};
 
 // contact overlays einbinden --->id="editC_overlay" oder id="addC_overlay" in den <body> einfügen,
 // (siehe contact_add_overlay.html/contact_edit_overlay.html <-- können danach gelöscht werden)
 // je nachdem welches overlay gebraucht wird --- ansonsten bis auf css fertig
-
+/**
+ * Generates the contact edit overlay HTML.
+ *
+ * Intended to be injected into a container element like `#editC_overlay`.
+ *
+ * @returns {string} HTML string representing the edit-contact overlay.
+ */
 export function getEditOverlayTemplate() {
   return `
  <main class="addContact_overlay" >
@@ -149,8 +213,16 @@ export function getEditOverlayTemplate() {
 
     </main>
     `;
-}
+};
 
+
+/**
+ * Generates the contact add overlay HTML.
+ *
+ * Intended to be injected into a container element like `#addC_overlay`.
+ *
+ * @returns {string} HTML string representing the add-contact overlay.
+ */
 export function getAddOverlayTemplate() {
   return `
 
@@ -196,8 +268,14 @@ export function getAddOverlayTemplate() {
 
     </main>
     `;
-}
+};
 
+
+/**
+ * Generates a success message shown after a successful signup.
+ *
+ * @returns {string} HTML string representing a signup success message.
+ */
 export function signupMassegeTemplate() {
   return `
         <aside class="signup-massege-box">
@@ -206,16 +284,22 @@ export function signupMassegeTemplate() {
             </p>
         </aside>
     `;
-}
+};
+
+
 /**
- * Generate Task in Bord.html
+ * Generates a task card HTML string for the board (drag-and-drop).
  *
- * @param {string} id - task ID
- * @param {string} title
- * @param {string} category
- * @param {string} description
- * @param {string} priority
- * @returns {T}
+ * NOTE:
+ * - `category` is used to build the CSS class name `task__category--${category}`
+ * - `priority` is used to build the icon path `/assets/icons/${priority}-prio-icon.svg`
+ *
+ * @param {string} id - Task ID (used as DOM element `id` and for drag & drop).
+ * @param {string} title - Task title.
+ * @param {Category} category - Task category label.
+ * @param {string} description - Task description.
+ * @param {Priority} priority - Task priority label.
+ * @returns {string} HTML string representing the task card.
  */
 export function generateTodosHTML(id, title, category, description, priority) {
   return `
@@ -232,4 +316,4 @@ export function generateTodosHTML(id, title, category, description, priority) {
               </div>
             </div>
           `;
-}
+};
