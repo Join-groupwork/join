@@ -202,9 +202,12 @@ export function getEditOverlayTemplate(contactId, contact) {
       </div>
 
       <div class="overlay_add_contact_right">
+       <div class="close_overlay_icon_container">
+                    <img class="close_overlay_icon" src="/assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="closeEditOverlay()">
+                </div>
         <div class="addContact_form_container">
           <div><img src="/assets/icons/contact-icon.svg" alt="Contact Icon"></div>
-
+            
           <form class="form_add_contact" id="edit_contact_form">
             <input type="text" id="contact_name" class="input_add_contact" placeholder="Name" value="${contact.name || ''}" required>
             <input type="email" id="contact_email" class="input_add_contact" placeholder="Email" value="${contact.email || ''}" required>
