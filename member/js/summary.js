@@ -1,4 +1,5 @@
 import { loadData, loadTasks } from '../../scripts/firebase/get-firebase';
+import { signInWithEmailAndPassword, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 // INFO die tasks von firebase müssen abgerufen werden
 // INFO firebase tasks auslesen "subtask"
 // INFO need greetings for user and guest
@@ -31,5 +32,14 @@ async function tasksInProgress(tasks) {
 
 // [ ] show how much tasks "await feedback"
 async function awaitFeedbackTasks(tasks) {
+
+}
+
+// [ ] greetings for user
+// [ ] greetings for guests
+// [ ] greetings for daytime
+async function greetings(signInWithEmailAndPassword, signInAnonymously) {
+  let daytime = document.getElementById('greetingTime');
+  let name = document.getElementById('greetingName');
 
 }
