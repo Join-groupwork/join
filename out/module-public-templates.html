@@ -38,7 +38,10 @@
     <div class="container-overview">
     
         
-            <div class="description">All template for public sites.</div>
+            <div class="description">HTML template factory functions for public pages.
+
+Provides template helpers that return HTML strings for shared public UI parts:
+header, sidebar, and a signup success message.</div>
         
 
         
@@ -152,7 +155,16 @@
 
 
 <div class="description">
-    Generate a Header as HTML string for public sites.
+    Generates the header HTML for public pages.
+
+Includes:
+- Help icon (currently just a div, no link)
+- Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)
+
+DOM hooks created by this template:
+- `#headerMenue` (toggle button)
+- `#headerMenueNav` (dropdown container)
+- `#logoutBtn` (logout trigger)
 </div>
 
 
@@ -196,7 +208,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="public_js_public-templates.js.html">public/js/public-templates.js</a>, <a href="public_js_public-templates.js.html#line12">line 12</a>
+        <a href="public_js_public-templates.js.html">public/js/public-templates.js</a>, <a href="public_js_public-templates.js.html#line24">line 24</a>
     </li></ul></dd>
     
 
@@ -225,7 +237,7 @@
 
         
 <div class="param-desc">
-    HTML string representing the header
+    HTML string representing the public header.
 </div>
 
 
@@ -261,6 +273,15 @@
 
 
 
+<div class="description">
+    Generates the sidebar HTML for public pages.
+
+Includes:
+- Logo
+- Navigation links (Summary / Add Task / Board / Contacts)
+- Footer/legal links (Privacy Policy / Legal Notice)
+</div>
+
 
 
 
@@ -302,7 +323,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="public_js_public-templates.js.html">public/js/public-templates.js</a>, <a href="public_js_public-templates.js.html#line42">line 42</a>
+        <a href="public_js_public-templates.js.html">public/js/public-templates.js</a>, <a href="public_js_public-templates.js.html#line61">line 61</a>
     </li></ul></dd>
     
 
@@ -331,7 +352,7 @@
 
         
 <div class="param-desc">
-    HTML string representing sidemenu
+    HTML string representing the public sidebar.
 </div>
 
 
@@ -367,6 +388,10 @@
 
 
 
+<div class="description">
+    Generates a success message shown after a successful signup.
+</div>
+
 
 
 
@@ -408,7 +433,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="public_js_public-templates.js.html">public/js/public-templates.js</a>, <a href="public_js_public-templates.js.html#line66">line 66</a>
+        <a href="public_js_public-templates.js.html">public/js/public-templates.js</a>, <a href="public_js_public-templates.js.html#line87">line 87</a>
     </li></ul></dd>
     
 
@@ -437,7 +462,7 @@
 
         
 <div class="param-desc">
-    HTML string representing successfull signup massege
+    HTML string representing a signup success message.
 </div>
 
 
@@ -476,13 +501,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-and-drop.html">drag-and-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Global</h3><ul><li><a href="global.html#app">app</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#renderHeader">renderHeader</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Feb 28 2026 14:13:20 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Mar 04 2026 11:25:49 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

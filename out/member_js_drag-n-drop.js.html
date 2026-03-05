@@ -27,9 +27,21 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @file
+ * @file Provides basic Kanban board rendering + drag-and-drop handling for tasks ("todos").
  *
- * @module drag-and-drop
+ * This module:
+ * - Keeps a temporary in-memory `todos` object (placeholder until Firebase is connected)
+ * - Renders tasks into the four board columns (todo / in-progress / await-feedback / done)
+ * - Toggles column placeholders when a column has no tasks
+ * - Implements drag &amp; drop using document-level event listeners
+ *
+ * DOM expectations:
+ * - Columns with IDs: `todo`, `inProgress`, `awaitFeedback`, `done`
+ * - Drop zones with class `.task__area` and `data-status` values matching todo.subtask
+ * - Placeholder element inside each `.task__area`: `.task__area--placeholder`
+ * - Task cards have class `.task__card` and an `id` that matches the todo key
+ *
+ * @module drag-n-drop
  */
 import { generateTodosHTML } from './member-templates.js'
 // import { renderBoard } from'./member-script.js';
@@ -50,16 +62,16 @@ import { generateTodosHTML } from './member-templates.js'
  */
 
 /**
- * Represent a board task.
+ * Represents a board task.
  *
  * @typedef {Object} Todo
- * @property {string} title - Task title
- * @property {string} description - Task description
- * @property {string} date - Endtime from the task
- * @property {Priority} priority - Task priority level
- * @property {string} assignedTo - who is working on
- * @property {Category} category - Task category
- * @property {SubtaskStatus} subtask - status from the task
+ * @property {string} title - Task title.
+ * @property {string} description - Task description.
+ * @property {string} date - Due date (YYYY-MM-DD) or empty string.
+ * @property {Priority} priority - Task priority level.
+ * @property {string} assignedTo - Person(s) assigned to this task (currently unused).
+ * @property {Category} category - Task category.
+ * @property {SubtaskStatus} subtask - Current board column/status.
  */
 
 
@@ -69,15 +81,13 @@ import { generateTodosHTML } from './member-templates.js'
 // [ ] Add Firebase update
 // [ ] Retrieve data from Firebase and display in to-dos
 // [ ] Test function with Firebase data
-
-// let categorys = ['user-story', 'technical-task'];
-// let subtask = ['todo', 'in-progress', 'await-feedback', 'done'];
 // INFO  let = todos will be replaced later when the data is loaded from Firebase.
+
 /**
  * Task collection indexed by id.
- * Will later be replaced by Firebase data.
+ * NOTE: Placeholder data until Firebase is connected.
  *
- * @type {Object.&lt;string, Todo>}
+ * @type {Record&lt;string, Todo>}
  */
 let todos = {
   "0": {
@@ -118,17 +128,19 @@ let todos = {
   }
 };
 /**
- * For temporary ID saving for toggle task on board UI section.
+ * ID (key in {@link todos}) of the currently dragged task card.
+ * Set on `dragstart`, consumed on `drop`.
  *
- * @type {string | undefined}
+ * @type {string|undefined}
  */
 let currentDraggedElement;
 
 // INFO This function is only temporary until the first test is completed.
 // INFO After that, this function will be replaced and the to-dos will be loaded from Firebase.
 /**
- * Update board sections and toggles placeholder visibility.
+ * Re-renders all board columns and updates placeholder visibility.
  *
+ * @export
  * @returns {void}
  */
 export function updateHTML() {
@@ -139,8 +151,9 @@ export function updateHTML() {
   togglePlaceholder();
 };
 /**
- * Trigger updates for section "Todo" on board UI
+ * Renders tasks with {@link Todo.subtask} === `"todo"` into the `#todo` column.
  *
+ * @private
  * @returns {void}
  */
 function updateTodo() {
@@ -152,8 +165,9 @@ function updateTodo() {
   }
 };
 /**
- * Trigger updates for section "In Progrss" on board UI
+ * Renders tasks with {@link Todo.subtask} === `"in-progress"` into the `#inProgress` column.
  *
+ * @private
  * @returns {void}
  */
 function updateInProgress() {
@@ -165,8 +179,9 @@ function updateInProgress() {
   }
 };
 /**
- * Trigger updates for section "Await Feedback" on board UI
+ * Renders tasks with {@link Todo.subtask} === `"await-feedback"` into the `#awaitFeedback` column.
  *
+ * @private
  * @returns {void}
  */
 function updateAwaitFeedback() {
@@ -177,9 +192,12 @@ function updateAwaitFeedback() {
     }
   }
 };
+
+
 /**
- * Trigger updates for section "Done" on board UI
+ * Renders tasks with {@link Todo.subtask} === `"done"` into the `#done` column.
  *
+ * @private
  * @returns {void}
  */
 function updateDone() {
@@ -195,8 +213,12 @@ function updateDone() {
 // [ ] if no task, show
 // [ ] if at least 1 task is hidden
 /**
- * Show or hides placeholder depending on whether a column contains task.
+ * Shows/hides the placeholder inside each `.task__area` depending on whether
+ * at least one task exists for that column.
  *
+ * Uses `.task__area[data-status]` to match against {@link Todo.subtask}.
+ *
+ * @private
  * @returns {void}
  */
 function togglePlaceholder() {
@@ -218,9 +240,11 @@ function togglePlaceholder() {
 // CHECK When drawing, the cards must turn slightly.
 // [x] dragstart coden
 /**
- * Handles dragstart event for task cards.
+ * Handles `dragstart` on `.task__card`.
+ * Stores dragged task id and adds a visual dragging class.
  *
- * @param {DragEvent} event
+ * @listens Document#dragstart
+ * @param {DragEvent} event - Browser dragstart event.
  * @returns {void}
  */
 document.addEventListener("dragstart", function (event) {
@@ -229,10 +253,14 @@ document.addEventListener("dragstart", function (event) {
     event.target.classList.add("task__card--dragging"); // INFO We add a CSS class for the move so that it visually matches the design.
   }
 });
+
+
 /**
- * Handles dragend event for task cards.
+ * Handles `dragend` on `.task__card`.
+ * Removes the visual dragging class.
  *
- * @param {DragEvent} event
+ * @listens Document#dragend
+ * @param {DragEvent} event - Browser dragend event.
  * @returns {void}
  */
 document.addEventListener("dragend", function (event) {
@@ -240,11 +268,15 @@ document.addEventListener("dragend", function (event) {
     event.target.classList.remove("task__card--dragging"); // INFO Removes the CSS class for the visual appearance when moving.
   }
 });
+
+
 // [x] dragover coden
 /**
- * Handles dragover event for task cards.
+ * Handles `dragover` within a `.task__area` drop zone.
+ * Calls `preventDefault()` to allow dropping and highlights the drop zone.
  *
- * @param {DragEvent} event
+ * @listens Document#dragover
+ * @param {DragEvent} event - Browser dragover event.
  * @returns {void}
  */
 document.addEventListener("dragover", function (event) {
@@ -254,12 +286,16 @@ document.addEventListener("dragover", function (event) {
   //  [ ] Visual feedback for the drop zone where it is pushed in must be determined here, via classlist.add.
   dropZone.classList.add("task__area--highlight");
 });
+
+
 // [x] drop coden
-// [ ] togglePlaceholder() is on function?
+// [x] togglePlaceholder() is on function?
 /**
- * Handles drop event for task cards.
+ * Handles `drop` within a `.task__area` drop zone.
+ * Moves the dragged task into the drop zone's status and re-renders the board.
  *
- * @param {DragEvent} event
+ * @listens Document#drop
+ * @param {DragEvent} event - Browser drop event.
  * @returns {void}
  */
 document.addEventListener("drop", function (event) {
@@ -273,12 +309,16 @@ document.addEventListener("drop", function (event) {
   togglePlaceholder();
 }
 );
+
+
 // [x] dragleave coden
 // [ ] Check that “task__area--highlight” is removed.
 /**
- * Handles dragleave event for task cards.
+ * Handles `dragleave` for `.task__area`.
+ * Removes the drop zone highlight class.
  *
- * @param {DragEvent} event
+ * @listens Document#dragleave
+ * @param {DragEvent} event - Browser dragleave event.
  * @returns {void}
  */
 document.addEventListener("dragleave", function (event) {
@@ -296,13 +336,13 @@ document.addEventListener("dragleave", function (event) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-and-drop.html">drag-and-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Global</h3><ul><li><a href="global.html#app">app</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#renderHeader">renderHeader</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Feb 28 2026 14:13:20 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Mar 04 2026 11:25:49 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

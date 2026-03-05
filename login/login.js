@@ -1,6 +1,8 @@
 /**
  * @file Handle authentication logic (email/password and anonymous login).
  *
+ * Binds UI event listenerss after DOM is ready and provides exported helper functions for logging in with email/password or as an anonymous guest.
+ *
  * @module join-login
  */
 import { auth } from "/scripts/firebase/firebase.js";
@@ -13,6 +15,18 @@ if (location.protocol === 'https:') {
   console.log("Seite läuft NICHT über HTTPS ❌");
 }
 
+
+/**
+ * Initializes login UI handlers once the DOM is loaded.
+ *
+ * Looks up required from elements and attaches click handlers:
+ *  - Login button: validates input, signs in via Firabase Auth, redirects on success
+ *  - Guest button: signs in anonymously, redirects on success
+ *
+ * @event DOMContentLoaded
+ * @listens Document#DOMContentLoaded
+ * @returns {void}
+ */
 document.addEventListener("DOMContentLoaded", () => {
   const loginBtn = document.getElementById("loginBtn");
   const guestBtn = document.getElementById("guestBtn");

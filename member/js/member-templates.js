@@ -1,14 +1,39 @@
 /**
- * All templates for member sites.
+ * @file HTML template factory functions for member pages.
+ *
+ * Provides functions that return HTML strings for commonly used UI parts:
+ * header, sidebar, add-task form, contact overlays, signup message, and board task cards.
  *
  * @module member-templates
  */
 
 /**
- * Generate a Header as HTML string for member sites.
+ * Task categories supported by the board UI.
+ * Used for CSS class naming (e.g. `task__category--user-story`).
  *
- * @module member-templates
- * @returns {string} HTML string representing the header
+ * @typedef {"user-story" | "technical-task" | string} Category
+ */
+
+/**
+ * Priority values supported by the board UI.
+ * Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
+ *
+ * @typedef {"low" | "medium" | "urgent" | string} Priority
+ */
+
+/**
+ * Generates the header HTML for member pages.
+ *
+ * Includes:
+ * - Help link
+ * - Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)
+ *
+ * DOM hooks created by this template:
+ * - `#headerMenue` (toggle button)
+ * - `#headerMenueNav` (dropdown container)
+ * - `#logoutBtn` (logout trigger)
+ *
+ * @returns {string} HTML string representing the member header.
  */
 export function getHeaderTemplate() {
   return `
@@ -35,10 +60,18 @@ export function getHeaderTemplate() {
           </div>
         </header>
       `;
-}
+};
+
+
 /**
- * Generate a sidemenu for member sides.
- * @returns {string} HTML string representing the sidemenu
+ * Generates the sidebar HTML for member pages.
+ *
+ * Includes:
+ * - Logo
+ * - Navigation links (Summary / Add Task / Board / Contacts)
+ * - Footer links (Privacy Policy / Legal Notice)
+ *
+ * @returns {string} HTML string representing the member sidebar.
  */
 export function getSidebarTemplate() {
   return `
@@ -58,10 +91,17 @@ export function getSidebarTemplate() {
         <a href="/member/legal-notice-user.html">Legal Notice</a>
       </div>
     `;
-}
+};
+
+
 /**
+ * Generates the "Add Task" form HTML.
  *
- * @returns {string} HTML string representing
+ * NOTE:
+ * This function only returns markup. Event handling (submit, priority button selection,
+ * form validation, etc.) should be implemented in the page/controller script.
+ *
+ * @returns {string} HTML string representing the add-task form section.
  */
 export function getTaskTemplate() {
   return `
@@ -118,14 +158,17 @@ export function getTaskTemplate() {
         </section>
     </section>
     `;
-}
+};
 
 // contact overlays einbinden --->id="editC_overlay" oder id="addC_overlay" in den <body> einfügen,
 // (siehe contact_add_overlay.html/contact_edit_overlay.html <-- können danach gelöscht werden)
 // je nachdem welches overlay gebraucht wird --- ansonsten bis auf css fertig
 /**
+ * Generates the contact edit overlay HTML.
  *
- * @returns {string} HTML string
+ * Intended to be injected into a container element like `#editC_overlay`.
+ *
+ * @returns {string} HTML string representing the edit-contact overlay.
  */
 export function getEditOverlayTemplate() {
   return `
@@ -170,10 +213,15 @@ export function getEditOverlayTemplate() {
 
     </main>
     `;
-}
+};
+
+
 /**
+ * Generates the contact add overlay HTML.
  *
- * @returns {string} HTML string
+ * Intended to be injected into a container element like `#addC_overlay`.
+ *
+ * @returns {string} HTML string representing the add-contact overlay.
  */
 export function getAddOverlayTemplate() {
   return `
@@ -220,11 +268,13 @@ export function getAddOverlayTemplate() {
 
     </main>
     `;
-}
+};
+
+
 /**
- * Generate a massege for successfull signup.
+ * Generates a success message shown after a successful signup.
  *
- * @returns {string} HTML string representing info message to succesfull signup
+ * @returns {string} HTML string representing a signup success message.
  */
 export function signupMassegeTemplate() {
   return `
@@ -234,16 +284,22 @@ export function signupMassegeTemplate() {
             </p>
         </aside>
     `;
-}
+};
+
+
 /**
- * Generate a task card as HTML string for board.html.
+ * Generates a task card HTML string for the board (drag-and-drop).
  *
- * @param {string} id - Task ID
- * @param {string} title - Task title
- * @param {category} category - Task category
- * @param {string} description - Task description
- * @param {priority} priority Task priority level
- * @returns {string} HTML string representing the task card
+ * NOTE:
+ * - `category` is used to build the CSS class name `task__category--${category}`
+ * - `priority` is used to build the icon path `/assets/icons/${priority}-prio-icon.svg`
+ *
+ * @param {string} id - Task ID (used as DOM element `id` and for drag & drop).
+ * @param {string} title - Task title.
+ * @param {Category} category - Task category label.
+ * @param {string} description - Task description.
+ * @param {Priority} priority - Task priority label.
+ * @returns {string} HTML string representing the task card.
  */
 export function generateTodosHTML(id, title, category, description, priority) {
   return `
@@ -260,4 +316,4 @@ export function generateTodosHTML(id, title, category, description, priority) {
               </div>
             </div>
           `;
-}
+};
