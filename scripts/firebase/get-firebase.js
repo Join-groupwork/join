@@ -94,7 +94,7 @@ function groupContactsByLetter(contactsObjects) {
     return grouped;
 }
 
-
+// rendern der contact list
 function renderContactsList(contactsObjects) {
     const contactList = getContactListElement();
     if (!contactList) return;
@@ -106,7 +106,7 @@ function renderContactsList(contactsObjects) {
 function getContactListElement() {
     return document.getElementById('contact_list');
 }
-
+// rendern der contact list in alphabetischer Reihenfolge
 function renderGroupedContacts(contactList, contactsObjects) {
     const groupedContacts = groupContactsByLetter(contactsObjects);
     resetContactListExceptAddButton(contactList);
@@ -129,7 +129,7 @@ function resetContactListExceptAddButton(contactList) {
     }
 }
 
-
+// rendern der contact list in alphabetischer Reihenfolge mit sections
 function renderAlphabeticalContactSections(contactList, groupedContacts) {
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     
@@ -150,7 +150,7 @@ function createLetterSectionHeader(contactList, letter) {
     divider.className = 'hr_contactList';
     contactList.appendChild(divider);
 }
-
+// rendern der contact list unter jedem section header
 function renderContactsUnderLetter(contactList, letter, groupedContacts) {
     if (!groupedContacts[letter]) return;
 
@@ -211,8 +211,7 @@ function getContactListItemById(contactId) {
 function renderActiveContactDetail(contactData) {
     renderActiveContactTemplate(contactData);
 }
-
-
+// rendern der contact details im rechten bereich
 function renderActiveContactTemplate(contact) {
   const container = getContactDetailContainer();
   if (!container) return;
@@ -409,7 +408,7 @@ function resetActiveContactDetail() {
     activeContactId = null;
     renderEmptyContactDetail();
 }
-
+// rendern eines leeren contact details templates, wenn ein contact gelöscht wird, damit kein fehler auf
 function renderEmptyContactDetail() {
     const detailContainer = getContactDetailContainer();
     if (!detailContainer) return;
@@ -439,9 +438,7 @@ function isEditableContact(contactId) {
 function getEditOverlayElement() {
     return document.getElementById('editC_overlay');
 }
-
-
-
+// rendern des edit overlays mit den bereits vorhandenen contact details
 function renderEditOverlay(overlay, contactId) {
     const contact = contacts[contactId];
     const initials = getInitials(contact.name || '');
@@ -526,12 +523,12 @@ function applyEditedContactLocally(payload) {
         id: editingContactId
     };
 }
-
+// nach dem editieren eines contacts wird die contact list und die contact details neu gerendert, damit die änderungen sofort sichtbar sind
 function rerenderAfterContactEdit() {
     renderContactsList(contacts);
     renderEditedContactDetail();
 }
-
+// rendern der contact details mit den neuen werten nach dem editieren eines contacts
 function renderEditedContactDetail() {
     const contact = contacts[editingContactId];
     if (!contact) return;
