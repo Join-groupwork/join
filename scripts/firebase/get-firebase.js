@@ -33,7 +33,6 @@ auth.onAuthStateChanged((user) => {
         console.log('No user authenticated');
     }
 });
-
 // Daten laden
 function loadData() {
     const contactsRef = ref(database, 'contacts');
@@ -64,9 +63,6 @@ function loadData() {
     });
 }
 
-
-
-
 function groupContactsByLetter(contactsObjects) {
     const grouped = {};
     Object.entries(contactsObjects).forEach(([id, contact]) => {
@@ -93,7 +89,6 @@ function groupContactsByLetter(contactsObjects) {
 
     return grouped;
 }
-
 // rendern der contact list
 function renderContactsList(contactsObjects) {
     const contactList = getContactListElement();
@@ -120,7 +115,6 @@ function rerenderActiveContactDetail(contactsObjects) {
     renderActiveContactTemplate(activeContact);
 }
 
-
 function resetContactListExceptAddButton(contactList) {
     const addButton = contactList.querySelector('.contact_btn_addNew');
     contactList.innerHTML = '';
@@ -128,7 +122,6 @@ function resetContactListExceptAddButton(contactList) {
         contactList.appendChild(addButton);
     }
 }
-
 // rendern der contact list in alphabetischer Reihenfolge mit sections
 function renderAlphabeticalContactSections(contactList, groupedContacts) {
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -181,7 +174,6 @@ function buildContactListItem(contact) {
     return listItem;
 }
 
-
 function setActiveContact(contactId, contactData) {
     setActiveContactId(contactId);
     clearActiveContactClass();
@@ -223,8 +215,6 @@ function renderActiveContactTemplate(contact) {
   container.innerHTML = getActiveContactTemplate(contact, initials, bgColor, phone);
 }
 
-
-
 function getContactItemTemplate(contact) {
     const initials = getInitials(contact.name);
     const bgColor = getAvatarColor(contact.name);
@@ -242,7 +232,6 @@ function getContactItemTemplate(contact) {
     `;
 }
 
-
 function getContactDetailContainer() {
     return (
         document.getElementById('contact_detail') ||
@@ -250,7 +239,6 @@ function getContactDetailContainer() {
         document.querySelector('.contact_detail')
     );
 }
-
 
 function getInitials(name) {
     return name
@@ -358,7 +346,6 @@ async function saveNewContact(payload, uid) {
     }
 }
 
-
 function showSuccessMessage(message) {
     const successDiv = document.createElement('div');
     successDiv.className = 'success_message';
@@ -376,8 +363,6 @@ function getEmptyContactDetailTemplate() {
     return `   
     `;
 }
-
-
 
 async function deleteContact(contactId) {
     if (!isDeletableContact(contactId)) return;
@@ -419,7 +404,6 @@ function logDeleteContactError(error) {
     console.error('Fehler beim Löschen des Kontakts:', error);
 }
 
-
 function editContact(contactId) {
     if (!isEditableContact(contactId)) return;
 
@@ -457,8 +441,6 @@ function bindEditFormSubmit() {
     form.addEventListener('submit', saveEditedContact);
 }
 
-
-
 function closeEditOverlay() {
     const overlay = document.getElementById('editC_overlay');
     if (!overlay) return;
@@ -466,9 +448,6 @@ function closeEditOverlay() {
     overlay.innerHTML = '';
     editingContactId = null;
 }
-
-
-
 
 async function saveEditedContact(event) {
     preventDefaultIfPresent(event);
@@ -540,7 +519,6 @@ function logEditContactError(error) {
 }
 
 // Make functions globally accessible
-
 window.deleteContact = deleteContact;
 window.showAddContactOverlay = showAddContactOverlay;
 window.hideAddContactOverlay = hideAddContactOverlay;
