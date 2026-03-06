@@ -42,13 +42,14 @@
     color: #000000;
 }
 
+.contact_item--active .contact_name {
+    color: #ffffff;
+    font-weight: 500;
+}
 .contact_email {
     font-size: 14px;
     color: #007CEE;
 }
-
-
-
 
 .overlay_add_contact {
     display: flex;
@@ -66,9 +67,6 @@
 
 }
 
-
-
-
 #contact-add-overlay {
     display: none;
     position: fixed;
@@ -83,13 +81,11 @@
 
 }
 
-
 .overlay_add_contact h2 {
     font-size: 58px;
     margin: unset;
     color: #ffffff;
 }
-
 
 .overlay_add_contact_left {
     height: 100%;
@@ -126,8 +122,6 @@
     margin: 20px 40px;
 }
 
-
-
 .overlay_add_contact_right form {
     display: flex;
     flex-direction: column;
@@ -144,7 +138,6 @@
     font-size: 16px;
 }
 
-
 .buttons_add_contact {
     display: flex;
     justify-content: flex-end;
@@ -153,7 +146,6 @@
     padding-right: 80px;
 
     margin-bottom: 100px;
-
 }
 
 .btn_save_contact {
@@ -232,7 +224,6 @@
     opacity: 0.7;
 }
 
-
 .success_message {
     position: fixed;
     bottom: 10%;
@@ -246,7 +237,6 @@
     z-index: 3000;
     font-size: 18px;
 }
-
 
 #contact_detail {
     padding: 36px 36px 36px 69px;
@@ -268,8 +258,6 @@
         transform: translateX(0);
     }
 }
-
-
 
 .contact_detail_card {
     display: flex;
@@ -376,13 +364,9 @@
 
 }
 
-
-
-
 .d_none {
     display: none !important;
 }
-
 
 .addContact_overlay {
     position: fixed;
@@ -394,7 +378,6 @@
     z-index: 1200;
     overflow: hidden;
 }
-
 
 .overlay_add_contact {
     width: 100%;
@@ -510,7 +493,6 @@
     border: 3px solid #fff;
     /* margin: 20px 55px 20px 33px; */
 }
-
 
 .overlay-form input {
     border: 1px solid #d1d1d1;
