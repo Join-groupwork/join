@@ -15,6 +15,7 @@
  *
  * @module drag-n-drop
  */
+import { loadTasks } from '../../scripts/firebase/get-firebase.js';
 import { generateTodosHTML } from './member-templates.js'
 // import { renderBoard } from'./member-script.js';
 
@@ -61,44 +62,46 @@ import { generateTodosHTML } from './member-templates.js'
  *
  * @type {Record<string, Todo>}
  */
-let todos = {
-  "0": {
-    title: 'Kochwelt',
-    description: 'Eine Kochwelt App erstellen',
-    date: '2026-02-08',
-    priority: 'urgent',
-    assignedTo: '',
-    category: 'user-story',
-    subtask: 'todo'
-  },
-  "1": {
-    title: 'Impressum',
-    description: 'Das Impressum erstellen',
-    date: '',
-    priority: 'medium',
-    assignedTo: '',
-    category: 'user-story',
-    subtask: 'in-progress'
-  },
-  "2": {
-    title: 'Rezept Seite',
-    description: 'Rezept Seite Designen',
-    date: '',
-    priority: 'low',
-    assignedTo: '',
-    category: 'technical-task',
-    subtask: 'await-feedback'
-  },
-  "3": {
-    title: 'Startseite erstellen',
-    description: 'Erster Aufbau der Starsteite erstellen',
-    date: '',
-    priority: 'urgent',
-    assignedTo: '',
-    category: 'technical-task',
-    subtask: 'done'
-  }
-};
+let todos = {};
+todos = await loadTasks();
+// let todos = {
+//   "0": {
+//     title: 'Kochwelt',
+//     description: 'Eine Kochwelt App erstellen',
+//     date: '2026-02-08',
+//     priority: 'urgent',
+//     assignedTo: '',
+//     category: 'user-story',
+//     subtask: 'todo'
+//   },
+//   "1": {
+//     title: 'Impressum',
+//     description: 'Das Impressum erstellen',
+//     date: '',
+//     priority: 'medium',
+//     assignedTo: '',
+//     category: 'user-story',
+//     subtask: 'in-progress'
+//   },
+//   "2": {
+//     title: 'Rezept Seite',
+//     description: 'Rezept Seite Designen',
+//     date: '',
+//     priority: 'low',
+//     assignedTo: '',
+//     category: 'technical-task',
+//     subtask: 'await-feedback'
+//   },
+//   "3": {
+//     title: 'Startseite erstellen',
+//     description: 'Erster Aufbau der Starsteite erstellen',
+//     date: '',
+//     priority: 'urgent',
+//     assignedTo: '',
+//     category: 'technical-task',
+//     subtask: 'done'
+//   }
+// };
 /**
  * ID (key in {@link todos}) of the currently dragged task card.
  * Set on `dragstart`, consumed on `drop`.
@@ -106,6 +109,16 @@ let todos = {
  * @type {string|undefined}
  */
 let currentDraggedElement;
+
+
+async function initBoard() {
+  try {
+    todos = await loadTasks();
+    updateHTML();
+  } catch (error) {
+    console.error('Fehler bei Laden der Tasks:', error);
+  }
+}
 
 // INFO This function is only temporary until the first test is completed.
 // INFO After that, this function will be replaced and the to-dos will be loaded from Firebase.
@@ -115,7 +128,7 @@ let currentDraggedElement;
  * @export
  * @returns {void}
  */
-export function updateHTML() {
+export async function updateHTML() {
   // if this page doesn’t have a todo column we’re not on the board,
   // so skip all DOM updates to avoid null errors
   if (!document.getElementById('todo')) return;
@@ -304,3 +317,5 @@ document.addEventListener("dragleave", function (event) {
   if (!dropZone) return;
   dropZone.classList.remove("task__area--highlight");
 });
+
+initBoard();

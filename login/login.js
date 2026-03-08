@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
 
-  loginBtn.addEventListener("click", async () => {
+  loginBtn.addEventListener("click", async (event) => {
     event.preventDefault();
     const email = emailInput.value.trim();
     const password = passwordInput.value;
