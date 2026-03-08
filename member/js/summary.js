@@ -66,9 +66,23 @@ async function awaitFeedbackTasks(tasks) {
 
 }
 
-// [ ] greetings for user
-// [ ] greetings for guests
-// [ ] greetings for daytime
+/**
+ * Displays a greeting message based on the current time of day
+ * and shows the name of the currently authenticated user.
+ *
+ * The function:
+ * - Determines the appropriate greeting ("Good morning", "Good afternoon", "Good evening")
+ *   based on the user's local time.
+ * - Updates the greeting text in the DOM.
+ * - Checks whether a user is authenticated.
+ * - Displays the user's display name or email if logged in,
+ *   otherwise falls back to "Guest".
+ * - Listens for authentication state changes and updates the name dynamically.
+ *
+ * @async
+ * @function greetings
+ * @returns {Promise<void>} Resolves after initializing the greeting display and auth listener.
+ */
 async function greetings() {
   const daytimeElem = document.getElementById('greetingTime');
   const nameElem = document.getElementById('greetingName');
@@ -84,7 +98,18 @@ async function greetings() {
     daytimeElem.textContent = greetingText;
   }
 
-  // determine user or guest; do an immediate check then listen for state changes
+  /**
+   * Assigns the displayed username depending on the authentication state.
+   *
+   * If a logged-in user exists and is not anonymous, their display name
+   * or email will be shown. Otherwise, the label "Guest" will be used.
+   *
+   * @param {Object|null} user - The authenticated user object from Firebase Auth.
+   * @param {string} [user.displayName] - The user's display name.
+   * @param {string} [user.email] - The user's email address.
+   * @param {boolean} [user.isAnonymous] - Indicates whether the user is anonymous.
+   * @returns {void}
+   */
   function assignName(user) {
     if (!nameElem) return;
     if (user && !user.isAnonymous) {
