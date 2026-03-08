@@ -43,6 +43,7 @@
  *
  * @module drag-n-drop
  */
+import { loadTasks } from '../../scripts/firebase/get-firebase.js';
 import { generateTodosHTML } from './member-templates.js'
 // import { renderBoard } from'./member-script.js';
 
@@ -89,44 +90,46 @@ import { generateTodosHTML } from './member-templates.js'
  *
  * @type {Record&lt;string, Todo>}
  */
-let todos = {
-  "0": {
-    title: 'Kochwelt',
-    description: 'Eine Kochwelt App erstellen',
-    date: '2026-02-08',
-    priority: 'urgent',
-    assignedTo: '',
-    category: 'user-story',
-    subtask: 'todo'
-  },
-  "1": {
-    title: 'Impressum',
-    description: 'Das Impressum erstellen',
-    date: '',
-    priority: 'medium',
-    assignedTo: '',
-    category: 'user-story',
-    subtask: 'in-progress'
-  },
-  "2": {
-    title: 'Rezept Seite',
-    description: 'Rezept Seite Designen',
-    date: '',
-    priority: 'low',
-    assignedTo: '',
-    category: 'technical-task',
-    subtask: 'await-feedback'
-  },
-  "3": {
-    title: 'Startseite erstellen',
-    description: 'Erster Aufbau der Starsteite erstellen',
-    date: '',
-    priority: 'urgent',
-    assignedTo: '',
-    category: 'technical-task',
-    subtask: 'done'
-  }
-};
+let todos = {};
+todos = await loadTasks();
+// let todos = {
+//   "0": {
+//     title: 'Kochwelt',
+//     description: 'Eine Kochwelt App erstellen',
+//     date: '2026-02-08',
+//     priority: 'urgent',
+//     assignedTo: '',
+//     category: 'user-story',
+//     subtask: 'todo'
+//   },
+//   "1": {
+//     title: 'Impressum',
+//     description: 'Das Impressum erstellen',
+//     date: '',
+//     priority: 'medium',
+//     assignedTo: '',
+//     category: 'user-story',
+//     subtask: 'in-progress'
+//   },
+//   "2": {
+//     title: 'Rezept Seite',
+//     description: 'Rezept Seite Designen',
+//     date: '',
+//     priority: 'low',
+//     assignedTo: '',
+//     category: 'technical-task',
+//     subtask: 'await-feedback'
+//   },
+//   "3": {
+//     title: 'Startseite erstellen',
+//     description: 'Erster Aufbau der Starsteite erstellen',
+//     date: '',
+//     priority: 'urgent',
+//     assignedTo: '',
+//     category: 'technical-task',
+//     subtask: 'done'
+//   }
+// };
 /**
  * ID (key in {@link todos}) of the currently dragged task card.
  * Set on `dragstart`, consumed on `drop`.
@@ -134,6 +137,16 @@ let todos = {
  * @type {string|undefined}
  */
 let currentDraggedElement;
+
+
+async function initBoard() {
+  try {
+    todos = await loadTasks();
+    updateHTML();
+  } catch (error) {
+    console.error('Fehler bei Laden der Tasks:', error);
+  }
+}
 
 // INFO This function is only temporary until the first test is completed.
 // INFO After that, this function will be replaced and the to-dos will be loaded from Firebase.
@@ -143,7 +156,7 @@ let currentDraggedElement;
  * @export
  * @returns {void}
  */
-export function updateHTML() {
+export async function updateHTML() {
   // if this page doesn’t have a todo column we’re not on the board,
   // so skip all DOM updates to avoid null errors
   if (!document.getElementById('todo')) return;
@@ -332,6 +345,8 @@ document.addEventListener("dragleave", function (event) {
   if (!dropZone) return;
   dropZone.classList.remove("task__area--highlight");
 });
+
+initBoard();
 </code></pre>
         </article>
     </section>
@@ -342,13 +357,13 @@ document.addEventListener("dragleave", function (event) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-get-firebase.html">get-firebase</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Mar 08 2026 19:41:47 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Mar 08 2026 19:51:57 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>
