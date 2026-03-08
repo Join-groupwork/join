@@ -116,6 +116,10 @@ let currentDraggedElement;
  * @returns {void}
  */
 export function updateHTML() {
+  // if this page doesn’t have a todo column we’re not on the board,
+  // so skip all DOM updates to avoid null errors
+  if (!document.getElementById('todo')) return;
+
   updateTodo();
   updateInProgress();
   updateAwaitFeedback();
@@ -129,10 +133,12 @@ export function updateHTML() {
  * @returns {void}
  */
 function updateTodo() {
-  document.getElementById('todo').innerHTML = '';
+  const container = document.getElementById('todo');
+  if (!container) return;
+  container.innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
     if (element.subtask === 'todo') {
-      document.getElementById('todo').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
     }
   }
 };

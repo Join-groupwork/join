@@ -80,7 +80,7 @@ export function getSidebarTemplate() {
       </div>
 
       <nav class="nav">
-        <a class="nav-item" href="/member/summary-guest.html"><img src="/assets/icons/side-menu/summary-icon.svg" alt="Summary" class="nav-icon">Summary</a>
+        <a class="nav-item" href="/member/summary.html"><img src="/assets/icons/side-menu/summary-icon.svg" alt="Summary" class="nav-icon">Summary</a>
         <a class="nav-item" href="/member/add-task.html"><img src="/assets/icons/side-menu/add-task-icon.svg" alt="Add Task" class="nav-icon">Add Task</a>
         <a class="nav-item" href="/member/board.html"><img src="/assets/icons/side-menu/board-icon.svg" alt="Board" class="nav-icon">Board</a>
         <a class="nav-item" href="/member/contacts.html"><img src="/assets/icons/side-menu/contacts-icon.svg" alt="Contacts" class="nav-icon">Contacts</a>
