@@ -1,13 +1,44 @@
-import { loadData, loadTasks, tasks } from "../../scripts/firebase/get-firebase";
+import { loadTasks, tasks } from "/scripts/firebase/get-firebase.js";
 import { auth } from "/script/firebase/firebase.js";
-import { signInWithEmailAndPassword, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { signInWithEmailAndPassword, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { auth } from '/scripts/firebase/firebase.js';
 // INFO die tasks von firebase müssen abgerufen werden
 // INFO firebase tasks auslesen "subtask"
 // INFO need greetings for user and guest
 
-// [ ] Show how much tasks "todo"
+/**
+ * Counts the number of tasks with the status "todo" or "to do"
+ * and updates the corresponding value in the summary UI.
+ *
+ * The function also ensures backward compatibility by checking
+ * if a task uses the old `subtask` property instead of `status`
+ * and assigns it accordingly.
+ *
+ * @async
+ * @function todoTasks
+ * @param {Array<Object>} tasks - Array of task objects retrieved from the database.
+ * @param {string} [tasks[].status] - The current status of the task (e.g. "todo", "in progress", "done").
+ * @param {string} [tasks[].subtask] - Legacy property used as a fallback for the task status.
+ *
+ * @returns {Promise<void>} Resolves after the UI has been updated.
+ */
 async function todoTasks(tasks) {
+    console.log('Fetched tasks for summary:', tasks);
 
+    // ensure every task has a `status` property (else fall back to old `subtask`)
+    tasks.forEach(task => {
+        if (!task.status && task.subtask) {
+            task.status = task.subtask;
+        }
+    });
+
+    const count = tasks.filter(task => {
+        const s = (task.status || '').toLowerCase().trim();
+        return s === 'todo' || s === 'to do';
+    }).length;
+
+    console.log('Computed todo count:', count);
+    document.querySelector('.todo .card-title').textContent = count;
 }
 
 // [ ] show how much tasks "done"
@@ -41,34 +72,70 @@ function greetTime() {
 
 }
 
-// [ ] greetings for user
-// [ ] greetings for guests
-
 /**
+ * Displays a greeting message based on the current time of day
+ * and shows the name of the currently authenticated user.
  *
- * @param {string} signInWithEmailAndPassword
- * @param {string} signInAnonymously
+ * The function:
+ * - Determines the appropriate greeting ("Good morning", "Good afternoon", "Good evening")
+ *   based on the user's local time.
+ * - Updates the greeting text in the DOM.
+ * - Checks whether a user is authenticated.
+ * - Displays the user's display name or email if logged in,
+ *   otherwise falls back to "Guest".
+ * - Listens for authentication state changes and updates the name dynamically.
+ *
+ * @async
+ * @function greetings
+ * @returns {Promise<void>} Resolves after initializing the greeting display and auth listener.
  */
-async function greetings(auth) {
+async function greetings() {
+  const daytimeElem = document.getElementById('greetingTime');
+  const nameElem = document.getElementById('greetingName');
 
-  let name = document.getElementById('greetingName');
-  if (signInWithEmailAndPassword == true) {
+  // determine time-based message
+  const hour = new Date().getHours();
+  let greetingText;
+  if (hour < 12) greetingText = 'Good morning';
+  else if (hour < 18) greetingText = 'Good afternoon';
+  else greetingText = 'Good evening';
 
-  } else {
-
+  if (daytimeElem) {
+    daytimeElem.textContent = greetingText;
   }
-};
 
+  /**
+   * Assigns the displayed username depending on the authentication state.
+   *
+   * If a logged-in user exists and is not anonymous, their display name
+   * or email will be shown. Otherwise, the label "Guest" will be used.
+   *
+   * @param {Object|null} user - The authenticated user object from Firebase Auth.
+   * @param {string} [user.displayName] - The user's display name.
+   * @param {string} [user.email] - The user's email address.
+   * @param {boolean} [user.isAnonymous] - Indicates whether the user is anonymous.
+   * @returns {void}
+   */
+  function assignName(user) {
+    if (!nameElem) return;
+    if (user && !user.isAnonymous) {
+      nameElem.textContent = user.displayName || user.email || 'User';
+    } else {
+      nameElem.textContent = 'Guest';
+    }
+  }
 
-function renderSummary() {
-  // todoTasks();
-  // doneTasks();
-  // urgentTasks();
-  // tasksInBoard();
-  // tasksInProgress();
-  // awaitFeedbackTasks();
-  greetTime();
-  greetings();
-};
+  assignName(auth.currentUser);
+  onAuthStateChanged(auth, assignName);
+}
 
-renderSummary();
+async function initSummary() {
+    // show greetings first so user sees something even if tasks fail
+    greetings();
+
+    const tasks = await loadTasks();
+    todoTasks(tasks);
+    // Call other functions here when implemented
+}
+
+window.addEventListener('load', initSummary);

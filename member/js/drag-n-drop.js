@@ -55,6 +55,10 @@ let currentDraggedElement;
 // INFO This function is only temporary until the first test is completed.
 // INFO After that, this function will be replaced and the to-dos will be loaded from Firebase.
 export function updateHTML() {
+  // if this page doesn’t have a todo column we’re not on the board,
+  // so skip all DOM updates to avoid null errors
+  if (!document.getElementById('todo')) return;
+
   updateTodo();
   updateInProgress();
   updateAwaitFeedback();
@@ -63,10 +67,12 @@ export function updateHTML() {
 };
 
 function updateTodo() {
-  document.getElementById('todo').innerHTML = '';
+  const container = document.getElementById('todo');
+  if (!container) return;
+  container.innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
     if (element.subtask === 'todo') {
-      document.getElementById('todo').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
     }
   }
 };
