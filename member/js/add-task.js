@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         assigned_to: assignedSelect?.value || '',
         category: categorySelect?.value || '',
         subtask: subtaskInput?.value?.trim() || "",
+        status: 'todo',
         createdAt: new Date().toISOString()
       };
       try {

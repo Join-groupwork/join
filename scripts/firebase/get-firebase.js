@@ -14,10 +14,9 @@ let category = [];
  *
  */
 async function loadData() {
-  let contacts = await fetch(BASE_URL + ".json");
-  let contactsToJson = await contacts.json();
+  const resp = await fetch(`${BASE_URL}.json`);
+  const contactsToJson = await resp.json();
   console.log(contactsToJson);
-
 }
 
 
