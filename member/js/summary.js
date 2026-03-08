@@ -1,7 +1,7 @@
-import { loadTasks, tasks } from "/scripts/firebase/get-firebase.js";
-import { auth } from "/script/firebase/firebase.js";
-import { signInWithEmailAndPassword, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { auth } from '/scripts/firebase/firebase.js';
+import { auth } from "../../scripts/firebase/firebase.js";
+import { loadTasks } from "/scripts/firebase/get-firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
 // INFO die tasks von firebase müssen abgerufen werden
 // INFO firebase tasks auslesen "subtask"
 // INFO need greetings for user and guest
@@ -23,22 +23,22 @@ import { auth } from '/scripts/firebase/firebase.js';
  * @returns {Promise<void>} Resolves after the UI has been updated.
  */
 async function todoTasks(tasks) {
-    console.log('Fetched tasks for summary:', tasks);
+  console.log('Fetched tasks for summary:', tasks);
 
-    // ensure every task has a `status` property (else fall back to old `subtask`)
-    tasks.forEach(task => {
-        if (!task.status && task.subtask) {
-            task.status = task.subtask;
-        }
-    });
+  // ensure every task has a `status` property (else fall back to old `subtask`)
+  tasks.forEach(task => {
+    if (!task.status && task.subtask) {
+      task.status = task.subtask;
+    }
+  });
 
-    const count = tasks.filter(task => {
-        const s = (task.status || '').toLowerCase().trim();
-        return s === 'todo' || s === 'to do';
-    }).length;
+  const count = tasks.filter(task => {
+    const s = (task.status || '').toLowerCase().trim();
+    return s === 'todo' || s === 'to do';
+  }).length;
 
-    console.log('Computed todo count:', count);
-    document.querySelector('.todo .card-title').textContent = count;
+  console.log('Computed todo count:', count);
+  document.querySelector('.todo .card-title').textContent = count;
 }
 
 // [ ] show how much tasks "done"
@@ -66,11 +66,7 @@ async function tasksInProgress(tasks) {
 async function awaitFeedbackTasks(tasks) {
 
 }
-// [ ] greetings for daytime
-function greetTime() {
-  let greetTimeRef = document.getElementById('greetingTime');
 
-}
 
 /**
  * Displays a greeting message based on the current time of day
@@ -104,6 +100,8 @@ async function greetings() {
     daytimeElem.textContent = greetingText;
   }
 
+  // BUGFIX email is the wrong name to use for greeting. It musst use the user name or displayuser name
+  // BUGFIX the displayuser name in firebase is dosn't the right name
   /**
    * Assigns the displayed username depending on the authentication state.
    *
@@ -130,12 +128,12 @@ async function greetings() {
 }
 
 async function initSummary() {
-    // show greetings first so user sees something even if tasks fail
-    greetings();
+  // show greetings first so user sees something even if tasks fail
+  greetings();
 
-    const tasks = await loadTasks();
-    todoTasks(tasks);
-    // Call other functions here when implemented
+  const tasks = await loadTasks();
+  todoTasks(tasks);
+  // Call other functions here when implemented
 }
 
 window.addEventListener('load', initSummary);
