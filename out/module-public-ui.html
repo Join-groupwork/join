@@ -38,21 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Public page bootstrapper: renders shared header/sidebar UI and wires up the header menu + logout.
-
-This module injects templates into the public pages (e.g. summary-guest/public area)
-and provides a logout button that signs out the current Firebase user.
-
-DOM requirements (IDs must exist in the HTML):
-- `header`        : container for the header template
-- `sidebar`       : container for the sidebar template
-- `headerMenue`   : profile/menu button in the header
-- `headerMenueNav`: dropdown/navigation container toggled by profile button
-- `logoutBtn`     : logout button
-
-External dependencies:
-- Template functions from `/public/js/public-templates.js`
-- Firebase Auth instance `auth` and `signOut()`</div>
+            <div class="description">Public page bootstrapper: renders shared header/sidebar UI and wires up the header menu + logout.This module injects templates into the public pages (e.g. summary-guest/public area)and provides a logout button that signs out the current Firebase user.DOM requirements (IDs must exist in the HTML):- `header`        : container for the header template- `sidebar`       : container for the sidebar template- `headerMenue`   : profile/menu button in the header- `headerMenueNav`: dropdown/navigation container toggled by profile button- `logoutBtn`     : logout buttonExternal dependencies:- Template functions from `/public/js/public-templates.js`- Firebase Auth instance `auth` and `signOut()`</div>
         
 
         
@@ -166,10 +152,7 @@ External dependencies:
 
 
 <div class="description">
-    Entry point for module initialization.
-Renders the UI on load.
-
-NOTE: `render()` is synchronous; this function does not need to be `async`.
+    Entry point for module initialization.Renders the UI on load.NOTE: `render()` is synchronous; this function does not need to be `async`.
 </div>
 
 
@@ -381,14 +364,7 @@ NOTE: `render()` is synchronous; this function does not need to be `async`.
 
 
 <div class="description">
-    Renders the "Add Task" section by injecting the task template into `#add_task`.
-
-DOM requirement:
-- An element with id `add_task` must exist on the page.
-
-Dependencies:
-- `getTaskTemplate()` must be available in scope (imported or defined elsewhere)
-  and must return a HTML string.
+    Renders the "Add Task" section by injecting the task template into `#add_task`.DOM requirement:- An element with id `add_task` must exist on the page.Dependencies:- `getTaskTemplate()` must be available in scope (imported or defined elsewhere)  and must return a HTML string.
 </div>
 
 
@@ -714,9 +690,7 @@ Dependencies:
 
 
 <div class="description">
-    Registers UI event listeners after the DOM is ready:
-- Toggle header dropdown menu
-- Sign out user and redirect to the public index page
+    Registers UI event listeners after the DOM is ready:- Toggle header dropdown menu- Sign out user and redirect to the public index page
 </div>
 
 
@@ -825,13 +799,13 @@ Dependencies:
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-get-firebase.html">get-firebase</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li><li><a href="global.html#todoTasks">todoTasks</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Mar 04 2026 11:25:49 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Mar 08 2026 19:39:24 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

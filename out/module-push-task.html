@@ -38,7 +38,8 @@
     <div class="container-overview">
     
         
-            <div class="description">Provides Firebasew Realtime Database utilitiesfor storing task data.</div>
+            <div class="description">Provides Firebasew Realtime Database utilities
+for storing task data.</div>
         
 
         
@@ -144,7 +145,7 @@
     
 
     
-    <h4 class="name" id=".pushTask"><span class="type-signature">(static) </span>pushTask<span class="signature">(taskData)</span><span class="type-signature"> &rarr; {Promise.&lt;(string|null)>}</span></h4>
+    <h4 class="name" id="~pushTask"><span class="type-signature">(async, inner) </span>pushTask<span class="signature">(taskData)</span><span class="type-signature"> &rarr; {Promise.&lt;(string|null)>}</span></h4>
     
 
     
@@ -152,7 +153,10 @@
 
 
 <div class="description">
-    Saves a task object to Firebase Realtime Database.
+    Pushes a new task object to the Firebase Realtime Database.
+
+Creates a new entry under the "tasks" node
+and returns the generated key of the created task.
 </div>
 
 
@@ -194,7 +198,7 @@
             <td class="type">
             
                 
-<span class="param-type">Todo</span>
+<span class="param-type">Object</span>
 
 
             
@@ -204,7 +208,7 @@
 
             
 
-            <td class="description last">Todo object to store</td>
+            <td class="description last">The task data object that should be stored.</td>
         </tr>
 
     
@@ -245,7 +249,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_firebase_push-task.js.html">scripts/firebase/push-task.js</a>, <a href="scripts_firebase_push-task.js.html#line17">line 17</a>
+        <a href="scripts_firebase_push-task.js.html">scripts/firebase/push-task.js</a>, <a href="scripts_firebase_push-task.js.html#line11">line 11</a>
     </li></ul></dd>
     
 
@@ -268,13 +272,42 @@
 
 
 
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        Throws an error if the task could not be saved.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Error</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
 
 
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
-    Firebase key of the created task
+    Resolves with the generated Firebase key.
 </div>
 
 
@@ -313,13 +346,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-get-firebase.html">get-firebase</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li><li><a href="global.html#todoTasks">todoTasks</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Mar 04 2026 11:25:49 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Mar 08 2026 19:39:24 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

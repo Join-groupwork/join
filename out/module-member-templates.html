@@ -38,10 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">HTML template factory functions for member pages.
-
-Provides functions that return HTML strings for commonly used UI parts:
-header, sidebar, add-task form, contact overlays, signup message, and board task cards.</div>
+            <div class="description">HTML template factory functions for member pages.Provides functions that return HTML strings for commonly used UI parts:header, sidebar, add-task form, contact overlays, signup message, and board task cards.</div>
         
 
         
@@ -155,11 +152,7 @@ header, sidebar, add-task form, contact overlays, signup message, and board task
 
 
 <div class="description">
-    Generates a task card HTML string for the board (drag-and-drop).
-
-NOTE:
-- `category` is used to build the CSS class name `task__category--${category}`
-- `priority` is used to build the icon path `/assets/icons/${priority}-prio-icon.svg`
+    Generates a task card HTML string for the board (drag-and-drop).NOTE:- `category` is used to build the CSS class name `task__category--${category}`- `priority` is used to build the icon path `/assets/icons/${priority}-prio-icon.svg`
 </div>
 
 
@@ -410,9 +403,7 @@ NOTE:
 
 
 <div class="description">
-    Generates the contact add overlay HTML.
-
-Intended to be injected into a container element like `#addC_overlay`.
+    Generates the contact add overlay HTML.Intended to be injected into a container element like `#addC_overlay`.
 </div>
 
 
@@ -522,9 +513,7 @@ Intended to be injected into a container element like `#addC_overlay`.
 
 
 <div class="description">
-    Generates the contact edit overlay HTML.
-
-Intended to be injected into a container element like `#editC_overlay`.
+    Generates the contact edit overlay HTML.Intended to be injected into a container element like `#editC_overlay`.
 </div>
 
 
@@ -634,16 +623,7 @@ Intended to be injected into a container element like `#editC_overlay`.
 
 
 <div class="description">
-    Generates the header HTML for member pages.
-
-Includes:
-- Help link
-- Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)
-
-DOM hooks created by this template:
-- `#headerMenue` (toggle button)
-- `#headerMenueNav` (dropdown container)
-- `#logoutBtn` (logout trigger)
+    Generates the header HTML for member pages.Includes:- Help link- Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)DOM hooks created by this template:- `#headerMenue` (toggle button)- `#headerMenueNav` (dropdown container)- `#logoutBtn` (logout trigger)
 </div>
 
 
@@ -753,12 +733,7 @@ DOM hooks created by this template:
 
 
 <div class="description">
-    Generates the sidebar HTML for member pages.
-
-Includes:
-- Logo
-- Navigation links (Summary / Add Task / Board / Contacts)
-- Footer links (Privacy Policy / Legal Notice)
+    Generates the sidebar HTML for member pages.Includes:- Logo- Navigation links (Summary / Add Task / Board / Contacts)- Footer links (Privacy Policy / Legal Notice)
 </div>
 
 
@@ -868,11 +843,7 @@ Includes:
 
 
 <div class="description">
-    Generates the "Add Task" form HTML.
-
-NOTE:
-This function only returns markup. Event handling (submit, priority button selection,
-form validation, etc.) should be implemented in the page/controller script.
+    Generates the "Add Task" form HTML.NOTE:This function only returns markup. Event handling (submit, priority button selection,form validation, etc.) should be implemented in the page/controller script.
 </div>
 
 
@@ -1092,8 +1063,7 @@ form validation, etc.) should be implemented in the page/controller script.
 
 
 <div class="description">
-    Task categories supported by the board UI.
-Used for CSS class naming (e.g. `task__category--user-story`).
+    Task categories supported by the board UI.Used for CSS class naming (e.g. `task__category--user-story`).
 </div>
 
 
@@ -1171,8 +1141,7 @@ Used for CSS class naming (e.g. `task__category--user-story`).
 
 
 <div class="description">
-    Priority values supported by the board UI.
-Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
+    Priority values supported by the board UI.Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
 </div>
 
 
@@ -1259,13 +1228,13 @@ Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-get-firebase.html">get-firebase</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li><li><a href="global.html#todoTasks">todoTasks</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Mar 04 2026 11:25:49 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Mar 08 2026 19:39:24 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

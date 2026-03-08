@@ -19,7 +19,7 @@
 
     <h1 class="page-title">Global</h1>
 
-
+    
 
 
 
@@ -27,157 +27,168 @@
 <section>
 
 <header>
-
+    
         <h2></h2>
-
-
+        
+    
 </header>
 
 <article>
     <div class="container-overview">
+    
+        
 
-
-
-
+        
 
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 </dl>
 
 
-
-
+        
+    
     </div>
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
+    
         <h3 class="subsection-title">Members</h3>
 
-
-
-<h4 class="name" id="app"><span class="type-signature">(constant) </span>app<span class="type-signature"></span></h4>
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_firebase_firebase.js.html">scripts/firebase/firebase.js</a>, <a href="scripts_firebase_firebase.js.html#line23">line 23</a>
-    </li></ul></dd>
-
-
-
-
-
-
-
-</dl>
-
-
-
-
-
-
-
-
-
-
-        <h3 class="subsection-title">Methods</h3>
-
-
-
-
-
-
-
-    <h4 class="name" id="pushTask"><span class="type-signature">(async) </span>pushTask<span class="signature">(taskData)</span><span class="type-signature"> &rarr; {Promise.&lt;(string|null)>}</span></h4>
-
-
+        
+            
+<h4 class="name" id="columns"><span class="type-signature">(constant) </span>columns<span class="type-signature"> :Object</span></h4>
 
 
 
 
 <div class="description">
-    Pushes a new task object to the Firebase Realtime Database.
+    References to the DOM containers (board columns) where tasks are rendered.Why this exists:- You query the DOM *once* (instead of repeating `document.getElementById(...)` everywhere).- Your code becomes cleaner: `columns.todo` is easier to read than `"todo"` strings everywhere.- It centralizes the “IDs must exist” assumption in one place (good for debugging).Note: These can be `null` if the elements don’t exist in the current HTML page.
+</div>
 
-Creates a new entry under the "tasks" node
-and returns the generated key of the created task.
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line20">line 20</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getCardTemplate"><span class="type-signature"></span>getCardTemplate<span class="signature">(task)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Generates the HTML template for a task card.
 </div>
 
 
@@ -189,50 +200,194 @@ and returns the generated key of the created task.
 
 
     <h5>Parameters:</h5>
-
+    
 
 <table class="params">
     <thead>
     <tr>
-
+        
         <th>Name</th>
-
+        
 
         <th>Type</th>
 
+        
 
-
-
+        
 
         <th class="last">Description</th>
     </tr>
     </thead>
 
     <tbody>
-
+    
 
         <tr>
-
-                <td class="name"><code>taskData</code></td>
-
+            
+                <td class="name"><code>task</code></td>
+            
 
             <td class="type">
+            
+                
+<span class="param-type">string</span>
 
 
-<span class="param-type">Object</span>
-
-
-
+            
             </td>
 
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">number</span>
 
 
+            
+            </td>
 
+            
 
-            <td class="description last">The task data object that should be stored.</td>
+            
+
+            <td class="description last"></td>
         </tr>
 
+    
 
+        <tr>
+            
+                <td class="name"><code>category</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>assigned_to</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -243,42 +398,42 @@ and returns the generated key of the created task.
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_firebase_push-task.js.html">scripts/firebase/push-task.js</a>, <a href="scripts_firebase_push-task.js.html#line4">line 4</a>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line40">line 40</a>
     </li></ul></dd>
+    
 
+    
 
+    
 
-
-
-
-
+    
 </dl>
 
 
@@ -290,35 +445,6 @@ and returns the generated key of the created task.
 
 
 
-
-
-
-<h5>Throws:</h5>
-
-
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        Throws an error if the task could not be saved.
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-
-<span class="param-type">Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
 
 
 
@@ -326,9 +452,9 @@ and returns the generated key of the created task.
 
 <h5>Returns:</h5>
 
-
+        
 <div class="param-desc">
-    Resolves with the generated Firebase key.
+    HTML string
 </div>
 
 
@@ -338,11 +464,82 @@ and returns the generated key of the created task.
         Type
     </dt>
     <dd>
-
-<span class="param-type">Promise.&lt;(string|null)></span>
+        
+<span class="param-type">string</span>
 
 
     </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getTask"><span class="type-signature">(async) </span>getTask<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_firebase_get-task.js.html">scripts/firebase/get-task.js</a>, <a href="scripts_firebase_get-task.js.html#line10">line 10</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
 </dl>
 
 
@@ -357,28 +554,46 @@ and returns the generated key of the created task.
 
 
 
-        <h3 class="subsection-title">Events</h3>
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
 
 
+        
+            
 
+    
 
-    <h4 class="name" id="event:DOMContentLoaded">DOMContentLoaded</h4>
+    
+    <h4 class="name" id="greetings"><span class="type-signature">(async) </span>greetings<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
+    
 
-
-
+    
 
 
 
 <div class="description">
-    Initializes the task creation page after the DOM is fully loaded.
-
-Sets up:
-- Priority button selection handling
-- Create task button logic (including validation and Firebase push)
-* - Cancel button navigation behavior
+    Displays a greeting message based on the current time of dayand shows the name of the currently authenticated user.The function:- Determines the appropriate greeting ("Good morning", "Good afternoon", "Good evening")  based on the user's local time.- Updates the greeting text in the DOM.- Checks whether a user is authenticated.- Displays the user's display name or email if logged in,  otherwise falls back to "Guest".- Listens for authentication state changes and updates the name dynamically.
 </div>
 
 
@@ -395,35 +610,43 @@ Sets up:
 
 <dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_add-task.js.html">member/js/add-task.js</a>, <a href="member_js_add-task.js.html#line3">line 3</a>
+        <a href="member_js_summary.js.html">member/js/summary.js</a>, <a href="member_js_summary.js.html#line71">line 71</a>
     </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
 
@@ -431,6 +654,153 @@ Sets up:
 
 
 
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Resolves after initializing the greeting display and auth listener.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="pushContact"><span class="type-signature"></span>pushContact<span class="signature">(contactData)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>contactData</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_firebase_push-contact.js.html">scripts/firebase/push-contact.js</a>, <a href="scripts_firebase_push-contact.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
 </dl>
 
 
@@ -452,8 +822,463 @@ Sets up:
 
 
 
+        
+            
+
+    
+
+    
+    <h4 class="name" id="renderBoard"><span class="type-signature">(async) </span>renderBoard<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
+    
+
+    
 
 
+
+<div class="description">
+    Fetches all tasks and renders thembased on their status.This function:- Loads tasks from the Firebase- Matches each task to the appropriate column- Removes placeholder elements if present- Appends the generated task card HTML to the column
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line64">line 64</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="todoTasks"><span class="type-signature">(async) </span>todoTasks<span class="signature">(tasks)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Counts the number of tasks with the status "todo" or "to do"and updates the corresponding value in the summary UI.The function also ensures backward compatibility by checkingif a task uses the old `subtask` property instead of `status`and assigns it accordingly.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tasks</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array of task objects retrieved from the database.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>status</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The current status of the task (e.g. "todo", "in progress", "done").</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>subtask</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Legacy property used as a fallback for the task status.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_summary.js.html">member/js/summary.js</a>, <a href="member_js_summary.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Resolves after the UI has been updated.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+        <h3 class="subsection-title">Events</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~event:DOMContentLoaded">DOMContentLoaded</h4>
+    
+
+    
+
+
+
+<div class="description">
+    Initializes the task creation page after the DOM is fully loaded.Sets up:- Priority button selection handling- Create task button logic (including validation and Firebase push)* - Cancel button navigation behavior
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_add-task.js.html">member/js/add-task.js</a>, <a href="member_js_add-task.js.html#line3">line 3</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
 </article>
 
 </section>
@@ -464,13 +1289,13 @@ Sets up:
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-get-firebase.html">get-firebase</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:DOMContentLoaded">DOMContentLoaded</a></li></ul><h3>Global</h3><ul><li><a href="global.html#app">app</a></li><li><a href="global.html#pushTask">pushTask</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-get-firebase.html">get-firebase</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li><li><a href="global.html#todoTasks">todoTasks</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 03 2026 14:32:19 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Mar 08 2026 19:39:24 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>
