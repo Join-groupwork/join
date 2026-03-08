@@ -1,4 +1,5 @@
-import { loadData, loadTasks } from '../../scripts/firebase/get-firebase';
+import { loadData, loadTasks, tasks } from "../../scripts/firebase/get-firebase";
+import { auth } from "/script/firebase/firebase.js";
 import { signInWithEmailAndPassword, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 // INFO die tasks von firebase müssen abgerufen werden
 // INFO firebase tasks auslesen "subtask"
@@ -34,12 +35,40 @@ async function tasksInProgress(tasks) {
 async function awaitFeedbackTasks(tasks) {
 
 }
+// [ ] greetings for daytime
+function greetTime() {
+  let greetTimeRef = document.getElementById('greetingTime');
+
+}
 
 // [ ] greetings for user
 // [ ] greetings for guests
-// [ ] greetings for daytime
-async function greetings(signInWithEmailAndPassword, signInAnonymously) {
-  let daytime = document.getElementById('greetingTime');
-  let name = document.getElementById('greetingName');
 
-}
+/**
+ *
+ * @param {string} signInWithEmailAndPassword
+ * @param {string} signInAnonymously
+ */
+async function greetings(auth) {
+
+  let name = document.getElementById('greetingName');
+  if (signInWithEmailAndPassword == true) {
+
+  } else {
+
+  }
+};
+
+
+function renderSummary() {
+  // todoTasks();
+  // doneTasks();
+  // urgentTasks();
+  // tasksInBoard();
+  // tasksInProgress();
+  // awaitFeedbackTasks();
+  greetTime();
+  greetings();
+};
+
+renderSummary();
