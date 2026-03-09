@@ -2,10 +2,11 @@ import { loadTasks } from '/scripts/firebase/get-firebase.js';
 
 
 async function initSummary() {
-    const tasks = await loadTasks();
+    const tasks = await loadTasks(); 
+    todoTasks(tasks);
+    doneTasks(tasks); 
     urgentTasks(tasks);
-    doneTasks(tasks);   
-    todoTasks(tasks);              
+    tasksInBoard(tasks)               
 }
 
 // [ ] Show how much tasks "todo"
@@ -27,6 +28,13 @@ async function urgentTasks(tasks) {
     const count = tasks.filter(task => task.priority === "urgent").length;
     document.getElementById("urgent-count").textContent = count;
 }
+
+// [ ] show how much "tasks in "board"
+async function tasksInBoard(tasks) {
+    const count = tasks.filter(task => task).length;
+    document.getElementById("tasks-in-board-count").textContent = count;
+}
+
 
 
 
