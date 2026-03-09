@@ -8,7 +8,8 @@ async function initSummary() {
     urgentTasks(tasks);
     tasksInBoard(tasks);
     tasksInProgress(tasks);
-    awaitFeedbackTasks(tasks);            
+    awaitFeedbackTasks(tasks);  
+    greetingTime();        
 }
 
 // [ ] Show how much tasks "todo"
@@ -47,6 +48,24 @@ async function tasksInProgress(tasks) {
 async function awaitFeedbackTasks(tasks) {
     const count = tasks.filter(task => task.status === "awaitFeedback").length;
     document.getElementById("awaiting-feedback-count").textContent = count;
+}
+
+
+// [ ] greetings for daytime
+function greetingTime() {
+  let daytime = document.getElementById('greetingTime');
+  let hour = new Date().getHours();
+  let greeting = "";
+
+  if (hour < 12) {
+    greeting = "Good morning,";
+  } else if (hour < 18) {
+    greeting = "Good afternoon,";
+  } else {
+    greeting = "Good evening,";
+  }
+
+  daytime.textContent = greeting;
 }
 
 initSummary();
