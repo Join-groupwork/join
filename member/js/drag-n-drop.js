@@ -15,9 +15,10 @@
  *
  * @module drag-n-drop
  */
+import { BASE_URL, database } from '../../scripts/firebase/firebase.js';
 import { loadTasks } from '../../scripts/firebase/get-firebase.js';
 import { generateTodosHTML } from './member-templates.js'
-// import { renderBoard } from'./member-script.js';
+import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 /**
  * Possible board states.
@@ -44,7 +45,7 @@ import { generateTodosHTML } from './member-templates.js'
  * @property {Priority} priority - Task priority level.
  * @property {string} assignedTo - Person(s) assigned to this task (currently unused).
  * @property {Category} category - Task category.
- * @property {SubtaskStatus} subtask - Current board column/status.
+ * @property {SubtaskStatus} status - Current board column/status.
  */
 
 
@@ -64,44 +65,7 @@ import { generateTodosHTML } from './member-templates.js'
  */
 let todos = {};
 todos = await loadTasks();
-// let todos = {
-//   "0": {
-//     title: 'Kochwelt',
-//     description: 'Eine Kochwelt App erstellen',
-//     date: '2026-02-08',
-//     priority: 'urgent',
-//     assignedTo: '',
-//     category: 'user-story',
-//     subtask: 'todo'
-//   },
-//   "1": {
-//     title: 'Impressum',
-//     description: 'Das Impressum erstellen',
-//     date: '',
-//     priority: 'medium',
-//     assignedTo: '',
-//     category: 'user-story',
-//     subtask: 'in-progress'
-//   },
-//   "2": {
-//     title: 'Rezept Seite',
-//     description: 'Rezept Seite Designen',
-//     date: '',
-//     priority: 'low',
-//     assignedTo: '',
-//     category: 'technical-task',
-//     subtask: 'await-feedback'
-//   },
-//   "3": {
-//     title: 'Startseite erstellen',
-//     description: 'Erster Aufbau der Starsteite erstellen',
-//     date: '',
-//     priority: 'urgent',
-//     assignedTo: '',
-//     category: 'technical-task',
-//     subtask: 'done'
-//   }
-// };
+
 /**
  * ID (key in {@link todos}) of the currently dragged task card.
  * Set on `dragstart`, consumed on `drop`.
@@ -119,6 +83,34 @@ async function initBoard() {
     console.error('Fehler bei Laden der Tasks:', error);
   }
 }
+
+export async function updateTaskStatus(taskId, newStatus) {
+  await update(ref(database, `tasks/${taskId}`), {
+    status: newStatus,
+  });
+}
+
+
+/**
+ *
+ * @param {string} currentDraggedElement
+ * @param {string} newStatus
+ */
+// async function updateTaskStatus(currentDraggedElement, newStatus) {
+//   const response = await fetch(`${BASE_URL}tasks/${currentDraggedElement}.json`, {
+//     method: "PATCH",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       status: newStatus,
+//     }),
+//   });
+//   if (!response.ok) {
+//     throw new Error("Status konnte nicht aktualisiert werden");
+//   }
+//   return await response.json();
+// }
 
 // INFO This function is only temporary until the first test is completed.
 // INFO After that, this function will be replaced and the to-dos will be loaded from Firebase.
@@ -139,6 +131,8 @@ export async function updateHTML() {
   updateDone();
   togglePlaceholder();
 };
+
+
 /**
  * Renders tasks with {@link Todo.subtask} === `"todo"` into the `#todo` column.
  *
@@ -150,11 +144,13 @@ function updateTodo() {
   if (!container) return;
   container.innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
-    if (element.subtask === 'todo') {
+    if (element.status === 'todo') {
       container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
     }
   }
 };
+
+
 /**
  * Renders tasks with {@link Todo.subtask} === `"in-progress"` into the `#inProgress` column.
  *
@@ -164,11 +160,13 @@ function updateTodo() {
 function updateInProgress() {
   document.getElementById('inProgress').innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
-    if (element.subtask === 'in-progress') {
+    if (element.status === 'in-progress') {
       document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
     }
   }
 };
+
+
 /**
  * Renders tasks with {@link Todo.subtask} === `"await-feedback"` into the `#awaitFeedback` column.
  *
@@ -178,7 +176,7 @@ function updateInProgress() {
 function updateAwaitFeedback() {
   document.getElementById('awaitFeedback').innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
-    if (element.subtask === 'await-feedback') {
+    if (element.status === 'await-feedback') {
       document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
     }
   }
@@ -194,11 +192,12 @@ function updateAwaitFeedback() {
 function updateDone() {
   document.getElementById('done').innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
-    if (element.subtask === 'done') {
+    if (element.status === 'done') {
       document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
     }
   }
 };
+
 
 // INFO Used to show and hide a placeholder when no task is available. Used to show and hide a placeholder when no task is available.
 // [ ] if no task, show
@@ -207,7 +206,7 @@ function updateDone() {
  * Shows/hides the placeholder inside each `.task__area` depending on whether
  * at least one task exists for that column.
  *
- * Uses `.task__area[data-status]` to match against {@link Todo.subtask}.
+ * Uses `.task__area[data - status]` to match against {@link Todo.status}.
  *
  * @private
  * @returns {void}
@@ -217,7 +216,7 @@ function togglePlaceholder() {
   taskAres.forEach(area => {
     let status = area.dataset.status;
     const placeholder = area.querySelector('.task__area--placeholder');
-    let hasTask = Object.values(todos).some(task => task.subtask === status);
+    let hasTask = Object.values(todos).some(task => task.status === status);
     if (hasTask) {
       placeholder.classList.add('d-none')
     } else {
@@ -225,6 +224,7 @@ function togglePlaceholder() {
     }
   });
 };
+
 
 // [x] You have to work with event listeners because you are working with modules.
 // CHECK Where are animations or transforms entered?
@@ -289,17 +289,30 @@ document.addEventListener("dragover", function (event) {
  * @param {DragEvent} event - Browser drop event.
  * @returns {void}
  */
-document.addEventListener("drop", function (event) {
+document.addEventListener("drop", async function (event) {
   event.preventDefault();
   const dropZone = event.target.closest(".task__area");
-  if (!dropZone) return;
-  const newSubtask = dropZone.dataset.status;
+  if (!dropZone || !currentDraggedElement) return;
+  const newStatus = dropZone.dataset.status;
+  const oldStatus = todos[currentDraggedElement]?.status;
   dropZone.classList.remove("task__area--highlight");
-  todos[currentDraggedElement].subtask = newSubtask;
+  todos[currentDraggedElement].status = newStatus;
+
   updateHTML();
   togglePlaceholder();
-}
-);
+  try {
+    await updateTaskStatus(currentDraggedElement, newStatus)
+  } catch (error) {
+    console.error("Firebase-Update fehlgeschlagen:", error);
+
+    // rollback
+    if (todos[currentDraggedElement]) {
+      todos[currentDraggedElement].status = oldStatus;
+      updateHTML();
+    }
+    alert("Status konnte nicht gespeichert.");
+  }
+});
 
 
 // [x] dragleave coden
@@ -317,5 +330,6 @@ document.addEventListener("dragleave", function (event) {
   if (!dropZone) return;
   dropZone.classList.remove("task__area--highlight");
 });
+
 
 initBoard();

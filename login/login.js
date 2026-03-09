@@ -8,6 +8,7 @@
 import { auth } from "/scripts/firebase/firebase.js";
 import { signInWithEmailAndPassword, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+// INFO Die console.log werden vor angabe entfernt.
 console.log("Auth object:", auth);
 if (location.protocol === 'https:') {
   console.log("Seite läuft über HTTPS ✅");
