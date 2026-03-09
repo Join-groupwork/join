@@ -7,7 +7,8 @@ async function initSummary() {
     doneTasks(tasks); 
     urgentTasks(tasks);
     tasksInBoard(tasks);
-    tasksInProgress(tasks)              
+    tasksInProgress(tasks);
+    awaitFeedbackTasks(tasks);            
 }
 
 // [ ] Show how much tasks "todo"
@@ -42,8 +43,10 @@ async function tasksInProgress(tasks) {
     document.getElementById("inProgress-count").textContent = count;
 }
 
-
-
-
+// [ ] show how much tasks "await feedback"
+async function awaitFeedbackTasks(tasks) {
+    const count = tasks.filter(task => task.status === "awaitFeedback").length;
+    document.getElementById("awaiting-feedback-count").textContent = count;
+}
 
 initSummary();
