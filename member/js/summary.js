@@ -6,7 +6,8 @@ async function initSummary() {
     todoTasks(tasks);
     doneTasks(tasks); 
     urgentTasks(tasks);
-    tasksInBoard(tasks)               
+    tasksInBoard(tasks);
+    tasksInProgress(tasks)              
 }
 
 // [ ] Show how much tasks "todo"
@@ -34,6 +35,13 @@ async function tasksInBoard(tasks) {
     const count = tasks.filter(task => task).length;
     document.getElementById("tasks-in-board-count").textContent = count;
 }
+
+// [ ] show how much "task in progress"
+async function tasksInProgress(tasks) {
+    const count = tasks.filter(task => task.status === "inProgress").length;
+    document.getElementById("inProgress-count").textContent = count;
+}
+
 
 
 
