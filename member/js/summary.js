@@ -9,7 +9,8 @@ async function initSummary() {
     tasksInBoard(tasks);
     tasksInProgress(tasks);
     awaitFeedbackTasks(tasks);  
-    greetingTime();        
+    greetingTime();  
+    urgentTasksDeadLine(tasks);
 }
 
 // [ ] Show how much tasks "todo"
@@ -68,4 +69,21 @@ function greetingTime() {
   daytime.textContent = greeting;
 }
 
+// [ ] show the next deadline for urgent tasks
+function urgentTasksDeadLine(tasks) {
+    const urgentTasks = tasks
+        .filter(task => task.priority === "urgent" && task.due_date)
+        .sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+
+    if (urgentTasks.length > 0) {
+        const nextDate = new Date(urgentTasks[0].due_date);
+
+        document.getElementById("urgentTasks-dead-line").textContent =
+            nextDate.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            });
+    }
+}
 initSummary();
