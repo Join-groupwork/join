@@ -64,7 +64,6 @@ import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-
  * @type {Record<string, Todo>}
  */
 let todos = {};
-todos = await loadTasks();
 
 /**
  * ID (key in {@link todos}) of the currently dragged task card.
@@ -74,7 +73,9 @@ todos = await loadTasks();
  */
 let currentDraggedElement;
 
-
+/**
+ *
+ */
 async function initBoard() {
   try {
     todos = await loadTasks();
@@ -84,6 +85,12 @@ async function initBoard() {
   }
 }
 
+/**
+ * Handles the upload to firebase after switch category.
+ *
+ * @param {string} taskId - ID from task
+ * @param {string} newStatus - Status from task
+ */
 export async function updateTaskStatus(taskId, newStatus) {
   await update(ref(database, `tasks/${taskId}`), {
     status: newStatus,
@@ -241,6 +248,7 @@ function togglePlaceholder() {
 document.addEventListener("dragstart", function (event) {
   if (event.target.classList.contains("task__card")) {
     currentDraggedElement = event.target.id; // INFO We remember the ID with event.target.id.
+    console.log("Dragged task id:", currentDraggedElement);
     event.target.classList.add("task__card--dragging"); // INFO We add a CSS class for the move so that it visually matches the design.
   }
 });
@@ -299,7 +307,6 @@ document.addEventListener("drop", async function (event) {
   todos[currentDraggedElement].status = newStatus;
 
   updateHTML();
-  togglePlaceholder();
   try {
     await updateTaskStatus(currentDraggedElement, newStatus)
   } catch (error) {
