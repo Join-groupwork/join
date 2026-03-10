@@ -63,7 +63,7 @@ function resetContactListExceptAddButton(contactList) {
         contactList.appendChild(addButton);
     }
 }
-// rendern der contact list in alphabetischer Reihenfolge mit sections
+
 function renderAlphabeticalContactSections(contactList, groupedContacts) {
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
@@ -84,7 +84,7 @@ function createLetterSectionHeader(contactList, letter) {
     divider.className = 'hr_contactList';
     contactList.appendChild(divider);
 }
-// rendern der contact list unter jedem section header
+
 function renderContactsUnderLetter(contactList, letter, groupedContacts) {
     if (!groupedContacts[letter]) return;
 
@@ -148,7 +148,7 @@ function getContactListItemById(contactId) {
 function renderActiveContactDetail(contactData) {
     renderActiveContactTemplate(contactData);
 }
-// rendern der contact details im rechten bereich
+
 export function renderActiveContactTemplate(contact) {
     const container = getContactDetailContainer();
     if (!container) return;
