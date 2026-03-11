@@ -1,19 +1,11 @@
 import { loadTasks } from '/scripts/firebase/get-firebase.js';
-
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { auth } from "../../scripts/firebase/firebase.js";
 
 async function initSummary() {
     const tasks = await loadTasks();
     todoTasks(tasks);
 }
-
-function todoTasks(tasks) {
-    const count = tasks.filter(task => task.status === "todo").length;
-    document.getElementById("todo-count").textContent = count;
-}
-
-initSummary();import { auth } from "../../scripts/firebase/firebase.js";
-import { loadTasks } from "/scripts/firebase/get-firebase.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 // INFO die tasks von firebase müssen abgerufen werden
 // INFO firebase tasks auslesen "subtask"
@@ -140,13 +132,5 @@ async function greetings() {
   onAuthStateChanged(auth, assignName);
 }
 
-async function initSummary() {
-  // show greetings first so user sees something even if tasks fail
-  greetings();
-
-  const tasks = await loadTasks();
-  todoTasks(tasks);
-  // Call other functions here when implemented
-}
 
 window.addEventListener('load', initSummary);
