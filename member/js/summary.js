@@ -3,7 +3,9 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/fi
 import { auth } from "../../scripts/firebase/firebase.js";
 
 async function initSummary() {
-    const tasks = await loadTasks();
+    const tasks = Object.values(await loadTasks());
+     console.log("Tasks loaded:", tasks); // <-- hier siehst du die Tasks
+    
     todoTasks(tasks);
 }
 
@@ -37,13 +39,19 @@ async function todoTasks(tasks) {
     }
   });
 
-  const count = tasks.filter(task => {
+ const count = tasks.filter(task => {
     const s = (task.status || '').toLowerCase().trim();
     return s === 'todo' || s === 'to do';
   }).length;
 
   console.log('Computed todo count:', count);
-  document.querySelector('.todo .card-title').textContent = count;
+
+  const element = document.querySelector('.todo .card-title');
+  if (element) {
+    element.textContent = count;
+  } else {
+    console.warn("Element '.todo .card-title' nicht gefunden!");
+  }
 }
 
 // [ ] show how much tasks "done"
