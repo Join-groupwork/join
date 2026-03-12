@@ -124,20 +124,6 @@ function renderContactEditOverlay() {
 };
 
 
-/**
- * Injects the contact add overlay template into `#addC_overlay`.
- *
- * @returns {void}
- */
-function renderContactAddOverlay() {
-  const addContactRef = document.getElementById('addC_overlay');
-  if (addContactRef) {
-    addContactRef.innerHTML = getAddOverlayTemplate();
-  } else {
-    console.error('ContactOverlay-Element nicht gefunden!');
-  }
-};
-
 
 /**
  * Registers UI event listeners after the DOM is ready:

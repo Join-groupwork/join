@@ -4,7 +4,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/fi
 import { auth } from "../../scripts/firebase/firebase.js";
 
 
-console.log("summary.js loaded");
+
 
 async function initSummary() {
   const data = await loadTasks();
