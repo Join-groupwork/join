@@ -1,0 +1,342 @@
+/**
+ * @file Provides basic Kanban board rendering + drag-and-drop handling for tasks ("todos").
+ *
+ * This module:
+ * - Keeps a temporary in-memory `todos` object (placeholder until Firebase is connected)
+ * - Renders tasks into the four board columns (todo / in-progress / await-feedback / done)
+ * - Toggles column placeholders when a column has no tasks
+ * - Implements drag & drop using document-level event listeners
+ *
+ * DOM expectations:
+ * - Columns with IDs: `todo`, `inProgress`, `awaitFeedback`, `done`
+ * - Drop zones with class `.task__area` and `data-status` values matching todo.subtask
+ * - Placeholder element inside each `.task__area`: `.task__area--placeholder`
+ * - Task cards have class `.task__card` and an `id` that matches the todo key
+ *
+ * @module drag-n-drop
+ */
+import { BASE_URL, database } from '../../scripts/firebase/firebase.js';
+import { loadTasks } from '../../scripts/firebase/get-firebase.js';
+import { generateTodosHTML } from './member-templates.js'
+import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/**
+ * Possible board states.
+ * @typedef {"todo" | "in-progress" | "await-feedback" | "done"} SubtaskStatus
+ */
+
+/**
+ * Possible task categories.
+ * @typedef {"user-story" | "technical-task"} Category
+ */
+
+/**
+ * Possible priority values.
+ * @typedef {"low" | "medium" | "urgent"} Priority
+ */
+
+/**
+ * Represents a board task.
+ *
+ * @typedef {Object} Todo
+ * @property {string} title - Task title.
+ * @property {string} description - Task description.
+ * @property {string} date - Due date (YYYY-MM-DD) or empty string.
+ * @property {Priority} priority - Task priority level.
+ * @property {string} assignedTo - Person(s) assigned to this task (currently unused).
+ * @property {Category} category - Task category.
+ * @property {SubtaskStatus} status - Current board column/status.
+ */
+
+
+// [x]Create updateHTML function, examples for initial testing
+// [x] Test drag and drop
+// [ ] Style drag and drop
+// [ ] Add Firebase update
+// [ ] Retrieve data from Firebase and display in to-dos
+// [ ] Test function with Firebase data
+// INFO  let = todos will be replaced later when the data is loaded from Firebase.
+
+/**
+ * Task collection indexed by id.
+ * NOTE: Placeholder data until Firebase is connected.
+ *
+ * @type {Record<string, Todo>}
+ */
+let todos = {};
+
+/**
+ * ID (key in {@link todos}) of the currently dragged task card.
+ * Set on `dragstart`, consumed on `drop`.
+ *
+ * @type {string|undefined}
+ */
+let currentDraggedElement;
+
+/**
+ *
+ */
+async function initBoard() {
+  try {
+    todos = await loadTasks();
+    updateHTML();
+  } catch (error) {
+    console.error('Fehler bei Laden der Tasks:', error);
+  }
+}
+
+/**
+ * Handles the upload to firebase after switch category.
+ *
+ * @param {string} taskId - ID from task
+ * @param {string} newStatus - Status from task
+ */
+export async function updateTaskStatus(taskId, newStatus) {
+  await update(ref(database, `tasks/${taskId}`), {
+    status: newStatus,
+  });
+}
+
+
+/**
+ *
+ * @param {string} currentDraggedElement
+ * @param {string} newStatus
+ */
+// async function updateTaskStatus(currentDraggedElement, newStatus) {
+//   const response = await fetch(`${BASE_URL}tasks/${currentDraggedElement}.json`, {
+//     method: "PATCH",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       status: newStatus,
+//     }),
+//   });
+//   if (!response.ok) {
+//     throw new Error("Status konnte nicht aktualisiert werden");
+//   }
+//   return await response.json();
+// }
+
+// INFO This function is only temporary until the first test is completed.
+// INFO After that, this function will be replaced and the to-dos will be loaded from Firebase.
+/**
+ * Re-renders all board columns and updates placeholder visibility.
+ *
+ * @export
+ * @returns {void}
+ */
+export async function updateHTML() {
+  // if this page doesn’t have a todo column we’re not on the board,
+  // so skip all DOM updates to avoid null errors
+  if (!document.getElementById('todo')) return;
+
+  updateTodo();
+  updateInProgress();
+  updateAwaitFeedback();
+  updateDone();
+  togglePlaceholder();
+};
+
+
+/**
+ * Renders tasks with {@link Todo.subtask} === `"todo"` into the `#todo` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateTodo() {
+  const container = document.getElementById('todo');
+  if (!container) return;
+  container.innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'todo') {
+      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.subtask} === `"in-progress"` into the `#inProgress` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateInProgress() {
+  document.getElementById('inProgress').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'in-progress') {
+      document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.subtask} === `"await-feedback"` into the `#awaitFeedback` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateAwaitFeedback() {
+  document.getElementById('awaitFeedback').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'await-feedback') {
+      document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.subtask} === `"done"` into the `#done` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateDone() {
+  document.getElementById('done').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'done') {
+      document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+    }
+  }
+};
+
+
+// INFO Used to show and hide a placeholder when no task is available. Used to show and hide a placeholder when no task is available.
+// [ ] if no task, show
+// [ ] if at least 1 task is hidden
+/**
+ * Shows/hides the placeholder inside each `.task__area` depending on whether
+ * at least one task exists for that column.
+ *
+ * Uses `.task__area[data - status]` to match against {@link Todo.status}.
+ *
+ * @private
+ * @returns {void}
+ */
+function togglePlaceholder() {
+  const taskAres = document.querySelectorAll('.task__area');
+  taskAres.forEach(area => {
+    let status = area.dataset.status;
+    const placeholder = area.querySelector('.task__area--placeholder');
+    let hasTask = Object.values(todos).some(task => task.status === status);
+    if (hasTask) {
+      placeholder.classList.add('d-none')
+    } else {
+      placeholder.classList.remove('d-none');
+    }
+  });
+};
+
+
+// [x] You have to work with event listeners because you are working with modules.
+// CHECK Where are animations or transforms entered?
+// CHECK When drawing, the cards must turn slightly.
+// [x] dragstart coden
+/**
+ * Handles `dragstart` on `.task__card`.
+ * Stores dragged task id and adds a visual dragging class.
+ *
+ * @listens Document#dragstart
+ * @param {DragEvent} event - Browser dragstart event.
+ * @returns {void}
+ */
+document.addEventListener("dragstart", function (event) {
+  if (event.target.classList.contains("task__card")) {
+    currentDraggedElement = event.target.id; // INFO We remember the ID with event.target.id.
+    console.log("Dragged task id:", currentDraggedElement);
+    event.target.classList.add("task__card--dragging"); // INFO We add a CSS class for the move so that it visually matches the design.
+  }
+});
+
+
+/**
+ * Handles `dragend` on `.task__card`.
+ * Removes the visual dragging class.
+ *
+ * @listens Document#dragend
+ * @param {DragEvent} event - Browser dragend event.
+ * @returns {void}
+ */
+document.addEventListener("dragend", function (event) {
+  if (event.target.classList.contains("task__card")) {
+    event.target.classList.remove("task__card--dragging"); // INFO Removes the CSS class for the visual appearance when moving.
+  }
+});
+
+
+// [x] dragover coden
+/**
+ * Handles `dragover` within a `.task__area` drop zone.
+ * Calls `preventDefault()` to allow dropping and highlights the drop zone.
+ *
+ * @listens Document#dragover
+ * @param {DragEvent} event - Browser dragover event.
+ * @returns {void}
+ */
+document.addEventListener("dragover", function (event) {
+  event.preventDefault(); //INFO This prevents the browser from blocking the drop.
+  const dropZone = event.target.closest(".task__area"); //INFO aThe columns are also found for child elements.
+  if (!dropZone) return; // INFO If there is no drop zone, cancel.
+  //  [ ] Visual feedback for the drop zone where it is pushed in must be determined here, via classlist.add.
+  dropZone.classList.add("task__area--highlight");
+});
+
+
+// [x] drop coden
+// [x] togglePlaceholder() is on function?
+/**
+ * Handles `drop` within a `.task__area` drop zone.
+ * Moves the dragged task into the drop zone's status and re-renders the board.
+ *
+ * @listens Document#drop
+ * @param {DragEvent} event - Browser drop event.
+ * @returns {void}
+ */
+document.addEventListener("drop", async function (event) {
+  event.preventDefault();
+  const dropZone = event.target.closest(".task__area");
+  if (!dropZone || !currentDraggedElement) return;
+  const newStatus = dropZone.dataset.status;
+  const oldStatus = todos[currentDraggedElement]?.status;
+  dropZone.classList.remove("task__area--highlight");
+  todos[currentDraggedElement].status = newStatus;
+
+  updateHTML();
+  try {
+    await updateTaskStatus(currentDraggedElement, newStatus)
+  } catch (error) {
+    console.error("Firebase-Update fehlgeschlagen:", error);
+
+    // rollback
+    if (todos[currentDraggedElement]) {
+      todos[currentDraggedElement].status = oldStatus;
+      updateHTML();
+    }
+    alert("Status konnte nicht gespeichert.");
+  }
+});
+
+
+// [x] dragleave coden
+// [ ] Check that “task__area--highlight” is removed.
+/**
+ * Handles `dragleave` for `.task__area`.
+ * Removes the drop zone highlight class.
+ *
+ * @listens Document#dragleave
+ * @param {DragEvent} event - Browser dragleave event.
+ * @returns {void}
+ */
+document.addEventListener("dragleave", function (event) {
+  const dropZone = event.target.closest(".task__area");
+  if (!dropZone) return;
+  dropZone.classList.remove("task__area--highlight");
+});
+
+
+initBoard();

@@ -2,28 +2,76 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join - Board</title>
-    <link rel="icon" href="/assets/img/logo-dark.svg" type="image/svg" />
-    <link rel="stylesheet" href="/styles/standard.css">
-    <link rel="stylesheet" href="/styles/join.css">
-    <link rel="stylesheet" href="/styles/fonts.css">
-    <link rel="stylesheet" href="/styles/colors.css">
-    <link rel="stylesheet" href="/styles/assets.css">
-    <link rel="stylesheet" href="/member/css/board.css">
-    <script type="module" src="/scripts/firebase/firebase.js"></script>
-    <script type="module" src="/login/auth-guard.js"></script>
-    <script type="module" src="/member/js/member-templates.js"></script>
-    <script type="module" src="/member/js/member-script.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join - Board</title>
+  <link rel="icon" href="/assets/img/logo-dark.svg" type="image/svg" />
+  <link rel="stylesheet" href="/styles/standard.css">
+  <link rel="stylesheet" href="/styles/join.css">
+  <link rel="stylesheet" href="/styles/fonts.css">
+  <link rel="stylesheet" href="/styles/colors.css">
+  <link rel="stylesheet" href="/styles/assets.css">
+  <link rel="stylesheet" href="/member/css/board.css">
+  <script type="module" src="/scripts/firebase/firebase.js"></script>
+  <script type="module" src="/login/auth-guard.js"></script>
+  <script type="module" src="/member/js/member-templates.js"></script>
+  <script type="module" src="/scripts/firebase/get-task.js"></script>
+  <script type="module" src="/member/js/drag-n-drop.js"></script>
+  <script type="module" src="/member/js/member-script.js"></script>
 </head>
 
 <body>
 
-    <header class="topbar" id="header"></header>
-    <aside class="sidebar" id="sidebar"></aside>
+  <header class="topbar" id="header"></header>
+  <aside class="sidebar" id="sidebar"></aside>
 
+  <main class="task">
 
+    <section name="todo" class="task__section">
+      <div class="card-bar">
+        <h3 class="task__title">To do</h3>
+        <img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="Add task">
+      </div>
+      <div class="task__area" data-status="todo">
+        <p class="task__area--placeholder d-none">No tasks to do</p>
+        <div id="todo"></div>
+      </div>
+    </section>
+
+    <section name="in Progress" class="task__section">
+      <div class="card-bar">
+        <h3 class="task__title">In Progress</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg"
+          alt="plus-icon">
+      </div>
+      <div class="task__area" data-status="in-progress">
+        <p class="task__area--placeholder d-none">No tasks in Progress</p>
+        <div id="inProgress"></div>
+      </div>
+    </section>
+
+    <section name="Await Feedback" class="task__section">
+      <div class="card-bar">
+        <h3 class="task__title">Await Feedback</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg"
+          alt="plus-icon">
+      </div>
+      <div class="task__area" data-status="await-feedback">
+        <p class="task__area--placeholder d-none">No tasks await Feedback</p>
+        <div id="awaitFeedback"></div>
+      </div>
+    </section>
+
+    <section name="Done" class="task__section">
+      <div class="card-bar">
+        <h3 class="task__title">Done</h3>
+      </div>
+      <div class="task__area" data-status="done">
+        <p class="task__area--placeholder d-none">No tasks done</p>
+        <div id="done"></div>
+      </div>
+    </section>
+  </main>
+    <script type="module" src="/member/js/board.js"></script>
+    
 </body>
 
 </html>
