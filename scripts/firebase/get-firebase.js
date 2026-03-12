@@ -11,9 +11,12 @@
 // loadData();
 
 
-import { database, auth } from '/scripts/firebase/firebase.js';
+import { database, auth, BASE_URL } from '/scripts/firebase/firebase.js';
 import { ref, onValue} from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 import { renderContactsList } from '/member/js/contacts.js';
+
+
+
 let contacts = {};
 let tasks = {};
 let category = {};
@@ -56,4 +59,20 @@ function loadData() {
     });
 }
 
+
+export async function loadTasks() {
+  const response = await fetch(`${BASE_URL}tasks.json`);
+  const data = await response.json();
+  // Check if there is any data
+  if (!data) {
+    console.log("No Tasks");   // If there are no tasks, log a message
+    return {};                 // Return an empty Object so renderBoard() won't crash
+  }
+  return data;
+  const categoryRef = ref(database, 'category');
+  // category auslesen
+  onValue(categoryRef, (firebaseData) => {
+    category = firebaseData.val() || {};
+  });
+}
 
