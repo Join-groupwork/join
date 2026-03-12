@@ -3,10 +3,13 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/fi
 import { auth } from "../../scripts/firebase/firebase.js";
 
 async function initSummary() {
-    const tasks = Object.values(await loadTasks());
-     console.log("Tasks loaded:", tasks); // <-- hier siehst du die Tasks
-    
-    todoTasks(tasks);
+  const data = await loadTasks();
+  console.log("Raw data from loadTasks():", data);
+
+  const tasks = Object.values(data || {});
+  console.log("Tasks loaded:", tasks);
+
+  todoTasks(tasks);
 }
 
 // INFO die tasks von firebase müssen abgerufen werden

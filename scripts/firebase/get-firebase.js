@@ -1,5 +1,6 @@
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { BASE_URL } from "./firebase.js";
+import { BASE_URL } from "/firebase.js";
+
 
 let contacts = [];
 let tasks = [];
