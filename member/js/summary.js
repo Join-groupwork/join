@@ -1,10 +1,14 @@
+console.log("summary.js loaded");
 import { loadTasks } from '/scripts/firebase/get-firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { auth } from "../../scripts/firebase/firebase.js";
 
+
+console.log("summary.js loaded");
+
 async function initSummary() {
   const data = await loadTasks();
-  console.log("Raw data from loadTasks():", data);
+
 
   const tasks = Object.values(data || {});
   console.log("Tasks loaded:", tasks);
