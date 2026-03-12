@@ -80,7 +80,7 @@ export function getSidebarTemplate() {
       </div>
 
       <nav class="nav">
-        <a class="nav-item" href="/member/summary-guest.html"><img src="/assets/icons/side-menu/summary-icon.svg" alt="Summary" class="nav-icon">Summary</a>
+        <a class="nav-item" href="/member/summary.html"><img src="/assets/icons/side-menu/summary-icon.svg" alt="Summary" class="nav-icon">Summary</a>
         <a class="nav-item" href="/member/add-task.html"><img src="/assets/icons/side-menu/add-task-icon.svg" alt="Add Task" class="nav-icon">Add Task</a>
         <a class="nav-item" href="/member/board.html"><img src="/assets/icons/side-menu/board-icon.svg" alt="Board" class="nav-icon">Board</a>
         <a class="nav-item" href="/member/contacts.html"><img src="/assets/icons/side-menu/contacts-icon.svg" alt="Contacts" class="nav-icon">Contacts</a>
@@ -230,36 +230,34 @@ export function getAddOverlayTemplate() {
           <section class="overlay_add_contact">
 
             <div class="overlay_add_contact_left">
-                <img class="join_logo_overlay" src="assets/img/joinlogo.png" alt="Join Logo">
+                <img class="join_logo_overlay" src="/assets/img/logo-bright.svg" alt="Join Logo">
                 <div>
                 <h2 class="heading_add_contact">Add Contact</h2>
                 <p>Tasks are better with a team!</p>
-                <img class="h2_underline" style="margin: unset; height: unset; width: 90px;" src="assets/icons/Vector 5.svg" alt="">
+                <img class="h2_underline" style="margin: unset; height: unset; width: 90px;" src="/assets/icons/underline-blue.svg" alt="">
                 </div>
             </div>
 
             <div class="overlay_add_contact_right">
+
                 <div class="close_overlay_icon_container">
-                    <img class="close_overlay_icon" src="assets/icons/x_cancel.svg" alt="Close Overlay Icon">
+                    <img class="close_overlay_icon" src="/assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="hideAddContactOverlay()">
                 </div>
                 <div class="addContact_form_container">
 
                     <div>
-                        <img src="/assets/icons/Contact_icon.svg" alt="Contact Icon">
+                        <img src="/assets/icons/contact-icon.svg" alt="Contact Icon">
                     </div>
-                    <form class="form_add_contact" action="">
-                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact"
-                            placeholder="Name">
-                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact"
-                            placeholder="Email">
-                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact"
-                            placeholder="Phone">
+                    <form class="form_add_contact" id="add_contact_form">
+                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact" required>
+                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact" required>
+                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact">
                     </form>
                 </div>
 
                 <div class="buttons_add_contact">
-                    <button type="submit" class="btn_save_contact">Cancel <img src="assets/icons/x_cancel.svg" alt=""></button>
-                    <button type="button" class="btn_cancel_contact">Create contact <img src="assets/icons/check.svg" alt=""></button>
+                    <button type="button" class="btn_save_contact" onclick="hideAddContactOverlay()">Cancel <img src="/assets/icons/close-icon.svg" alt=""></button>
+                    <button type="submit" form="add_contact_form" class="btn_cancel_contact">Create contact <img src="/assets/icons/check-icon-white.svg" alt=""></button>
                 </div>
 
             </div>
@@ -317,3 +315,68 @@ export function generateTodosHTML(id, title, category, description, priority) {
             </div>
           `;
 };
+
+
+export function getActiveContactTemplate(contact, initials, bgColor, phone) {
+  return `
+    <section class="contact_detail_card contact_detail_card--enter">
+      <div class="contact_detail_header">
+        <div class="contact_avatar contact_avatar--large" style="background-color:${bgColor}">
+          ${initials}
+        </div>
+        <div>
+          <h2 class="contact_detail_name">${contact.name || ''}</h2>
+          <div class="contact_detail_actions">
+            <button type="button" class="link_btn" onclick="editContact('${contact.id}')"><img src="/assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
+            <button type="button" class="link_btn" onclick="deleteContact('${contact.id}')"><img src="/assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="contact_detail_subtitle">Contact Information</h3>
+
+      <div class="contact_detail_info">
+        <strong>Email</strong>
+        <a href="mailto:${contact.email || ''}">${contact.email || ''}</a>
+      </div>
+
+      <div class="contact_detail_info">
+        <strong>Phone</strong>
+        <a href="tel:${phone}">${phone}</a>
+      </div>
+    </section>
+  `;
+}
+
+export function getEditOverlayTemplate(contactId, contact, initials, color) {
+  return `
+    <section class="overlay_add_contact" onclick="event.stopPropagation()">
+      <div class="overlay_add_contact_left">
+        <img class="join_logo_overlay" src="/assets/img/logo-bright.svg" alt="Join Logo">
+        <h2 class="heading_add_contact">Edit Contact</h2>
+        <img class="h2_underline" src="/assets/icons/underline-blue.svg" alt="">
+      </div>
+
+      <div class="overlay_add_contact_right">
+       <div class="close_overlay_icon_container">
+                    <img class="close_overlay_icon" src="/assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="closeEditOverlay()">
+                </div>
+        <div class="addContact_form_container">
+            <div class="contact_avatar contact_avatar--large edit_overlay_avatar" style="background-color:${color}">
+                ${initials}
+            </div>
+          <form class="form_add_contact" id="edit_contact_form">
+            <input type="text" id="contact_name" class="input_add_contact" placeholder="Name" value="${contact.name || ''}" required>
+            <input type="email" id="contact_email" class="input_add_contact" placeholder="Email" value="${contact.email || ''}" required>
+            <input type="tel" id="contact_phone" class="input_add_contact" placeholder="Phone" value="${contact.phone || ''}">
+            <div class="buttons_add_contact">
+              <button type="button" class="btn_save_contact" onclick="deleteContact('${contactId}')">Delete</button>
+              <button type="submit" class="btn_cancel_contact">Save<img src="/assets/icons/check-icon-white.svg" alt=""></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  `;
+}
+

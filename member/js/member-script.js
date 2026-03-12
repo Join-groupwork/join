@@ -51,7 +51,12 @@ async function init() {
 async function render() {
   await renderHeader();
   await renderSidebar();
-  await renderAddTask();
+
+  // only attempt to render the add‑task button if the placeholder exists
+  if (document.getElementById('add_task')) {
+    await renderAddTask();
+  }
+
   // renderContactAddOverlay();   <-- Aktivieren, um das Overlay zum Hinzufügen von Kontakten anzuzeigen
   // renderContactEditOverlay(); Contact
   await renderBoard();
@@ -118,20 +123,6 @@ function renderContactEditOverlay() {
   }
 };
 
-
-/**
- * Injects the contact add overlay template into `#addC_overlay`.
- *
- * @returns {void}
- */
-function renderContactAddOverlay() {
-  const addContactRef = document.getElementById('addC_overlay');
-  if (addContactRef) {
-    addContactRef.innerHTML = getAddOverlayTemplate();
-  } else {
-    console.error('ContactOverlay-Element nicht gefunden!');
-  }
-};
 
 
 /**

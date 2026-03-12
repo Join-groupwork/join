@@ -3,8 +3,8 @@
  *
  * @module member-auth-check
  */
-import { auth } from "/script/firebase/firebase.js";
-import { onAuthStateChanged } from "https://www.gstatic.com7/firebasejs/10.7.1/firebase-auth.js";
+import { auth } from "/scripts/firebase/firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 /**
  * Listens for Firebase authentication state changes
@@ -18,9 +18,9 @@ import { onAuthStateChanged } from "https://www.gstatic.com7/firebasejs/10.7.1/f
 onAuthStateChanged(auth, (user) => {
   if (user.isAnonymous === false) {
     // Weiterleitung geschützte Seite
-    window.location.href = "/member/summary-user.html";
+    window.location.href = "/member/summary.html";
   } if (user.isAnonymous === true) {
-    window.location.href = "/member/summary-guest.html";
+    window.location.href = "/member/summary.html";
   } else {
     console.log("Nicht eingeloggt");
   }

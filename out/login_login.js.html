@@ -36,6 +36,7 @@
 import { auth } from "/scripts/firebase/firebase.js";
 import { signInWithEmailAndPassword, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+// INFO Die console.log werden vor angabe entfernt.
 console.log("Auth object:", auth);
 if (location.protocol === 'https:') {
   console.log("Seite läuft über HTTPS ✅");
@@ -61,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
 
-  loginBtn.addEventListener("click", async () => {
+  loginBtn.addEventListener("click", async (event) => {
     event.preventDefault();
     const email = emailInput.value.trim();
     const password = passwordInput.value;
@@ -77,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
         password
       );
       console.log("Login erforlgreich:", userCredential.user);
-      window.location.href = "/member/summary-user.html"; // target page after login
+      window.location.href = "/member/summary.html"; // target page after login
     } catch (error) {
       console.error("Login Fehlgeschlagen:", error.message);
       alert("Login fehlgeschlagen");
@@ -91,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const userCredential = await signInAnonymously(auth);
       console.log("GUEST LOGIN CLICK");
-      window.location.href = "/member/summary-guest.html"; // target page after login
+      window.location.href = "/member/summary.html"; // target page after login
     } catch (error) {
       console.error(error.message);
       alert("Gast-Login fehlgeschlagen");
@@ -112,7 +113,7 @@ export function loginWithEmail(email, password) {
   signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
       console.log("Login erfolgreich:", userCredential.user);
-      window.location.href = "/member/summary-user.html";
+      window.location.href = "/member/summary.html";
     })
     .catch(error => {
       console.log("Login Fehlgeschlagen", error.message);
@@ -130,7 +131,7 @@ export function loginAsGuest() {
   signInAnonymously(auth)
     .then(userCredential => {
       console.log("Gast eingeloggt:", userCredential.user);
-      window.location.href = "/member/summary-guest.html";
+      window.location.href = "/member/summary.html";
     })
     .catch(error => {
       console.error("Gast Login Fehlgeschlagen:", error.message);
@@ -148,13 +149,13 @@ export function loginAsGuest() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Mar 04 2026 11:25:49 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 10 2026 12:49:30 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>
