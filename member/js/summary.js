@@ -8,10 +8,9 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/fi
 
 async function initSummary() {
  const data = await loadTasks();
-  console.log("Raw data:", data);
-  const tasks = Object.values(data || {});   // ⭐ WICHTIG
-  console.log("Tasks array:", tasks);
+  const tasks = Object.values(data || {});  
   todoTasks(tasks);
+  doneTasks(tasks)
 }
 
 // INFO die tasks von firebase müssen abgerufen werden
@@ -61,7 +60,25 @@ async function todoTasks(tasks) {
 
 // [ ] show how much tasks "done"
 async function doneTasks(tasks) {
+  tasks.forEach(task => {
+    if (!task.status && task.subtask) {
+      task.status = task.subtask;
+    }
+  });
 
+ const count = tasks.filter(task => {
+    const s = (task.status || '').toLowerCase().trim();
+    return s === 'done' ;
+  }).length;
+
+  console.log('Computed done count:', count);
+
+  const element = document.querySelector('.done .card-title');
+  if (element) {
+    element.textContent = count;
+  } else {
+    console.warn("Element '.done .card-title' nicht gefunden!");
+  }
 }
 // INFO Urgent task
 // INFO functoin for "when is the next deadline?"
