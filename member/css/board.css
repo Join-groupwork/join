@@ -15,10 +15,7 @@ main {
   justify-content: space-between;
 }
 
-.task {
-  /* margin-top: 50px;
-  margin-left: 230px; */
-}
+.task {}
 
 .task__section {
   width: 256px;
