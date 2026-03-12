@@ -6,6 +6,9 @@
 
 body {
   font-family: "Open Sans", sans-serif;
+  position: fixed;
+  left: 0;
+  /* bitte klassen verwenden, sonst könnte es zu Konflikten kommen, keine direkte Stile auf body bzw html tags, da wir so viele seiten haben */
 }
 
 .app {

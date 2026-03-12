@@ -7,6 +7,7 @@ main {
   justify-content: flex-start;
   gap: 50px;
 }
+/* evtl statt main eine klasse verwenden, sonst könnte es zu Konflikten kommen */
 
 .card-bar {
   padding-bottom: 8px;
