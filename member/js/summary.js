@@ -1,4 +1,4 @@
-import { BASE_URL, auth } from '/scripts/firebase/firebase.js';
+import { auth } from '/scripts/firebase/firebase.js';
 import { loadTasks } from '/scripts/firebase/get-firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
@@ -15,6 +15,8 @@ async function initSummary() {
   tasksInBoard(tasks); 
   tasksInProgress(tasks);
   awaitFeedbackTasks(tasks);
+  urgentTasksDeadLine(tasks);
+  greetings(); 
 }
 
 // INFO die tasks von firebase müssen abgerufen werden
@@ -142,7 +144,7 @@ async function awaitFeedbackTasks(tasks) {
     const s = (task.status || '').toLowerCase().trim();
     return s === 'await-feedback';
   }).length;
-  
+
   console.log('Computed await-feedback count:', count);
   const element = document.querySelector('.await-feedback-info .big');
   if (element) {
@@ -210,6 +212,23 @@ async function greetings() {
 
   assignName(auth.currentUser);
   onAuthStateChanged(auth, assignName);
+}
+
+function urgentTasksDeadLine(tasks) {
+    const urgentTasks = tasks
+        .filter(task => task.priority === "urgent" && task.due_date)
+        .sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+
+    if (urgentTasks.length > 0) {
+        const nextDate = new Date(urgentTasks[0].due_date);
+
+        document.getElementById("urgentTasks-dead-line").textContent =
+            nextDate.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            });
+    }
 }
 
 
