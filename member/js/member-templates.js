@@ -316,7 +316,15 @@ export function generateTodosHTML(id, title, category, description, priority) {
           `;
 };
 
-
+/**
+ * Two show contact details overlay.
+ *
+ * @param {string} contact - Name frome Contact
+ * @param {string} initials - Initials from Contact Name
+ * @param {string} bgColor - Background Color for Avatar
+ * @param {number} phone - Phonenumber from Contact
+ * @returns {string} - HTML string representing the contact details
+ */
 export function getActiveContactTemplate(contact, initials, bgColor, phone) {
   return `
     <section class="contact_detail_card contact_detail_card--enter">
@@ -348,6 +356,15 @@ export function getActiveContactTemplate(contact, initials, bgColor, phone) {
   `;
 }
 
+/**
+ * Show the overlay to editing contact details.
+ *
+ * @param {string} contactId
+ * @param {string} contact
+ * @param {string} initials
+ * @param {string} color
+ * @returns {string} - HTML string representing the contact editing overlay.
+ */
 export function getEditOverlayTemplate(contactId, contact, initials, color) {
   return `
     <section class="overlay_add_contact" onclick="event.stopPropagation()">
