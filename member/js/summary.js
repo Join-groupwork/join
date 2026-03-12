@@ -12,6 +12,7 @@ async function initSummary() {
   todoTasks(tasks);
   doneTasks(tasks);
   urgentTasks(tasks);
+  tasksInBoard(tasks); 
 }
 
 // INFO die tasks von firebase müssen abgerufen werden
@@ -104,7 +105,14 @@ async function urgentTasks(tasks) {
 
 // [ ] show how much "tasks in "board"
 async function tasksInBoard(tasks) {
+  const count = tasks.length; 
 
+  const element = document.querySelector('.all-tasks .big');
+  if (element) {
+    element.textContent = count;
+  } else {
+    console.warn("Element '.all-tasks .card-title' nicht gefunden!");
+  }
 }
 
 // [ ] show how much "task in progress"
