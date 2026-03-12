@@ -14,6 +14,7 @@ async function initSummary() {
   urgentTasks(tasks);
   tasksInBoard(tasks); 
   tasksInProgress(tasks);
+  awaitFeedbackTasks(tasks);
 }
 
 // INFO die tasks von firebase müssen abgerufen werden
@@ -119,11 +120,8 @@ async function tasksInProgress(tasks) {
       task.status = task.subtask;
     }
   });
-
   const count = tasks.filter(task => task.status === 'inProgress').length;
-
   console.log('Computed inProgress count:', count);
-
   const element = document.querySelector('.tasks-in-progress .big'); 
   if (element) {
     element.textContent = count;
@@ -134,7 +132,24 @@ async function tasksInProgress(tasks) {
 
 // [ ] show how much tasks "await feedback"
 async function awaitFeedbackTasks(tasks) {
+  tasks.forEach(task => {
+    if (!task.status && task.subtask) {
+      task.status = task.subtask;
+    }
+  });
 
+  const count = tasks.filter(task => {
+    const s = (task.status || '').toLowerCase().trim();
+    return s === 'await-feedback';
+  }).length;
+  
+  console.log('Computed await-feedback count:', count);
+  const element = document.querySelector('.await-feedback-info .big');
+  if (element) {
+    element.textContent = count;
+  } else {
+    console.warn("Element '.await-feedback-info .big' nicht gefunden!");
+  }
 }
 
 
