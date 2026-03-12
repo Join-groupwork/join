@@ -1,19 +1,18 @@
-import { loadTasks } from '/scripts/firebase/get-firebase.js';
-
+// import { loadTasks } from '/scripts/firebase/get-firebase.js';
+initSummary();import { auth } from "../../scripts/firebase/firebase.js";
+import { loadTasks } from "/scripts/firebase/get-firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 async function initSummary() {
     const tasks = await loadTasks();
     todoTasks(tasks);
 }
 
-function todoTasks(tasks) {
-    const count = tasks.filter(task => task.status === "todo").length;
-    document.getElementById("todo-count").textContent = count;
-}
+// function todoTasks(tasks) {
+//     const count = tasks.filter(task => task.status === "todo").length;
+//     document.getElementById("todo-count").textContent = count;
+// }
 
-initSummary();import { auth } from "../../scripts/firebase/firebase.js";
-import { loadTasks } from "/scripts/firebase/get-firebase.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 // INFO die tasks von firebase müssen abgerufen werden
 // INFO firebase tasks auslesen "subtask"
