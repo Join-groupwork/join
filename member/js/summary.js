@@ -13,6 +13,7 @@ async function initSummary() {
   doneTasks(tasks);
   urgentTasks(tasks);
   tasksInBoard(tasks); 
+  tasksInProgress(tasks);
 }
 
 // INFO die tasks von firebase müssen abgerufen werden
@@ -36,8 +37,6 @@ async function initSummary() {
  * @returns {Promise<void>} Resolves after the UI has been updated.
  */
 async function todoTasks(tasks) {
-  console.log('Fetched tasks for summary:', tasks);
-
   // ensure every task has a `status` property (else fall back to old `subtask`)
   tasks.forEach(task => {
     if (!task.status && task.subtask) {
@@ -87,7 +86,6 @@ async function doneTasks(tasks) {
 // [ ] show how much task "urgent"
 
 async function urgentTasks(tasks) {
-
  const count = tasks.filter(task => {
     const s = (task.priority || '').toLowerCase().trim();
     return s === 'urgent' ;
@@ -106,18 +104,32 @@ async function urgentTasks(tasks) {
 // [ ] show how much "tasks in "board"
 async function tasksInBoard(tasks) {
   const count = tasks.length; 
-
   const element = document.querySelector('.all-tasks .big');
   if (element) {
     element.textContent = count;
   } else {
-    console.warn("Element '.all-tasks .card-title' nicht gefunden!");
+    console.warn("Element '.all-tasks .big' nicht gefunden!");
   }
 }
 
 // [ ] show how much "task in progress"
 async function tasksInProgress(tasks) {
+  tasks.forEach(task => {
+    if (!task.status && task.subtask) {
+      task.status = task.subtask;
+    }
+  });
 
+  const count = tasks.filter(task => task.status === 'inProgress').length;
+
+  console.log('Computed inProgress count:', count);
+
+  const element = document.querySelector('.tasks-in-progress .big'); 
+  if (element) {
+    element.textContent = count;
+  } else {
+    console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
+  }
 }
 
 // [ ] show how much tasks "await feedback"
