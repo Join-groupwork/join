@@ -239,7 +239,7 @@ export function getAddOverlayTemplate() {
             </div>
 
             <div class="overlay_add_contact_right">
-            
+
                 <div class="close_overlay_icon_container">
                     <img class="close_overlay_icon" src="/assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="hideAddContactOverlay()">
                 </div>
@@ -315,8 +315,7 @@ export function generateTodosHTML(id, title, category, description, priority) {
             </div>
           `;
 };
-    `
-}
+
 
 export function getActiveContactTemplate(contact, initials, bgColor, phone) {
   return `
