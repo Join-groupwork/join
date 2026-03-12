@@ -10,7 +10,8 @@ async function initSummary() {
  const data = await loadTasks();
   const tasks = Object.values(data || {});  
   todoTasks(tasks);
-  doneTasks(tasks)
+  doneTasks(tasks);
+  urgentTasks(tasks);
 }
 
 // INFO die tasks von firebase müssen abgerufen werden
@@ -83,9 +84,23 @@ async function doneTasks(tasks) {
 // INFO Urgent task
 // INFO functoin for "when is the next deadline?"
 // [ ] show how much task "urgent"
+
 async function urgentTasks(tasks) {
 
-}
+ const count = tasks.filter(task => {
+    const s = (task.priority || '').toLowerCase().trim();
+    return s === 'urgent' ;
+  }).length;
+
+  console.log('Computed urgent count:', count);
+
+  const element = document.querySelector('.urgent-info .card-title');
+  if (element) {
+    element.textContent = count;
+  } else {
+    console.warn("Element '.urgent-info .card-title' nicht gefunden!");
+  }
+} 
 
 // [ ] show how much "tasks in "board"
 async function tasksInBoard(tasks) {
