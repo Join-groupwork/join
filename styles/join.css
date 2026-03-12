@@ -248,25 +248,38 @@ header {
 }
 
 .topbar {
-  height: 96px;
-  
-  background: white;
-  border-bottom: 1px solid #e5e5e5;
   position: fixed;
-  top: 0px;
-  max-width: 1440px;
-  width: 100%;
+  top: 0;
+  left: 230px;
+  width: calc(100% - 230px);
+  height: 96px;
+  background: #ffffff;
+  border-bottom: 1px solid #d1d1d1;
+  z-index: 20;
 }
 
+.topbar > header {
+  height: 96px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px 0 56px;
+}
+
+
 .topbar-left {
-  padding-left: 350px;
+  padding-left: 0;
+  font-size: 20px;
+  font-weight: 400;
+  color: #2a3647;
+  line-height: 1.2;
 }
 
 .topbar-right {
-  padding: 0 40px 0 0;
+  padding: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
 }
 
 .help-circle {
@@ -285,16 +298,19 @@ header {
 }
 
 .profile {
-  width: 40px;
-  height: 40px;
+  position: relative;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bold;
-  border: 2px solid;
-  border-color: #252b41;
-  color: #2eabe2;
+  font-weight: 700;
+  font-size: 20px;
+  border: 3px solid #2a3647;
+  color: #29abe2;
+  background: #ffffff;
+  cursor: pointer;
 }
 
 .summary_pencil {
@@ -347,7 +363,7 @@ footer p {
 
 .header-menue-nav {
   position: absolute;
-  top: 66px;
+  top: 72px;
   right: 0;
   min-width: 150px;
   border-radius: 20px 0 20px 20px;
