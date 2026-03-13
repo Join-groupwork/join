@@ -4,17 +4,13 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/fi
 
 
 async function initSummary() {
+  // show greetings first so user sees something even if tasks fail
+  greetings();
+
   const tasks = await loadTasks();
   todoTasks(tasks);
+  // Call other functions here when implemented
 }
-// async function initSummary() {
-//   // show greetings first so user sees something even if tasks fail
-//   greetings();
-
-//   const tasks = await loadTasks();
-//   todoTasks(tasks);
-//   // Call other functions here when implemented
-// }
 
 // function todoTasks(tasks) {
 //   const count = tasks.filter(task => task.status === "todo").length;
