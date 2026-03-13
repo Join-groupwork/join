@@ -20,19 +20,13 @@ main {
 }
 
 .task__area {
-  height: 100%;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
   border-radius: 24px;
+  scrollbar-gutter: stable;
 }
-
-
-
-/* .task__area--highlight {
-  width: 250px;
-  height: 210px;
-  border: 1px dotted var(--border__task--highlight);
-  border-radius: 24px;
-} */
 
 .task__area--highlight::before {
   border-color: var(--border__task--highlight);
