@@ -15,7 +15,7 @@
  *
  * @module drag-n-drop
  */
-import { BASE_URL, database } from '../../scripts/firebase/firebase.js';
+import { database } from '../../scripts/firebase/firebase.js';
 import { loadTasks } from '../../scripts/firebase/get-firebase.js';
 import { generateTodosHTML } from './member-templates.js'
 import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -233,6 +233,17 @@ function togglePlaceholder() {
 };
 
 
+function clearDropHighlights() {
+  document.querySelectorAll(".task__area--highlight").forEach(zone => {
+    zone.classList.remove("task__area--highlight");
+  });
+}
+
+function clearDropCardPreview() {
+  document.querySelectorAll(".task__list--preview").forEach(list => {
+    list.classList.remove("task__list--preview");
+  });
+}
 // [x] You have to work with event listeners because you are working with modules.
 // CHECK Where are animations or transforms entered?
 // CHECK When drawing, the cards must turn slightly.
@@ -246,11 +257,11 @@ function togglePlaceholder() {
  * @returns {void}
  */
 document.addEventListener("dragstart", function (event) {
-  if (event.target.classList.contains("task__card")) {
-    currentDraggedElement = event.target.id; // INFO We remember the ID with event.target.id.
-    console.log("Dragged task id:", currentDraggedElement);
-    event.target.classList.add("task__card--dragging"); // INFO We add a CSS class for the move so that it visually matches the design.
-  }
+  const card = event.target.closest(".task__card");
+  if (!card) return;
+
+  currentDraggedElement = card.id;
+  card.classList.add("task__card--dragging");
 });
 
 
@@ -263,9 +274,12 @@ document.addEventListener("dragstart", function (event) {
  * @returns {void}
  */
 document.addEventListener("dragend", function (event) {
-  if (event.target.classList.contains("task__card")) {
-    event.target.classList.remove("task__card--dragging"); // INFO Removes the CSS class for the visual appearance when moving.
-  }
+  const card = event.target.closest(".task__card");
+  if (!card) return;
+  card.classList.remove("task__card--dragging");
+  clearDropHighlights();
+  clearDropCardPreview();
+  currentDraggedElement = undefined
 });
 
 
@@ -281,9 +295,13 @@ document.addEventListener("dragend", function (event) {
 document.addEventListener("dragover", function (event) {
   event.preventDefault(); //INFO This prevents the browser from blocking the drop.
   const dropZone = event.target.closest(".task__area"); //INFO aThe columns are also found for child elements.
+  clearDropHighlights();
+  clearDropCardPreview();
   if (!dropZone) return; // INFO If there is no drop zone, cancel.
   //  [ ] Visual feedback for the drop zone where it is pushed in must be determined here, via classlist.add.
-  dropZone.classList.add("task__area--highlight");
+  const taskList = dropZone.querySelector(".task__list");
+  if (!taskList) return;
+  taskList.classList.add("task__list--preview");
 });
 
 
@@ -300,10 +318,12 @@ document.addEventListener("dragover", function (event) {
 document.addEventListener("drop", async function (event) {
   event.preventDefault();
   const dropZone = event.target.closest(".task__area");
+  clearDropHighlights();
+  clearDropCardPreview();
   if (!dropZone || !currentDraggedElement) return;
   const newStatus = dropZone.dataset.status;
   const oldStatus = todos[currentDraggedElement]?.status;
-  dropZone.classList.remove("task__area--highlight");
+  dropZone.classList.remove("task__list--preview");
   todos[currentDraggedElement].status = newStatus;
 
   updateHTML();

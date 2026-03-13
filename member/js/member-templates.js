@@ -170,50 +170,6 @@ export function getTaskTemplate() {
  *
  * @returns {string} HTML string representing the edit-contact overlay.
  */
-// export function getEditOverlayTemplate() {
-//   return `
-//  <main class="addContact_overlay" >
-//   <section class="overlay_add_contact">
-
-//             <div class="overlay_add_contact_left">
-//                 <img class="join_logo_overlay" src="/assets/img/joinlogo.png" alt="Join Logo">
-//                 <h2 class="heading_add_contact">Edit Contact</h2>
-//                 <img class="h2_underline" src="/assets/icons/underline-blue.svg" alt="">
-
-//             </div>
-
-//             <div class="overlay_add_contact_right">
-//             <div class="close_overlay_icon_container">
-//             <img class="close_overlay_icon" src="/assets/icons/x_cancel.svg" alt="Close Overlay Icon">
-//             </div>
-//                 <div class="addContact_form_container">
-//                     <div>
-//                         <img src="/assets/icons/Contact_icon.svg" alt="Contact Icon">
-//                     </div>
-
-//                     <form class="form_add_contact" action="">
-//                         <input type="text" id="contact_name" name="contact_name" class="input_add_contact"
-//                             placeholder="Name">
-//                         <input type="email" id="contact_email" name="contact_email" class="input_add_contact"
-//                             placeholder="Email">
-//                         <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact"
-//                             placeholder="Phone">
-//                     </form>
-//                 </div>
-
-//                 <div class="buttons_add_contact">
-//                     <button type="submit" class="btn_save_contact">Delete</button>
-//                     <button type="button" class="btn_cancel_contact">Save <img src="assets/icons/check.svg"
-//                             alt=""></button>
-//                 </div>
-
-//             </div>
-
-//         </section>
-
-//     </main>
-//     `;
-// };
 
 
 /**
