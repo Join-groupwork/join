@@ -348,6 +348,8 @@
     background: #2a3647;
     color: #fff;
     border-radius: 10px;
+    min-width: 231px;
+    padding: 10px;
 }
 
 .contact_item--active .contact_email {
