@@ -201,9 +201,6 @@
     margin: 0;
 }
 
-.display_none {
-    display: none;
-}
 
 .close_overlay_icon_container {
     display: flex;

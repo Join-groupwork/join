@@ -1,12 +1,13 @@
 // import { loadTasks } from '/scripts/firebase/get-firebase.js';
-initSummary();import { auth } from "../../scripts/firebase/firebase.js";
+import { auth } from "../../scripts/firebase/firebase.js";
 import { loadTasks } from "/scripts/firebase/get-firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-async function initSummary() {
-    const tasks = await loadTasks();
-    todoTasks(tasks);
-}
+
+// async function initSummary() {
+//     const tasks = await loadTasks();
+//     todoTasks(tasks);
+// }
 
 // function todoTasks(tasks) {
 //     const count = tasks.filter(task => task.status === "todo").length;
@@ -36,15 +37,16 @@ async function initSummary() {
  */
 async function todoTasks(tasks) {
   console.log('Fetched tasks for summary:', tasks);
+  const taskArray = Array.isArray(tasks) ? tasks : Object.values(tasks);
 
   // ensure every task has a `status` property (else fall back to old `subtask`)
-  tasks.forEach(task => {
+  taskArray.forEach(task => {
     if (!task.status && task.subtask) {
       task.status = task.subtask;
     }
   });
 
-  const count = tasks.filter(task => {
+  const count = taskArray.filter(task => {
     const s = (task.status || '').toLowerCase().trim();
     return s === 'todo' || s === 'to do';
   }).length;
