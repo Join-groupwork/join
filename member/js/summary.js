@@ -18,6 +18,11 @@ async function initSummary() {
   urgentTasksDeadLine(tasks);
   greetings(); 
 }
+// function todoTasks(tasks) {
+//     const count = tasks.filter(task => task.status === "todo").length;
+//     document.getElementById("todo-count").textContent = count;
+// }
+
 
 // INFO die tasks von firebase müssen abgerufen werden
 // INFO firebase tasks auslesen "subtask"

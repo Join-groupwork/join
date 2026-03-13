@@ -120,6 +120,8 @@ form {
   display: flex;
   height: 100vh;
   background-color: #F6F7F8;
+  position:fixed;
+  left:0;
 }
 
 .contact_slogan {
