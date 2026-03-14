@@ -72,20 +72,20 @@ function loadData() {
     });
 }
 
-
-export async function loadTasks() {
-  const response = await fetch(`${BASE_URL}tasks.json`);
-  const data = await response.json();
-  // Check if there is any data
-  if (!data) {
-    console.log("No Tasks");   // If there are no tasks, log a message
-    return {};                 // Return an empty Object so renderBoard() won't crash
-  }
-  return data;
-  const categoryRef = ref(database, 'category');
-  // category auslesen
-  onValue(categoryRef, (firebaseData) => {
-    category = firebaseData.val() || {};
-  });
-}
+// *********LOAD TASK DOPPELT************
+// export async function loadTasks() {
+//   const response = await fetch(`${BASE_URL}tasks.json`);
+//   const data = await response.json();
+//   // Check if there is any data
+//   if (!data) {
+//     console.log("No Tasks");   // If there are no tasks, log a message
+//     return {};                 // Return an empty Object so renderBoard() won't crash
+//   }
+//   return data;
+//   const categoryRef = ref(database, 'category');
+//   // category auslesen
+//   onValue(categoryRef, (firebaseData) => {
+//     category = firebaseData.val() || {};
+//   });
+// }
 
