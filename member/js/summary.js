@@ -47,7 +47,7 @@ initSummary();
  */
 async function todoTasks(tasks) {
   // ensure every task has a `status` property (else fall back to old `subtask`)
-  taskArray.forEach(task => {
+  tasks.forEach(task => {
     if (!task.status && task.subtask) {
       task.status = task.subtask;
     }
