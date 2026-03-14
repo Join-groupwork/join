@@ -8,9 +8,9 @@
 /**
  *
  */
-import { auth } from "/join/firebase.js";
-import { createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import { pushContact } from '../../scripts/firebase/pushContact.js';
+import { auth } from "/scripts/firebase/firebase.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { pushContact } from "/scripts/firebase/push-contact.js";
 
 const signupName = document.getElementById('signupName');
 const signupEmail = document.getElementById('loginEmail');
@@ -93,7 +93,7 @@ async function handleSignup(event) {
 
 
     setTimeout(() => {
-      window.location.href = "index.html";
+      window.location.href = "/index.html";
     }, 1500);
   } catch (error) {
     signupBtn.disabled = true;
