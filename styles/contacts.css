@@ -129,7 +129,7 @@
 }
 
 .close_overlay_icon {
-
+    margin-right: 32px!important;
     cursor: pointer;
     width: 16px;
     height: 16px;
