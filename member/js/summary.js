@@ -22,7 +22,7 @@ async function initSummary() {
 
 
 
-initSummary();
+// initSummary(); window.addEventListener('load', initSummary); calls the initSummary function when the page loads already
 
 
 // INFO die tasks von firebase müssen abgerufen werden
@@ -122,20 +122,37 @@ async function tasksInBoard(tasks) {
 }
 
 // [ ] show how much "task in progress"
+// async function tasksInProgress(tasks) {
+//   tasks.forEach(task => {
+//     if (!task.status && task.subtask) {
+//       task.status = task.subtask;
+//     }
+//   });
+//   const count = tasks.filter(task => task.status === 'inProgress').length;
+//   console.log('Computed inProgress count:', count);
+//   const element = document.querySelector('.tasks-in-progress .big'); 
+//   if (element) {
+//     element.textContent = count;
+//   } else {
+//     console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
+//   }
+// }
+
+// inProgress didn't count correct, because in firebase the status is "in-progress" not "inProgress".
 async function tasksInProgress(tasks) {
-  tasks.forEach(task => {
-    if (!task.status && task.subtask) {
-      task.status = task.subtask;
-    }
-  });
-  const count = tasks.filter(task => task.status === 'inProgress').length;
-  console.log('Computed inProgress count:', count);
-  const element = document.querySelector('.tasks-in-progress .big'); 
-  if (element) {
-    element.textContent = count;
-  } else {
-    console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
-  }
+const count = tasks.filter(task => {
+const status = (task.status || '').toLowerCase().trim();
+return status === 'in-progress';
+}).length;
+
+console.log('Computed in-progress count (strict):', count);
+
+const element = document.querySelector('.tasks-in-progress .big');
+if (element) {
+element.textContent = count;
+} else {
+console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
+}
 }
 
 // [ ] show how much tasks "await feedback"
