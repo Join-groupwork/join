@@ -76,3 +76,43 @@ body {
 .login__input--password {
   background-image: url('/assets/icons/lock-icon.svg');
 }
+
+.logo-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: var(--color-background-primary);
+  pointer-events: none;
+  animation: splashFadeOut 0.4s ease-in-out 1.6s forwards;
+}
+
+.logo-splash__img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250px;
+  transform: translate(-50%, -50%);
+  animation: logoToCorner 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+}
+
+@keyframes logoToCorner {
+  0% {
+    top: 50%;
+    left: 50%;
+    width: 250px;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    top: 80px;
+    left: 76px;
+    width: 100px;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes splashFadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
