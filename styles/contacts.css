@@ -52,92 +52,9 @@
     color: #007CEE;
 }
 
-.overlay_add_contact {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 550px;
-    width: 110%;
-    background-color: #ffffff;
-    color: #ffffff;
-    font-size: 16px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    gap: 20px;
-    border-radius: 16px;
-
-}
-
-#contact-add-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-
-}
-
-.overlay_add_contact h2 {
-    font-size: 58px;
-    margin: unset;
-    color: #ffffff;
-}
-
-.overlay_add_contact_left {
-    height: 100%;
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    border-right: 1px solid #e0e0e0;
-    background-color: #2A3647;
-    border-radius: 16px 0 0 16px;
-}
-
-.overlay_add_contact_left p {
-    font-size: 29px;
-    margin: unset;
-    justify-self: flex-start;
-}
-
-.join_logo_overlay {
-    margin-bottom: 10px;
-    height: 7vh;
-}
-
-.overlay_add_contact_right {
-    width: 60%;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    height: 589px;
-}
 
 
-.overlay_add_contact_right img {
-    margin: 20px 0px;
-}
 
-.overlay_add_contact_right form {
-    display: flex;
-    flex-direction: column;
-    padding: 0px 55px 0px 0px;
-    gap: 15px;
-    width: 63%;
-    border-radius: 16px;
-}
-
-.overlay_add_contact form input.input_add_contact {
-    height: 40px;
-    border: 1px solid #cccccc;
-    border-radius: 8px;
-    font-size: 16px;
-}
 
 .buttons_add_contact {
     display: flex;
@@ -389,6 +306,13 @@
     display: flex;
     overflow: hidden;
     animation: overlaySlideInFromRight 260ms ease-out forwards;
+    justify-content: center;
+    align-items: center;
+    height: 550px;
+    color: #ffffff;
+    font-size: 16px;
+    gap: 20px;
+
 }
 
 @keyframes overlaySlideInFromRight {
@@ -404,15 +328,22 @@
 }
 
 .overlay_add_contact_left {
-    width: 42%;
+    width: 47%;
     background: #2a3647;
     color: #fff;
     padding: 64px 48px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    align-items: flex-start;
+    border-right: 1px solid #e0e0e0;
+    height: 100%;
     justify-content: center;
+    border-radius: 16px 0 0 16px;
+
 }
+
+
 
 .overlay_add_contact_right {
     width: 58%;
@@ -420,6 +351,44 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    height: 589px;
+}
+
+.overlay_add_contact h2 {
+    font-size: 58px;
+    margin: unset;
+    color: #ffffff;
+}
+
+.overlay_add_contact_left p {
+    font-size: 29px;
+    margin: unset;
+    justify-self: flex-start;
+}
+
+.join_logo_overlay {
+    margin-bottom: 10px;
+    height: 7vh;
+}
+
+.overlay_add_contact_right img {
+    margin: 20px 0px;
+}
+
+.overlay_add_contact_right form {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 55px 0px 0px;
+    gap: 15px;
+    width: 63%;
+    border-radius: 16px;
+}
+
+.overlay_add_contact form input.input_add_contact {
+    height: 40px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    font-size: 16px;
 }
 
 .addContact_form_container {
@@ -447,23 +416,29 @@
     background-position: right 14px center;
     background-size: 20px 20px;
     padding-right: 46px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 #contact_name {
-background-image: url('/assets/icons/person-icon.svg');
+    background-image: url('/assets/icons/person-icon.svg');
 }
 
 #contact_email {
-background-image: url('/assets/icons/mail-icon.svg');
+    background-image: url('/assets/icons/mail-icon.svg');
 }
 
 #contact_phone {
-background-image: url('/assets/icons/phone-icon.svg');
+    background-image: url('/assets/icons/phone-icon.svg');
 }
 
-.input_add_contact:focus {
+#contact_name:focus,
+#contact_email:focus,
+#contact_phone:focus {
     border-color: #29abe2;
+    box-shadow: 0 0 0 1px #29abe2;
 }
+
+
 
 .buttons_add_contact {
     margin-top: 14px;
