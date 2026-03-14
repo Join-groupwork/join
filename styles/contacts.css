@@ -46,6 +46,7 @@
     color: #ffffff;
     font-weight: 500;
 }
+
 .contact_email {
     font-size: 14px;
     color: #007CEE;
@@ -119,7 +120,7 @@
 
 
 .overlay_add_contact_right img {
-    margin: 20px 40px;
+    margin: 20px 0px;
 }
 
 .overlay_add_contact_right form {
@@ -442,6 +443,22 @@
     padding: 0 16px;
     font-size: 16px;
     outline: none;
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 20px 20px;
+    padding-right: 46px;
+}
+
+#contact_name {
+background-image: url('/assets/icons/person-icon.svg');
+}
+
+#contact_email {
+background-image: url('/assets/icons/mail-icon.svg');
+}
+
+#contact_phone {
+background-image: url('/assets/icons/phone-icon.svg');
 }
 
 .input_add_contact:focus {
