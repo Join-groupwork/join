@@ -202,7 +202,7 @@ export function getAddOverlayTemplate() {
                 <div class="addContact_form_container">
 
                     <div>
-                        <img src="/assets/icons/contact-icon.svg" alt="Contact Icon">
+                        <img class="overlay_avatar" src="/assets/icons/contact-icon.svg" alt="Contact Icon">
                     </div>
                     <form class="form_add_contact" id="add_contact_form">
                         <input type="text" id="contact_name" name="contact_name" class="input_add_contact" required>
@@ -335,7 +335,7 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
                     <img class="close_overlay_icon" src="/assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="closeEditOverlay()">
                 </div>
         <div class="addContact_form_container">
-            <div class="contact_avatar contact_avatar--large edit_overlay_avatar" style="background-color:${color}">
+            <div class="contact_avatar contact_avatar--large edit_overlay_avatar overlay_avatar" style="background-color:${color}">
                 ${initials}
             </div>
           <form class="form_add_contact" id="edit_contact_form">
