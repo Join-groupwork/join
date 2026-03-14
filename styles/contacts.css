@@ -378,7 +378,7 @@
 .overlay_add_contact_right form {
     display: flex;
     flex-direction: column;
-    padding: 0px 55px 0px 0px;
+    padding: 0px 25px 0px 0px;
     gap: 15px;
     width: 63%;
     border-radius: 16px;
