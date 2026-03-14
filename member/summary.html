@@ -5,9 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Join</title>
-  <script type="module" src="/scripts/firebase/firebase.js"></script>
-  <script type="module" src="/login/auth-guard.js"></script>
-
   <link rel="icon" href="/assets/img/logo-dark.svg" type="image/svg" />
   <link rel="stylesheet" href="/styles/standard.css" />
   <link rel="stylesheet" href="/styles/fonts.css" />
@@ -15,31 +12,32 @@
   <link rel="stylesheet" href="/styles/assets.css" />
   <link rel="stylesheet" href="/styles/join.css" />
   <link rel="stylesheet" href="/member/css/summary.css" />
-  <!-- <script type="module" src="/member/js/member-templates.js"></script> -->
-  
+  <script type="module" src="/scripts/firebase/firebase.js"></script>
+  <script type="module" src="/login/auth-guard.js"></script>
+  <script type="module" src="/member/js/member-templates.js"></script>
   <script type="module" src="/member/js/member-script.js"></script>
+  <script type="module" src="/member/js/summary.js"></script>
 </head>
 
+<body>
 
 
+  <!-- CHECK müssen wir die css KLasse "app" nutzen? oder könne wir das auch anders Lösen? -->
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar"></aside>
 
-  <body>
-    <!-- CHECK müssen wir die css KLasse "app" nutzen? oder könne wir das auch anders Lösen? -->
-    <div class="app">
-      <!-- SIDEBAR -->
-      <aside class="sidebar" id="sidebar"></aside>
-
-      <!-- TOPBAR -->
-      <header class="topbar" id="header"></header>
-      <!-- MAIN -->
-      <main class="main">
-        <!-- DASHBOARD -->
-        <section class="dashboard">
-          <div class="heading-join">
-            <h1>Join 360</h1>
-            <div class="divider-blue"></div>
-            <h3>Key Metrics at a Glance</h3>
-          </div>
+    <!-- TOPBAR -->
+    <header class="topbar" id="header"></header>
+    <!-- MAIN -->
+    <main class="main">
+      <!-- DASHBOARD -->
+      <section class="dashboard">
+        <div class="heading-join">
+          <h1>Join 360</h1>
+          <div class="divider-blue"></div>
+          <h3>Key Metrics at a Glance</h3>
+        </div>
 
           <div class="dashboard-top">
             <div class="dashboard-left">
@@ -71,7 +69,7 @@
                     </div>
                   </div>
 
-                  <div class="divider"></div>
+                <div class="divider"></div>
 
                   <div class="urgent-right">
                     <div class="date" id="urgentTasks-dead-line">0</div>

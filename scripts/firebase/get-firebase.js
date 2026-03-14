@@ -1,18 +1,6 @@
-// const BASE_URL = "https://join-ae525-default-rtdb.europe-west1.firebasedatabase.app/";
-// let contacts = [];
-// let tasks = [];
-// let category = [];
 
-// async function loadData(){
-//     let contacts = await fetch (BASE_URL + ".json");
-//     let contactsToJson = await contacts.json();
-//     console.log(contactsToJson);
-// }
-// loadData();
-
-
-import { database, auth, BASE_URL} from '/scripts/firebase/firebase.js';
-import { ref, onValue} from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import { database, auth, BASE_URL } from '/scripts/firebase/firebase.js';
+import { ref, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 import { renderContactsList } from '/member/js/contacts.js';
 
 
@@ -22,15 +10,45 @@ let tasks = {};
 let category = {};
 
 
-//  authentifizierung 
+//  authentifizierung
 auth.onAuthStateChanged((user) => {
-    if (user) {
-        // console.log('User authenticated:', user.uid);
-        loadData();
-    } else {
-        console.error('No user authenticated');
-    }
+  if (user) {
+    // console.log('User authenticated:', user.uid);
+    loadData();
+  } else {
+    console.error('No user authenticated');
+  }
 });
+
+
+
+// Daten laden
+export function loadData() {
+  const contactsRef = ref(database, 'contacts');
+  // contacts auslesen
+  onValue(contactsRef, (firebaseData) => {
+    contacts = firebaseData.val() || {};
+
+    if (document.getElementById('contact_list')) {
+      renderContactsList(contacts);
+    }
+  }, (error) => {
+    console.error('Fehler beim Laden der Contacts:', error);
+  });
+
+  const tasksRef = ref(database, 'tasks');
+  // tasks auslesen
+  onValue(tasksRef, (firebaseData) => {
+    tasks = firebaseData.val() || {};
+    console.log('Tasks loaded:', tasks);
+  });
+
+  const categoryRef = ref(database, 'category');
+  // category auslesen
+  onValue(categoryRef, (firebaseData) => {
+    category = firebaseData.val() || {};
+  });
+}
 
 export async function loadTasks() {
   const response = await fetch(`${BASE_URL}tasks.json`);
@@ -41,38 +59,12 @@ export async function loadTasks() {
     return {};                 // Return an empty Object so renderBoard() won't crash
   }
   return data;
-
+  const categoryRef = ref(database, 'category');
+  // category auslesen
+  onValue(categoryRef, (firebaseData) => {
+    category = firebaseData.val() || {};
+  });
 }
-
-// Daten laden
-function loadData() {
-    const contactsRef = ref(database, 'contacts');
-    // contacts auslesen
-    onValue(contactsRef, (firebaseData) => {
-        contacts = firebaseData.val() || {};
-       
-        if (document.getElementById('contact_list')) {
-            renderContactsList(contacts);
-        }
-    }, (error) => {
-        console.error('Fehler beim Laden der Contacts:', error);
-    });
-
-    const tasksRef = ref(database, 'tasks');
-    // tasks auslesen
-    onValue(tasksRef, (firebaseData) => {
-        tasks = firebaseData.val() || {};
-        console.log('Tasks loaded:', tasks);
-    });
-
-    const categoryRef = ref(database, 'category');
-    // category auslesen
-    onValue(categoryRef, (firebaseData) => {
-        category = firebaseData.val() || {};
-    });
-}
-
-// *********LOAD TASK DOPPELT************
 // export async function loadTasks() {
 //   const response = await fetch(`${BASE_URL}tasks.json`);
 //   const data = await response.json();
@@ -82,10 +74,5 @@ function loadData() {
 //     return {};                 // Return an empty Object so renderBoard() won't crash
 //   }
 //   return data;
-//   const categoryRef = ref(database, 'category');
-//   // category auslesen
-//   onValue(categoryRef, (firebaseData) => {
-//     category = firebaseData.val() || {};
-//   });
-// }
 
+// }

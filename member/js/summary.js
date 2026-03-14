@@ -3,9 +3,6 @@ import { loadTasks } from '/scripts/firebase/get-firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 
-
-
-
 async function initSummary() {
  const data = await loadTasks();
   const tasks = Object.values(data || {});  
@@ -19,9 +16,13 @@ async function initSummary() {
   greetings(); 
 }
 // function todoTasks(tasks) {
-//     const count = tasks.filter(task => task.status === "todo").length;
-//     document.getElementById("todo-count").textContent = count;
+//   const count = tasks.filter(task => task.status === "todo").length;
+//   document.getElementById("todo-count").textContent = count;
 // }
+
+
+
+initSummary();
 
 
 // INFO die tasks von firebase müssen abgerufen werden
@@ -46,7 +47,7 @@ async function initSummary() {
  */
 async function todoTasks(tasks) {
   // ensure every task has a `status` property (else fall back to old `subtask`)
-  tasks.forEach(task => {
+  taskArray.forEach(task => {
     if (!task.status && task.subtask) {
       task.status = task.subtask;
     }

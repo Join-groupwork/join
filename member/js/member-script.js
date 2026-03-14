@@ -154,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
 /**
  * Triggers the board rendering.
  *

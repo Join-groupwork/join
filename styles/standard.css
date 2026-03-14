@@ -17,8 +17,8 @@ a:hover {
     overflow: hidden;
 }
 
-.d-none {
-    display: none;
+.d_none {
+    display: none !important;
 }
 
 /* overlay, dialog, modal */

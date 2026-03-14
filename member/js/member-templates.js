@@ -172,52 +172,6 @@ export function getTaskTemplate() {
  */
 
 
-/* export function getEditOverlayTemplate() {
-  return `
- <main class="addContact_overlay" >
-  <section class="overlay_add_contact">
-
-            <div class="overlay_add_contact_left">
-                <img class="join_logo_overlay" src="/assets/img/joinlogo.png" alt="Join Logo">
-                <h2 class="heading_add_contact">Edit Contact</h2>
-                <img class="h2_underline" src="/assets/icons/underline-blue.svg" alt="">
-
-            </div>
-
-            <div class="overlay_add_contact_right">
-            <div class="close_overlay_icon_container">
-            <img class="close_overlay_icon" src="/assets/icons/x_cancel.svg" alt="Close Overlay Icon">
-            </div>
-                <div class="addContact_form_container">
-                    <div>
-                        <img src="/assets/icons/Contact_icon.svg" alt="Contact Icon">
-                    </div>
-
-                    <form class="form_add_contact" action="">
-                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact"
-                            placeholder="Name">
-                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact"
-                            placeholder="Email">
-                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact"
-                            placeholder="Phone">
-                    </form>
-                </div>
-
-                <div class="buttons_add_contact">
-                    <button type="submit" class="btn_save_contact">Delete</button>
-                    <button type="button" class="btn_cancel_contact">Save <img src="assets/icons/check.svg"
-                            alt=""></button>
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-    `;
-}; */
-
-
 /**
  * Generates the contact add overlay HTML.
  *
@@ -318,7 +272,15 @@ export function generateTodosHTML(id, title, category, description, priority) {
           `;
 };
 
-
+/**
+ * Two show contact details overlay.
+ *
+ * @param {string} contact - Name frome Contact
+ * @param {string} initials - Initials from Contact Name
+ * @param {string} bgColor - Background Color for Avatar
+ * @param {number} phone - Phonenumber from Contact
+ * @returns {string} - HTML string representing the contact details
+ */
 export function getActiveContactTemplate(contact, initials, bgColor, phone) {
   return `
     <section class="contact_detail_card contact_detail_card--enter">
@@ -350,6 +312,15 @@ export function getActiveContactTemplate(contact, initials, bgColor, phone) {
   `;
 }
 
+/**
+ * Show the overlay to editing contact details.
+ *
+ * @param {string} contactId
+ * @param {string} contact
+ * @param {string} initials
+ * @param {string} color
+ * @returns {string} - HTML string representing the contact editing overlay.
+ */
 export function getEditOverlayTemplate(contactId, contact, initials, color) {
   return `
     <section class="overlay_add_contact" onclick="event.stopPropagation()">

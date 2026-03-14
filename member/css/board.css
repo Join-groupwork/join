@@ -9,34 +9,51 @@ main {
 }
 /* evtl statt main eine klasse verwenden, sonst könnte es zu Konflikten kommen */
 
-.card-bar {
-  padding-bottom: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .task {
-  /* margin-top: 50px;
-  margin-left: 230px; */
+  display: flex;
+  flex-direction: row;
 }
 
 .task__section {
   width: 256px;
+  display: flex;
+  flex-direction: column;
 }
 
 .task__area {
-  height: 100%;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  border-radius: 24px;
+  scrollbar-gutter: stable;
+}
+
+.task__area--highlight::before {
+  border-color: var(--border__task--highlight);
+  background-color: rgba(42, 54, 71, 0.04);
 }
 
 .task__area--placeholder {
   text-align: center;
 }
 
-.card {
-  background-color: #ffffff;
+.task__list--preview::after {
+  content: "";
+  display: block;
+  width: 250px;
+  height: 210px;
+  margin-top: 8px;
+  border: 1px dashed var(--border__task--highlight);
   border-radius: 24px;
-  padding: 10px;
+  background: rgba(42, 54, 71, 0.04);
+}
+
+.card-bar {
+  padding-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .task__card {
@@ -45,11 +62,14 @@ main {
   border-radius: 24px;
   font-weight: 400;
   background-color: var(--color-background-input);
+  position: relative;
+  z-index: 2;
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
 }
 
 .task__card--dragging {
   opacity: 0.7;
-  transform: rotate(-15eg);
+  transform: rotate(5deg);
 }
 
 .task__category--user-story {

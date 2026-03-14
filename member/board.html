@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+  <script type="module" src="/scripts/firebase/firebase.js"></script>
+  <script type="module" src="/login/auth-guard.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Join - Board</title>
@@ -12,8 +14,6 @@
   <link rel="stylesheet" href="/styles/colors.css">
   <link rel="stylesheet" href="/styles/assets.css">
   <link rel="stylesheet" href="/member/css/board.css">
-  <script type="module" src="/scripts/firebase/firebase.js"></script>
-  <script type="module" src="/login/auth-guard.js"></script>
   <script type="module" src="/member/js/member-templates.js"></script>
   <script type="module" src="/scripts/firebase/get-task.js"></script>
   <script type="module" src="/member/js/drag-n-drop.js"></script>
@@ -34,7 +34,7 @@
       </div>
       <div class="task__area" data-status="todo">
         <p class="task__area--placeholder d-none">No tasks to do</p>
-        <div id="todo"></div>
+        <div id="todo" class="task__list"></div>
       </div>
     </section>
 
@@ -45,7 +45,7 @@
       </div>
       <div class="task__area" data-status="in-progress">
         <p class="task__area--placeholder d-none">No tasks in Progress</p>
-        <div id="inProgress"></div>
+        <div id="inProgress" class="task__list"></div>
       </div>
     </section>
 
@@ -56,7 +56,7 @@
       </div>
       <div class="task__area" data-status="await-feedback">
         <p class="task__area--placeholder d-none">No tasks await Feedback</p>
-        <div id="awaitFeedback"></div>
+        <div id="awaitFeedback" class="task__list"></div>
       </div>
     </section>
 
@@ -66,12 +66,13 @@
       </div>
       <div class="task__area" data-status="done">
         <p class="task__area--placeholder d-none">No tasks done</p>
-        <div id="done"></div>
+        <div id="done" class="task__list"></div>
       </div>
     </section>
+
   </main>
-    <script type="module" src="/member/js/board.js"></script>
-    
+  <!-- <script type="module" src="/member/js/board.js"></script> -->
+
 </body>
 
 </html>
