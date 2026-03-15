@@ -40,15 +40,15 @@ export function getHeaderTemplate() {
         <header>
           <div class="topbar-left f-s-20">Kanban Project Management Tool</div>
           <div class="topbar-right">
-              <a href="./member/help.html"class="help-circle" title="Help">?</a>
+              <a href="../help.html"class="help-circle" title="Help">?</a>
               <div id="headerMenue" class="profile">
                   SM
                   <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
                       <ul>
-                          <a href="/member/legal-notice-user.html">Legal Notice</a>
+                          <a href="../legal-notice-user.html">Legal Notice</a>
                       </ul>
                       <ul>
-                          <a href="/member/privacy-policy-user.html">Privacy Policy</a>
+                          <a href="../privacy-policy-user.html">Privacy Policy</a>
                       </ul>
                       <ul>
                           <a id="logoutBtn">
@@ -76,19 +76,19 @@ export function getHeaderTemplate() {
 export function getSidebarTemplate() {
   return `
       <div class="logo">
-        <img src="./assets/img/logo-bright.svg" alt="" >
+        <img src="../assets/img/logo-bright.svg" alt="" >
       </div>
 
       <nav class="nav">
-        <a class="nav-item" href="./member/summary.html"><img src="./assets/icons/side-menu/summary-icon.svg" alt="Summary" class="nav-icon">Summary</a>
-        <a class="nav-item" href="./member/add-task.html"><img src="./assets/icons/side-menu/add-task-icon.svg" alt="Add Task" class="nav-icon">Add Task</a>
-        <a class="nav-item" href="./member/board.html"><img src="./assets/icons/side-menu/board-icon.svg" alt="Board" class="nav-icon">Board</a>
-        <a class="nav-item" href="./member/contacts.html"><img src="./assets/icons/side-menu/contacts-icon.svg" alt="Contacts" class="nav-icon">Contacts</a>
+        <a class="nav-item" href="./summary.html"><img src="../assets/icons/side-menu/summary-icon.svg" alt="Summary" class="nav-icon">Summary</a>
+        <a class="nav-item" href="./add-task.html"><img src="../assets/icons/side-menu/add-task-icon.svg" alt="Add Task" class="nav-icon">Add Task</a>
+        <a class="nav-item" href="./board.html"><img src="../assets/icons/side-menu/board-icon.svg" alt="Board" class="nav-icon">Board</a>
+        <a class="nav-item" href="./contacts.html"><img src="../assets/icons/side-menu/contacts-icon.svg" alt="Contacts" class="nav-icon">Contacts</a>
       </nav>
 
       <div class="footer">
-        <a href="./member/privacy-policy-user.html">Privacy Policy</a>
-        <a href="./member/legal-notice-user.html">Legal Notice</a>
+        <a href="./privacy-policy-user.html">Privacy Policy</a>
+        <a href="./legal-notice-user.html">Legal Notice</a>
       </div>
     `;
 };
@@ -126,9 +126,9 @@ export function getTaskTemplate() {
                 <section class="section_priority">
                     <label for="priority">Priority</label>
                     <div id="priority" class="priority" name="priority">
-                        <button class="priority_button" value="low">Urgent <img src=./"assets/icons/Property 1=Urgent.svg" alt=""></button>
-                        <button class="priority_button" value="medium">Medium <img src="./assets/icons/Property 1=Medium.svg" alt=""></button>
-                        <button class="priority_button" value="high">Low <img src="./assets/icons/Property 1=Low.svg" alt=""></button>
+                        <button class="priority_button" value="low">Urgent <img src="../../assets/icons/Property 1=Urgent.svg" alt=""></button>
+                        <button class="priority_button" value="medium">Medium <img src="../../assets/icons/Property 1=Medium.svg" alt=""></button>
+                        <button class="priority_button" value="high">Low <img src="../../assets/icons/Property 1=Low.svg" alt=""></button>
                     </div>
                 </section>
 
@@ -153,8 +153,8 @@ export function getTaskTemplate() {
             </form>
         </section>
         <section class="section_add_task_button">
-            <button class="clear_button_add_task" type="button">Cancel <img src="./assets/icons/close.svg" alt=""></button>
-            <button class="Create_button_add_task" type="submit">Create Task <img src="./assets/icons/check.svg" alt=""></button>
+            <button class="clear_button_add_task" type="button">Cancel <img src="../../assets/icons/close.svg" alt=""></button>
+            <button class="Create_button_add_task" type="submit">Create Task <img src="../../assets/icons/check.svg" alt=""></button>
         </section>
     </section>
     `;
@@ -185,23 +185,23 @@ export function getAddOverlayTemplate() {
           <section class="overlay_add_contact">
 
             <div class="overlay_add_contact_left">
-                <img class="join_logo_overlay" src="./assets/img/logo-bright.svg" alt="Join Logo">
+                <img class="join_logo_overlay" src="../../assets/img/logo-bright.svg" alt="Join Logo">
                 <div>
                 <h2 class="heading_add_contact">Add Contact</h2>
                 <p>Tasks are better with a team!</p>
-                <img class="h2_underline" style="margin: unset; height: unset; width: 90px;" src="./assets/icons/underline-blue.svg" alt="">
+                <img class="h2_underline" style="margin: unset; height: unset; width: 90px;" src="../../assets/icons/underline-blue.svg" alt="">
                 </div>
             </div>
 
             <div class="overlay_add_contact_right">
 
                 <div class="close_overlay_icon_container">
-                    <img class="close_overlay_icon" src="./assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="hideAddContactOverlay()">
+                    <img class="close_overlay_icon" src="../../assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="hideAddContactOverlay()">
                 </div>
                 <div class="addContact_form_container">
 
                     <div>
-                        <img class="overlay_avatar" src="./assets/icons/contact-icon.svg" alt="Contact Icon">
+                        <img class="overlay_avatar" src="../../assets/icons/contact-icon.svg" alt="Contact Icon">
                     </div>
                     <form class="form_add_contact" id="add_contact_form">
                         <input type="text" id="contact_name" name="contact_name" class="input_add_contact" required>
@@ -211,8 +211,8 @@ export function getAddOverlayTemplate() {
                 </div>
 
                 <div class="buttons_add_contact">
-                    <button type="button" class="btn_save_contact" onclick="hideAddContactOverlay()">Cancel <img src="./assets/icons/close-icon.svg" alt=""></button>
-                    <button type="submit" form="add_contact_form" class="btn_cancel_contact">Create contact <img src="./assets/icons/check-icon-white.svg" alt=""></button>
+                    <button type="button" class="btn_save_contact" onclick="hideAddContactOverlay()">Cancel <img src="../../assets/icons/close-icon.svg" alt=""></button>
+                    <button type="submit" form="add_contact_form" class="btn_cancel_contact">Create contact <img src="../../assets/icons/check-icon-white.svg" alt=""></button>
                 </div>
 
             </div>
@@ -290,8 +290,8 @@ export function getActiveContactTemplate(contact, initials, bgColor, phone) {
         <div>
           <h2 class="contact_detail_name">${contact.name || ''}</h2>
           <div class="contact_detail_actions">
-            <button type="button" class="link_btn" onclick="editContact('${contact.id}')"><img src="./assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
-            <button type="button" class="link_btn" onclick="deleteContact('${contact.id}')"><img src="./assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
+            <button type="button" class="link_btn" onclick="editContact('${contact.id}')"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
+            <button type="button" class="link_btn" onclick="deleteContact('${contact.id}')"><img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
           </div>
         </div>
       </div>
@@ -324,14 +324,14 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
   return `
     <section class="overlay_add_contact" onclick="event.stopPropagation()">
       <div class="overlay_add_contact_left">
-        <img class="join_logo_overlay" src="./assets/img/logo-bright.svg" alt="Join Logo">
+        <img class="join_logo_overlay" src="../../assets/img/logo-bright.svg" alt="Join Logo">
         <h2 class="heading_add_contact">Edit Contact</h2>
-        <img class="h2_underline" src="./assets/icons/underline-blue.svg" alt="">
+        <img class="h2_underline" src="../../assets/icons/underline-blue.svg" alt="">
       </div>
 
       <div class="overlay_add_contact_right">
        <div class="close_overlay_icon_container">
-                    <img class="close_overlay_icon" src="./assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="closeEditOverlay()">
+                    <img class="close_overlay_icon" src="../../assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="closeEditOverlay()">
                 </div>
         <div class="addContact_form_container">
             <div class="contact_avatar contact_avatar--large edit_overlay_avatar overlay_avatar" style="background-color:${color}">
@@ -343,7 +343,7 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
             <input type="tel" id="contact_phone" class="input_add_contact" placeholder="Phone" value="${contact.phone || ''}">
             <div class="buttons_add_contact">
               <button type="button" class="btn_save_contact" onclick="deleteContact('${contactId}')">Delete</button>
-              <button type="submit" class="btn_cancel_contact">Save<img src="./assets/icons/check-icon-white.svg" alt=""></button>
+              <button type="submit" class="btn_cancel_contact">Save<img src="../../assets/icons/check-icon-white.svg" alt=""></button>
             </div>
           </form>
         </div>

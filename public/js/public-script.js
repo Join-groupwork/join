@@ -17,9 +17,9 @@
  *
  * @module public-ui
  */
-import { getHeaderTemplate, getSidebarTemplate } from './public/js/public-templates.js';
+import { getHeaderTemplate, getSidebarTemplate } from './public-templates.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { auth } from "./scripts/firebase/firebase.js";
+import { auth } from "../../scripts/firebase/firebase.js";
 
 init();
 

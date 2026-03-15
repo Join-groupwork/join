@@ -1,6 +1,6 @@
-import { database, auth } from './scripts/firebase/firebase.js';
+import { database, auth } from '../../scripts/firebase/firebase.js';
 import { ref, push, set, update, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
-import { getAddOverlayTemplate, getEditOverlayTemplate } from './member/js/member-templates.js';
+import { getAddOverlayTemplate, getEditOverlayTemplate } from './member-templates.js';
 import {
     renderContactsList as renderContactsListView,
     renderActiveContactTemplate,
@@ -9,7 +9,7 @@ import {
     getAvatarColor,
     getActiveContactId,
     setActiveContactId
-} from './member/js/contacts-render.js';
+} from './contacts-render.js';
 
 let contacts = {};
 let editingContactId = null;

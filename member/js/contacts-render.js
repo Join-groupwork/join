@@ -1,4 +1,4 @@
-import { getActiveContactTemplate } from './member/js/member-templates.js';
+import { getActiveContactTemplate } from './member-templates.js';
 
 let contacts = {};
 let activeContactId = null;
