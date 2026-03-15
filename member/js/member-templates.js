@@ -45,10 +45,10 @@ export function getHeaderTemplate() {
                   SM
                   <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
                       <ul>
-                          <a href="legal_notice.html">Legal Notice</a>
+                          <a href="/member/legal-notice-user.html">Legal Notice</a>
                       </ul>
                       <ul>
-                          <a href="privacy_policy.html">Privacy Policy</a>
+                          <a href="/member/privacy-policy-user.html">Privacy Policy</a>
                       </ul>
                       <ul>
                           <a id="logoutBtn">

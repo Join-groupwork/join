@@ -111,8 +111,25 @@ async function urgentTasks(tasks) {
 } 
 
 // [ ] show how much "tasks in "board"
-async function tasksInBoard(tasks) {
-  const count = tasks.length; 
+// async function tasksInBoard(tasks) {
+//   const count = tasks.length; 
+//   const element = document.querySelector('.all-tasks .big');
+//   if (element) {
+//     element.textContent = count;
+//   } else {
+//     console.warn("Element '.all-tasks .big' nicht gefunden!");
+//   }
+// }
+// INFO the count of tasks in board was not correct, now it counts only the tasks with the status "todo", "in progress", "await feedback" and "done". Because only these tasks are in the board. 
+//
+async function tasksInBoard(tasks) {  
+  const validStatuses = new Set(['todo', 'in-progress', 'await-feedback', 'done']);
+
+  const count = tasks.filter(task => {
+    const status = (task.status || '').toLowerCase().trim();
+    return validStatuses.has(status);
+  }).length;
+
   const element = document.querySelector('.all-tasks .big');
   if (element) {
     element.textContent = count;
