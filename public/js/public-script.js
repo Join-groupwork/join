@@ -98,32 +98,3 @@ function renderAddTask() {
     console.error('Add Task-Element nicht gefunden!');
   }
 };
-
-
-/**
- * Registers UI event listeners after the DOM is ready:
- * - Toggle header dropdown menu
- * - Sign out user and redirect to the public index page
- *
- * @event DOMContentLoaded
- * @listens Document#DOMContentLoaded
- * @returns {void}
- */
-document.addEventListener('DOMContentLoaded', () => {
-  const profileBtn = document.getElementById('headerMenue');
-  const logoutBtn = document.getElementById('logoutBtn');
-  const headerMenueNav = document.getElementById('headerMenueNav');
-  profileBtn.addEventListener('click', () => {
-    headerMenueNav.classList.toggle('d_none');
-  })
-  logoutBtn.addEventListener('click', () => {
-    try {
-      const userCredential = signOut(auth);
-      console.log("Logout erfolgreich:", userCredential.user);
-      window.location.href = "index.html"; // target page after Logout
-    } catch (error) {
-      console.error("Logout Fehlgeschlagen:", error.message);
-      alert("Logout fehlgeschlagen");
-    }
-  })
-})
