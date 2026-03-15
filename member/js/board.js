@@ -1,4 +1,13 @@
 import { loadTasks } from '/scripts/firebase/get-firebase.js';
+import { getTaskOverlayTemplate } from './member-templates.js';
+let tasks = {}; 
+
+// Daten laden und tasks befüllen
+async function initTasks() {
+  tasks = await loadTasks(); // tasks jetzt befüllt
+}
+
+initTasks();
 
 /**
  * References to the DOM containers (board columns) where tasks are rendered.
@@ -37,16 +46,19 @@ const columns = {
  *
  * @returns {string} HTML string
  */
-function getCardTemplate(task) {
+
+/*function getCardTemplate(task) {
   return `
     <div class="card" id="${task.key}" draggable="true">
         <h4>${task.category}</h4>
         <p>${task.title}</p>
         <p>${task.description}</p>
         <p>${task.assigned_to}</p>
+        
+      
     </div>
-    `;
-}
+    `;  } */
+
 
 /**
  * Fetches all tasks and renders them
@@ -61,6 +73,8 @@ function getCardTemplate(task) {
  * @async
  * @returns {Promise<void>}
  */
+
+/*
 async function renderBoard() {
   const tasksData = await loadTasks();
   for (let i = 0; i < tasksData.length; i++) {
@@ -75,8 +89,27 @@ async function renderBoard() {
     column.innerHTML += getCardTemplate(task);
 
   }
+}*/
+
+
+
+
+
+function openTaskOverlay(taskId) {
+  const task = tasks[taskId];
+  if (!task) return console.warn("Task nicht gefunden:", taskId);
+
+  const overlayContainer = document.getElementById("overlay_container");
+
+  overlayContainer.innerHTML = getTaskOverlayTemplate(
+    task.title,
+    task.description,
+    task.category,
+    task.priority,
+  );
+
+  overlayContainer.classList.remove('d_none');
 }
+window.openTaskOverlay = openTaskOverlay;
 
-
-
-renderBoard();
+/* renderBoard(); */

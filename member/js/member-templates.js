@@ -103,6 +103,7 @@ export function getSidebarTemplate() {
  *
  * @returns {string} HTML string representing the add-task form section.
  */
+
 export function getTaskTemplate() {
   return `
      <section class="overlay_add_task">
@@ -257,7 +258,7 @@ export function signupMassegeTemplate() {
  */
 export function generateTodosHTML(id, title, category, description, priority) {
   return `
-            <div class="task__card" id="${id}" draggable="true">
+            <div class="task__card" id="${id}" draggable="true" onclick="openTaskOverlay('${id}')">
               <span class="task__category--${category}">${category}</span><br>
               <h4 class="task__title">${title}</h4><br>
               <p class="task__text">${description}</p><br>
@@ -353,3 +354,13 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
   `;
 }
 
+export function getTaskOverlayTemplate(title, description, category, priority) {
+  return `
+    <div class="task-overlay-content">
+      <h2>${title}</h2>
+      <p>${description}</p>
+      <p>Category: ${category}</p>
+      <p>Priority: ${priority}</p>
+    </div>
+  `;
+}
