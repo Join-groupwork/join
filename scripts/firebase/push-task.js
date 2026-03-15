@@ -5,7 +5,7 @@
  *
  * @module push-task
  */
-import { database } from '/scripts/firebase/firebase.js';
+import { database } from './firebase.js';
 import { ref, push } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
 /**

@@ -17,9 +17,9 @@
  *
  * @module public-ui
  */
-import { getHeaderTemplate, getSidebarTemplate } from '/public/js/public-templates.js';
+import { getHeaderTemplate, getSidebarTemplate } from './public/js/public-templates.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { auth } from "/scripts/firebase/firebase.js";
+import { auth } from "./scripts/firebase/firebase.js";
 
 init();
 
@@ -77,7 +77,7 @@ function renderSidebar() {
   }
 };
 
-
+// CHECK Why this function? Function don't used!
 /**
  * Renders the "Add Task" section by injecting the task template into `#add_task`.
  *

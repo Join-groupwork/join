@@ -1,4 +1,4 @@
-import { loadTasks } from '/scripts/firebase/get-firebase.js';
+import { loadTasks } from './scripts/firebase/get-firebase.js';
 
 /**
  * References to the DOM containers (board columns) where tasks are rendered.

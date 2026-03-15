@@ -1,7 +1,7 @@
 
-import { database, auth, BASE_URL } from '/scripts/firebase/firebase.js';
+import { database, auth, BASE_URL } from './firebase.js';
 import { ref, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
-import { renderContactsList } from '/member/js/contacts.js';
+import { renderContactsList } from '../../member/js/contacts.js';
 
 
 

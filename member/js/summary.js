@@ -1,19 +1,19 @@
-import { auth } from '/scripts/firebase/firebase.js';
-import { loadTasks } from '/scripts/firebase/get-firebase.js';
+import { auth } from './/../scripts/firebase/firebase.js';
+import { loadTasks } from '../../scripts/firebase/get-firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 
 async function initSummary() {
  const data = await loadTasks();
-  const tasks = Object.values(data || {});  
+  const tasks = Object.values(data || {});
   todoTasks(tasks);
   doneTasks(tasks);
   urgentTasks(tasks);
-  tasksInBoard(tasks); 
+  tasksInBoard(tasks);
   tasksInProgress(tasks);
   awaitFeedbackTasks(tasks);
   urgentTasksDeadLine(tasks);
-  greetings(); 
+  greetings();
 }
 // function todoTasks(tasks) {
 //   const count = tasks.filter(task => task.status === "todo").length;
@@ -108,11 +108,11 @@ async function urgentTasks(tasks) {
   } else {
     console.warn("Element '.urgent-info .card-title' nicht gefunden!");
   }
-} 
+}
 
 // [ ] show how much "tasks in "board"
 async function tasksInBoard(tasks) {
-  const count = tasks.length; 
+  const count = tasks.length;
   const element = document.querySelector('.all-tasks .big');
   if (element) {
     element.textContent = count;
@@ -130,7 +130,7 @@ async function tasksInProgress(tasks) {
   });
   const count = tasks.filter(task => task.status === 'inProgress').length;
   console.log('Computed inProgress count:', count);
-  const element = document.querySelector('.tasks-in-progress .big'); 
+  const element = document.querySelector('.tasks-in-progress .big');
   if (element) {
     element.textContent = count;
   } else {
