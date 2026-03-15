@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const userCredential = signOut(auth);
       console.log("Logout erfolgreich:", userCredential.user);
-      window.location.href = "../../index.html"; // target page after Logout
+      window.location.href = "./index.html"; // target page after Logout
     } catch (error) {
       console.error("Logout Fehlgeschlagen:", error.message);
       alert("Logout fehlgeschlagen");

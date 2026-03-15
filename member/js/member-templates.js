@@ -40,15 +40,15 @@ export function getHeaderTemplate() {
         <header>
           <div class="topbar-left f-s-20">Kanban Project Management Tool</div>
           <div class="topbar-right">
-              <a href="../help.html"class="help-circle" title="Help">?</a>
+              <a href="./help.html"class="help-circle" title="Help">?</a>
               <div id="headerMenue" class="profile">
                   SM
                   <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
                       <ul>
-                          <a href="../legal-notice-user.html">Legal Notice</a>
+                          <a href="./legal-notice-user.html">Legal Notice</a>
                       </ul>
                       <ul>
-                          <a href="../privacy-policy-user.html">Privacy Policy</a>
+                          <a href="./privacy-policy-user.html">Privacy Policy</a>
                       </ul>
                       <ul>
                           <a id="logoutBtn">
@@ -126,9 +126,9 @@ export function getTaskTemplate() {
                 <section class="section_priority">
                     <label for="priority">Priority</label>
                     <div id="priority" class="priority" name="priority">
-                        <button class="priority_button" value="low">Urgent <img src="../../assets/icons/Property 1=Urgent.svg" alt=""></button>
-                        <button class="priority_button" value="medium">Medium <img src="../../assets/icons/Property 1=Medium.svg" alt=""></button>
-                        <button class="priority_button" value="high">Low <img src="../../assets/icons/Property 1=Low.svg" alt=""></button>
+                        <button class="priority_button" value="low">Urgent <img src="../assets/icons/Property 1=Urgent.svg" alt=""></button>
+                        <button class="priority_button" value="medium">Medium <img src="../assets/icons/Property 1=Medium.svg" alt=""></button>
+                        <button class="priority_button" value="high">Low <img src="../assets/icons/Property 1=Low.svg" alt=""></button>
                     </div>
                 </section>
 
@@ -265,7 +265,7 @@ export function generateTodosHTML(id, title, category, description, priority) {
               </div><br>
               <div class="task__footer">
                 <div>users</div>
-                <img src="./assets/icons/${priority}-prio-icon.svg" alt="">
+                <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
               </div>
             </div>
           `;

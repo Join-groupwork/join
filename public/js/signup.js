@@ -8,9 +8,9 @@
 /**
  *
  */
-import { auth } from "/scripts/firebase/firebase.js";
+import { auth } from "../../scripts/firebase/firebase.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { pushContact } from "/scripts/firebase/push-contact.js";
+import { pushContact } from "../../scripts/firebase/push-contact.js";
 
 const signupName = document.getElementById('signupName');
 const signupEmail = document.getElementById('loginEmail');

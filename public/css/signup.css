@@ -75,16 +75,16 @@ body {
 
 /* TODO Farbe der Icon noch anpassen */
 .signup__input--name {
-  background-image: url('/assets/icons/person-icon.svg');
+  background-image: url('../../assets/icons/person-icon.svg');
 }
 
 .signup__input--email {
-  background-image: url('/assets/icons/mail-icon.svg');
+  background-image: url('../../assets/icons/mail-icon.svg');
 }
 
 .signup__input--password,
 .signup__input--confirm-password {
-  background-image: url('/assets/icons/lock-icon.svg');
+  background-image: url('../../assets/icons/lock-icon.svg');
 }
 
 .signup__terms {
