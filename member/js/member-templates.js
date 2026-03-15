@@ -45,10 +45,10 @@ export function getHeaderTemplate() {
                   SM
                   <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
                       <ul>
-                          <a href="legal_notice.html">Legal Notice</a>
+                          <a href="/member/legal-notice-user.html">Legal Notice</a>
                       </ul>
                       <ul>
-                          <a href="privacy_policy.html">Privacy Policy</a>
+                          <a href="/member/privacy-policy-user.html">Privacy Policy</a>
                       </ul>
                       <ul>
                           <a id="logoutBtn">
@@ -201,7 +201,7 @@ export function getAddOverlayTemplate() {
                 <div class="addContact_form_container">
 
                     <div>
-                        <img src="./assets/icons/contact-icon.svg" alt="Contact Icon">
+                        <img class="overlay_avatar" src="./assets/icons/contact-icon.svg" alt="Contact Icon">
                     </div>
                     <form class="form_add_contact" id="add_contact_form">
                         <input type="text" id="contact_name" name="contact_name" class="input_add_contact" required>
@@ -334,7 +334,7 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
                     <img class="close_overlay_icon" src="./assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="closeEditOverlay()">
                 </div>
         <div class="addContact_form_container">
-            <div class="contact_avatar contact_avatar--large edit_overlay_avatar" style="background-color:${color}">
+            <div class="contact_avatar contact_avatar--large edit_overlay_avatar overlay_avatar" style="background-color:${color}">
                 ${initials}
             </div>
           <form class="form_add_contact" id="edit_contact_form">

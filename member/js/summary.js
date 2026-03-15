@@ -22,7 +22,7 @@ async function initSummary() {
 
 
 
-initSummary();
+// initSummary(); window.addEventListener('load', initSummary); calls the initSummary function when the page loads already
 
 
 // INFO die tasks von firebase müssen abgerufen werden
@@ -111,8 +111,25 @@ async function urgentTasks(tasks) {
 }
 
 // [ ] show how much "tasks in "board"
+// async function tasksInBoard(tasks) {
+//   const count = tasks.length;
+//   const element = document.querySelector('.all-tasks .big');
+//   if (element) {
+//     element.textContent = count;
+//   } else {
+//     console.warn("Element '.all-tasks .big' nicht gefunden!");
+//   }
+// }
+// INFO the count of tasks in board was not correct, now it counts only the tasks with the status "todo", "in progress", "await feedback" and "done". Because only these tasks are in the board.
+//
 async function tasksInBoard(tasks) {
-  const count = tasks.length;
+  const validStatuses = new Set(['todo', 'in-progress', 'await-feedback', 'done']);
+
+  const count = tasks.filter(task => {
+    const status = (task.status || '').toLowerCase().trim();
+    return validStatuses.has(status);
+  }).length;
+
   const element = document.querySelector('.all-tasks .big');
   if (element) {
     element.textContent = count;
@@ -122,20 +139,37 @@ async function tasksInBoard(tasks) {
 }
 
 // [ ] show how much "task in progress"
+// async function tasksInProgress(tasks) {
+//   tasks.forEach(task => {
+//     if (!task.status && task.subtask) {
+//       task.status = task.subtask;
+//     }
+//   });
+//   const count = tasks.filter(task => task.status === 'inProgress').length;
+//   console.log('Computed inProgress count:', count);
+//   const element = document.querySelector('.tasks-in-progress .big');
+//   if (element) {
+//     element.textContent = count;
+//   } else {
+//     console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
+//   }
+// }
+
+// inProgress didn't count correct, because in firebase the status is "in-progress" not "inProgress".
 async function tasksInProgress(tasks) {
-  tasks.forEach(task => {
-    if (!task.status && task.subtask) {
-      task.status = task.subtask;
-    }
-  });
-  const count = tasks.filter(task => task.status === 'inProgress').length;
-  console.log('Computed inProgress count:', count);
-  const element = document.querySelector('.tasks-in-progress .big');
-  if (element) {
-    element.textContent = count;
-  } else {
-    console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
-  }
+const count = tasks.filter(task => {
+const status = (task.status || '').toLowerCase().trim();
+return status === 'in-progress';
+}).length;
+
+console.log('Computed in-progress count (strict):', count);
+
+const element = document.querySelector('.tasks-in-progress .big');
+if (element) {
+element.textContent = count;
+} else {
+console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
+}
 }
 
 // [ ] show how much tasks "await feedback"

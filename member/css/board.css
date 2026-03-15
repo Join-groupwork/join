@@ -1,6 +1,6 @@
 main {
   margin: 96px 60px 0 230px;
-  padding: 50px 0 0 50px;
+  padding: 50px 0 0 28px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -64,6 +64,7 @@ main {
   background-color: var(--color-background-input);
   position: relative;
   z-index: 2;
+  margin-top:20px;
   transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
 }
 

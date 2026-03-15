@@ -8,9 +8,9 @@
 /**
  *
  */
-import { auth } from "./join/firebase.js";
-import { createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import { pushContact } from '../../scripts/firebase/pushContact.js';
+import { auth } from "/scripts/firebase/firebase.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { pushContact } from "/scripts/firebase/push-contact.js";
 
 const signupName = document.getElementById('signupName');
 const signupEmail = document.getElementById('loginEmail');
@@ -54,6 +54,18 @@ function validateForm() {
     termsAccepted
   });
 }
+
+function getSignupErrorMessage(errorCode) {
+  const messages = {
+    "auth/email-already-in-use": "Diese E-Mail ist bereits registriert. Bitte logge dich ein oder nutze eine andere E-Mail.",
+    "auth/invalid-email": "Bitte gib eine gültige E-Mail-Adresse ein.",
+    "auth/weak-password": "Das Passwort ist zu schwach (mindestens 6 Zeichen).",
+    "auth/network-request-failed": "Netzwerkfehler. Bitte prüfe deine Verbindung und versuche es erneut."
+  };
+
+  return messages[errorCode] || "Registrierung fehlgeschlagen. Bitte erneut versuchen.";
+}
+
 /**
  * Handles the signup form submission.
  * Create a Firebase user and stores additional contact data.
@@ -93,10 +105,13 @@ async function handleSignup(event) {
 
 
     setTimeout(() => {
-      window.location.href = "index.html";
+      window.location.href = "/index.html";
     }, 1500);
   } catch (error) {
-    signupBtn.disabled = true;
-    console.error('Fehler beim Speichern:', error);
+    signupBtn.disabled = false;
+    console.error("Fehler beim Speichern:", error.code, error.message);
+    alert(getSignupErrorMessage(error.code));
+    // signupBtn.disabled = true;
+    // console.error('Fehler beim Speichern:', error);
   }
 }
