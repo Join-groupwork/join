@@ -1,3 +1,5 @@
+import { getInitials, getAvatarColor } from './contacts-render.js';
+
 /**
  * @file HTML template factory functions for member pages.
  *
@@ -353,8 +355,12 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
   `;
 }
 
-export function getTaskOverlayTemplate(category,title, description, due_date , priority, assigned_to, subtask
-) {
+export function getTaskOverlayTemplate(category,title, description, due_date , priority, assigned_to, subtask ) {
+
+  const initials = getInitials(assigned_to);
+  const bgColor = getAvatarColor(assigned_to);
+
+
   return `
     <div class="task-overlay-content">
       <div class="overlaytemplate-first-section">
@@ -365,9 +371,22 @@ export function getTaskOverlayTemplate(category,title, description, due_date , p
     <h2 class="overlaytemplate-title">${title}</h2>
     <p class="overlaytemplate-description">${description}</p>
     <p class="overlaytemplate-due_date">Due date: ${due_date}</p>
-    <p class="overlaytemplate-priority">Priority: ${priority}</p>
-    <div class="overlaytemplate-assigned_to"> <p>Assigned To:<br> ${assigned_to}</p></div>
-    <div class="overlaytemplate-subtask"> <p>Subtasks:<br> ${subtask}</p></div>
+    <div class="overlaytemplate-priority-container">
+        <p class="overlaytemplate-priority">Priority: ${priority}</p>
+        <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
+    </div>
+        <div class="overlaytemplate-assigned_to">
+        <p>Assigned To:<br> ${assigned_to}</p>
+        <div class="contact_avatar" style="background-color: ${bgColor}">
+          ${initials}
+        </div>
+          
+      
+
+      <div class="overlaytemplate-subtask">
+        <p>Subtasks:<br>${subtask}</p>
+      </div>
+
     </div>
   `;
 }

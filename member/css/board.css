@@ -156,7 +156,6 @@ main {
   background-color: #adc7ea;
   z-index: 1000;
 
-  
 }
 
 .overlaytemplate-first-section{
@@ -197,6 +196,14 @@ main {
 
 .overlaytemplate-assigned_to{
   padding-bottom: 20px;
+
+}
+
+.overlaytemplate-priority-container {
+  display: flex;
+  align-items: self-start;
+  gap: 10px;
+
 
 }
 
