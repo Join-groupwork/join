@@ -11,7 +11,7 @@
  * @module member-auth-guard
  */
 
-import { auth } from "/scripts/firebase/firebase.js";
+import { auth } from "../scripts/firebase/firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 /**
@@ -26,7 +26,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/fi
  */
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    window.location.href = "/index.html";
+    window.location.href = "../index.html";
     return;
   }
 

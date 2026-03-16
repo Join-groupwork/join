@@ -49,14 +49,6 @@ import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-
  */
 
 
-// [x]Create updateHTML function, examples for initial testing
-// [x] Test drag and drop
-// [ ] Style drag and drop
-// [ ] Add Firebase update
-// [ ] Retrieve data from Firebase and display in to-dos
-// [ ] Test function with Firebase data
-// INFO  let = todos will be replaced later when the data is loaded from Firebase.
-
 /**
  * Task collection indexed by id.
  * NOTE: Placeholder data until Firebase is connected.
@@ -98,29 +90,6 @@ export async function updateTaskStatus(taskId, newStatus) {
 }
 
 
-/**
- *
- * @param {string} currentDraggedElement
- * @param {string} newStatus
- */
-// async function updateTaskStatus(currentDraggedElement, newStatus) {
-//   const response = await fetch(`${BASE_URL}tasks/${currentDraggedElement}.json`, {
-//     method: "PATCH",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       status: newStatus,
-//     }),
-//   });
-//   if (!response.ok) {
-//     throw new Error("Status konnte nicht aktualisiert werden");
-//   }
-//   return await response.json();
-// }
-
-// INFO This function is only temporary until the first test is completed.
-// INFO After that, this function will be replaced and the to-dos will be loaded from Firebase.
 /**
  * Re-renders all board columns and updates placeholder visibility.
  *
@@ -206,9 +175,6 @@ function updateDone() {
 };
 
 
-// INFO Used to show and hide a placeholder when no task is available. Used to show and hide a placeholder when no task is available.
-// [ ] if no task, show
-// [ ] if at least 1 task is hidden
 /**
  * Shows/hides the placeholder inside each `.task__area` depending on whether
  * at least one task exists for that column.
@@ -244,10 +210,7 @@ function clearDropCardPreview() {
     list.classList.remove("task__list--preview");
   });
 }
-// [x] You have to work with event listeners because you are working with modules.
-// CHECK Where are animations or transforms entered?
-// CHECK When drawing, the cards must turn slightly.
-// [x] dragstart coden
+
 /**
  * Handles `dragstart` on `.task__card`.
  * Stores dragged task id and adds a visual dragging class.
@@ -283,7 +246,6 @@ document.addEventListener("dragend", function (event) {
 });
 
 
-// [x] dragover coden
 /**
  * Handles `dragover` within a `.task__area` drop zone.
  * Calls `preventDefault()` to allow dropping and highlights the drop zone.
@@ -294,19 +256,16 @@ document.addEventListener("dragend", function (event) {
  */
 document.addEventListener("dragover", function (event) {
   event.preventDefault(); //INFO This prevents the browser from blocking the drop.
-  const dropZone = event.target.closest(".task__area"); //INFO aThe columns are also found for child elements.
+  const dropZone = event.target.closest(".task__area"); //INFO The columns are also found for child elements.
   clearDropHighlights();
   clearDropCardPreview();
   if (!dropZone) return; // INFO If there is no drop zone, cancel.
-  //  [ ] Visual feedback for the drop zone where it is pushed in must be determined here, via classlist.add.
-  const taskList = dropZone.querySelector(".task__list");
+    const taskList = dropZone.querySelector(".task__list");
   if (!taskList) return;
   taskList.classList.add("task__list--preview");
 });
 
 
-// [x] drop coden
-// [x] togglePlaceholder() is on function?
 /**
  * Handles `drop` within a `.task__area` drop zone.
  * Moves the dragged task into the drop zone's status and re-renders the board.
@@ -342,8 +301,6 @@ document.addEventListener("drop", async function (event) {
 });
 
 
-// [x] dragleave coden
-// [ ] Check that “task__area--highlight” is removed.
 /**
  * Handles `dragleave` for `.task__area`.
  * Removes the drop zone highlight class.

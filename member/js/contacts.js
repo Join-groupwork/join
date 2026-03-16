@@ -1,6 +1,6 @@
-import { database, auth } from '/scripts/firebase/firebase.js';
+import { database, auth } from '../../scripts/firebase/firebase.js';
 import { ref, push, set, update, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
-import { getAddOverlayTemplate, getEditOverlayTemplate } from '/member/js/member-templates.js';
+import { getAddOverlayTemplate, getEditOverlayTemplate } from './member-templates.js';
 import {
     renderContactsList as renderContactsListView,
     renderActiveContactTemplate,
@@ -9,7 +9,7 @@ import {
     getAvatarColor,
     getActiveContactId,
     setActiveContactId
-} from '/member/js/contacts-render.js';
+} from './contacts-render.js';
 
 let contacts = {};
 let editingContactId = null;
@@ -33,7 +33,7 @@ export function showAddContactOverlay() {
 export function hideAddContactOverlay() {
     const overlay = document.getElementById('contact-add-overlay');
     if (!overlay) return;
-    
+
     overlay.style.display = 'none';
     overlay.innerHTML = '';
 }
@@ -107,16 +107,16 @@ function showSuccessMessage(message) {
     successDiv.className = 'success_message';
     successDiv.textContent = message;
 
-    
+
     document.body.appendChild(successDiv);
-    
+
     setTimeout(() => {
         successDiv.remove();
     }, 500);
 }
 
 function getEmptyContactDetailTemplate() {
-    return `   
+    return `
     `;
 }
 
@@ -280,6 +280,6 @@ window.deleteContact = deleteContact;
 window.showAddContactOverlay = showAddContactOverlay;
 window.hideAddContactOverlay = hideAddContactOverlay;
 window.editContact = editContact;
-window.handleAddContact = handleAddContact; 
+window.handleAddContact = handleAddContact;
 window.closeEditOverlay = closeEditOverlay;
 window.saveEditedContact = saveEditedContact;

@@ -70,11 +70,11 @@ body {
 }
 
 .login__input--email {
-  background-image: url('/assets/icons/mail-icon.svg');
+  background-image: url('../../assets/icons/mail-icon.svg');
 }
 
 .login__input--password {
-  background-image: url('/assets/icons/lock-icon.svg');
+  background-image: url('../../assets/icons/lock-icon.svg');
 }
 
 .logo-splash {
