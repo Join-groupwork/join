@@ -356,6 +356,7 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
 export function getTaskOverlayTemplate(title, description, category, priority) {
   return `
     <div class="task-overlay-content">
+    <button onclick="closeTaskOverlay()">X</button>
       <h2>${title}</h2>
       <p>${description}</p>
       <p>Category: ${category}</p>

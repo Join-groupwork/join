@@ -140,7 +140,7 @@ main {
 
 /* Overlay Styles */
 .d_none {
-  display: none !important;
+  display: none !important ;
 }
 
 .task-overlay {
@@ -148,7 +148,8 @@ main {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;          
+  width: 400px;
+  height: 600px;          
   padding: 20px;
   border-radius: 24px;
   font-weight: 400;

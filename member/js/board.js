@@ -2,9 +2,9 @@ import { loadTasks } from '/scripts/firebase/get-firebase.js';
 import { getTaskOverlayTemplate } from './member-templates.js';
 let tasks = {}; 
 
-// Daten laden und tasks befüllen
+
 async function initTasks() {
-  tasks = await loadTasks(); // tasks jetzt befüllt
+  tasks = await loadTasks();
 }
 
 initTasks();
@@ -111,5 +111,14 @@ function openTaskOverlay(taskId) {
   overlayContainer.classList.remove('d_none');
 }
 window.openTaskOverlay = openTaskOverlay;
+
+function closeTaskOverlay() {
+  const overlayContainer = document.getElementById("overlay_container");
+  overlayContainer.classList.add("d_none");
+  overlayContainer.innerHTML = "";
+
+}
+
+window.closeTaskOverlay = closeTaskOverlay;
 
 /* renderBoard(); */
