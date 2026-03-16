@@ -155,8 +155,17 @@ main {
   font-weight: 400;
   background-color: #2a3647;
   z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+  
 }
+
+.get-task-overlaytemplate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between ;
+  width: 100%;                    /* wichtig, damit space-between wirkt */
+  box-sizing: border-box;         /* damit Padding die Breite nicht kaputt macht */
+  gap: 10px;  
+
+}
+
