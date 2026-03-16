@@ -102,10 +102,15 @@ function openTaskOverlay(taskId) {
   const overlayContainer = document.getElementById("overlay_container");
 
   overlayContainer.innerHTML = getTaskOverlayTemplate(
+    task.category,
     task.title,
     task.description,
-    task.category,
+    task.due_date,
     task.priority,
+    task.assigned_to,
+    task.subtask,
+
+
   );
 
   overlayContainer.classList.remove('d_none');
