@@ -1,11 +1,52 @@
 main {
   margin: 96px 60px 0 230px;
-  padding: 50px 0 0 50px;
+  padding: 50px 0 0 28px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
   gap: 50px;
+}
+/* evtl statt main eine klasse verwenden, sonst könnte es zu Konflikten kommen */
+
+.task {
+  display: flex;
+  flex-direction: row;
+}
+
+.task__section {
+  width: 256px;
+  display: flex;
+  flex-direction: column;
+}
+
+.task__area {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  border-radius: 24px;
+  scrollbar-gutter: stable;
+}
+
+.task__area--highlight::before {
+  border-color: var(--border__task--highlight);
+  background-color: rgba(42, 54, 71, 0.04);
+}
+
+.task__area--placeholder {
+  text-align: center;
+}
+
+.task__list--preview::after {
+  content: "";
+  display: block;
+  width: 250px;
+  height: 210px;
+  margin-top: 8px;
+  border: 1px dashed var(--border__task--highlight);
+  border-radius: 24px;
+  background: rgba(42, 54, 71, 0.04);
 }
 
 .card-bar {
@@ -15,42 +56,21 @@ main {
   justify-content: space-between;
 }
 
-.task {
-  /* margin-top: 50px;
-  margin-left: 230px; */
-}
-
-.task__section {
-  width: 256px;
-  /* INFO border dient nur zum designen und ausrichten der spalten */
-  border: 3px solid aqua;
-}
-
-.task__area {
-  height: 100%;
-}
-
-.task__area--placeholder {
-  text-align: center;
-}
-
-.card {
-  background-color: #ffffff;
-  border-radius: 24px;
-  padding: 10px;
-}
-
 .task__card {
   width: 250px;
   padding: 20px;
   border-radius: 24px;
   font-weight: 400;
   background-color: var(--color-background-input);
+  position: relative;
+  z-index: 2;
+  margin-top:20px;
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
 }
 
 .task__card--dragging {
   opacity: 0.7;
-  transform: rotate(-15eg);
+  transform: rotate(5deg);
 }
 
 .task__category--user-story {

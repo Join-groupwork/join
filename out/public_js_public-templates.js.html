@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: public/js/public-templates.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: public/js/public-templates.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file HTML template factory functions for public pages.
+ *
+ * Provides template helpers that return HTML strings for shared public UI parts:
+ * header, sidebar, and a signup success message.
+ *
+ * @module public-templates
+ */
+
+/**
+ * Generates the header HTML for public pages.
+ *
+ * Includes:
+ * - Help icon (currently just a div, no link)
+ * - Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)
+ *
+ * DOM hooks created by this template:
+ * - `#headerMenue` (toggle button)
+ * - `#headerMenueNav` (dropdown container)
+ * - `#logoutBtn` (logout trigger)
+ *
+ * @returns {string} HTML string representing the public header.
+ */
+export function getHeaderTemplate() {
+  return `
+        &lt;div class="topbar-left">Kanban Project Management Tool&lt;/div>
+        &lt;div class="topbar-right">
+            &lt;div class="help-circle" title="Help">?&lt;/div>
+            &lt;div id="headerMenue" class="profile">
+                SM
+                &lt;nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
+                    &lt;ul>
+                        &lt;a href="/public/legal-notice-public.html">Legal Notice&lt;/a>
+                    &lt;/ul>
+                    &lt;ul>
+                        &lt;a href="/public/privacy-policy-public.html">Privacy Policy&lt;/a>
+                    &lt;/ul>
+                    &lt;ul>
+                        &lt;a id="logoutBtn">
+                            Log out
+                        &lt;/a>
+                    &lt;ul/>
+                &lt;/nav>
+            &lt;/div>
+        &lt;/div>
+      `;
+
+};
+
+
+/**
+ * Generates the sidebar HTML for public pages.
+ *
+ * Includes:
+ * - Logo
+ * - Navigation links (Summary / Add Task / Board / Contacts)
+ * - Footer/legal links (Privacy Policy / Legal Notice)
+ *
+ * @returns {string} HTML string representing the public sidebar.
+ */
+export function getSidebarTemplate() {
+  return `
+      &lt;div class="logo">
+        &lt;img src="../assets/img/joinlogo.png" alt="" >
+      &lt;/div>
+
+      &lt;nav class="nav">
+        &lt;a class="nav-item" href="./summary_user.html">&lt;img src="/assets/icons/sideMenu/summary1.png" alt="Summary" class="nav-icon">Summary&lt;/a>
+        &lt;a class="nav-item" href="./add_task.html">&lt;img src="/assets/icons/sideMenu/addtask1.png" alt="Add Task" class="nav-icon">Add Task&lt;/a>
+        &lt;a class="nav-item" href="./board.html">&lt;img src="/assets/icons/sideMenu/board1.png" alt="Board" class="nav-icon">Board&lt;/a>
+        &lt;a class="nav-item" href="./contacts.html">&lt;img src="/assets/icons/sideMenu/contacs1.png" alt="Contacts" class="nav-icon">Contacts&lt;/a>
+      &lt;/nav>
+
+      &lt;div class="legal">
+        &lt;a href="/public/privacy-policy-public.html">1Privacy Policy&lt;/a>
+        &lt;a href="/public/legal-notice-public.html">Legal Notice&lt;/a>
+      &lt;/div>
+    `;
+};
+
+
+/**
+ * Generates a success message shown after a successful signup.
+ *
+ * @returns {string} HTML string representing a signup success message.
+ */
+export function signupMassegeTemplate() {
+  return `
+        &lt;aside class="signup-massege-box">
+            &lt;p>
+                You Signed Up successfully
+            &lt;/p>
+        &lt;/aside>
+    `
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Mar 12 2026 11:09:41 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

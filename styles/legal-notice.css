@@ -1,6 +1,3 @@
-.legal-page {
-  padding: 120px 96px 0 107px;
-}
 
 .legal {
   width: 100%;
@@ -16,7 +13,9 @@
 
 /* Content area */
 .legal-page {
+  padding: 120px 96px 50px 107px;
   width: 100%;
+  
 
 }
 

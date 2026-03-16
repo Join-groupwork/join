@@ -59,7 +59,7 @@ form {
   flex-direction: column;
   gap: 20px;
   margin-top: 95px;
-  height: 93vh;
+  height: 89vh;
   width: 367px;
   background: white;
   margin-left: 222px;
@@ -70,7 +70,7 @@ form {
   flex-direction: column;
   gap: 15px;
   height: fit-content;
-  width: 367px;
+  width: 100%;
   background-color: white;
   overflow-y: auto;
 }
@@ -79,6 +79,8 @@ form {
   display: flex;
   height: 100vh;
   background-color: #F6F7F8;
+  position:fixed;
+  left:0;
 }
 
 .contact_slogan {
@@ -91,8 +93,8 @@ form {
 }
 
 .hr_line_contacts {
-  border: 1px solid #29ABE2;
-  height: 60px;
+  border: 2px solid #29ABE2;
+  height: 66px;
 }
 
 .hr_contactList {
@@ -107,7 +109,7 @@ form {
   justify-content: center;
   background-color: #2A3647;
   height: 50px;
-  width: 325px;
+  width: 77%;
   border-radius: 8px;
   color: white;
   margin: 30px auto;
@@ -131,7 +133,7 @@ form {
 }
 
 .labelfor_contactList {
-  padding-left: 20px;
+  padding-left: 55px;
   font-size: 20px;
   font-weight: 400;
   color: #000000;
@@ -154,7 +156,7 @@ form {
   position: fixed;
   left: 0;
   top: 0;
-  z-index: +1;
+  z-index: 1000;
 }
 
 .logo {
@@ -205,27 +207,38 @@ header {
 }
 
 .topbar {
-  height: 96px;
-  /* display: flex;
-  justify-content: space-between;
-  align-items: center; */
-  background: white;
-  border-bottom: 1px solid #e5e5e5;
   position: fixed;
-  top: 0px;
-  max-width: 1440px;
-  width: 100%;
+  top: 0;
+  left: 230px;
+  width: calc(100% - 230px);
+  height: 96px;
+  background: #ffffff;
+  border-bottom: 1px solid #d1d1d1;
+  z-index: 20;
 }
 
+.topbar > header {
+  height: 96px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px 0 56px;
+}
+
+
 .topbar-left {
-  padding-left: 350px;
+  padding-left: 0;
+  font-size: 20px;
+  font-weight: 400;
+  color: #2a3647;
+  line-height: 1.2;
 }
 
 .topbar-right {
-  padding: 0 40px 0 0;
+  padding: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
 }
 
 .help-circle {
@@ -244,16 +257,19 @@ header {
 }
 
 .profile {
-  width: 40px;
-  height: 40px;
+  position: relative;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bold;
-  border: 2px solid;
-  border-color: #252b41;
-  color: #2eabe2;
+  font-weight: 700;
+  font-size: 20px;
+  border: 3px solid #2a3647;
+  color: #29abe2;
+  background: #ffffff;
+  cursor: pointer;
 }
 
 .summary_pencil {
@@ -302,4 +318,56 @@ footer p {
   text-decoration: none;
   color: var(--color-footer);
   /* color: #aaa; */
+}
+
+.header-menue-nav {
+  position: absolute;
+  top: 72px;
+  right: 0;
+  min-width: 150px;
+  border-radius: 20px 0 20px 20px;
+  padding: 10px 0;
+  background: #2a3647;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 30;
+}
+
+.header-menue-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-menue-nav a {
+  display: block;
+  padding: 10px 16px;
+  color: #cdcdcd;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.header-menue-nav a:hover {
+  background: #091931;
+  color: #ffffff;
+}
+
+
+.sidebar .footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 24px;
+}
+
+.sidebar .footer a {
+  color: #a8a8a8;
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 1.2;
+  padding: 8px 0;
+}
+
+.sidebar .footer a:hover {
+  color: #29abe2;
 }

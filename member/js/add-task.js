@@ -2,12 +2,12 @@ import { pushTask } from '../../scripts/firebase/push-task.js';
 
 /**
  * Initializes the task creation page after the DOM is fully loaded.
- * 
+ *
  * Sets up:
  * - Priority button selection handling
  * - Create task button logic (including validation and Firebase push)
- * * - Cancel button navigation behavior
- * 
+ * - Cancel button navigation behavior
+ *
  * @event DOMContentLoaded
  */
 
@@ -26,10 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /**
    * Handles priority button selection.
-   * 
+   *
    * Removes the "selected" class from all priority buttons,
    * assigns it to the clicked button and stores the selected value.
-   * 
+   *
    * @param {MouseEvent} e - The click event object.
    */
 
@@ -46,11 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Handles the task creation process.
-     * 
+     *
      * Validates input, constructs the task object,
      * sends it to Firebase using pushTask(),
      * and redirects to the board page on success.
-     * 
+     *
      * @async
      * @param {MouseEvent} e - The click event object.
      * @returns {Promise<void>}
@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         assigned_to: assignedSelect?.value || '',
         category: categorySelect?.value || '',
         subtask: subtaskInput?.value?.trim() || "",
+        status: 'todo',
         createdAt: new Date().toISOString()
       };
       try {
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const key = await pushTask(taskData);
         console.log('Pushed task, key:', key);
         alert('Task created successfully');
-        window.location.href = '/member/board.html';
+        window.location.href = './member/board.html';
       } catch (err) {
         console.error(err);
         alert('Failed to create task');
@@ -89,10 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Handles cancel button click.
-     * 
+     *
      * Prevents default behavior and navigates back
      * to the previous page in browser history.
-     * 
+     *
      * @param {MouseEvent} e - The click event object.
      */
 

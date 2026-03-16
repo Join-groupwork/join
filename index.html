@@ -5,24 +5,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Join</title>
-  <link rel="shortcut icon" href="/assets/img/logo-dark.svg" type="image/x-icon">
-  <link rel="stylesheet" href="/styles/standard.css">
-  <link rel="stylesheet" href="/styles/assets.css">
-  <link rel="stylesheet" href="/styles/colors.css">
-  <link rel="stylesheet" href="/styles/fonts.css">
-  <link rel="stylesheet" href="/styles/join.css">
-  <link rel="stylesheet" href="/public/css/index.css">
-  <script type="module" src="/scripts/firebase/firebase.js"></script>
-  <script type="module" src="/login/login.js"></script>
+  <link rel="shortcut icon" href="./assets/img/logo-dark.svg" type="image/x-icon">
+  <link rel="stylesheet" href="./styles/standard.css">
+  <link rel="stylesheet" href="./styles/assets.css">
+  <link rel="stylesheet" href="./styles/colors.css">
+  <link rel="stylesheet" href="./styles/fonts.css">
+  <link rel="stylesheet" href="./styles/join.css">
+  <link rel="stylesheet" href="./public/css/index.css">
+  <script type="module" src="./scripts/firebase/firebase.js"></script>
+  <script type="module" src="./login/login.js"></script>
 </head>
 
 <body>
   <main>
+    <div class="logo-splash">
+      <img class="logo-splash__img" src="./assets/img/logo-dark.svg" alt="Join-logo" />
+    </div>
     <div class="index__header">
-      <img class="join__logo join-icon" src="/assets/img/logo-dark.svg" alt="Join-logo" />
+      <img class="join__logo join-icon" src="./assets/img/logo-dark.svg" alt="Join-logo" />
       <div class="index__menu">
         <p>Not a Join user ?</p>
-        <a href="/public/signup.html">
+        <a href="./public/signup.html">
           <button class="button button__index--signup">Sign up</button>
         </a>
       </div>
@@ -31,9 +34,10 @@
       <h2 class="login__title">Log in</h2>
       <form>
         <div class="login__form">
-          <input id="email" class="login__input login__input--email" type="email" autocomplete="email" placeholder="Email" required />
-          <input id="password" class="login__input login__input--password" type="password" autocomplete="current-password"
-            placeholder="Password" required />
+          <input id="email" class="login__input login__input--email" type="email" autocomplete="email"
+            placeholder="Email" required />
+          <input id="password" class="login__input login__input--password" type="password"
+            autocomplete="current-password" placeholder="Password" required />
         </div>
         <div class="buttons-section">
           <button id="loginBtn" class="button button__login" type="submit">Log in</button>
@@ -44,8 +48,8 @@
   </main>
   <footer>
     <div class="footer-container">
-      <p><a class="footer" href="/public/privacy-policy-public.html">Privacy Policy</a></p>
-      <p><a class="footer" href="/public/legal-notice-public.html">Legal Notice</a></p>
+      <p><a class="footer" href="./public/privacy-policy-public.html">Privacy Policy</a></p>
+      <p><a class="footer" href="./public/legal-notice-public.html">Legal Notice</a></p>
     </div>
   </footer>
 </body>
