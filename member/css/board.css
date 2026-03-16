@@ -150,22 +150,53 @@ main {
   transform: translate(-50%, -50%);
   width: 400px;
   height: 600px;          
-  padding: 20px;
+  padding: 40px;
   border-radius: 24px;
   font-weight: 400;
-  background-color: #2a3647;
+  background-color: #adc7ea;
   z-index: 1000;
 
   
 }
 
-.get-task-overlaytemplate {
+.overlaytemplate-first-section{
   display: flex;
   align-items: center;
   justify-content: space-between ;
   width: 100%;                    /* wichtig, damit space-between wirkt */
   box-sizing: border-box;         /* damit Padding die Breite nicht kaputt macht */
   gap: 10px;  
+  padding-bottom: 20px;
+}
+
+.overlaytemplate-title{
+  padding-bottom: 20px;
+}
+
+.task-overlay-content h2 {
+  font-size: 45px;
+  font-weight: bold;
+}
+
+.task-overlay-content p {
+  font-size: 24px;
+  
+}
+
+.overlaytemplate-description{
+  padding-bottom: 20px;
+}
+
+.overlaytemplate-due_date{
+  padding-bottom: 20px;
+}
+
+.overlaytemplate-priority{
+  padding-bottom: 20px;
+}
+
+.overlaytemplate-assigned_to{
+  padding-bottom: 20px;
 
 }
 

@@ -357,17 +357,17 @@ export function getTaskOverlayTemplate(category,title, description, due_date , p
 ) {
   return `
     <div class="task-overlay-content">
-      <div class=" get-task-overlaytemplate">
-        <p class="task__category--technical-task"> ${category}</p>
+      <div class="overlaytemplate-first-section">
+        <p class="task__category--technical-task overlaytemplate-category"> ${category}</p>
         <button onclick="closeTaskOverlay()">X</button>
       </div>
     
-    <h2>${title}</h2>
-    <p>${description}</p>
-    <p>Due date: ${due_date}</p>
-    <p>Priority: ${priority}</p>
-    <div> <p>Assigned To: ${assigned_to}</p></div>
-    <div> <p>Subtasks: ${subtask}</p></div>
+    <h2 class="overlaytemplate-title">${title}</h2>
+    <p class="overlaytemplate-description">${description}</p>
+    <p class="overlaytemplate-due_date">Due date: ${due_date}</p>
+    <p class="overlaytemplate-priority">Priority: ${priority}</p>
+    <div class="overlaytemplate-assigned_to"> <p>Assigned To:<br> ${assigned_to}</p></div>
+    <div class="overlaytemplate-subtask"> <p>Subtasks:<br> ${subtask}</p></div>
     </div>
   `;
 }
