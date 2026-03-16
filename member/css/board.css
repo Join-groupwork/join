@@ -203,7 +203,11 @@ main {
   display: flex;
   align-items: self-start;
   gap: 10px;
+}
 
-
+.assigned_contact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 

@@ -375,18 +375,20 @@ export function getTaskOverlayTemplate(category,title, description, due_date , p
         <p class="overlaytemplate-priority">Priority: ${priority}</p>
         <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
     </div>
-        <div class="overlaytemplate-assigned_to">
-        <p>Assigned To:<br> ${assigned_to}</p>
-        <div class="contact_avatar" style="background-color: ${bgColor}">
-          ${initials}
-        </div>
-          
-      
-
-      <div class="overlaytemplate-subtask">
-        <p>Subtasks:<br>${subtask}</p>
+    <div class="overlaytemplate-assigned_to">
+      <p>Assigned To:</p>
+      <div class="assigned_contact">
+      <div class="contact_avatar" style="background-color: ${bgColor}">
+        ${initials}
+       </div>
+        <span>${assigned_to}</span>
       </div>
-
     </div>
+          
+    <div class="overlaytemplate-subtask">
+        <p>Subtasks:<br>${subtask}</p>
+    </div>
+
+  </div>
   `;
 }
