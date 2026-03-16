@@ -61,12 +61,9 @@ button p {
 }
 
 /* Input */
-/* input {
-  border-radius: 5px;
-  border-width: 1px;
-  width: 250px;
-  height: 20px;
-} */
+input {
+  border: unset;
+}
 
 .email-input {
   border: 1px solid #ccc;
