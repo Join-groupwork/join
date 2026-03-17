@@ -28,10 +28,13 @@ export let currentDraggedElement;
 
 
 /**
- * Handles the upload to firebase after switch category.
+ * Persists a task status change to Firebase.
  *
- * @param {string} taskId - ID from task
- * @param {string} newStatus - Status from task
+ * Updates `tasks/{taskId}` with the new `status` value.
+ *
+ * @param {string} taskId - ID of the task to update.
+ * @param {string} newStatus - New board status for the task.
+ * @returns {Promise<void>}
  */
 export async function updateTaskStatus(taskId, newStatus) {
   await update(ref(database, `tasks/${taskId}`), {
@@ -40,7 +43,9 @@ export async function updateTaskStatus(taskId, newStatus) {
 }
 
 /**
+ * Removes the highlight class from all drop zones.
  *
+ * @returns {void}
  */
 function clearDropHighlights() {
   document.querySelectorAll(".task__area--highlight").forEach(zone => {
@@ -49,7 +54,9 @@ function clearDropHighlights() {
 }
 
 /**
+ * Removes the preview class from all task lists.
  *
+ * @returns {void}
  */
 function clearDropCardPreview() {
   document.querySelectorAll(".task__list--preview").forEach(list => {
