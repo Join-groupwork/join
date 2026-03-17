@@ -22,12 +22,17 @@
  * @module member-ui
  */
 import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate, getAddOverlayTemplate, generateTodosHTML } from './member-templates.js';
-import { updateHTML } from './drag-n-drop.js';
+import { initBoard } from './board.js';
+import { updateHTML } from './board.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { auth } from "../../scripts/firebase/firebase.js";
 
 init();
 
+
+async function renderBoard() {
+  await initBoard();
+}
 
 /**
  * Entry point for module initialization.
@@ -152,18 +157,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 });
-
-
-
-/**
- * Triggers the board rendering.
- *
- * Currently delegates to `updateHTML()` in `drag-n-drop.js`, which renders the
- * board columns based on the current in-memory tasks.
- *
- * @async
- * @returns {Promise<void>}
- */
-async function renderBoard() {
-  updateHTML();
-}

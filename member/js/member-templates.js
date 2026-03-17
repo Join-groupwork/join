@@ -260,9 +260,7 @@ export function generateTodosHTML(id, title, category, description, priority) {
               <span class="task__category--${category}">${category}</span><br>
               <h4 class="task__title">${title}</h4><br>
               <p class="task__text">${description}</p><br>
-              <div class="task__bar">
-                <progress></progress>
-              </div><br>
+              <div class="task__bar" id="taskProgressBar"></div><br>
               <div class="task__footer">
                 <div>users</div>
                 <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
@@ -270,6 +268,14 @@ export function generateTodosHTML(id, title, category, description, priority) {
             </div>
           `;
 };
+
+
+export function generateProgressBar() {
+  return `
+          <progress></progress>
+`
+}
+
 
 /**
  * Two show contact details overlay.
