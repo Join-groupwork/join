@@ -26,17 +26,39 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { loadTasks } from '/scripts/firebase/get-firebase.js';
+            <pre class="prettyprint source linenums"><code>import { loadTasks } from '../../scripts/firebase/get-firebase.js';
+import { generateTodosHTML } from './member-templates.js';
+
+/**
+ * Possible board states.
+ * @typedef {"todo" | "in-progress" | "await-feedback" | "done"} TaskStatus
+ */
+
+/**
+ * Possible task categories.
+ * @typedef {"user-story" | "technical-task"} Category
+ */
+
+/**
+ * Possible priority values.
+ * @typedef {"low" | "medium" | "urgent"} Priority
+ */
+
+/**
+ * Represents a board task.
+ *
+ * @typedef {Object} Todo
+ * @property {string} title - Task title.
+ * @property {string} description - Task description.
+ * @property {string} date - Due date (YYYY-MM-DD) or empty string.
+ * @property {Priority} priority - Task priority level.
+ * @property {string} assignedTo - Person(s) assigned to this task (currently unused).
+ * @property {Category} category - Task category.
+ * @property {TaskStatus} status - Current board column/status.
+ */
 
 /**
  * References to the DOM containers (board columns) where tasks are rendered.
- *
- * Why this exists:
- * - You query the DOM *once* (instead of repeating `document.getElementById(...)` everywhere).
- * - Your code becomes cleaner: `columns.todo` is easier to read than `"todo"` strings everywhere.
- * - It centralizes the “IDs must exist” assumption in one place (good for debugging).
- *
- * Note: These can be `null` if the elements don’t exist in the current HTML page.
  *
  * @type {{
  *   todo: HTMLElement|null,
@@ -51,63 +73,138 @@ const columns = {
   /** @type {HTMLElement|null} */ awaitFeedback: document.getElementById('awaitFeedback'),
   /** @type {HTMLElement|null} */ done: document.getElementById('done'),
 };
-
-
 /**
- * Generates the HTML template for a task card.
+ * Task collection indexed by id.
+ * NOTE: Placeholder data until Firebase is connected.
  *
- * @param {string} task
- * @param {string|number} task.key
- * @param {string} task.category
- * @param {string} task.title
- * @param {string} task.description
- * @param {string} task.assigned_to
- *
- * @returns {string} HTML string
+ * @type {Record&lt;string, Todo>}
  */
-function getCardTemplate(task) {
-  return `
-    &lt;div class="card" id="${task.key}" draggable="true">
-        &lt;h4>${task.category}&lt;/h4>
-        &lt;p>${task.title}&lt;/p>
-        &lt;p>${task.description}&lt;/p>
-        &lt;p>${task.assigned_to}&lt;/p>
-    &lt;/div>
-    `;
-}
+export let todos = {};
+
 
 /**
- * Fetches all tasks and renders them
- * based on their status.
- *
- * This function:
- * - Loads tasks from the Firebase
- * - Matches each task to the appropriate column
- * - Removes placeholder elements if present
- * - Appends the generated task card HTML to the column
+ * Loads all tasks from Firebase and renders them into the board.
  *
  * @async
  * @returns {Promise&lt;void>}
  */
-async function renderBoard() {
-  const tasksData = await loadTasks();
-  for (let i = 0; i &lt; tasksData.length; i++) {
-    const task = tasksData[i]; // get the current task
-    // Find the correct column based on task status
-    const column = columns[task.status];
-    if (!column) continue; // skip if the column doesn't exist
-    // Remove the placeholder text if it exists
-    const placeholder = column.querySelector('.card-placeholder');
-    if (placeholder) placeholder.remove();
-    // 5️⃣ Add the task card to the column
-    column.innerHTML += getCardTemplate(task);
-
+export async function initBoard() {
+  try {
+    todos = await loadTasks();
+    updateHTML();
+  } catch (error) {
+    console.error('Fehler bei Laden der Tasks:', error);
   }
 }
 
 
+/**
+ * Re-renders all board columns and updates placeholder visibility.
+ *
+ * Skips rendering when the board DOM is not present.
+ *
+ * @returns {void}
+ */
+export function updateHTML() {
+  // if this page doesn’t have a todo column we’re not on the board,
+  // so skip all DOM updates to avoid null errors
+  if (!document.getElementById('todo')) return;
+  updateTodo();
+  updateInProgress();
+  updateAwaitFeedback();
+  updateDone();
+  togglePlaceholder();
+};
 
-renderBoard();
+
+/**
+ * Renders tasks with {@link Todo.status} === "todo" into the `#todo` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateTodo() {
+  const container = document.getElementById('todo');
+  if (!container) return;
+  container.innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'todo') {
+      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.status} === `"in-progress"` into the `#inProgress` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateInProgress() {
+  document.getElementById('inProgress').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'in-progress') {
+      document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.status} === `"await-feedback"` into the `#awaitFeedback` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateAwaitFeedback() {
+  document.getElementById('awaitFeedback').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'await-feedback') {
+      document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.status} === `"done"` into the `#done` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateDone() {
+  document.getElementById('done').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'done') {
+      document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+    }
+  }
+};
+
+
+/**
+ * Shows/hides the placeholder inside each `.task__area` depending on whether
+ * at least one task exists for that column.
+ *
+ * Uses `.task__area[data-status]` to match against {@link Todo.status}.
+ *
+ * @private
+ * @returns {void}
+ */
+function togglePlaceholder() {
+  const taskAreas = document.querySelectorAll('.task__area');
+  taskAreas.forEach(area => {
+    let status = area.dataset.status;
+    const placeholder = area.querySelector('.task__area--placeholder');
+    let hasTask = Object.values(todos).some(task => task.status === status);
+    if (hasTask) {
+      placeholder.classList.add('d-none')
+    } else {
+      placeholder.classList.remove('d-none');
+    }
+  });
+};
 </code></pre>
         </article>
     </section>
@@ -118,13 +215,13 @@ renderBoard();
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Mar 12 2026 11:09:41 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:02:53 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>
