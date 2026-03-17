@@ -366,7 +366,7 @@ export function getTaskOverlayTemplate(category,title, description, due_date , p
   <div class="task-overlay-content">
       <div class="overlaytemplate-first-section">
         <p class="task__category--${category} overlaytemplate-category"> ${category}</p>
-        <button onclick="closeTaskOverlay()">X</button>
+        <button onclick="closeTaskOverlay()"><img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt=""></button>
       </div>
     
     <h2 class="overlaytemplate-title">${title}</h2>

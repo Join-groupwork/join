@@ -169,7 +169,7 @@ main {
   height: 600px;
   padding: 40px;
   border-radius: 24px;
-  background-color: #adc7ea;
+  background-color: var(--color-background-input);
   z-index: 1000;
 }
 
@@ -246,4 +246,21 @@ main {
   align-items: center;
   text-align: center;
   gap: 10px;
+}
+
+.close_overlay_icon_getTaskOverlayTemplate{
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+button {
+  background: transparent;  
+  border: none;            
+  padding: 0;              
+  cursor: pointer;          
+}
+
+button img.close_overlay_icon_getTaskOverlayTemplate {
+  display: block;           
 }
