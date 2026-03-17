@@ -191,9 +191,10 @@ function setupBackdropAndCloseButton(overlay) {
 function setupClearButton(overlay) {
   const clearBtn = overlay.querySelector('.clear_button_add_task');
   if (!clearBtn) return;
+
   clearBtn.addEventListener('click', (event) => {
     event.preventDefault();
-    clearOverlayAddTaskForm(overlay);
+    closeAddTaskOverlay(overlay);
   });
 }
 
