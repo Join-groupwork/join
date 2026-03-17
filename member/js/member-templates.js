@@ -388,12 +388,12 @@ export function getTaskOverlayTemplate(category,title, description, due_date , p
     <div class="overlaytemplate-subtask">
       <p>Subtasks:</p>
       <div class="overlaytemplate-subtask-checkbox">
-        <img class="checkbox-icon" src="../assets/icons/checkbox/checkbox-icon unchecked.svg"  alt="">
+        <img class="checkbox-icon" src="../assets/icons/checkbox/checkbox-icon unchecked.svg" alt="">
         ${subtask}
       </div>
     </div>
 
-    <div class="contact_detail_actions">
+    <div class="taskoverlay_detail_actions">
       <button type="button" class="link_btn" onclick="editContact()"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
       <button type="button" class="link_btn" onclick="deleteContact()"><img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
     </div>

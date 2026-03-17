@@ -222,3 +222,10 @@ main {
   padding-top: 6px;
 }
 
+.taskoverlay_detail_actions{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}

@@ -181,6 +181,9 @@
     font-size: 16px;
     color: #2a3647;
     cursor: pointer;
+
+    display: flex;           
+    align-items: center; 
 }
 
 .link_btn:hover {
