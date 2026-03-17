@@ -1,22 +1,23 @@
 /**
- * @file Member page bootstrapper: renders header/sidebar/task UI and wires up header menu + logout.
+ * @file Member page bootstrapper: renders header, sidebar and task UI,
+ * then initializes the board and wires up header menu + logout.
  *
- * This module initializes the member UI by injecting HTML templates into the page,
- * then triggers board rendering (currently via `updateHTML()` from the drag & drop module).
+ * This module injects shared HTML templates into the page and starts
+ * board rendering via `initBoard()` from `board.js`.
  *
  * DOM requirements (IDs must exist in the HTML):
- * - `header`       : container for the header template
- * - `sidebar`      : container for the sidebar template
- * - `add_task`     : container for the "add task" template
- * - `editC_overlay`: (optional) container for contact edit overlay
- * - `addC_overlay` : (optional) container for contact add overlay
- * - `headerMenue`  : profile/menu button in the header
- * - `headerMenueNav`: dropdown/navigation container toggled by profile button
- * - `logoutBtn`    : logout button
+ * - `header`        : container for the header template
+ * - `sidebar`       : container for the sidebar template
+ * - `add_task`      : container for the "add task" template
+ * - `editC_overlay` : optional container for contact edit overlay
+ * - `addC_overlay`  : optional container for contact add overlay
+ * - `headerMenue`   : profile/menu button in the header
+ * - `headerMenueNav`: dropdown container toggled by profile button
+ * - `logoutBtn`     : logout button
  *
  * External dependencies:
  * - Template functions from `member-templates.js`
- * - `updateHTML()` from `drag-n-drop.js`
+ * - `initBoard()` from `board.js`
  * - Firebase Auth instance `auth` and `signOut()`
  *
  * @module member-ui
