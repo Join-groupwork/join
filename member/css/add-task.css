@@ -1,14 +1,22 @@
+html {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+
 .body_add_task {
     background-color: #f6f7f8;
     display: block;
     min-height: 100vh;
     overflow-x: hidden;
+    max-width: none;
+    margin: 0;
 }
 
 .main_add_task {
     width: 100%;
     max-width: 1100px;
-    margin: 0 auto;
+    margin: 0;
     background-color: transparent;
     display: block;
     height: auto;
@@ -44,9 +52,10 @@
     display: grid;
     grid-template-columns: 1fr 1px 1fr;
     align-items: start;
+    justify-content: start;
     gap: 32px;
-    width: 100%;
-    max-width: 980px;
+    width: auto;
+    max-width: none;
 }
 
 .form_add_task {
@@ -79,7 +88,7 @@
 
 .priority {
     display: grid;
-    grid-template-columns: repeat(3, minmax(90px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     width: 100%;
     gap: 10px;
 }
@@ -130,8 +139,7 @@
     margin-top: 40px;
     gap: 16px;
     min-width: 0;
-    width: 100%;
-    max-width: 980px;
+    width: calc(100% - 20px);
 }
 
 .margin_bottom_add_task {
@@ -160,7 +168,8 @@
 }
 
 .priority_button:not(.selected):hover {
-    background-color: #ffffff;   /* globales blau überschreiben */
+    background-color: #ffffff;
+    /* globales blau überschreiben */
     border-color: #d1d1d1;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
 }
