@@ -126,4 +126,18 @@ function closeTaskOverlay() {
 
 window.closeTaskOverlay = closeTaskOverlay;
 
+
+function toggleCheckbox(img) {
+  if (img.src.includes("unchecked")) {
+    img.src = "../assets/icons/checkbox/checkbox-icon-checked.svg";
+  } else {
+    img.src = "../assets/icons/checkbox/checkbox-icon unchecked.svg";
+  }
+}
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("checkbox-icon")) {
+    toggleCheckbox(e.target);
+  }
+});
+
 /* renderBoard(); */
