@@ -22,7 +22,6 @@ html {
     height: auto;
 }
 
-
 .container_add_task {
     margin-left: 230px;
     margin-top: 96px;
@@ -243,4 +242,27 @@ html {
     height: 12px;
     margin-left: 5px;
     transform: invert(1);
+}
+
+.overlay_add_task {
+  position: relative;
+}
+
+.add-task-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-task-close-btn img {
+  width: 16px;
+  height: 16px;
 }

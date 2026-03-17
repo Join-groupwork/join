@@ -14,17 +14,32 @@
   <link rel="stylesheet" href="../styles/colors.css">
   <link rel="stylesheet" href="../styles/assets.css">
   <link rel="stylesheet" href="./css/board.css">
+  <link rel="stylesheet" href="./css/add-task.css">
   <script type="module" src="./js/member-templates.js"></script>
   <script type="module" src="../scripts/firebase/get-task.js"></script>
   <script type="module" src="./js/drag-n-drop.js"></script>
   <script type="module" src="./js/member-script.js"></script>
+  <script type="module" src="./js/add-task.js"></script>
 </head>
+
+<section id="add_task_overlay" class="board-overlay d_none">
+  <div id="add_task" class="board-overlay__content"></div>
+</section>
 
 <body>
 
   <header class="topbar" id="header"></header>
   <aside class="sidebar" id="sidebar"></aside>
-
+  <!-- searchTask input -->
+  <section class="board-header">
+    <h1 class="board-header__title">Board</h1>
+    <div class="board-search-wrapper">
+      <input type="text" id="searchInput" class="board-search-input" placeholder="Find Task"
+        oninput="searchTask(this.value)">
+      <img class="board-search-icon" src="../assets/icons/search.svg" alt="Search">
+    </div>
+    <button type="button" id="openAddTaskOverlay" class="board-add-btn">Add task <img class="board-add-icon" src="../assets/icons/add-icon-white.svg" alt=""></button>
+  </section>
   <main class="task">
 
     <section name="todo" class="task__section">
