@@ -387,12 +387,10 @@ export function getTaskOverlayTemplate(category,title, description, due_date , p
           
     <div class="overlaytemplate-subtask">
       <p>Subtasks:</p>
-      ${subtask.map(s => `
       <div class="overlaytemplate-subtask-checkbox">
-        <span>${s}</span>
         <img src="../assets/icons/checkbox/checkbox-icon unchecked.svg" alt="">
+        ${subtask}
       </div>
-      `).join('')}
     </div>
 
   </div>

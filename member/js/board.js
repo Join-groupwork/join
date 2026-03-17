@@ -108,7 +108,7 @@ function openTaskOverlay(taskId) {
     task.due_date,
     task.priority,
     task.assigned_to,
-    task.subtasks,
+    task.subtask,
 
 
   );
