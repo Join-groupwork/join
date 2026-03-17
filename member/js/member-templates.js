@@ -362,7 +362,8 @@ export function getTaskOverlayTemplate(category,title, description, due_date , p
 
 
   return `
-    <div class="task-overlay-content">
+
+  <div class="task-overlay-content">
       <div class="overlaytemplate-first-section">
         <p class="task__category--technical-task overlaytemplate-category"> ${category}</p>
         <button onclick="closeTaskOverlay()">X</button>
@@ -394,8 +395,8 @@ export function getTaskOverlayTemplate(category,title, description, due_date , p
     </div>
 
     <div class="taskoverlay_detail_actions">
-      <button type="button" class="link_btn" onclick="editContact()"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
       <button type="button" class="link_btn" onclick="deleteContact()"><img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
+      <button type="button" class="link_btn" onclick="editContact()"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
     </div>
 
   </div>
