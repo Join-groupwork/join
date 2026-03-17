@@ -1,47 +1,9 @@
 import { loadTasks } from '../../scripts/firebase/get-firebase.js';
 import { generateTodosHTML } from './member-templates.js';
-/**
- * References to the DOM containers (board columns) where tasks are rendered.
- *
- * Why this exists:
- * - You query the DOM *once* (instead of repeating `document.getElementById(...)` everywhere).
- * - Your code becomes cleaner: `columns.todo` is easier to read than `"todo"` strings everywhere.
- * - It centralizes the “IDs must exist” assumption in one place (good for debugging).
- *
- * Note: These can be `null` if the elements don’t exist in the current HTML page.
- *
- * @type {{
- *   todo: HTMLElement|null,
- *   inProgress: HTMLElement|null,
- *   awaitFeedback: HTMLElement|null,
- *   done: HTMLElement|null
- * }}
- */
-const columns = {
-  /** @type {HTMLElement|null} */ todo: document.getElementById('todo'),
-  /** @type {HTMLElement|null} */ inProgress: document.getElementById('inProgress'),
-  /** @type {HTMLElement|null} */ awaitFeedback: document.getElementById('awaitFeedback'),
-  /** @type {HTMLElement|null} */ done: document.getElementById('done'),
-};
-/**
- * Task collection indexed by id.
- * NOTE: Placeholder data until Firebase is connected.
- *
- * @type {Record<string, Todo>}
- */
-export let todos = {};
 
-export async function initBoard() {
-  try {
-    todos = await loadTasks();
-    updateHTML();
-  } catch (error) {
-    console.error('Fehler bei Laden der Tasks:', error);
-  }
-}
 /**
  * Possible board states.
- * @typedef {"todo" | "in-progress" | "await-feedback" | "done"} SubtaskStatus
+ * @typedef {"todo" | "in-progress" | "await-feedback" | "done"} TaskStatus
  */
 
 /**
@@ -64,7 +26,56 @@ export async function initBoard() {
  * @property {Priority} priority - Task priority level.
  * @property {string} assignedTo - Person(s) assigned to this task (currently unused).
  * @property {Category} category - Task category.
- * @property {SubtaskStatus} status - Current board column/status.
+ * @property {TaskStatus} status - Current board column/status.
+ */
+
+/**
+ * References to the DOM containers (board columns) where tasks are rendered.
+ *
+ * @type {{
+ *   todo: HTMLElement|null,
+ *   inProgress: HTMLElement|null,
+ *   awaitFeedback: HTMLElement|null,
+ *   done: HTMLElement|null
+ * }}
+ */
+const columns = {
+  /** @type {HTMLElement|null} */ todo: document.getElementById('todo'),
+  /** @type {HTMLElement|null} */ inProgress: document.getElementById('inProgress'),
+  /** @type {HTMLElement|null} */ awaitFeedback: document.getElementById('awaitFeedback'),
+  /** @type {HTMLElement|null} */ done: document.getElementById('done'),
+};
+/**
+ * Task collection indexed by id.
+ * NOTE: Placeholder data until Firebase is connected.
+ *
+ * @type {Record<string, Todo>}
+ */
+export let todos = {};
+
+
+/**
+ * Loads all tasks from Firebase and renders them into the board.
+ *
+ * @async
+ * @returns {Promise<void>}
+ */
+export async function initBoard() {
+  try {
+    todos = await loadTasks();
+    updateHTML();
+  } catch (error) {
+    console.error('Fehler bei Laden der Tasks:', error);
+  }
+}
+
+
+/**
+ * Re-renders all board columns and updates placeholder visibility.
+ *
+ * Skips rendering when the board DOM is not present.
+ *
+ * @returns {void}
  */
 export function updateHTML() {
   // if this page doesn’t have a todo column we’re not on the board,
@@ -79,7 +90,7 @@ export function updateHTML() {
 
 
 /**
- * Renders tasks with {@link Todo.subtask} === `"todo"` into the `#todo` column.
+ * Renders tasks with {@link Todo.status} === "todo" into the `#todo` column.
  *
  * @private
  * @returns {void}
@@ -97,7 +108,7 @@ function updateTodo() {
 
 
 /**
- * Renders tasks with {@link Todo.subtask} === `"in-progress"` into the `#inProgress` column.
+ * Renders tasks with {@link Todo.status} === `"in-progress"` into the `#inProgress` column.
  *
  * @private
  * @returns {void}
@@ -113,7 +124,7 @@ function updateInProgress() {
 
 
 /**
- * Renders tasks with {@link Todo.subtask} === `"await-feedback"` into the `#awaitFeedback` column.
+ * Renders tasks with {@link Todo.status} === `"await-feedback"` into the `#awaitFeedback` column.
  *
  * @private
  * @returns {void}
@@ -129,7 +140,7 @@ function updateAwaitFeedback() {
 
 
 /**
- * Renders tasks with {@link Todo.subtask} === `"done"` into the `#done` column.
+ * Renders tasks with {@link Todo.status} === `"done"` into the `#done` column.
  *
  * @private
  * @returns {void}
@@ -148,14 +159,14 @@ function updateDone() {
  * Shows/hides the placeholder inside each `.task__area` depending on whether
  * at least one task exists for that column.
  *
- * Uses `.task__area[data - status]` to match against {@link Todo.status}.
+ * Uses `.task__area[data-status]` to match against {@link Todo.status}.
  *
  * @private
  * @returns {void}
  */
 function togglePlaceholder() {
-  const taskAres = document.querySelectorAll('.task__area');
-  taskAres.forEach(area => {
+  const taskAreas = document.querySelectorAll('.task__area');
+  taskAreas.forEach(area => {
     let status = area.dataset.status;
     const placeholder = area.querySelector('.task__area--placeholder');
     let hasTask = Object.values(todos).some(task => task.status === status);
