@@ -365,7 +365,7 @@ export function getTaskOverlayTemplate(category,title, description, due_date , p
 
   <div class="task-overlay-content">
       <div class="overlaytemplate-first-section">
-        <p class="task__category--technical-task overlaytemplate-category"> ${category}</p>
+        <p class="task__category--${category} overlaytemplate-category"> ${category}</p>
         <button onclick="closeTaskOverlay()">X</button>
       </div>
     
