@@ -29,6 +29,7 @@ html {
     min-height: calc(100vh - 96px);
     padding: 48px 56px 32px;
     width: calc(100% - 230px);
+    position: fixed;
 }
 
 .div_add_task {
