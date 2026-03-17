@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const key = await pushTask(taskData);
         console.log('Pushed task, key:', key);
         alert('Task created successfully');
-        window.location.href = './member/board.html';
+        window.location.href = './board.html';
       } catch (err) {
         console.error(err);
         alert('Failed to create task');

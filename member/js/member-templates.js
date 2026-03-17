@@ -126,9 +126,9 @@ export function getTaskTemplate() {
                 <section class="section_priority">
                     <label for="priority">Priority</label>
                     <div id="priority" class="priority" name="priority">
-                        <button class="priority_button" value="low">Urgent <img src="../assets/icons/Property 1=Urgent.svg" alt=""></button>
-                        <button class="priority_button" value="medium">Medium <img src="../assets/icons/Property 1=Medium.svg" alt=""></button>
-                        <button class="priority_button" value="high">Low <img src="../assets/icons/Property 1=Low.svg" alt=""></button>
+                        <button class="priority_button" value="urgent">Urgent <img src="../assets/icons/urgent-prio-icon.svg" alt=""></button>
+                        <button class="priority_button" value="medium">Medium <img src="../assets/icons/medium-prio-icon.svg" alt=""></button>
+                        <button class="priority_button" value="low">Low <img src="../assets/icons/low-prio-icon.svg" alt=""></button>
                     </div>
                 </section>
 
@@ -153,8 +153,8 @@ export function getTaskTemplate() {
             </form>
         </section>
         <section class="section_add_task_button">
-            <button class="clear_button_add_task" type="button">Cancel <img src="../../assets/icons/close.svg" alt=""></button>
-            <button class="Create_button_add_task" type="submit">Create Task <img src="../../assets/icons/check.svg" alt=""></button>
+            <button class="clear_button_add_task" type="button">Cancel <img src="../assets/icons/close-icon.svg" alt=""></button>
+            <button class="Create_button_add_task" type="submit">Create Task <img src="../assets/icons/check-icon-white.svg" alt=""></button>
         </section>
     </section>
     `;
