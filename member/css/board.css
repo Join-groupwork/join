@@ -264,3 +264,11 @@ button {
 button img.close_overlay_icon_getTaskOverlayTemplate {
   display: block;           
 }
+
+.divider-grey {
+    width: 2px;
+    height: 22px;
+    background: #646869;
+    align-self: center;
+    border-radius: 8px;
+}
