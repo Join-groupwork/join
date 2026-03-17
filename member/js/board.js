@@ -114,13 +114,19 @@ function openTaskOverlay(taskId) {
   );
 
   overlayContainer.classList.remove('d_none');
+   setTimeout(() => {
+    overlayContainer.classList.add('show');
+  }, 10);
 }
 window.openTaskOverlay = openTaskOverlay;
 
 function closeTaskOverlay() {
   const overlayContainer = document.getElementById("overlay_container");
-  overlayContainer.classList.add("d_none");
-  overlayContainer.innerHTML = "";
+  overlayContainer.classList.remove('show');
+  setTimeout(() => {
+    overlayContainer.classList.add('d_none'); // danach ausblenden
+    overlayContainer.innerHTML = '';           // optional Inhalt löschen
+  }, 300);
 
 }
 

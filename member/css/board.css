@@ -144,7 +144,7 @@ main {
 }
 
 
-/* Container für Zentrieren + Backdrop */
+
 #overlay_container {
   position: fixed;
   top: 0;
@@ -156,8 +156,13 @@ main {
   align-items: center;         
   background-color: rgba(0,0,0,0.1); 
   z-index: 999;
+  opacity: 0;           
+  transition: opacity 0.3s ease-in-out;
 }
 
+#overlay_container.show {
+  opacity: 1;             
+}
 
 .task-overlay-content {
   width: 400px;
