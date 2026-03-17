@@ -22,9 +22,8 @@
  *
  * @module member-ui
  */
-import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate, getAddOverlayTemplate, generateTodosHTML } from './member-templates.js';
+import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate } from './member-templates.js';
 import { initBoard } from './board.js';
-import { updateHTML } from './board.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { auth } from "../../scripts/firebase/firebase.js";
 
