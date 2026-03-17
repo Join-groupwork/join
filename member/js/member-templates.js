@@ -106,6 +106,9 @@ export function getSidebarTemplate() {
 export function getTaskTemplate() {
   return `
      <section class="overlay_add_task">
+        <button class="add-task-close-btn" type="button" aria-label="Close">
+          <img src="../assets/icons/close-icon.svg" alt="">
+        </button>
         <h1 class="h1_add_task">Add Task</h1>
             <section class="section_add_task">
 
