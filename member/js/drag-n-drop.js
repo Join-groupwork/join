@@ -35,6 +35,8 @@ import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-
  * @typedef {"low" | "medium" | "urgent"} Priority
  */
 
+
+let activeSearchTerm = ''; // INFO This is currently only used in the search function
 /**
  * Represents a board task.
  *
@@ -120,7 +122,7 @@ function updateTodo() {
   if (!container) return;
   container.innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
-    if (element.status === 'todo') {
+    if (element.status === 'todo' && matchesSearch(element)) {
       container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
     }
   }
@@ -136,7 +138,7 @@ function updateTodo() {
 function updateInProgress() {
   document.getElementById('inProgress').innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
-    if (element.status === 'in-progress') {
+    if (element.status === 'in-progress' && matchesSearch(element)) {
       document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
     }
   }
@@ -152,7 +154,7 @@ function updateInProgress() {
 function updateAwaitFeedback() {
   document.getElementById('awaitFeedback').innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
-    if (element.status === 'await-feedback') {
+    if (element.status === 'await-feedback' && matchesSearch(element)) {
       document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
     }
   }
@@ -168,7 +170,7 @@ function updateAwaitFeedback() {
 function updateDone() {
   document.getElementById('done').innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
-    if (element.status === 'done') {
+    if (element.status === 'done' && matchesSearch(element)) {
       document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
     }
   }
@@ -189,7 +191,7 @@ function togglePlaceholder() {
   taskAres.forEach(area => {
     let status = area.dataset.status;
     const placeholder = area.querySelector('.task__area--placeholder');
-    let hasTask = Object.values(todos).some(task => task.status === status);
+    let hasTask = Object.values(todos).some(task => task.status === status && matchesSearch(task));
     if (hasTask) {
       placeholder.classList.add('d-none')
     } else {
@@ -316,4 +318,21 @@ document.addEventListener("dragleave", function (event) {
 });
 
 
+
+function matchesSearch(task) {
+  if (!activeSearchTerm) return true;
+  const haystack = [task.title, task.description, task.category, task.priority]
+    .map(v => String(v || '').toLowerCase())
+    .join(' ');
+  return haystack.includes(activeSearchTerm);
+}
+
+function searchTask(value) {
+  activeSearchTerm = String(value || '').toLowerCase().trim();
+  updateHTML();
+}
+
 initBoard();
+
+
+window.searchTask = searchTask;

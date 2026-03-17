@@ -153,7 +153,32 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 });
 
+function setupAddTaskOverlay() {
+  const openBtn = document.getElementById('openAddTaskOverlay');
+  const overlay = document.getElementById('add_task_overlay');
+  if (!openBtn || !overlay) return;
 
+  openBtn.addEventListener('click', () => {
+    overlay.classList.remove('d_none');
+    document.body.classList.add('no-scroll');
+  });
+
+  overlay.addEventListener('click', (event) => {
+    if (event.target === overlay) {
+      overlay.classList.add('d_none');
+      document.body.classList.remove('no-scroll');
+    }
+  });
+
+  const cancelBtn = overlay.querySelector('.clear_button_add_task');
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      overlay.classList.add('d_none');
+      document.body.classList.remove('no-scroll');
+    });
+  }
+}
 
 /**
  * Triggers the board rendering.
@@ -167,3 +192,5 @@ document.addEventListener('DOMContentLoaded', () => {
 async function renderBoard() {
   updateHTML();
 }
+
+setupAddTaskOverlay();
