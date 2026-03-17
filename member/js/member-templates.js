@@ -144,8 +144,8 @@ export function getTaskTemplate() {
                 <label for="">Category</label>
                 <select class="input_add_task margin_bottom_add_task" id="category" name="category" required placeholder="">
                     <option value="select_task_category">Select task category</option>
-                    <option value="technical_task">Technical Task</option>
-                    <option value="user_story">User Story</option>
+                    <option value="technical-task">Technical Task</option>
+                    <option value="user-story">User Story</option>
                 </select>
 
                 <label for="">Subtasks</label>
