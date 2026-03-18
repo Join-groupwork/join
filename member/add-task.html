@@ -67,16 +67,15 @@
                             </div>
                         </section>
 
-                        <label for="">Assigned to</label>
-                        <select class="input_add_task margin_bottom_add_task" type="text" id="assigned_to"
-                            name="assigned_to" required placeholder="Select contacts to assign">
-                            <option value="select_contact">
-                                Select contacts to assign
-                            </option>
-                            <option value="contact_1">Contact 1</option>
-                            <option value="contact_2">Contact 2</option>
-                            <option value="contact_3">Contact 3</option>
-                        </select>
+                        <label for="assigned_to_input">Assigned to</label>
+                        <div class="custom-select margin_bottom_add_task" id="assigned_to">
+                            <button type="button" class="custom-select__trigger" id="assigned_to_trigger">
+                                <span class="custom-select__trigger-label">Select contacts to assign</span>
+                                <span class="custom-select__arrow">▾</span>
+                            </button>
+                            <div class="custom-select__options d_none" id="assigned_to_options"></div>
+                        </div>
+                        <input type="hidden" id="assigned_to_input" name="assigned_to" required>
 
                         <label for="">Category</label>
                         <select class="input_add_task margin_bottom_add_task" id="category" name="category" required
