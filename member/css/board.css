@@ -160,6 +160,7 @@ main {
   z-index: 999;
   opacity: 0;           
   transition: opacity 0.3s ease-in-out;
+  animation: overlaySlideInFromRight 260ms ease-out forwards;
 }
 
 #overlay_container.show {
