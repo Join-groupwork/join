@@ -359,3 +359,29 @@ html {
   width: 16px;
   height: 16px;
 }
+
+.custom-select__option {
+    justify-content: space-between;
+}
+
+.custom-select__option-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.custom-select__checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.selected-assignees {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 8px 0 15px;
+    min-height: 40px;
+}

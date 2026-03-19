@@ -32,11 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const assignedInput = document.getElementById('assigned_to_input');
   const assignedTrigger = document.getElementById('assigned_to_trigger');
   const assignedOptions = document.getElementById('assigned_to_options');
+  const selectedDisplay = document.getElementById('selected_assignees_display');
   const categorySelect = document.getElementById('category');
   const subtaskInput = document.getElementById('subtask');
   const priorityButtons = document.querySelectorAll('.priority_button');
 
   let selectedPriority = null;
+  let selectedAssignees = [];
+  let currentContacts = {};
 
   /**
    * Populates the "Assigned to" dropdown with contacts belonging to the current user.
@@ -63,28 +66,81 @@ document.addEventListener('DOMContentLoaded', () => {
     return AVATAR_COLORS[hashString(name || '') % AVATAR_COLORS.length];
   }
 
-  function setAssignedContact(name, initials, avatarColor) {
-    assignedInput.value = name;
-    assignedTrigger.innerHTML = `
-      <span class="contact_avatar" style="background-color: ${avatarColor}">${initials}</span>
-      ${name}
-      <span class="custom-select__arrow">▾</span>
-    `;
-    assignedOptions.classList.add('d_none');
+  function getContactData(id, contact) {
+    const name = contact.name || `Contact (${id})`;
+    return { id, name, initials: getInitials(name), avatarColor: getAvatarColor(name) };
   }
 
+  function isSelected(id) {
+    return selectedAssignees.some((item) => item.id === id);
+  }
+
+  function updateAssignedInput() {
+    assignedInput.value = selectedAssignees.map((item) => item.name).join(', ');
+  }
+
+  function renderSelectedAssignees() {
+    if (!selectedDisplay) return;
+    selectedDisplay.innerHTML = selectedAssignees
+      .map((item) => `<span class="contact_avatar" title="${item.name}" style="background-color: ${item.avatarColor}">${item.initials}</span>`)
+      .join('');
+  }
+
+  function toggleAssignee(contactData) {
+    selectedAssignees = isSelected(contactData.id)
+      ? selectedAssignees.filter((item) => item.id !== contactData.id)
+      : [...selectedAssignees, contactData];
+    updateAssignedInput();
+    renderSelectedAssignees();
+  }
+
+  function buildCheckbox(checked) {
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'custom-select__checkbox';
+    checkbox.checked = checked;
+    return checkbox;
+  }
+
+  function buildOptionMain(data) {
+    const main = document.createElement('div');
+    main.className = 'custom-select__option-main';
+    main.innerHTML = `<span class="contact_avatar" style="background-color: ${data.avatarColor}">${data.initials}</span><span class="custom-select__option-label">${data.name}</span>`;
+    return main;
+  }
+
+  function syncOptionToggle(data, checkbox) {
+    toggleAssignee(data);
+    checkbox.checked = isSelected(data.id);
+  }
+
+  function clearSelectedAssignees() {
+    selectedAssignees = [];
+    updateAssignedInput();
+    renderSelectedAssignees();
+    populateAssignedToDropdown(currentContacts);
+  }
+
+  // function setAssignedContact(name, initials, avatarColor) {
+  //   assignedInput.value = name;
+  //   assignedTrigger.innerHTML = `
+  //     <span class="contact_avatar" style="background-color: ${avatarColor}">${initials}</span>
+  //     ${name}
+  //     <span class="custom-select__arrow">▾</span>
+  //   `;
+  //   assignedOptions.classList.add('d_none');
+  // }
+
   function buildContactOptionElement(id, contact) {
-    const name = contact.name || `Contact (${id})`;
-    const initials = getInitials(name);
-    const avatarColor = getAvatarColor(name);
-
-    const option = document.createElement('button');
-    option.type = 'button'; option.className = 'custom-select__option';
-    option.dataset.contactId = id; option.dataset.contactName = name;
-
-    option.innerHTML = `<span class="contact_avatar" style="background-color: ${avatarColor}">${initials}</span><span class="custom-select__option-label">${name}</span>`;
-    option.addEventListener('click', () => setAssignedContact(name, initials, avatarColor));
-
+    const data = getContactData(id, contact);
+    const option = document.createElement('div');
+    const main = buildOptionMain(data);
+    const checkbox = buildCheckbox(isSelected(id));
+    option.className = 'custom-select__option';
+    option.append(main, checkbox);
+    option.addEventListener('click', () => syncOptionToggle(data, checkbox));
+    checkbox.addEventListener('click', (e) => e.stopPropagation());
+    checkbox.addEventListener('change', () => toggleAssignee(data));
     return option;
   }
 
@@ -109,11 +165,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function populateAssignedToDropdown(contacts) {
     if (!assignedOptions || !assignedTrigger || !assignedInput) return;
-
+    currentContacts = contacts || {};
     assignedOptions.innerHTML = '';
-    const entries = getSortedContacts(contacts);
+    const entries = getSortedContacts(currentContacts);
     if (entries.length === 0) return renderNoContacts();
-
     renderContactOptions(entries);
   }
 
@@ -243,14 +298,15 @@ document.addEventListener('DOMContentLoaded', () => {
   //     });
   //   }
   // });
-  
 
-  function clearAddTaskForm() {
-    document.querySelector('.form_add_task')?.reset();
-    document.querySelector('.select_add_task')?.reset();
-    priorityButtons.forEach((button) => button.classList.remove('selected'));
-    selectedPriority = null;
-  }
+
+function clearAddTaskForm() {
+  document.querySelector('.form_add_task')?.reset();
+  document.querySelector('.select_add_task')?.reset();
+  priorityButtons.forEach((button) => button.classList.remove('selected'));
+  selectedPriority = null;
+  clearSelectedAssignees();
+}
 
 
   priorityButtons.forEach((btn) => {
