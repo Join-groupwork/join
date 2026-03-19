@@ -55,13 +55,23 @@ export function trackContactsForUser() {
 }
 
 /**
- * Returns the selected assignee names as a comma-separated string.
+ * Transforms selected assignees into an indexed object
+ * suitable for Firebase storage.
+ *
+ * Each selected contact is stored as a separate entry:
+ * {
+ *   0: "Name1",
+ *   1: "Name2"
+ * }
  *
  * @function getAssignedNames
- * @returns {string} The selected assignee names.
+ * @returns {Object<number, string>} Object containing selected assignee names.
  */
 export function getAssignedNames() {
-  return selectedAssignees.map((item) => item.name).join(', ');
+  return selectedAssignees.reduce((result, item, index) => {
+    result[index] = item.name;
+    return result;
+  }, {});
 }
 
 /**

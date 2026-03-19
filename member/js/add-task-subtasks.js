@@ -32,13 +32,32 @@ export function initSubtasks(elements) {
 }
 
 /**
- * Returns the current list of subtasks.
+ * Transforms the internal subtask array into a structured object
+ * suitable for Firebase storage.
+ *
+ * Each subtask is converted into an object containing:
+ * - a unique key (e.g. "Subtask1", "Subtask2")
+ * - a boolean status (default: false)
+ * - the subtask title
+ *
+ * Example output:
+ * {
+ *   Subtask1: { status: false, title: "First subtask" },
+ *   Subtask2: { status: false, title: "Second subtask" }
+ * }
  *
  * @function getSubtasks
- * @returns {string[]} The current subtask array.
+ * @returns {Object<string, {status: boolean, title: string}>}
+ * An object containing all subtasks formatted for Firebase.
  */
 export function getSubtasks() {
-  return subtasks;
+  return subtasks.reduce((result, title, index) => {
+    result[`Subtask${index + 1}`] = {
+      status: false,
+      title
+    };
+    return result;
+  }, {});
 }
 
 /**
