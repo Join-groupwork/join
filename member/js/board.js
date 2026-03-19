@@ -88,6 +88,34 @@ export function updateHTML() {
   togglePlaceholder();
 };
 
+function updateProgressBar() {
+  let tasks = loadTasks();
+  let progressPercent = ;
+  let progressData = Object.values(tasks || {});
+  progressBarData(tasks, id);
+}
+
+function progressBarData(tasks, id) {
+  const progressRef = document.getElementById(taskProgressBar(${id}));
+
+  if (!tasks[id].subtasks || tasks[id].subtasks.length == 0) {
+    progressRef.classList.add('d-none');
+    return;
+  } else {
+    let totalSubtasks = tasks[id].subtasks.length;
+    let doneSubtasks = subtasksStatus(tasks, id);
+
+    progressRef.classList.remove('d-none');
+  }
+}
+
+
+function subtaskStatus( tasks, id) {
+for await (const doneStatus of tasks[id].subtasks.status) {
+
+}
+}
+
 
 /**
  * Renders tasks with {@link Todo.status} === "todo" into the `#todo` column.
@@ -101,7 +129,8 @@ function updateTodo() {
   container.innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'todo') {
-      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.subtask, element.priority);
+      progressBarData(id);
     }
   }
 };

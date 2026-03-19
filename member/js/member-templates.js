@@ -251,16 +251,21 @@ export function signupMassegeTemplate() {
  * @param {string} title - Task title.
  * @param {Category} category - Task category label.
  * @param {string} description - Task description.
+ * @param {Array} subtask - Array with subtasks.
+ * @param {string} subtasks - subtasks into subtask.
  * @param {Priority} priority - Task priority label.
  * @returns {string} HTML string representing the task card.
  */
-export function generateTodosHTML(id, title, category, description, priority) {
+export function generateTodosHTML(id, title, category, description, doneSubtasks, totalSubtasks, priority) {
   return `
             <div class="task__card" id="${id}" draggable="true">
               <span class="task__category--${category}">${category}</span><br>
               <h4 class="task__title">${title}</h4><br>
               <p class="task__text">${description}</p><br>
-              <div class="task__bar" id="taskProgressBar"></div><br>
+              <div class="task__bar" id="taskProgressBar(${id})">
+                <progress>Das Template wird returned</progress>
+                ${doneSubtasks} von ${totalSubtasks}
+              </div><br>
               <div class="task__footer">
                 <div>users</div>
                 <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
@@ -270,9 +275,9 @@ export function generateTodosHTML(id, title, category, description, priority) {
 };
 
 
-export function generateProgressBar() {
+export function generateProgressBar(id) {
   return `
-          <progress></progress>
+
 `
 }
 

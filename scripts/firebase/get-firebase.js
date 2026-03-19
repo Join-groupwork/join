@@ -23,7 +23,7 @@ auth.onAuthStateChanged((user) => {
 
 
 // Daten laden
-export function loadData() {
+export async function loadData() {
   const contactsRef = ref(database, 'contacts');
   // contacts auslesen
   onValue(contactsRef, (firebaseData) => {
