@@ -249,9 +249,17 @@ main {
   align-items: center;
   text-align: center;
   gap: 10px;
-
-  
 }
+.taskoverlay_detail_actions button  {
+  background: none;
+  border: none;
+}
+
+.taskoverlay_detail_actions button:hover,
+.taskoverlay_detail_actions button:hover img {
+ filter: brightness(0) invert(44%) sepia(88%) saturate(3000%) hue-rotate(175deg) brightness(95%) contrast(90%);
+}
+
 
 .close_overlay_icon_getTaskOverlayTemplate{
   width: 24px;
@@ -276,4 +284,17 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
     background: #646869;
     align-self: center;
     border-radius: 8px;
+}
+
+.link_btn-taskoverlay {
+    border: none;
+    background: transparent;
+    padding: 0;
+    gap: 5px;
+    font-size: 16px;
+    color: #2a3647;
+    cursor: pointer;
+
+    display: flex;           
+    align-items: center; 
 }
