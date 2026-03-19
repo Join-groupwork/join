@@ -12,12 +12,12 @@ const AVATAR_COLORS = [
  * Initializes the task creation page after the DOM is fully loaded.
  *
  * Sets up:
- * - Priority button selection handling
- * - Create task button logic
- * - Cancel button reset behavior
- * - Contact dropdown rendering
- * - Multi-assignee selection
- * - Subtask creation, editing and deletion
+ * - priority button selection
+ * - create task logic
+ * - form reset behavior
+ * - contact dropdown rendering
+ * - multi-assignee selection
+ * - subtask creation, editing and deletion
  *
  * @event DOMContentLoaded
  */
@@ -46,6 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
   let subtasks = [];
   let editingSubtaskIndex = -1;
 
+  /**
+   * Creates initials from a contact name.
+   *
+   * Uses the first character of up to two words and converts them to uppercase.
+   *
+   * @function getInitials
+   * @param {string} name - The full contact name.
+   * @returns {string} The generated initials.
+   */
   function getInitials(name) {
     return name
       .split(' ')
@@ -54,6 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
       .join('');
   }
 
+  /**
+   * Generates a numeric hash from a string value.
+   *
+   * @function hashString
+   * @param {string} value - The string to hash.
+   * @returns {number} A positive numeric hash.
+   */
   function hashString(value) {
     let hash = 0;
     for (let i = 0; i < value.length; i++) {
@@ -62,23 +78,60 @@ document.addEventListener('DOMContentLoaded', () => {
     return Math.abs(hash);
   }
 
+  /**
+   * Returns a stable avatar color based on a contact name.
+   *
+   * @function getAvatarColor
+   * @param {string} name - The contact name.
+   * @returns {string} A hex color value from the avatar color list.
+   */
   function getAvatarColor(name) {
     return AVATAR_COLORS[hashString(name || '') % AVATAR_COLORS.length];
   }
 
+  /**
+   * Builds normalized contact data for dropdown rendering.
+   *
+   * @function getContactData
+   * @param {string} id - The contact id.
+   * @param {Object} contact - The contact object.
+   * @param {string} [contact.name] - The display name of the contact.
+   * @returns {{id: string, name: string, initials: string, avatarColor: string}} Normalized contact data.
+   */
   function getContactData(id, contact) {
     const name = contact.name || `Contact (${id})`;
     return { id, name, initials: getInitials(name), avatarColor: getAvatarColor(name) };
   }
 
+  /**
+   * Checks whether a contact is currently selected.
+   *
+   * @function isSelected
+   * @param {string} id - The contact id to check.
+   * @returns {boolean} True if the contact is selected, otherwise false.
+   */
   function isSelected(id) {
     return selectedAssignees.some((item) => item.id === id);
   }
 
+  /**
+   * Updates the hidden assigned-to input with selected contact names.
+   *
+   * Contact names are stored as a comma-separated string.
+   *
+   * @function updateAssignedInput
+   * @returns {void}
+   */
   function updateAssignedInput() {
     assignedInput.value = selectedAssignees.map((item) => item.name).join(', ');
   }
 
+  /**
+   * Renders the selected assignee avatars below the assigned-to field.
+   *
+   * @function renderSelectedAssignees
+   * @returns {void}
+   */
   function renderSelectedAssignees() {
     if (!selectedDisplay) return;
     selectedDisplay.innerHTML = selectedAssignees
@@ -88,6 +141,15 @@ document.addEventListener('DOMContentLoaded', () => {
       .join('');
   }
 
+  /**
+   * Adds or removes a contact from the selected assignees list.
+   *
+   * After updating the selection, the hidden input and avatar display are refreshed.
+   *
+   * @function toggleAssignee
+   * @param {{id: string, name: string, initials: string, avatarColor: string}} contactData - The contact to toggle.
+   * @returns {void}
+   */
   function toggleAssignee(contactData) {
     selectedAssignees = isSelected(contactData.id)
       ? selectedAssignees.filter((item) => item.id !== contactData.id)
@@ -96,6 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
     renderSelectedAssignees();
   }
 
+  /**
+   * Creates a checkbox element for a contact option.
+   *
+   * @function buildCheckbox
+   * @param {boolean} checked - Whether the checkbox should be checked initially.
+   * @returns {HTMLInputElement} The created checkbox element.
+   */
   function buildCheckbox(checked) {
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -104,6 +173,13 @@ document.addEventListener('DOMContentLoaded', () => {
     return checkbox;
   }
 
+  /**
+   * Creates the main visual content for one contact option.
+   *
+   * @function buildOptionMain
+   * @param {{name: string, initials: string, avatarColor: string}} data - Contact display data.
+   * @returns {HTMLDivElement} The created option content element.
+   */
   function buildOptionMain(data) {
     const main = document.createElement('div');
     main.className = 'custom-select__option-main';
@@ -114,11 +190,25 @@ document.addEventListener('DOMContentLoaded', () => {
     return main;
   }
 
+  /**
+   * Toggles a contact option and synchronizes the checkbox state.
+   *
+   * @function syncOptionToggle
+   * @param {{id: string, name: string, initials: string, avatarColor: string}} data - The contact data to toggle.
+   * @param {HTMLInputElement} checkbox - The checkbox to synchronize.
+   * @returns {void}
+   */
   function syncOptionToggle(data, checkbox) {
     toggleAssignee(data);
     checkbox.checked = isSelected(data.id);
   }
 
+  /**
+   * Clears all selected assignees and refreshes the dropdown state.
+   *
+   * @function clearSelectedAssignees
+   * @returns {void}
+   */
   function clearSelectedAssignees() {
     selectedAssignees = [];
     updateAssignedInput();
@@ -126,6 +216,14 @@ document.addEventListener('DOMContentLoaded', () => {
     populateAssignedToDropdown(currentContacts);
   }
 
+  /**
+   * Builds a selectable dropdown option for one contact.
+   *
+   * @function buildContactOptionElement
+   * @param {string} id - The contact id.
+   * @param {Object} contact - The contact object.
+   * @returns {HTMLDivElement} The rendered contact option element.
+   */
   function buildContactOptionElement(id, contact) {
     const data = getContactData(id, contact);
     const option = document.createElement('div');
@@ -139,12 +237,25 @@ document.addEventListener('DOMContentLoaded', () => {
     return option;
   }
 
+  /**
+   * Sorts contact entries alphabetically by name.
+   *
+   * @function getSortedContacts
+   * @param {Object<string, Object>} contacts - The contacts object from Firebase.
+   * @returns {Array<[string, Object]>} Sorted contact entries.
+   */
   function getSortedContacts(contacts) {
     return Object.entries(contacts || {}).sort(
       ([, a], [, b]) => (a.name || '').localeCompare(b.name || '')
     );
   }
 
+  /**
+   * Renders an empty-state message when no contacts are available.
+   *
+   * @function renderNoContacts
+   * @returns {void}
+   */
   function renderNoContacts() {
     const empty = document.createElement('div');
     empty.className = 'custom-select__empty';
@@ -152,12 +263,28 @@ document.addEventListener('DOMContentLoaded', () => {
     assignedOptions.appendChild(empty);
   }
 
+  /**
+   * Renders all contact options into the assigned-to dropdown.
+   *
+   * @function renderContactOptions
+   * @param {Array<[string, Object]>} entries - Sorted contact entries.
+   * @returns {void}
+   */
   function renderContactOptions(entries) {
     entries.forEach(([id, contact]) => {
       assignedOptions.appendChild(buildContactOptionElement(id, contact));
     });
   }
 
+  /**
+   * Populates the assigned-to dropdown with contacts.
+   *
+   * Stores the current contact collection and renders all available options.
+   *
+   * @function populateAssignedToDropdown
+   * @param {Object<string, Object>} contacts - The contacts object from Firebase.
+   * @returns {void}
+   */
   function populateAssignedToDropdown(contacts) {
     if (!assignedOptions || !assignedTrigger || !assignedInput) return;
     currentContacts = contacts || {};
@@ -167,6 +294,13 @@ document.addEventListener('DOMContentLoaded', () => {
     renderContactOptions(entries);
   }
 
+  /**
+   * Starts listening for contact changes in Firebase.
+   *
+   * @function trackContactsForUser
+   * @param {string} userId - The current user's id.
+   * @returns {void}
+   */
   function trackContactsForUser(userId) {
     const contactsRef = ref(database, 'contacts');
     onValue(contactsRef, (snapshot) => {
@@ -175,40 +309,92 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /**
+   * Closes the assigned-to dropdown menu.
+   *
+   * @function closeAssignedOptions
+   * @returns {void}
+   */
   function closeAssignedOptions() {
     assignedOptions?.classList.add('d_none');
   }
 
+  /**
+   * Toggles the assigned-to dropdown menu visibility.
+   *
+   * @function toggleAssignedOptions
+   * @returns {void}
+   */
   function toggleAssignedOptions() {
     if (!assignedOptions) return;
     assignedOptions.classList.toggle('d_none');
   }
 
+  /**
+   * Shows or hides the subtask action buttons depending on input content.
+   *
+   * @function toggleSubtaskActions
+   * @returns {void}
+   */
   function toggleSubtaskActions() {
     if (!subtaskActions || !subtaskInput) return;
     subtaskActions.classList.toggle('d_none', !subtaskInput.value.trim());
   }
 
+  /**
+   * Clears the subtask input field and resets edit mode.
+   *
+   * @function clearSubtaskInput
+   * @returns {void}
+   */
   function clearSubtaskInput() {
     subtaskInput.value = '';
     editingSubtaskIndex = -1;
     toggleSubtaskActions();
   }
 
+  /**
+   * Adds a new subtask to the subtask list.
+   *
+   * @function saveNewSubtask
+   * @param {string} value - The new subtask text.
+   * @returns {void}
+   */
   function saveNewSubtask(value) {
     subtasks = [...subtasks, value];
   }
 
+  /**
+   * Updates an existing subtask at the current edit index.
+   *
+   * @function saveEditedSubtask
+   * @param {string} value - The updated subtask text.
+   * @returns {void}
+   */
   function saveEditedSubtask(value) {
     subtasks[editingSubtaskIndex] = value;
     editingSubtaskIndex = -1;
   }
 
+  /**
+   * Saves a subtask either as new or as an edited entry.
+   *
+   * @function saveSubtaskValue
+   * @param {string} value - The subtask text to save.
+   * @returns {void}
+   */
   function saveSubtaskValue(value) {
     if (editingSubtaskIndex > -1) return saveEditedSubtask(value);
     saveNewSubtask(value);
   }
 
+  /**
+   * Creates the text element for one subtask entry.
+   *
+   * @function createSubtaskText
+   * @param {string} text - The subtask text.
+   * @returns {HTMLSpanElement} The created text element.
+   */
   function createSubtaskText(text) {
     const span = document.createElement('span');
     span.className = 'subtask-item-text';
@@ -216,6 +402,13 @@ document.addEventListener('DOMContentLoaded', () => {
     return span;
   }
 
+  /**
+   * Creates the action buttons for one subtask entry.
+   *
+   * @function createSubtaskActions
+   * @param {number} index - The subtask index.
+   * @returns {HTMLDivElement} The container holding edit and delete buttons.
+   */
   function createSubtaskActions(index) {
     const actions = document.createElement('div');
     actions.className = 'subtask-item-actions';
@@ -226,6 +419,14 @@ document.addEventListener('DOMContentLoaded', () => {
     return actions;
   }
 
+  /**
+   * Builds one rendered subtask list item.
+   *
+   * @function buildSubtaskItem
+   * @param {string} text - The subtask text.
+   * @param {number} index - The subtask index.
+   * @returns {HTMLDivElement} The rendered subtask item.
+   */
   function buildSubtaskItem(text, index) {
     const item = document.createElement('div');
     item.className = 'subtask-item';
@@ -233,6 +434,12 @@ document.addEventListener('DOMContentLoaded', () => {
     return item;
   }
 
+  /**
+   * Renders all current subtasks below the input field.
+   *
+   * @function renderSubtasks
+   * @returns {void}
+   */
   function renderSubtasks() {
     if (!subtaskList) return;
     subtaskList.innerHTML = '';
@@ -241,6 +448,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /**
+   * Adds a new subtask or saves an edited subtask from the input field.
+   *
+   * @function addSubtask
+   * @returns {void}
+   */
   function addSubtask() {
     const value = subtaskInput?.value.trim();
     if (!value) return;
@@ -249,6 +462,13 @@ document.addEventListener('DOMContentLoaded', () => {
     clearSubtaskInput();
   }
 
+  /**
+   * Loads a subtask into the input field for editing.
+   *
+   * @function editSubtask
+   * @param {number} index - The subtask index to edit.
+   * @returns {void}
+   */
   function editSubtask(index) {
     subtaskInput.value = subtasks[index] || '';
     editingSubtaskIndex = index;
@@ -256,11 +476,25 @@ document.addEventListener('DOMContentLoaded', () => {
     subtaskInput.focus();
   }
 
+  /**
+   * Deletes a subtask by index and re-renders the subtask list.
+   *
+   * @function deleteSubtask
+   * @param {number} index - The subtask index to delete.
+   * @returns {void}
+   */
   function deleteSubtask(index) {
     subtasks = subtasks.filter((_, i) => i !== index);
     renderSubtasks();
   }
 
+  /**
+   * Handles clicks on subtask edit and delete buttons.
+   *
+   * @function handleSubtaskListClick
+   * @param {MouseEvent} event - The click event from the subtask list.
+   * @returns {void}
+   */
   function handleSubtaskListClick(event) {
     const editIndex = event.target.dataset.edit;
     const deleteIndex = event.target.dataset.delete;
@@ -268,6 +502,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (deleteIndex !== undefined) deleteSubtask(Number(deleteIndex));
   }
 
+  /**
+   * Resets the add-task form to its initial state.
+   *
+   * Clears form fields, selected priority, assignees and subtasks.
+   *
+   * @function clearAddTaskForm
+   * @returns {void}
+   */
   function clearAddTaskForm() {
     document.querySelector('.form_add_task')?.reset();
     document.querySelector('.select_add_task')?.reset();
@@ -280,6 +522,12 @@ document.addEventListener('DOMContentLoaded', () => {
     clearSubtaskInput();
   }
 
+  /**
+   * Builds the task object from the current form values.
+   *
+   * @function buildTaskData
+   * @returns {Object|null} The task data object, or null if the title is missing.
+   */
   function buildTaskData() {
     const title = titleInput?.value?.trim();
     if (!title) return null;
@@ -297,6 +545,15 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+  /**
+   * Submits a task to Firebase and redirects on success.
+   *
+   * @async
+   * @function submitTask
+   * @param {Object} taskData - The task data object to store.
+   * @returns {Promise<void>}
+   * @throws {Error} Rethrows any Firebase push error after logging it.
+   */
   async function submitTask(taskData) {
     createBtn.disabled = true;
     try {
