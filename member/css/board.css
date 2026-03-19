@@ -264,17 +264,25 @@ main {
 
 
 .close_overlay_icon_getTaskOverlayTemplate{
-  width: 24px;
-  height: 24px;
+  width: 14px;
+  height: 14px;
   cursor: pointer;
 }
 
-button {
+.overlaytemplate-first-section button {
   background: transparent;  
-  border: none;            
-  padding: 0;              
-  cursor: pointer;          
+  border: none;                          
+  cursor: pointer;  
+  padding: 8px;
+  border-radius: 17px;
+  
 }
+
+.overlaytemplate-first-section button:hover {
+   background-color: rgba(58, 79, 237, 0.1);
+}
+
+
 
 button img.close_overlay_icon_getTaskOverlayTemplate {
   display: block;           
