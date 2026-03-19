@@ -13,15 +13,14 @@ const AVATAR_COLORS = [
  *
  * Sets up:
  * - Priority button selection handling
- * - Create task button logic (including validation and Firebase push)
- * - Cancel button navigation behavior
- * - Populating the "Assigned to" dropdown with existing contacts
+ * - Create task button logic
+ * - Cancel button reset behavior
+ * - Contact dropdown rendering
+ * - Multi-assignee selection
+ * - Subtask creation, editing and deletion
  *
  * @event DOMContentLoaded
  */
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
   const createBtn = document.querySelector('.Create_button_add_task');
   const cancelBtn = document.querySelector('.clear_button_add_task');
@@ -35,21 +34,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const selectedDisplay = document.getElementById('selected_assignees_display');
   const categorySelect = document.getElementById('category');
   const subtaskInput = document.getElementById('subtask');
+  const subtaskActions = document.getElementById('subtask_actions');
+  const confirmSubtaskBtn = document.getElementById('confirm_subtask_btn');
+  const clearSubtaskBtn = document.getElementById('clear_subtask_btn');
+  const subtaskList = document.getElementById('subtask_list');
   const priorityButtons = document.querySelectorAll('.priority_button');
 
   let selectedPriority = null;
   let selectedAssignees = [];
   let currentContacts = {};
+  let subtasks = [];
+  let editingSubtaskIndex = -1;
 
-  /**
-   * Populates the "Assigned to" dropdown with contacts belonging to the current user.
-   *
-   * @param {Object} contacts - The contacts object from Firebase.
-   */
   function getInitials(name) {
     return name
       .split(' ')
-      .map(word => word.charAt(0).toUpperCase())
+      .map((word) => word.charAt(0).toUpperCase())
       .slice(0, 2)
       .join('');
   }
@@ -82,7 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderSelectedAssignees() {
     if (!selectedDisplay) return;
     selectedDisplay.innerHTML = selectedAssignees
-      .map((item) => `<span class="contact_avatar" title="${item.name}" style="background-color: ${item.avatarColor}">${item.initials}</span>`)
+      .map((item) => {
+        return `<span class="contact_avatar" title="${item.name}" style="background-color: ${item.avatarColor}">${item.initials}</span>`;
+      })
       .join('');
   }
 
@@ -105,7 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function buildOptionMain(data) {
     const main = document.createElement('div');
     main.className = 'custom-select__option-main';
-    main.innerHTML = `<span class="contact_avatar" style="background-color: ${data.avatarColor}">${data.initials}</span><span class="custom-select__option-label">${data.name}</span>`;
+    main.innerHTML = `
+      <span class="contact_avatar" style="background-color: ${data.avatarColor}">${data.initials}</span>
+      <span class="custom-select__option-label">${data.name}</span>
+    `;
     return main;
   }
 
@@ -120,16 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderSelectedAssignees();
     populateAssignedToDropdown(currentContacts);
   }
-
-  // function setAssignedContact(name, initials, avatarColor) {
-  //   assignedInput.value = name;
-  //   assignedTrigger.innerHTML = `
-  //     <span class="contact_avatar" style="background-color: ${avatarColor}">${initials}</span>
-  //     ${name}
-  //     <span class="custom-select__arrow">▾</span>
-  //   `;
-  //   assignedOptions.classList.add('d_none');
-  // }
 
   function buildContactOptionElement(id, contact) {
     const data = getContactData(id, contact);
@@ -172,11 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderContactOptions(entries);
   }
 
-  /**
-   * Starts listening to contact changes in Firebase and updates the dropdown.
-   *
-   * @param {string} userId
-   */
   function trackContactsForUser(userId) {
     const contactsRef = ref(database, 'contacts');
     onValue(contactsRef, (snapshot) => {
@@ -194,129 +184,101 @@ document.addEventListener('DOMContentLoaded', () => {
     assignedOptions.classList.toggle('d_none');
   }
 
-  document.addEventListener('click', (event) => {
-    if (!assignedContainer) return;
-    if (assignedContainer.contains(event.target)) return;
-    closeAssignedOptions();
-  });
+  function toggleSubtaskActions() {
+    if (!subtaskActions || !subtaskInput) return;
+    subtaskActions.classList.toggle('d_none', !subtaskInput.value.trim());
+  }
 
-  if (assignedTrigger) {
-    assignedTrigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      toggleAssignedOptions();
+  function clearSubtaskInput() {
+    subtaskInput.value = '';
+    editingSubtaskIndex = -1;
+    toggleSubtaskActions();
+  }
+
+  function saveNewSubtask(value) {
+    subtasks = [...subtasks, value];
+  }
+
+  function saveEditedSubtask(value) {
+    subtasks[editingSubtaskIndex] = value;
+    editingSubtaskIndex = -1;
+  }
+
+  function saveSubtaskValue(value) {
+    if (editingSubtaskIndex > -1) return saveEditedSubtask(value);
+    saveNewSubtask(value);
+  }
+
+  function createSubtaskText(text) {
+    const span = document.createElement('span');
+    span.className = 'subtask-item-text';
+    span.textContent = text;
+    return span;
+  }
+
+  function createSubtaskActions(index) {
+    const actions = document.createElement('div');
+    actions.className = 'subtask-item-actions';
+    actions.innerHTML = `
+      <button type="button" class="subtask-icon-btn" data-edit="${index}">✎</button>
+      <button type="button" class="subtask-icon-btn" data-delete="${index}">🗑</button>
+    `;
+    return actions;
+  }
+
+  function buildSubtaskItem(text, index) {
+    const item = document.createElement('div');
+    item.className = 'subtask-item';
+    item.append(createSubtaskText(text), createSubtaskActions(index));
+    return item;
+  }
+
+  function renderSubtasks() {
+    if (!subtaskList) return;
+    subtaskList.innerHTML = '';
+    subtasks.forEach((text, index) => {
+      subtaskList.appendChild(buildSubtaskItem(text, index));
     });
   }
 
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      trackContactsForUser(user.uid);
-    }
-  });
-
-  // If the user is already signed in before this script runs, ensure we still populate.
-  if (auth.currentUser) {
-    trackContactsForUser(auth.currentUser.uid);
+  function addSubtask() {
+    const value = subtaskInput?.value.trim();
+    if (!value) return;
+    saveSubtaskValue(value);
+    renderSubtasks();
+    clearSubtaskInput();
   }
 
+  function editSubtask(index) {
+    subtaskInput.value = subtasks[index] || '';
+    editingSubtaskIndex = index;
+    toggleSubtaskActions();
+    subtaskInput.focus();
+  }
 
-  /**
-   * Handles priority button selection.
-   *
-   * Removes the "selected" class from all priority buttons,
-   * assigns it to the clicked button and stores the selected value.
-   *
-   * @param {MouseEvent} e - The click event object.
-   */
+  function deleteSubtask(index) {
+    subtasks = subtasks.filter((_, i) => i !== index);
+    renderSubtasks();
+  }
 
-  // priorityButtons.forEach(btn => {
-  //   btn.addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     priorityButtons.forEach(b => b.classList.remove('selected'));
-  //     btn.classList.add('selected');
-  //     selectedPriority = btn.value || btn.getAttribute('value') || btn.textContent.trim();
-  //   });
-  // });
+  function handleSubtaskListClick(event) {
+    const editIndex = event.target.dataset.edit;
+    const deleteIndex = event.target.dataset.delete;
+    if (editIndex !== undefined) editSubtask(Number(editIndex));
+    if (deleteIndex !== undefined) deleteSubtask(Number(deleteIndex));
+  }
 
-  // if (createBtn) {
-
-  //   /**
-  //    * Handles the task creation process.
-  //    *
-  //    * Validates input, constructs the task object,
-  //    * sends it to Firebase using pushTask(),
-  //    * and redirects to the board page on success.
-  //    *
-  //    * @async
-  //    * @param {MouseEvent} e - The click event object.
-  //    * @returns {Promise<void>}
-  //    */
-
-  //     createBtn.addEventListener('click', async (e) => {
-  //       e.preventDefault();
-  //       const title = titleInput?.value?.trim();
-  //       if (!title) { alert('Title required'); return; }
-  //       const taskData = {
-  //         title,
-  //         description: descInput?.value?.trim() || '',
-  //         due_date: dueInput?.value || '',
-  //         priority: selectedPriority || 'low',
-  //         assigned_to: assignedSelect?.value || '',
-  //         category: categorySelect?.value || '',
-  //         subtask: subtaskInput?.value?.trim() || "",
-  //         status: 'todo',
-  //         createdAt: new Date().toISOString()
-  //       };
-  //       try {
-  //         createBtn.disabled = true;
-  //         const key = await pushTask(taskData);
-  //         console.log('Pushed task, key:', key);
-  //         alert('Task created successfully');
-  //         window.location.href = './board.html';
-  //       } catch (err) {
-  //         console.error(err);
-  //         alert('Failed to create task');
-  //       } finally {
-  //         createBtn.disabled = false;
-  //       }
-  //     });
-  //   }
-
-  //   if (cancelBtn) {
-
-  //     /**
-  //      * Handles cancel button click.
-  //      *
-  //      * Prevents default behavior and navigates back
-  //      * to the previous page in browser history.
-  //      *
-  //      * @param {MouseEvent} e - The click event object.
-  //      */
-
-  //     cancelBtn.addEventListener('click', (e) => {
-  //       e.preventDefault();
-  //       window.history.back();
-  //     });
-  //   }
-  // });
-
-
-function clearAddTaskForm() {
-  document.querySelector('.form_add_task')?.reset();
-  document.querySelector('.select_add_task')?.reset();
-  priorityButtons.forEach((button) => button.classList.remove('selected'));
-  selectedPriority = null;
-  clearSelectedAssignees();
-}
-
-
-  priorityButtons.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      priorityButtons.forEach((b) => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      selectedPriority = btn.value || btn.getAttribute('value') || btn.textContent.trim();
-    });
-  });
+  function clearAddTaskForm() {
+    document.querySelector('.form_add_task')?.reset();
+    document.querySelector('.select_add_task')?.reset();
+    priorityButtons.forEach((button) => button.classList.remove('selected'));
+    selectedPriority = null;
+    subtasks = [];
+    editingSubtaskIndex = -1;
+    clearSelectedAssignees();
+    renderSubtasks();
+    clearSubtaskInput();
+  }
 
   function buildTaskData() {
     const title = titleInput?.value?.trim();
@@ -329,7 +291,7 @@ function clearAddTaskForm() {
       priority: selectedPriority || 'low',
       assigned_to: assignedInput?.value || '',
       category: categorySelect?.value || '',
-      subtask: subtaskInput?.value?.trim() || '',
+      subtasks,
       status: 'todo',
       createdAt: new Date().toISOString()
     };
@@ -350,6 +312,58 @@ function clearAddTaskForm() {
     }
   }
 
+  document.addEventListener('click', (event) => {
+    if (!assignedContainer) return;
+    if (assignedContainer.contains(event.target)) return;
+    closeAssignedOptions();
+  });
+
+  if (assignedTrigger) {
+    assignedTrigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleAssignedOptions();
+    });
+  }
+
+  auth.onAuthStateChanged((user) => {
+    if (user) trackContactsForUser(user.uid);
+  });
+
+  if (auth.currentUser) {
+    trackContactsForUser(auth.currentUser.uid);
+  }
+
+  priorityButtons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      priorityButtons.forEach((b) => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedPriority = btn.value || btn.getAttribute('value') || btn.textContent.trim();
+    });
+  });
+
+  if (subtaskInput) {
+    subtaskInput.addEventListener('input', toggleSubtaskActions);
+    subtaskInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        addSubtask();
+      }
+    });
+  }
+
+  if (confirmSubtaskBtn) {
+    confirmSubtaskBtn.addEventListener('click', addSubtask);
+  }
+
+  if (clearSubtaskBtn) {
+    clearSubtaskBtn.addEventListener('click', clearSubtaskInput);
+  }
+
+  if (subtaskList) {
+    subtaskList.addEventListener('click', handleSubtaskListClick);
+  }
+
   if (createBtn) {
     createBtn.addEventListener('click', async (e) => {
       e.preventDefault();
@@ -368,5 +382,4 @@ function clearAddTaskForm() {
       clearAddTaskForm();
     });
   }
-
 });

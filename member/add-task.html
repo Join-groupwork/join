@@ -23,10 +23,10 @@
 
 <body class="body_add_task">
 
-        <aside class="sidebar" id="sidebar"></aside>
+    <aside class="sidebar" id="sidebar"></aside>
 
-        <header class="topbar" id="header"></header>
-        <section class="container_add_task">
+    <header class="topbar" id="header"></header>
+    <section class="container_add_task">
         <main class="main_add_task">
             <div class="div_add_task">
                 <h1 class="h1_add_task">Add Task</h1>
@@ -88,9 +88,17 @@
                             <option value="user-story">User Story</option>
                         </select>
 
-                        <label for="">Subtasks</label>
-                        <input class="input_add_task" type="text" id="subtask" name="subtask"
-                            placeholder="Add new subtask" />
+                        <label for="subtask">Subtasks</label>
+                        <div class="subtask-input-wrap">
+                            <input class="input_add_task subtask_input_field" type="text" id="subtask" name="subtask"
+                                placeholder="Add new subtask" />
+                            <div class="subtask-actions d_none" id="subtask_actions">
+                                <button type="button" class="subtask-action-btn" id="clear_subtask_btn">✕</button>
+                                <span class="subtask-divider">|</span>
+                                <button type="button" class="subtask-action-btn" id="confirm_subtask_btn">✓</button>
+                            </div>
+                        </div>
+                        <div class="subtask-list" id="subtask_list"></div>
                     </form>
                 </section>
                 <section class="section_add_task_button">
