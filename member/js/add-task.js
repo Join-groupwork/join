@@ -11,6 +11,8 @@ import { pushTask } from '../../scripts/firebase/push-task.js';
  * @event DOMContentLoaded
  */
 
+
+
 document.addEventListener('DOMContentLoaded', () => {
   const createBtn = document.querySelector('.Create_button_add_task');
   const cancelBtn = document.querySelector('.clear_button_add_task');
@@ -24,6 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let selectedPriority = null;
 
+
+
   /**
    * Handles priority button selection.
    *
@@ -33,33 +37,104 @@ document.addEventListener('DOMContentLoaded', () => {
    * @param {MouseEvent} e - The click event object.
    */
 
-  priorityButtons.forEach(btn => {
+  // priorityButtons.forEach(btn => {
+  //   btn.addEventListener('click', (e) => {
+  //     e.preventDefault();
+  //     priorityButtons.forEach(b => b.classList.remove('selected'));
+  //     btn.classList.add('selected');
+  //     selectedPriority = btn.value || btn.getAttribute('value') || btn.textContent.trim();
+  //   });
+  // });
+
+  // if (createBtn) {
+
+  //   /**
+  //    * Handles the task creation process.
+  //    *
+  //    * Validates input, constructs the task object,
+  //    * sends it to Firebase using pushTask(),
+  //    * and redirects to the board page on success.
+  //    *
+  //    * @async
+  //    * @param {MouseEvent} e - The click event object.
+  //    * @returns {Promise<void>}
+  //    */
+
+  //     createBtn.addEventListener('click', async (e) => {
+  //       e.preventDefault();
+  //       const title = titleInput?.value?.trim();
+  //       if (!title) { alert('Title required'); return; }
+  //       const taskData = {
+  //         title,
+  //         description: descInput?.value?.trim() || '',
+  //         due_date: dueInput?.value || '',
+  //         priority: selectedPriority || 'low',
+  //         assigned_to: assignedSelect?.value || '',
+  //         category: categorySelect?.value || '',
+  //         subtask: subtaskInput?.value?.trim() || "",
+  //         status: 'todo',
+  //         createdAt: new Date().toISOString()
+  //       };
+  //       try {
+  //         createBtn.disabled = true;
+  //         const key = await pushTask(taskData);
+  //         console.log('Pushed task, key:', key);
+  //         alert('Task created successfully');
+  //         window.location.href = './board.html';
+  //       } catch (err) {
+  //         console.error(err);
+  //         alert('Failed to create task');
+  //       } finally {
+  //         createBtn.disabled = false;
+  //       }
+  //     });
+  //   }
+
+  //   if (cancelBtn) {
+
+  //     /**
+  //      * Handles cancel button click.
+  //      *
+  //      * Prevents default behavior and navigates back
+  //      * to the previous page in browser history.
+  //      *
+  //      * @param {MouseEvent} e - The click event object.
+  //      */
+
+  //     cancelBtn.addEventListener('click', (e) => {
+  //       e.preventDefault();
+  //       window.history.back();
+  //     });
+  //   }
+  // });
+  
+
+  function clearAddTaskForm() {
+    document.querySelector('.form_add_task')?.reset();
+    document.querySelector('.select_add_task')?.reset();
+    priorityButtons.forEach((button) => button.classList.remove('selected'));
+    selectedPriority = null;
+  }
+
+
+  priorityButtons.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      priorityButtons.forEach(b => b.classList.remove('selected'));
+      priorityButtons.forEach((b) => b.classList.remove('selected'));
       btn.classList.add('selected');
       selectedPriority = btn.value || btn.getAttribute('value') || btn.textContent.trim();
     });
   });
 
   if (createBtn) {
-
-    /**
-     * Handles the task creation process.
-     *
-     * Validates input, constructs the task object,
-     * sends it to Firebase using pushTask(),
-     * and redirects to the board page on success.
-     *
-     * @async
-     * @param {MouseEvent} e - The click event object.
-     * @returns {Promise<void>}
-     */
-
     createBtn.addEventListener('click', async (e) => {
       e.preventDefault();
       const title = titleInput?.value?.trim();
-      if (!title) { alert('Title required'); return; }
+      if (!title) {
+        alert('Title required');
+        return;
+      }
+
       const taskData = {
         title,
         description: descInput?.value?.trim() || '',
@@ -67,16 +142,17 @@ document.addEventListener('DOMContentLoaded', () => {
         priority: selectedPriority || 'low',
         assigned_to: assignedSelect?.value || '',
         category: categorySelect?.value || '',
-        subtask: subtaskInput?.value?.trim() || "",
+        subtask: subtaskInput?.value?.trim() || '',
         status: 'todo',
         createdAt: new Date().toISOString()
       };
+
       try {
         createBtn.disabled = true;
         const key = await pushTask(taskData);
         console.log('Pushed task, key:', key);
         alert('Task created successfully');
-        window.location.href = './member/board.html';
+        window.location.href = './board.html';
       } catch (err) {
         console.error(err);
         alert('Failed to create task');
@@ -87,19 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (cancelBtn) {
-
-    /**
-     * Handles cancel button click.
-     *
-     * Prevents default behavior and navigates back
-     * to the previous page in browser history.
-     *
-     * @param {MouseEvent} e - The click event object.
-     */
-
     cancelBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      window.history.back();
+      clearAddTaskForm();
     });
   }
 });

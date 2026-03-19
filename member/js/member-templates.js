@@ -109,6 +109,9 @@ export function getSidebarTemplate() {
 export function getTaskTemplate() {
   return `
      <section class="overlay_add_task">
+        <button class="add-task-close-btn" type="button" aria-label="Close">
+          <img src="../assets/icons/close-icon.svg" alt="">
+        </button>
         <h1 class="h1_add_task">Add Task</h1>
             <section class="section_add_task">
 
@@ -129,9 +132,9 @@ export function getTaskTemplate() {
                 <section class="section_priority">
                     <label for="priority">Priority</label>
                     <div id="priority" class="priority" name="priority">
-                        <button class="priority_button" value="low">Urgent <img src="../assets/icons/Property 1=Urgent.svg" alt=""></button>
-                        <button class="priority_button" value="medium">Medium <img src="../assets/icons/Property 1=Medium.svg" alt=""></button>
-                        <button class="priority_button" value="high">Low <img src="../assets/icons/Property 1=Low.svg" alt=""></button>
+                        <button class="priority_button" value="urgent">Urgent <img src="../assets/icons/urgent-prio-icon.svg" alt=""></button>
+                        <button class="priority_button" value="medium">Medium <img src="../assets/icons/medium-prio-icon.svg" alt=""></button>
+                        <button class="priority_button" value="low">Low <img src="../assets/icons/low-prio-icon.svg" alt=""></button>
                     </div>
                 </section>
 
@@ -147,8 +150,8 @@ export function getTaskTemplate() {
                 <label for="">Category</label>
                 <select class="input_add_task margin_bottom_add_task" id="category" name="category" required placeholder="">
                     <option value="select_task_category">Select task category</option>
-                    <option value="technical_task">Technical Task</option>
-                    <option value="user_story">User Story</option>
+                    <option value="technical-task">Technical Task</option>
+                    <option value="user-story">User Story</option>
                 </select>
 
                 <label for="">Subtasks</label>
@@ -156,8 +159,8 @@ export function getTaskTemplate() {
             </form>
         </section>
         <section class="section_add_task_button">
-            <button class="clear_button_add_task" type="button">Cancel <img src="../../assets/icons/close.svg" alt=""></button>
-            <button class="Create_button_add_task" type="submit">Create Task <img src="../../assets/icons/check.svg" alt=""></button>
+            <button class="clear_button_add_task" type="button">Cancel <img src="../assets/icons/close-icon.svg" alt=""></button>
+            <button class="Create_button_add_task" type="submit">Create Task <img src="../assets/icons/check-icon-white.svg" alt=""></button>
         </section>
     </section>
     `;

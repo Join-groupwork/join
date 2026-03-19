@@ -52,13 +52,11 @@ async function render() {
   await renderHeader();
   await renderSidebar();
 
-  // only attempt to render the add‑task button if the placeholder exists
   if (document.getElementById('add_task')) {
     await renderAddTask();
+    setupAddTaskOverlay(); 
   }
 
-  // renderContactAddOverlay();   <-- Aktivieren, um das Overlay zum Hinzufügen von Kontakten anzuzeigen
-  // renderContactEditOverlay(); Contact
   await renderBoard();
 };
 
@@ -114,14 +112,6 @@ function renderAddTask() {
  *
  * @returns {void}
  */
-function renderContactEditOverlay() {
-  const editContactRef = document.getElementById('editC_overlay');
-  if (editContactRef) {
-    editContactRef.innerHTML = getEditOverlayTemplate();
-  } else {
-    console.error('ContactOverlay-Element nicht gefunden!');
-  }
-};
 
 
 
@@ -154,7 +144,69 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+function openAddTaskOverlay(overlay) {
+  overlay.classList.remove('d_none');
+  const content = overlay.querySelector('.overlay_add_task');
+  if (content) {
+    content.classList.remove('overlay_add_task--slide-out');
+    content.classList.add('overlay_add_task--slide-in');
+  }
+  document.body.classList.add('no-scroll');
+}
 
+function closeAddTaskOverlay(overlay) {
+  const content = overlay.querySelector('.overlay_add_task');
+  if (!content) {
+    overlay.classList.add('d_none');
+    document.body.classList.remove('no-scroll');
+    return;
+  }
+  content.classList.remove('overlay_add_task--slide-in');
+  content.classList.add('overlay_add_task--slide-out');
+  content.addEventListener('animationend', () => {
+    content.classList.remove('overlay_add_task--slide-out');
+    overlay.classList.add('d_none');
+    document.body.classList.remove('no-scroll');
+  }, { once: true });
+}
+
+function clearOverlayAddTaskForm(overlay) {
+  overlay.querySelector('.form_add_task')?.reset();
+  overlay.querySelector('.select_add_task')?.reset();
+  overlay.querySelectorAll('.priority_button').forEach((btn) => btn.classList.remove('selected'));
+}
+
+function setupOpenButton(openBtn, overlay) {
+  openBtn.addEventListener('click', () => openAddTaskOverlay(overlay));
+}
+
+function setupBackdropAndCloseButton(overlay) {
+  overlay.addEventListener('click', (event) => {
+    if (event.target === overlay || event.target.closest('.add-task-close-btn')) {
+      closeAddTaskOverlay(overlay);
+    }
+  });
+}
+
+function setupClearButton(overlay) {
+  const clearBtn = overlay.querySelector('.clear_button_add_task');
+  if (!clearBtn) return;
+
+  clearBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    closeAddTaskOverlay(overlay);
+  });
+}
+
+function setupAddTaskOverlay() {
+  const openBtn = document.getElementById('openAddTaskOverlay');
+  const overlay = document.getElementById('add_task_overlay');
+  if (!openBtn || !overlay) return;
+
+  setupOpenButton(openBtn, overlay);
+  setupBackdropAndCloseButton(overlay);
+  setupClearButton(overlay);
+}
 /**
  * Triggers the board rendering.
  *
@@ -167,3 +219,5 @@ document.addEventListener('DOMContentLoaded', () => {
 async function renderBoard() {
   updateHTML();
 }
+
+// setupAddTaskOverlay();
