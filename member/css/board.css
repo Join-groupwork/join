@@ -306,10 +306,11 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
     font-size: 16px;
     color: #2a3647;
     cursor: pointer;
-
     display: flex;           
     align-items: center; 
 }
+
+/* Overlay Styles */
 
 .board-header {
   display: flex;
