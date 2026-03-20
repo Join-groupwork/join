@@ -237,12 +237,9 @@ main {
   padding-top: 8px;
 }
 
+
+
 .overlaytemplate-subtask-checkbox {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: flex-start;
-  text-align: center;
   gap: 8px;
   padding-top: 6px;
 }
@@ -311,7 +308,14 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
     align-items: center; 
 }
 
-/* Overlay Styles */
+.subtask-item-taskoverlay {
+  display: flex;         
+  align-items: center;    
+  gap: 8px;               
+  margin-bottom: 6px;     
+}
+
+/* Overlay Styles End */
 
 .board-header {
   display: flex;

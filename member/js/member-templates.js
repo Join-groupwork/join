@@ -371,10 +371,7 @@ export function getTaskOverlayTemplate(category,title, description, due_date , p
   ? Object.values(subtasks)
   : []; 
 
-  
-
   return `
-
   <div class="task-overlay-content">
       <div class="overlaytemplate-first-section">
         <p class="task__category--${category} overlaytemplate-category"> ${category.replace(/-/g, " ")}</p>
@@ -403,9 +400,11 @@ export function getTaskOverlayTemplate(category,title, description, due_date , p
     <div class="overlaytemplate-subtask">
       <p>Subtasks:</p>
       <div class="overlaytemplate-subtask-checkbox">
-        <img class="checkbox-icon" src="../assets/icons/checkbox/checkbox-icon unchecked.svg" alt="">
+        
         ${subtaskArray.map(s => `
-          <div class="subtask-item">
+          
+          <div class="subtask-item-taskoverlay">
+          <img class="checkbox-icon" src="../assets/icons/checkbox/checkbox-icon unchecked.svg" alt="">
             ${s.title}
           </div>
         `).join('')}
