@@ -88,32 +88,30 @@ export function updateHTML() {
   togglePlaceholder();
 };
 
-function updateProgressBar() {
-  let tasks = loadTasks();
-  let progressPercent = ;
+function updateProgressBar(tasks, id) {
+  // let progressPercent = ;
   let progressData = Object.values(tasks || {});
-  progressBarData(tasks, id);
+  progressBarShow(tasks, id);
 }
 
-function progressBarData(tasks, id) {
-  const progressRef = document.getElementById(taskProgressBar(${id}));
+function progressBarShow(tasks, id) {
+  // const progressRef = document.getElementById(taskProgressBar(${ id }));
 
   if (!tasks[id].subtasks || tasks[id].subtasks.length == 0) {
     progressRef.classList.add('d-none');
     return;
   } else {
     let totalSubtasks = tasks[id].subtasks.length;
-    let doneSubtasks = subtasksStatus(tasks, id);
-
+    // let doneSubtasks = subtasksStatus(tasks, id);
+    subtaskStatus(tasks, id);
     progressRef.classList.remove('d-none');
   }
 }
 
 
-function subtaskStatus( tasks, id) {
-for await (const doneStatus of tasks[id].subtasks.status) {
+function subtaskStatus(tasks, id) {
 
-}
+  return doneSubtasks;
 }
 
 
@@ -130,7 +128,7 @@ function updateTodo() {
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'todo') {
       container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.subtask, element.priority);
-      progressBarData(id);
+      // progressBarShow(todos, id);
     }
   }
 };
@@ -147,6 +145,7 @@ function updateInProgress() {
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'in-progress') {
       document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      // progressBarShow(todos, id);
     }
   }
 };
@@ -163,6 +162,7 @@ function updateAwaitFeedback() {
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'await-feedback') {
       document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      // progressBarShow(todos, id);
     }
   }
 };
@@ -179,6 +179,7 @@ function updateDone() {
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'done') {
       document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      // progressBarShow(todos, id);
     }
   }
 };
