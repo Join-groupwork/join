@@ -265,7 +265,7 @@ export function generateTodosHTML(id, title, category, description, priority) {
       : category;
 
   return `
-            <div class="task__card" id="${id}" draggable="true">
+            <div class="task__card" id="${id}" onclick="openTaskOverlay('${id}')" draggable="true" >
               <span class="task__category--${category}">${category}</span><br>
               <h4 class="task__title">${title}</h4><br>
               <p class="task__text">${description}</p><br>
