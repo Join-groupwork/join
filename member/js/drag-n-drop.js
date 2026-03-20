@@ -19,6 +19,45 @@ import { todos, updateHTML } from './board.js';
 import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 /**
+ * Possible board states.
+ * @typedef {"todo" | "in-progress" | "await-feedback" | "done"} SubtaskStatus
+ */
+
+/**
+ * Possible task categories.
+ * @typedef {"user-story" | "technical-task"} Category
+ */
+
+/**
+ * Possible priority values.
+ * @typedef {"low" | "medium" | "urgent"} Priority
+ */
+
+
+let activeSearchTerm = ''; // INFO This is currently only used in the search function
+/**
+ * Represents a board task.
+ *
+ * @typedef {Object} Todo
+ * @property {string} title - Task title.
+ * @property {string} description - Task description.
+ * @property {string} date - Due date (YYYY-MM-DD) or empty string.
+ * @property {Priority} priority - Task priority level.
+ * @property {string} assignedTo - Person(s) assigned to this task (currently unused).
+ * @property {Category} category - Task category.
+ * @property {SubtaskStatus} status - Current board column/status.
+ */
+
+
+/**
+ * Task collection indexed by id.
+ * NOTE: Placeholder data until Firebase is connected.
+ *
+ * @type {Record<string, Todo>}
+ */
+let todos = {};
+
+/**
  * ID (key in {@link todos}) of the currently dragged task card.
  * Set on `dragstart`, consumed on `drop`.
  *
@@ -167,3 +206,23 @@ document.addEventListener("dragleave", function (event) {
   if (!dropZone) return;
   dropZone.classList.remove("task__area--highlight");
 });
+
+
+
+function matchesSearch(task) {
+  if (!activeSearchTerm) return true;
+  const haystack = [task.title, task.description, task.category, task.priority]
+    .map(v => String(v || '').toLowerCase())
+    .join(' ');
+  return haystack.includes(activeSearchTerm);
+}
+
+function searchTask(value) {
+  activeSearchTerm = String(value || '').toLowerCase().trim();
+  updateHTML();
+}
+
+initBoard();
+
+
+window.searchTask = searchTask;
