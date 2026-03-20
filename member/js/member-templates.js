@@ -362,11 +362,10 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
 }
 
 export function getTaskOverlayTemplate(category,title, description, due_date , priority, assigned_to, subtask ) {
-
-  const initials = getInitials(assigned_to);
-  const bgColor = getAvatarColor(assigned_to);
-
-
+  const assignedArray = Array.isArray(assigned_to)
+  ? assigned_to
+  : assigned_to.split(', ');  
+  
   return `
 
   <div class="task-overlay-content">
@@ -384,12 +383,14 @@ export function getTaskOverlayTemplate(category,title, description, due_date , p
     </div>
     <div class="overlaytemplate-assigned_to">
       <p>Assigned To:</p>
-      <div class="assigned_contact">
-      <div class="contact_avatar" style="background-color: ${bgColor}">
-        ${initials}
-       </div>
-        <span>${assigned_to}</span>
-      </div>
+      ${assignedArray.map(person => `
+        <div class="assigned_contact">
+          <div class="contact_avatar" style="background-color: ${getAvatarColor(person)}">
+            ${getInitials(person)}
+          </div>
+          <span>${person}</span>
+        </div>
+      `).join('')}
     </div>
           
     <div class="overlaytemplate-subtask">
