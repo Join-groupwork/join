@@ -139,12 +139,8 @@ export function getTaskTemplate() {
                 </section>
 
                 <label for="">Assigned to</label>
-                <select class="input_add_task margin_bottom_add_task" type="text" id="assigned_to" name="assigned_to" required
-                    placeholder="Select contacts to assign">
-                    <option value="select_contact">Select contacts to assign</option>
-                    <option value="contact_1">Contact 1</option>
-                    <option value="contact_2">Contact 2</option>
-                    <option value="contact_3">Contact 3</option>
+                <select class="input_add_task margin_bottom_add_task" id="assigned_to" name="assigned_to" required>
+                    <option value="select_contact" disabled selected>Select contacts to assign</option>
                 </select>
 
                 <label for="">Category</label>
@@ -261,8 +257,15 @@ export function signupMassegeTemplate() {
  * @returns {string} HTML string representing the task card.
  */
 export function generateTodosHTML(id, title, category, description, priority) {
+  const categoryLabel =
+    category === "user-story"
+      ? "User Story"
+      : category === "technical-task"
+      ? "Technical Task"
+      : category;
+
   return `
-            <div class="task__card" id="${id}" draggable="true" onclick="openTaskOverlay('${id}')">
+            <div class="task__card" id="${id}" draggable="true">
               <span class="task__category--${category}">${category}</span><br>
               <h4 class="task__title">${title}</h4><br>
               <p class="task__text">${description}</p><br>
