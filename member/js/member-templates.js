@@ -361,11 +361,18 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
   `;
 }
 
-export function getTaskOverlayTemplate(category,title, description, due_date , priority, assigned_to, subtask ) {
+export function getTaskOverlayTemplate(category,title, description, due_date , priority, assigned_to, subtasks ) {
+  console.log('subtasks input:', subtasks);
   const assignedArray = Array.isArray(assigned_to)
   ? assigned_to
   : assigned_to.split(', ');  
+
+  const subtaskArray = subtasks && typeof subtasks === 'object'
+  ? Object.values(subtasks)
+  : []; 
+
   
+
   return `
 
   <div class="task-overlay-content">
@@ -397,7 +404,11 @@ export function getTaskOverlayTemplate(category,title, description, due_date , p
       <p>Subtasks:</p>
       <div class="overlaytemplate-subtask-checkbox">
         <img class="checkbox-icon" src="../assets/icons/checkbox/checkbox-icon unchecked.svg" alt="">
-        ${subtask}
+        ${subtaskArray.map(s => `
+          <div class="subtask-item">
+            ${s.title}
+          </div>
+        `).join('')}
       </div>
     </div>
 
