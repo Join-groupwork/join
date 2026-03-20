@@ -124,8 +124,8 @@ function closeTaskOverlay() {
   const overlayContainer = document.getElementById("overlay_container");
   overlayContainer.classList.remove('show');
   setTimeout(() => {
-    overlayContainer.classList.add('d_none'); // danach ausblenden
-    overlayContainer.innerHTML = '';           // optional Inhalt löschen
+    overlayContainer.classList.add('d_none'); 
+    overlayContainer.innerHTML = '';          
   }, 300);
 
 }
