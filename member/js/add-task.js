@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const categorySelect = document.getElementById('category');
   const priorityButtons = document.querySelectorAll('.priority_button');
 
+  const requiredFields = [titleInput, dueInput];
+  setupRequiredFieldValidation(requiredFields);
+
   let selectedPriority = null;
 
   initAssignees({
@@ -67,8 +70,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   createBtn?.addEventListener('click', async (event) => {
     event.preventDefault();
+
+    const isTitleValid = validateRequiredField(titleInput);
+    const isDueValid = validateRequiredField(dueInput);
+
+    if (!isTitleValid || !isDueValid) return;
+
     const taskData = buildTaskData();
-    if (!taskData) return alert('Title required');
+    if (!taskData) return;
+
     await submitTask(taskData, createBtn);
   });
 
@@ -119,6 +129,9 @@ document.addEventListener('DOMContentLoaded', () => {
     selectedPriority = null;
     clearSelectedAssignees();
     clearSubtasks();
+
+    clearFieldError(titleInput);
+    clearFieldError(dueInput);
   }
 
   /**
@@ -136,16 +149,18 @@ document.addEventListener('DOMContentLoaded', () => {
    * - creation timestamp
    *
    * @function buildTaskData
-   * @returns {Object|null} The task data object, or null if title is missing.
+   * @returns {Object|null} The task data object, or null if required data is missing.
    */
   function buildTaskData() {
     const title = titleInput?.value?.trim();
-    if (!title) return null;
+    const dueDate = dueInput?.value || '';
+
+    if (!title || !dueDate) return null;
 
     return {
       title,
       description: descInput?.value?.trim() || '',
-      due_date: dueInput?.value || '',
+      due_date: dueDate,
       priority: selectedPriority || 'low',
       assigned_to: getAssignedNames(),
       category: categorySelect?.value || '',
@@ -155,6 +170,76 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 });
+
+/**
+ * Validates a required form field.
+ *
+ * Adds an error class and shows the related error message
+ * when the field is empty. Removes the error state when valid.
+ *
+ * @function validateRequiredField
+ * @param {HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement} input - The field to validate.
+ * @returns {boolean} True if the field is valid, otherwise false.
+ */
+function validateRequiredField(input) {
+  const formField = input.closest('.form-field');
+  if (!formField) return true;
+
+  const isEmpty = input.value === '';
+
+  if (isEmpty) {
+    input.classList.add('input-error');
+    formField.classList.add('error');
+    return false;
+  }
+
+  input.classList.remove('input-error');
+  formField.classList.remove('error');
+  return true;
+}
+
+/**
+ * Removes the visual error state from a field.
+ *
+ * @function clearFieldError
+ * @param {HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement} input - The field to reset.
+ * @returns {void}
+ */
+function clearFieldError(input) {
+  const formField = input.closest('.form-field');
+  input.classList.remove('input-error');
+  formField?.classList.remove('error');
+}
+
+/**
+ * Sets up validation listeners for required fields.
+ *
+ * Validates fields on blur and removes the error state
+ * while typing or changing the value.
+ *
+ * @function setupRequiredFieldValidation
+ * @param {Array<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>} fields - Required fields.
+ * @returns {void}
+ */
+function setupRequiredFieldValidation(fields) {
+  fields.forEach((field) => {
+    field?.addEventListener('blur', () => {
+      validateRequiredField(field);
+    });
+
+    field?.addEventListener('input', () => {
+      if (field.classList.contains('input-error')) {
+        validateRequiredField(field);
+      }
+    });
+
+    field?.addEventListener('change', () => {
+      if (field.classList.contains('input-error')) {
+        validateRequiredField(field);
+      }
+    });
+  });
+}
 
 /**
  * Submits a task to Firebase and handles UI feedback.
