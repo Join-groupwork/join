@@ -16,11 +16,11 @@ import {
  * Initializes the Add Task page after the DOM is fully loaded.
  *
  * Sets up:
- * - Assignee module (contacts dropdown & selection)
- * - Subtask module (create, edit, delete)
+ * - assignee module (contacts dropdown and selection)
+ * - subtask module (create, edit, delete)
  * - Firebase auth listener for loading contacts
- * - Priority button handling
- * - Create and cancel button behavior
+ * - priority button handling
+ * - create and clear button behavior
  *
  * @event DOMContentLoaded
  */
@@ -33,10 +33,63 @@ document.addEventListener('DOMContentLoaded', () => {
   const categorySelect = document.getElementById('category');
   const priorityButtons = document.querySelectorAll('.priority_button');
 
+  let selectedPriority = null;
+
+  /**
+   * Sets the given priority button as selected and updates the priority state.
+   *
+   * @function applyPrioritySelection
+   * @param {HTMLButtonElement|null} button - The priority button to activate.
+   * @param {NodeListOf<HTMLButtonElement>} buttons - All available priority buttons.
+   * @returns {void}
+   */
+  function applyPrioritySelection(button, buttons) {
+    buttons.forEach((item) => item.classList.remove('selected'));
+
+    if (!button) {
+      selectedPriority = null;
+      return;
+    }
+
+    button.classList.add('selected');
+    selectedPriority =
+      button.value ||
+      button.getAttribute('value') ||
+      button.textContent.trim();
+  }
+
+  /**
+   * Finds a priority button by its priority value.
+   *
+   * @function findPriorityButton
+   * @param {NodeListOf<HTMLButtonElement>} buttons - All priority buttons.
+   * @param {string} priorityName - The priority value to search for.
+   * @returns {HTMLButtonElement|undefined} The matching button, if found.
+   */
+  function findPriorityButton(buttons, priorityName) {
+    return [...buttons].find((button) => {
+      const buttonPriority =
+        button.value ||
+        button.getAttribute('value') ||
+        button.textContent.trim();
+
+      return buttonPriority.toLowerCase() === priorityName.toLowerCase();
+    });
+  }
+
+  /**
+   * Sets the default priority to "medium" on page load.
+   *
+   * @function setDefaultPriority
+   * @returns {void}
+   */
+  function setDefaultPriority() {
+    const mediumButton = findPriorityButton(priorityButtons, 'medium');
+    applyPrioritySelection(mediumButton || null, priorityButtons);
+  }
+
   const requiredFields = [titleInput, dueInput];
   setupRequiredFieldValidation(requiredFields);
-
-  let selectedPriority = null;
 
   initAssignees({
     assignedContainer: document.getElementById('assigned_to'),
@@ -53,6 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
     clearSubtaskBtn: document.getElementById('clear_subtask_btn'),
     subtaskList: document.getElementById('subtask_list')
   });
+
+  setDefaultPriority();
 
   auth.onAuthStateChanged((user) => {
     if (user) trackContactsForUser(user.uid);
@@ -91,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
    * Handles priority button selection.
    *
    * Removes the "selected" class from all buttons,
-   * sets it on the clicked button and updates the selected priority value.
+   * sets it on the clicked button, and updates the selected priority value.
    *
    * @function selectPriority
    * @param {MouseEvent} event - The click event.
@@ -101,37 +156,38 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function selectPriority(event, button, buttons) {
     event.preventDefault();
-    buttons.forEach((item) => item.classList.remove('selected'));
-    button.classList.add('selected');
-    selectedPriority =
-      button.value ||
-      button.getAttribute('value') ||
-      button.textContent.trim();
+    applyPrioritySelection(button, buttons);
   }
 
   /**
-   * Resets the entire add-task form.
+   * Resets the entire add-task form to its initial state.
    *
    * Clears:
-   * - form inputs
-   * - selected priority
+   * - all input fields (title, description, due date, category)
    * - selected assignees
    * - subtasks
+   * - validation error states
+   *
+   * Then restores "medium" as the default priority.
    *
    * @function clearAddTaskForm
-   * @param {NodeListOf<HTMLButtonElement>} buttons - All priority buttons.
+   * @param {NodeListOf<HTMLButtonElement>} buttons - List of all priority buttons.
    * @returns {void}
    */
   function clearAddTaskForm(buttons) {
-    document.querySelector('.form_add_task')?.reset();
-    document.querySelector('.select_add_task')?.reset();
-    buttons.forEach((button) => button.classList.remove('selected'));
-    selectedPriority = null;
+    if (titleInput) titleInput.value = '';
+    if (descInput) descInput.value = '';
+    if (dueInput) dueInput.value = '';
+    if (categorySelect) categorySelect.selectedIndex = 0;
+
     clearSelectedAssignees();
     clearSubtasks();
 
     clearFieldError(titleInput);
     clearFieldError(dueInput);
+
+    const mediumButton = findPriorityButton(buttons, 'medium');
+    applyPrioritySelection(mediumButton || null, buttons);
   }
 
   /**
@@ -161,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title,
       description: descInput?.value?.trim() || '',
       due_date: dueDate,
-      priority: selectedPriority || 'low',
+      priority: selectedPriority || 'medium',
       assigned_to: getAssignedNames(),
       category: categorySelect?.value || '',
       subtasks: getSubtasks(),
@@ -174,14 +230,16 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * Validates a required form field.
  *
- * Adds an error class and shows the related error message
+ * Adds an error class and shows the related error state
  * when the field is empty. Removes the error state when valid.
  *
  * @function validateRequiredField
- * @param {HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement} input - The field to validate.
+ * @param {HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement|null} input - The field to validate.
  * @returns {boolean} True if the field is valid, otherwise false.
  */
 function validateRequiredField(input) {
+  if (!input) return false;
+
   const formField = input.closest('.form-field');
   if (!formField) return true;
 
@@ -202,10 +260,12 @@ function validateRequiredField(input) {
  * Removes the visual error state from a field.
  *
  * @function clearFieldError
- * @param {HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement} input - The field to reset.
+ * @param {HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement|null} input - The field to reset.
  * @returns {void}
  */
 function clearFieldError(input) {
+  if (!input) return;
+
   const formField = input.closest('.form-field');
   input.classList.remove('input-error');
   formField?.classList.remove('error');
@@ -218,7 +278,7 @@ function clearFieldError(input) {
  * while typing or changing the value.
  *
  * @function setupRequiredFieldValidation
- * @param {Array<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>} fields - Required fields.
+ * @param {Array<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement|null>} fields - Required fields.
  * @returns {void}
  */
 function setupRequiredFieldValidation(fields) {
@@ -257,6 +317,7 @@ function setupRequiredFieldValidation(fields) {
  */
 async function submitTask(taskData, createBtn) {
   createBtn.disabled = true;
+
   try {
     const key = await pushTask(taskData);
     console.log('Pushed task, key:', key);
