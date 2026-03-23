@@ -210,8 +210,8 @@ export function getAddOverlayTemplate() {
                 </div>
 
                 <div class="buttons_add_contact">
-                    <button type="button" class="btn_save_contact" onclick="hideAddContactOverlay()">Cancel <img src="../../assets/icons/close-icon.svg" alt=""></button>
-                    <button type="submit" form="add_contact_form" class="btn_cancel_contact">Create contact <img src="../../assets/icons/check-icon-white.svg" alt=""></button>
+                    <button type="button" class="btn_save_contact" onclick="hideAddContactOverlay()">Cancel <img src="../../assets/icons/close-icon.svg" alt="Close Icon"></button>
+                    <button type="submit" form="add_contact_form" class="btn_cancel_contact">Create contact <img src="../../assets/icons/check-icon-white.svg" alt="Check Icon"></button>
                 </div>
 
             </div>
@@ -296,8 +296,13 @@ export function getActiveContactTemplate(contact, initials, bgColor, phone) {
         <div>
           <h2 class="contact_detail_name">${contact.name || ''}</h2>
           <div class="contact_detail_actions">
-            <button type="button" class="link_btn" onclick="editContact('${contact.id}')"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
-            <button type="button" class="link_btn" onclick="deleteContact('${contact.id}')"><img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
+            <button type="button" class="link_btn" onclick="editContact('${contact.id}')">
+              <img src="../../assets/icons/pencil-icon.svg" alt="Pencil icon to edit contact details"><span>Edit</span>
+            </button>
+
+            <button type="button" class="link_btn" onclick="deleteContact('${contact.id}')">
+              <img src="../../assets/icons/trash-icon.svg" alt="Trash can icon to delete contact"><span>Delete</span>
+            </button>
           </div>
         </div>
       </div>
