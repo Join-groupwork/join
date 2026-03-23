@@ -114,13 +114,13 @@ export function getTaskTemplate() {
 
             <section>
                 <form class="form_add_task">
-                    <label for="title">Title*</label>
+                    <label for="title">Title<span class="required">*</span></label>
                     <input class="input_add_task" type="text" id="title" name="title" required placeholder="Enter a title">
 
                     <label for="description">Description</label>
                     <textarea class="textarea_add_task" id="description" name="description" required placeholder="Enter a Description"></textarea>
 
-                    <label for="due_date">Due date*</label>
+                    <label for="due_date">Due date<span class="required">*</span></label>
                     <input class="input_add_task" type="date" id="due_date" name="due_date" required placeholder="dd/mm/yyyy">
                 </form>
             </section>
