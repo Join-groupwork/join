@@ -242,6 +242,7 @@ main {
 .overlaytemplate-subtask-checkbox {
   gap: 8px;
   padding-top: 6px;
+  padding-bottom: 16px;
 }
 
 .taskoverlay_detail_actions{
