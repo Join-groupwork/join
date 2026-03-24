@@ -57,7 +57,7 @@ let activeSearchTerm = ''; // INFO This is currently only used in the search fun
  *
  * @type {Record<string, Todo>}
  */
-let todos = {};
+export let todos = {};
 
 /**
  * ID (key in {@link todos}) of the currently dragged task card.
