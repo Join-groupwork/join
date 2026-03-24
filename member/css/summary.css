@@ -167,7 +167,7 @@ body {
 .card.icon-card:hover,
 .card.urgent-info:hover,
 .small-card:hover {
-  background: #9da6b4;
+  background:#2a3547;
   transform: scale(1.10);
   transition: transform 0.18s ease;
 }
