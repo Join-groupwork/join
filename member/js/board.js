@@ -1,4 +1,17 @@
-import { loadTasks } from './scripts/firebase/get-firebase.js';
+import { loadTasks } from '/scripts/firebase/get-firebase.js';
+import { getTaskOverlayTemplate } from './member-templates.js';
+import { ref, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import { database } from "../../scripts/firebase/firebase.js";
+import { updateHTML,todos  } from './drag-n-drop.js';
+
+let tasks = {}; 
+
+
+async function initTasks() {
+  tasks = await loadTasks();
+}
+
+initTasks();
 
 /**
  * References to the DOM containers (board columns) where tasks are rendered.
@@ -37,16 +50,19 @@ const columns = {
  *
  * @returns {string} HTML string
  */
-function getCardTemplate(task) {
+
+/*function getCardTemplate(task) {
   return `
     <div class="card" id="${task.key}" draggable="true">
         <h4>${task.category}</h4>
         <p>${task.title}</p>
         <p>${task.description}</p>
         <p>${task.assigned_to}</p>
+        
+      
     </div>
-    `;
-}
+    `;  } */
+
 
 /**
  * Fetches all tasks and renders them
@@ -61,6 +77,8 @@ function getCardTemplate(task) {
  * @async
  * @returns {Promise<void>}
  */
+
+/*
 async function renderBoard() {
   const tasksData = await loadTasks();
   for (let i = 0; i < tasksData.length; i++) {
@@ -75,8 +93,73 @@ async function renderBoard() {
     column.innerHTML += getCardTemplate(task);
 
   }
+}*/
+
+
+
+
+
+function openTaskOverlay(taskId) {
+  const task = tasks[taskId];
+  if (!task) return console.warn("Task nicht gefunden:", taskId);
+
+  const overlayContainer = document.getElementById("overlay_container");
+
+  overlayContainer.innerHTML = getTaskOverlayTemplate(
+    taskId,
+    task.category,
+    task.title,
+    task.description,
+    task.due_date,
+    task.priority,
+    task.assigned_to,
+    task.subtasks,
+
+
+  );
+
+  overlayContainer.classList.remove('d_none');
+   setTimeout(() => {
+    overlayContainer.classList.add('show');
+  }, 10);
+}
+window.openTaskOverlay = openTaskOverlay;
+
+function closeTaskOverlay() {
+  const overlayContainer = document.getElementById("overlay_container");
+  overlayContainer.classList.remove('show');
+  overlayContainer.classList.add('d_none'); 
+
 }
 
+window.closeTaskOverlay = closeTaskOverlay;
 
 
-renderBoard();
+function toggleCheckbox(img) {
+  if (img.src.includes("unchecked")) {
+    img.src = "../assets/icons/checkbox/checkbox-icon-checked.svg";
+  } else {
+    img.src = "../assets/icons/checkbox/checkbox-icon unchecked.svg";
+  }
+}
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("checkbox-icon")) {
+    toggleCheckbox(e.target);
+  }
+});
+
+async function deleteTask(taskId) {
+  try {
+    await remove(ref(database, `tasks/${taskId}`));
+    delete todos[taskId]; 
+
+    closeTaskOverlay();
+    updateHTML();
+
+  } catch (error) {
+    console.error("Error deleting task:", error);
+  }
+}
+
+window.deleteTask = deleteTask;
+/* renderBoard(); */

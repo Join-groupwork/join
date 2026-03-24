@@ -140,6 +140,183 @@ main {
   cursor: pointer;
 }
 
+/* Overlay Styles */
+.d_none {
+  display: none !important ;
+}
+
+
+
+#overlay_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;                
+  justify-content: center;   
+  align-items: center;         
+  background-color: rgba(0,0,0,0.1); 
+  z-index: 999;
+  opacity: 0;           
+  transition: opacity 0.3s ease-in-out;
+  animation: overlaySlideInFromRight 260ms ease-out forwards;
+  
+}
+
+#overlay_container.show {
+  opacity: 1;             
+}
+
+.task-overlay-content {
+  width: 400px;
+  padding: 40px;
+  border-radius: 24px;
+  background-color: var(--color-background-input);
+  z-index: 1000;
+  display: flex;        
+  flex-direction: column;
+  height: auto;      
+  min-height: 600px; 
+}
+
+
+
+
+.overlaytemplate-first-section{
+  display: flex;
+  align-items: center;
+  justify-content: space-between ;
+  width: 100%;                    
+  box-sizing: border-box;        
+  gap: 10px;  
+  padding-bottom: 20px;
+}
+
+.overlaytemplate-title{
+  padding-bottom: 20px;
+}
+
+.task-overlay-content h2 {
+  font-size: 45px;
+  font-weight: bold;
+}
+
+.task-overlay-content p {
+  font-size: 24px;
+  
+}
+
+.overlaytemplate-description{
+  padding-bottom: 20px;
+}
+
+.overlaytemplate-due_date{
+  padding-bottom: 20px;
+}
+
+.overlaytemplate-priority{
+  padding-bottom: 20px;
+}
+
+.overlaytemplate-assigned_to{
+  padding-bottom: 20px;
+
+}
+
+.overlaytemplate-priority-container {
+  display: flex;
+  align-items: self-start;
+  gap: 10px;
+}
+
+.assigned_contact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+
+
+.overlaytemplate-subtask-checkbox {
+  gap: 8px;
+  padding-top: 6px;
+  padding-bottom: 16px;
+}
+
+.taskoverlay_detail_actions{
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+.taskoverlay_detail_actions button  {
+  background: none;
+  border: none;
+}
+
+.taskoverlay_detail_actions button:hover,
+.taskoverlay_detail_actions button:hover img {
+ filter: brightness(0) invert(44%) sepia(88%) saturate(3000%) hue-rotate(175deg) brightness(95%) contrast(90%);
+}
+
+
+.close_overlay_icon_getTaskOverlayTemplate{
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+.overlaytemplate-first-section button {
+  background: transparent;  
+  border: none;                          
+  cursor: pointer;  
+  padding: 8px;
+  border-radius: 17px;
+  
+}
+
+.overlaytemplate-first-section button:hover {
+   background-color: rgba(58, 79, 237, 0.1);
+}
+
+
+
+button img.close_overlay_icon_getTaskOverlayTemplate {
+  display: block;           
+}
+
+.divider-grey {
+    width: 2px;
+    height: 22px;
+    background: #646869;
+    align-self: center;
+    border-radius: 8px;
+}
+
+.link_btn-taskoverlay {
+    border: none;
+    background: transparent;
+    padding: 0;
+    gap: 5px;
+    font-size: 16px;
+    color: #2a3647;
+    cursor: pointer;
+    display: flex;           
+    align-items: center; 
+}
+
+.subtask-item-taskoverlay {
+  display: flex;         
+  align-items: center;    
+  gap: 8px;               
+  margin-bottom: 6px;     
+}
+
+/* Overlay Styles End */
 
 .board-header {
   display: flex;

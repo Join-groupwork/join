@@ -1,20 +1,9 @@
 import { auth } from '../../scripts/firebase/firebase.js';
 import { loadTasks } from '../../scripts/firebase/get-firebase.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getContacts, loadData  } from '../../scripts/firebase/get-firebase.js';
 
 
-async function initSummary() {
- const data = await loadTasks();
-  const tasks = Object.values(data || {});
-  todoTasks(tasks);
-  doneTasks(tasks);
-  urgentTasks(tasks);
-  tasksInBoard(tasks);
-  tasksInProgress(tasks);
-  awaitFeedbackTasks(tasks);
-  urgentTasksDeadLine(tasks);
-  greetings();
-}
 // function todoTasks(tasks) {
 //   const count = tasks.filter(task => task.status === "todo").length;
 //   document.getElementById("todo-count").textContent = count;
@@ -226,6 +215,7 @@ async function greetings() {
   if (daytimeElem) {
     daytimeElem.textContent = greetingText;
   }
+}
 
   // BUGFIX email is the wrong name to use for greeting. It musst use the user name or displayuser name
   // BUGFIX the displayuser name in firebase is dosn't the right name
@@ -241,18 +231,30 @@ async function greetings() {
    * @param {boolean} [user.isAnonymous] - Indicates whether the user is anonymous.
    * @returns {void}
    */
-  function assignName(user) {
-    if (!nameElem) return;
-    if (user && !user.isAnonymous) {
-      nameElem.textContent = user.displayName || user.email || 'User';
-    } else {
-      nameElem.textContent = 'Guest';
-    }
+export function assignName(user, nameElem) {
+  console.log('assignName aufgerufen', { user, nameElem });
+
+  if (!nameElem) {
+    console.warn('Kein nameElem vorhanden!');
+    return;
   }
 
-  assignName(auth.currentUser);
-  onAuthStateChanged(auth, assignName);
+  if (user && !user.isAnonymous) {
+    const contacts = getContacts();
+    console.log('contacts aktuell:', contacts);
+
+    const contact = Object.values(contacts).find(c => c.uid === user.uid);
+    console.log('Gefundener contact:', contact);
+
+    nameElem.textContent = contact?.name || 'User';
+  } else {
+    console.log('User ist anonym oder null, setze Guest');
+    nameElem.textContent = 'Guest';
+  }
 }
+
+
+
 
 function urgentTasksDeadLine(tasks) {
     const urgentTasks = tasks
@@ -271,5 +273,37 @@ function urgentTasksDeadLine(tasks) {
     }
 }
 
+export async function initSummary() {
+  const tasksData = await loadTasks();
+  const tasks = Object.values(tasksData || {});
+
+  // --- Task-Zähler hier ---
+  todoTasks(tasks);
+  doneTasks(tasks);
+  urgentTasks(tasks);
+  tasksInBoard(tasks);
+  tasksInProgress(tasks);
+  awaitFeedbackTasks(tasks);
+  urgentTasksDeadLine(tasks);
+
+  // --- Zeitbegrüßung ---
+  greetings();
+
+  const nameElem = document.getElementById('greetingName');
+
+  // --- Auth + contacts sicher synchronisieren ---
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      // contacts müssen geladen sein → loadData() aufrufen
+      loadData(() => {
+        assignName(user, nameElem);
+      });
+    } else {
+      assignName(null, nameElem); // Guest
+    }
+  });
+}
+
+// --- Aufruf beim Laden der Seite ---
 
 window.addEventListener('load', initSummary);
