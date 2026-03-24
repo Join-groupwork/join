@@ -1,5 +1,9 @@
 import { loadTasks } from '/scripts/firebase/get-firebase.js';
 import { getTaskOverlayTemplate } from './member-templates.js';
+import { ref, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import { database } from "../../scripts/firebase/firebase.js";
+import { updateHTML,todos  } from './drag-n-drop.js';
+
 let tasks = {}; 
 
 
@@ -102,6 +106,7 @@ function openTaskOverlay(taskId) {
   const overlayContainer = document.getElementById("overlay_container");
 
   overlayContainer.innerHTML = getTaskOverlayTemplate(
+    taskId,
     task.category,
     task.title,
     task.description,
@@ -123,10 +128,7 @@ window.openTaskOverlay = openTaskOverlay;
 function closeTaskOverlay() {
   const overlayContainer = document.getElementById("overlay_container");
   overlayContainer.classList.remove('show');
-  setTimeout(() => {
-    overlayContainer.classList.add('d_none'); 
-    overlayContainer.innerHTML = '';          
-  }, 300);
+  overlayContainer.classList.add('d_none'); 
 
 }
 
@@ -146,4 +148,18 @@ document.addEventListener("click", (e) => {
   }
 });
 
+async function deleteTask(taskId) {
+  try {
+    await remove(ref(database, `tasks/${taskId}`));
+    delete todos[taskId]; 
+
+    closeTaskOverlay();
+    updateHTML();
+
+  } catch (error) {
+    console.error("Error deleting task:", error);
+  }
+}
+
+window.deleteTask = deleteTask;
 /* renderBoard(); */
