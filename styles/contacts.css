@@ -181,11 +181,29 @@
     font-size: 16px;
     color: #2a3647;
     cursor: pointer;
-
+    justify-content: center;
+    display: inline-flex;
+    align-items: center;
 }
+
+.link_btn:hover,
+.link_btn:focus-visible,
+.link_btn:active {
+    background-color: transparent;
+    transition: color 0.2s ease;
+}
+
 
 .link_btn:hover {
     color: #29abe2;
+}
+
+.link_btn img {
+    transition: filter 0.2s ease;
+}
+
+.link_btn:hover img {
+    filter: brightness(0) saturate(100%) invert(61%) sepia(67%) saturate(1699%) hue-rotate(163deg) brightness(92%) contrast(86%);
 }
 
 .contact_detail_subtitle {
