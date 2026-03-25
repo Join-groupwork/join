@@ -118,8 +118,7 @@ function updateProgressBar(tasks, id) {
   });
   let progressPercent = doneSubtasks / totalSubtasks * 100;
   let progressRef = document.getElementById(`taskProgressBar-${id}`);
-  // progressRef = "";
-  progressRef.innerHTML += generateProgressBar(totalSubtasks, progressPercent, doneSubtasks);
+  progressRef.innerHTML = generateProgressBar(totalSubtasks, progressPercent, doneSubtasks);
 }
 
 
