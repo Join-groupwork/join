@@ -105,13 +105,6 @@
 
 <div class="description">
     References to the DOM containers (board columns) where tasks are rendered.
-
-Why this exists:
-- You query the DOM *once* (instead of repeating `document.getElementById(...)` everywhere).
-- Your code becomes cleaner: `columns.todo` is easier to read than `"todo"` strings everywhere.
-- It centralizes the “IDs must exist” assumption in one place (good for debugging).
-
-Note: These can be `null` if the elements don’t exist in the current HTML page.
 </div>
 
 
@@ -159,7 +152,7 @@ Note: These can be `null` if the elements don’t exist in the current HTML page
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line20">line 20</a>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line42">line 42</a>
     </li></ul></dd>
 
 
@@ -177,227 +170,27 @@ Note: These can be `null` if the elements don’t exist in the current HTML page
 
 
 
-
-
-        <h3 class="subsection-title">Methods</h3>
-
-
-
-
-
-
-
-    <h4 class="name" id="getCardTemplate"><span class="type-signature"></span>getCardTemplate<span class="signature">(task)</span><span class="type-signature"> &rarr; {string}</span></h4>
-
-
+<h4 class="name" id="todos"><span class="type-signature"></span>todos<span class="type-signature"> :Record.&lt;string, <a href="global.html#Todo">Todo</a>></span></h4>
 
 
 
 
 <div class="description">
-    Generates the HTML template for a task card.
+    Task collection indexed by id.
+NOTE: Placeholder data until Firebase is connected.
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
 
+<span class="param-type">Record.&lt;string, <a href="global.html#Todo">Todo</a>></span>
 
 
-
-
-
-    <h5>Parameters:</h5>
-
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-
-        <th>Type</th>
-
-
-
-
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-
-        <tr>
-
-                <td class="name"><code>task</code></td>
-
-
-            <td class="type">
-
-
-<span class="param-type">string</span>
-
-
-
-            </td>
-
-
-
-
-
-            <td class="description last">
-                <h6>Properties</h6>
-
-
-<table class="params">
-    <thead>
-    <tr>
-
-        <th>Name</th>
-
-
-        <th>Type</th>
-
-
-
-
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-
-        <tr>
-
-                <td class="name"><code>key</code></td>
-
-
-            <td class="type">
-
-
-<span class="param-type">string</span>
-|
-
-<span class="param-type">number</span>
-
-
-
-            </td>
-
-
-
-
-
-            <td class="description last"></td>
-        </tr>
-
-
-
-        <tr>
-
-                <td class="name"><code>category</code></td>
-
-
-            <td class="type">
-
-
-<span class="param-type">string</span>
-
-
-
-            </td>
-
-
-
-
-
-            <td class="description last"></td>
-        </tr>
-
-
-
-        <tr>
-
-                <td class="name"><code>title</code></td>
-
-
-            <td class="type">
-
-
-<span class="param-type">string</span>
-
-
-
-            </td>
-
-
-
-
-
-            <td class="description last"></td>
-        </tr>
-
-
-
-        <tr>
-
-                <td class="name"><code>description</code></td>
-
-
-            <td class="type">
-
-
-<span class="param-type">string</span>
-
-
-
-            </td>
-
-
-
-
-
-            <td class="description last"></td>
-        </tr>
-
-
-
-        <tr>
-
-                <td class="name"><code>assigned_to</code></td>
-
-
-            <td class="type">
-
-
-<span class="param-type">string</span>
-
-
-
-            </td>
-
-
-
-
-
-            <td class="description last"></td>
-        </tr>
-
-
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-
-    </tbody>
-</table>
-
+        </li>
+    </ul>
 
 
 
@@ -432,7 +225,7 @@ Note: These can be `null` if the elements don’t exist in the current HTML page
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line40">line 40</a>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line54">line 54</a>
     </li></ul></dd>
 
 
@@ -452,37 +245,7 @@ Note: These can be `null` if the elements don’t exist in the current HTML page
 
 
 
-
-
-
-
-
-<h5>Returns:</h5>
-
-
-<div class="param-desc">
-    HTML string
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-
-
-
-
-
-
+        <h3 class="subsection-title">Methods</h3>
 
 
 
@@ -575,6 +338,232 @@ Note: These can be `null` if the elements don’t exist in the current HTML page
     <dd>
 
 <span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="name" id="greetings"><span class="type-signature">(async) </span>greetings<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
+
+
+
+
+
+
+<div class="description">
+    Displays a greeting message based on the current time of day
+and shows the name of the currently authenticated user.
+
+The function:
+- Determines the appropriate greeting ("Good morning", "Good afternoon", "Good evening")
+  based on the user's local time.
+- Updates the greeting text in the DOM.
+- Checks whether a user is authenticated.
+- Displays the user's display name or email if logged in,
+  otherwise falls back to "Guest".
+- Listens for authentication state changes and updates the name dynamically.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_summary.js.html">member/js/summary.js</a>, <a href="member_js_summary.js.html#line198">line 198</a>
+    </li></ul></dd>
+
+
+
+
+
+
+
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+
+<div class="param-desc">
+    Resolves after initializing the greeting display and auth listener.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+
+<span class="param-type">Promise.&lt;void></span>
+
+
+    </dd>
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="name" id="initBoard"><span class="type-signature">(async) </span>initBoard<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
+
+
+
+
+
+
+<div class="description">
+    Loads all tasks from Firebase and renders them into the board.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line63">line 63</a>
+    </li></ul></dd>
+
+
+
+
+
+
+
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+
+<span class="param-type">Promise.&lt;void></span>
 
 
     </dd>
@@ -725,7 +714,7 @@ Note: These can be `null` if the elements don’t exist in the current HTML page
 
 
 
-    <h4 class="name" id="renderBoard"><span class="type-signature">(async) </span>renderBoard<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
+    <h4 class="name" id="todoTasks"><span class="type-signature">(async) </span>todoTasks<span class="signature">(tasks)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
 
 
 
@@ -733,14 +722,267 @@ Note: These can be `null` if the elements don’t exist in the current HTML page
 
 
 <div class="description">
-    Fetches all tasks and renders them
-based on their status.
+    Counts the number of tasks with the status "todo" or "to do"
+and updates the corresponding value in the summary UI.
 
-This function:
-- Loads tasks from the Firebase
-- Matches each task to the appropriate column
-- Removes placeholder elements if present
-- Appends the generated task card HTML to the column
+The function also ensures backward compatibility by checking
+if a task uses the old `subtask` property instead of `status`
+and assigns it accordingly.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+
+        <th>Type</th>
+
+
+
+
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+
+        <tr>
+
+                <td class="name"><code>tasks</code></td>
+
+
+            <td class="type">
+
+
+<span class="param-type">Array.&lt;Object></span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">Array of task objects retrieved from the database.
+                <h6>Properties</h6>
+
+
+<table class="params">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+
+        <th>Type</th>
+
+
+        <th>Attributes</th>
+
+
+
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+
+        <tr>
+
+                <td class="name"><code>status</code></td>
+
+
+            <td class="type">
+
+
+<span class="param-type">string</span>
+
+
+
+            </td>
+
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+
+
+
+
+                </td>
+
+
+
+
+            <td class="description last">The current status of the task (e.g. "todo", "in progress", "done").</td>
+        </tr>
+
+
+
+        <tr>
+
+                <td class="name"><code>subtask</code></td>
+
+
+            <td class="type">
+
+
+<span class="param-type">string</span>
+
+
+
+            </td>
+
+
+                <td class="attributes">
+
+                    &lt;optional><br>
+
+
+
+
+
+                </td>
+
+
+
+
+            <td class="description last">Legacy property used as a fallback for the task status.</td>
+        </tr>
+
+
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_summary.js.html">member/js/summary.js</a>, <a href="member_js_summary.js.html#line32">line 32</a>
+    </li></ul></dd>
+
+
+
+
+
+
+
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+
+<div class="param-desc">
+    Resolves after the UI has been updated.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+
+<span class="param-type">Promise.&lt;void></span>
+
+
+    </dd>
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="name" id="updateHTML"><span class="type-signature"></span>updateHTML<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+
+
+
+
+
+
+<div class="description">
+    Re-renders all board columns and updates placeholder visibility.
+
+Skips rendering when the board DOM is not present.
 </div>
 
 
@@ -784,7 +1026,7 @@ This function:
 
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line64">line 64</a>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line80">line 80</a>
     </li></ul></dd>
 
 
@@ -820,7 +1062,7 @@ This function:
     </dt>
     <dd>
 
-<span class="param-type">Promise.&lt;void></span>
+<span class="param-type">void</span>
 
 
     </dd>
@@ -828,6 +1070,506 @@ This function:
 
 
 
+
+
+
+
+
+
+
+
+        <h3 class="subsection-title">Type Definitions</h3>
+
+
+
+<h4 class="name" id="Category">Category</h4>
+
+
+
+
+<div class="description">
+    Possible task categories.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+
+<span class="param-type">"user-story"</span>
+|
+
+<span class="param-type">"technical-task"</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line9">line 9</a>
+    </li></ul></dd>
+
+
+
+
+
+
+
+</dl>
+
+
+
+
+
+
+
+
+<h4 class="name" id="Priority">Priority</h4>
+
+
+
+
+<div class="description">
+    Possible priority values.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+
+<span class="param-type">"low"</span>
+|
+
+<span class="param-type">"medium"</span>
+|
+
+<span class="param-type">"urgent"</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line14">line 14</a>
+    </li></ul></dd>
+
+
+
+
+
+
+
+</dl>
+
+
+
+
+
+
+
+
+<h4 class="name" id="TaskStatus">TaskStatus</h4>
+
+
+
+
+<div class="description">
+    Possible board states.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+
+<span class="param-type">"todo"</span>
+|
+
+<span class="param-type">"in-progress"</span>
+|
+
+<span class="param-type">"await-feedback"</span>
+|
+
+<span class="param-type">"done"</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line4">line 4</a>
+    </li></ul></dd>
+
+
+
+
+
+
+
+</dl>
+
+
+
+
+
+
+
+
+<h4 class="name" id="Todo">Todo</h4>
+
+
+
+
+<div class="description">
+    Represents a board task.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+
+
+<table class="props">
+    <thead>
+    <tr>
+
+        <th>Name</th>
+
+
+        <th>Type</th>
+
+
+
+
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+
+        <tr>
+
+                <td class="name"><code>title</code></td>
+
+
+            <td class="type">
+
+
+<span class="param-type">string</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">Task title.</td>
+        </tr>
+
+
+
+        <tr>
+
+                <td class="name"><code>description</code></td>
+
+
+            <td class="type">
+
+
+<span class="param-type">string</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">Task description.</td>
+        </tr>
+
+
+
+        <tr>
+
+                <td class="name"><code>date</code></td>
+
+
+            <td class="type">
+
+
+<span class="param-type">string</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">Due date (YYYY-MM-DD) or empty string.</td>
+        </tr>
+
+
+
+        <tr>
+
+                <td class="name"><code>priority</code></td>
+
+
+            <td class="type">
+
+
+<span class="param-type"><a href="global.html#Priority">Priority</a></span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">Task priority level.</td>
+        </tr>
+
+
+
+        <tr>
+
+                <td class="name"><code>assignedTo</code></td>
+
+
+            <td class="type">
+
+
+<span class="param-type">string</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">Person(s) assigned to this task (currently unused).</td>
+        </tr>
+
+
+
+        <tr>
+
+                <td class="name"><code>category</code></td>
+
+
+            <td class="type">
+
+
+<span class="param-type"><a href="global.html#Category">Category</a></span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">Task category.</td>
+        </tr>
+
+
+
+        <tr>
+
+                <td class="name"><code>status</code></td>
+
+
+            <td class="type">
+
+
+<span class="param-type"><a href="global.html#TaskStatus">TaskStatus</a></span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">Current board column/status.</td>
+        </tr>
+
+
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_board.js.html">member/js/board.js</a>, <a href="member_js_board.js.html#line19">line 19</a>
+    </li></ul></dd>
+
+
+
+
+
+
+
+</dl>
 
 
 
@@ -859,7 +1601,7 @@ This function:
 Sets up:
 - Priority button selection handling
 - Create task button logic (including validation and Firebase push)
-* - Cancel button navigation behavior
+- Cancel button navigation behavior
 </div>
 
 
@@ -945,13 +1687,13 @@ Sets up:
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Mar 12 2026 11:09:41 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

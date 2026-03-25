@@ -106,6 +106,9 @@ export function getSidebarTemplate() {
 export function getTaskTemplate() {
   return `
      <section class="overlay_add_task">
+        <button class="add-task-close-btn" type="button" aria-label="Close">
+          <img src="../assets/icons/close-icon.svg" alt="">
+        </button>
         <h1 class="h1_add_task">Add Task</h1>
             <section class="section_add_task">
 
@@ -126,26 +129,22 @@ export function getTaskTemplate() {
                 <section class="section_priority">
                     <label for="priority">Priority</label>
                     <div id="priority" class="priority" name="priority">
-                        <button class="priority_button" value="low">Urgent <img src="../assets/icons/Property 1=Urgent.svg" alt=""></button>
-                        <button class="priority_button" value="medium">Medium <img src="../assets/icons/Property 1=Medium.svg" alt=""></button>
-                        <button class="priority_button" value="high">Low <img src="../assets/icons/Property 1=Low.svg" alt=""></button>
+                        <button class="priority_button" value="urgent">Urgent <img src="../assets/icons/urgent-prio-icon.svg" alt=""></button>
+                        <button class="priority_button" value="medium">Medium <img src="../assets/icons/medium-prio-icon.svg" alt=""></button>
+                        <button class="priority_button" value="low">Low <img src="../assets/icons/low-prio-icon.svg" alt=""></button>
                     </div>
                 </section>
 
                 <label for="">Assigned to</label>
-                <select class="input_add_task margin_bottom_add_task" type="text" id="assigned_to" name="assigned_to" required
-                    placeholder="Select contacts to assign">
-                    <option value="select_contact">Select contacts to assign</option>
-                    <option value="contact_1">Contact 1</option>
-                    <option value="contact_2">Contact 2</option>
-                    <option value="contact_3">Contact 3</option>
+                <select class="input_add_task margin_bottom_add_task" id="assigned_to" name="assigned_to" required>
+                    <option value="select_contact" disabled selected>Select contacts to assign</option>
                 </select>
 
                 <label for="">Category</label>
                 <select class="input_add_task margin_bottom_add_task" id="category" name="category" required placeholder="">
                     <option value="select_task_category">Select task category</option>
-                    <option value="technical_task">Technical Task</option>
-                    <option value="user_story">User Story</option>
+                    <option value="technical-task">Technical Task</option>
+                    <option value="user-story">User Story</option>
                 </select>
 
                 <label for="">Subtasks</label>
@@ -153,8 +152,8 @@ export function getTaskTemplate() {
             </form>
         </section>
         <section class="section_add_task_button">
-            <button class="clear_button_add_task" type="button">Cancel <img src="../../assets/icons/close.svg" alt=""></button>
-            <button class="Create_button_add_task" type="submit">Create Task <img src="../../assets/icons/check.svg" alt=""></button>
+            <button class="clear_button_add_task" type="button">Cancel <img src="../assets/icons/close-icon.svg" alt=""></button>
+            <button class="Create_button_add_task" type="submit">Create Task <img src="../assets/icons/check-icon-white.svg" alt=""></button>
         </section>
     </section>
     `;
@@ -251,25 +250,66 @@ export function signupMassegeTemplate() {
  * @param {string} title - Task title.
  * @param {Category} category - Task category label.
  * @param {string} description - Task description.
+ * @param {Array} subtask - Array with subtasks.
+ * @param {string} subtasks - subtasks into subtask.
  * @param {Priority} priority - Task priority label.
  * @returns {string} HTML string representing the task card.
  */
+// export function generateTodosHTML(id, title, category, description, doneSubtasks, totalSubtasks, priority) {
+//   const categoryLabel =
+//     category === "user-story"
+//       ? "User Story"
+//       : category === "technical-task"
+//       ? "Technical Task"
+//       : category;
+
+//   return `
+//             <div class="task__card" id="${id}" draggable="true">
+//               <span class="task__category--${category}">${categoryLabel}</span><br>
+//               <h4 class="task__title">${title}</h4><br>
+//               <p class="task__text">${description}</p><br>
+//               <div class="task__bar" id="taskProgressBar(${id})">
+//                 <progress>Das Template wird returned</progress>
+//                 ${doneSubtasks} von ${totalSubtasks}
+//               </div><br>
+//               <div class="task__footer">
+//                 <div>users</div>
+//                 <img src="../../assets/icons/${priority}-prio-icon.svg" alt="">
+//               </div>
+//             </div>
+//           `;
+// };
 export function generateTodosHTML(id, title, category, description, priority) {
+  const categoryLabel =
+    category === "user-story"
+      ? "User Story"
+      : category === "technical-task"
+        ? "Technical Task"
+        : category;
+
+  const safePriority = priority || "low";
+
   return `
-            <div class="task__card" id="${id}" draggable="true">
-              <span class="task__category--${category}">${category}</span><br>
-              <h4 class="task__title">${title}</h4><br>
-              <p class="task__text">${description}</p><br>
-              <div class="task__bar">
-                <progress></progress>
-              </div><br>
-              <div class="task__footer">
-                <div>users</div>
-                <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
-              </div>
-            </div>
-          `;
-};
+    <div class="task__card" id="${id}" draggable="true">
+      <span class="task__category--${category}">${categoryLabel}</span><br>
+      <h4 class="task__title">${title}</h4><br>
+      <p class="task__text">${description}</p><br>
+      <div class="task__bar" id="taskProgressBar-${id}">
+      </div><br>
+      <div class="task__footer">
+        <div>users</div>
+        <img src="../../assets/icons/${safePriority}-prio-icon.svg" alt="">
+      </div>
+    </div>
+  `;
+}
+
+export function generateProgressBar(totalSubtasks, progressPercent, doneSubtasks) {
+  return `
+          <progress max="100" value="${progressPercent}"></progress> ${doneSubtasks} von ${totalSubtasks}
+`
+}
+
 
 /**
  * Two show contact details overlay.

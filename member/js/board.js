@@ -1,14 +1,36 @@
-import { loadTasks } from './scripts/firebase/get-firebase.js';
+import { loadTasks } from '../../scripts/firebase/get-firebase.js';
+import { generateTodosHTML, generateProgressBar } from './member-templates.js';
+
+/**
+ * Possible board states.
+ * @typedef {"todo" | "in-progress" | "await-feedback" | "done"} TaskStatus
+ */
+
+/**
+ * Possible task categories.
+ * @typedef {"user-story" | "technical-task"} Category
+ */
+
+/**
+ * Possible priority values.
+ * @typedef {"low" | "medium" | "urgent"} Priority
+ */
+
+/**
+ * Represents a board task.
+ *
+ * @typedef {Object} Todo
+ * @property {string} title - Task title.
+ * @property {string} description - Task description.
+ * @property {string} date - Due date (YYYY-MM-DD) or empty string.
+ * @property {Priority} priority - Task priority level.
+ * @property {string} assignedTo - Person(s) assigned to this task (currently unused).
+ * @property {Category} category - Task category.
+ * @property {TaskStatus} status - Current board column/status.
+ */
 
 /**
  * References to the DOM containers (board columns) where tasks are rendered.
- *
- * Why this exists:
- * - You query the DOM *once* (instead of repeating `document.getElementById(...)` everywhere).
- * - Your code becomes cleaner: `columns.todo` is easier to read than `"todo"` strings everywhere.
- * - It centralizes the “IDs must exist” assumption in one place (good for debugging).
- *
- * Note: These can be `null` if the elements don’t exist in the current HTML page.
  *
  * @type {{
  *   todo: HTMLElement|null,
@@ -23,60 +45,177 @@ const columns = {
   /** @type {HTMLElement|null} */ awaitFeedback: document.getElementById('awaitFeedback'),
   /** @type {HTMLElement|null} */ done: document.getElementById('done'),
 };
-
-
 /**
- * Generates the HTML template for a task card.
+ * Task collection indexed by id.
+ * NOTE: Placeholder data until Firebase is connected.
  *
- * @param {string} task
- * @param {string|number} task.key
- * @param {string} task.category
- * @param {string} task.title
- * @param {string} task.description
- * @param {string} task.assigned_to
- *
- * @returns {string} HTML string
+ * @type {Record<string, Todo>}
  */
-function getCardTemplate(task) {
-  return `
-    <div class="card" id="${task.key}" draggable="true">
-        <h4>${task.category}</h4>
-        <p>${task.title}</p>
-        <p>${task.description}</p>
-        <p>${task.assigned_to}</p>
-    </div>
-    `;
-}
+export let todos = {};
+
 
 /**
- * Fetches all tasks and renders them
- * based on their status.
- *
- * This function:
- * - Loads tasks from the Firebase
- * - Matches each task to the appropriate column
- * - Removes placeholder elements if present
- * - Appends the generated task card HTML to the column
+ * Loads all tasks from Firebase and renders them into the board.
  *
  * @async
  * @returns {Promise<void>}
  */
-async function renderBoard() {
-  const tasksData = await loadTasks();
-  for (let i = 0; i < tasksData.length; i++) {
-    const task = tasksData[i]; // get the current task
-    // Find the correct column based on task status
-    const column = columns[task.status];
-    if (!column) continue; // skip if the column doesn't exist
-    // Remove the placeholder text if it exists
-    const placeholder = column.querySelector('.card-placeholder');
-    if (placeholder) placeholder.remove();
-    // 5️⃣ Add the task card to the column
-    column.innerHTML += getCardTemplate(task);
-
+export async function initBoard() {
+  try {
+    todos = await loadTasks();
+    updateHTML();
+  } catch (error) {
+    console.error('Fehler bei Laden der Tasks:', error);
   }
 }
 
 
+/**
+ * Re-renders all board columns and updates placeholder visibility.
+ *
+ * Skips rendering when the board DOM is not present.
+ *
+ * @returns {void}
+ */
+export function updateHTML() {
+  // if this page doesn’t have a todo column we’re not on the board,
+  // so skip all DOM updates to avoid null errors
+  if (!document.getElementById('todo')) return;
+  updateTodo();
+  updateInProgress();
+  updateAwaitFeedback();
+  updateDone();
+  togglePlaceholder();
+};
 
-renderBoard();
+
+/**
+ *
+ * @param {object} tasks - JSON file with all tasks.
+ * @param {string} id - ID from then tasks.
+ * @returns {void}
+ */
+function progressBarShow(tasks, id) {
+  const progressRef = document.getElementById(`taskProgressBar-${id}`);
+  if (!tasks[id].subtasks || Object.values(tasks[id].subtasks).length == 0) {
+    progressRef.classList.add('d-none');
+    return;
+  } else {
+    updateProgressBar(tasks, id);
+    progressRef.classList.remove('d-none');
+  }
+}
+
+
+function updateProgressBar(tasks, id) {
+  let totalSubtasks = Object.values(tasks[id].subtasks).length;
+  let subtaskRef = Object.values(tasks[id].subtasks)
+  let doneSubtasks = 0;
+  subtaskRef.forEach(subtask => {
+    if (subtask.status === true) {
+      doneSubtasks++;
+    }
+  });
+  let progressPercent = doneSubtasks / totalSubtasks * 100;
+  let progressRef = document.getElementById(`taskProgressBar-${id}`);
+  progressRef.innerHTML = generateProgressBar(totalSubtasks, progressPercent, doneSubtasks);
+}
+
+
+function toggleSubtaskStatus(tasks, id, subtaskKey) {
+
+}
+
+
+/**
+ * Renders tasks with {@link Todo.status} === "todo" into the `#todo` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateTodo() {
+  const container = document.getElementById('todo');
+  if (!container) return;
+  container.innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'todo') {
+      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      progressBarShow(todos, id);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.status} === `"in-progress"` into the `#inProgress` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateInProgress() {
+  document.getElementById('inProgress').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'in-progress') {
+      document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      progressBarShow(todos, id);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.status} === `"await-feedback"` into the `#awaitFeedback` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateAwaitFeedback() {
+  document.getElementById('awaitFeedback').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'await-feedback') {
+      document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      progressBarShow(todos, id);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.status} === `"done"` into the `#done` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateDone() {
+  document.getElementById('done').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'done') {
+      document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      progressBarShow(todos, id);
+    }
+  }
+};
+
+
+/**
+ * Shows/hides the placeholder inside each `.task__area` depending on whether
+ * at least one task exists for that column.
+ *
+ * Uses `.task__area[data-status]` to match against {@link Todo.status}.
+ *
+ * @private
+ * @returns {void}
+ */
+function togglePlaceholder() {
+  const taskAreas = document.querySelectorAll('.task__area');
+  taskAreas.forEach(area => {
+    let status = area.dataset.status;
+    const placeholder = area.querySelector('.task__area--placeholder');
+    let hasTask = Object.values(todos).some(task => task.status === status);
+    if (hasTask) {
+      placeholder.classList.add('d-none')
+    } else {
+      placeholder.classList.remove('d-none');
+    }
+  });
+};

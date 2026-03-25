@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join</title>
-    <link rel="icon" href="./assets/img/logo-dark.svg" type="image/svg" />
+    <link rel="icon" href="../assets/img/logo-dark.svg" type="image/svg" />
     <link rel="stylesheet" href="../styles/standard.css" />
     <link rel="stylesheet" href="../styles/join.css" />
     <link rel="stylesheet" href="../styles/fonts.css" />
@@ -23,10 +23,10 @@
 
 <body class="body_add_task">
 
-        <aside class="sidebar" id="sidebar"></aside>
+    <aside class="sidebar" id="sidebar"></aside>
 
-        <header class="topbar" id="header"></header>
-        <section class="container_add_task">
+    <header class="topbar" id="header"></header>
+    <section class="container_add_task">
         <main class="main_add_task">
             <div class="div_add_task">
                 <h1 class="h1_add_task">Add Task</h1>
@@ -67,16 +67,16 @@
                             </div>
                         </section>
 
-                        <label for="">Assigned to</label>
-                        <select class="input_add_task margin_bottom_add_task" type="text" id="assigned_to"
-                            name="assigned_to" required placeholder="Select contacts to assign">
-                            <option value="select_contact">
-                                Select contacts to assign
-                            </option>
-                            <option value="contact_1">Contact 1</option>
-                            <option value="contact_2">Contact 2</option>
-                            <option value="contact_3">Contact 3</option>
-                        </select>
+                        <label for="assigned_to_input">Assigned to</label>
+                        <div class="custom-select margin_bottom_add_task" id="assigned_to">
+                            <button type="button" class="custom-select__trigger" id="assigned_to_trigger">
+                                <span class="custom-select__trigger-label">Select contacts to assign</span>
+                                <span class="custom-select__arrow">▾</span>
+                            </button>
+                            <div class="custom-select__options d_none" id="assigned_to_options"></div>
+                        </div>
+                        <input type="hidden" id="assigned_to_input" name="assigned_to" required>
+                        <div class="selected-assignees" id="selected_assignees_display"></div>
 
                         <label for="">Category</label>
                         <select class="input_add_task margin_bottom_add_task" id="category" name="category" required
@@ -88,14 +88,22 @@
                             <option value="user-story">User Story</option>
                         </select>
 
-                        <label for="">Subtasks</label>
-                        <input class="input_add_task" type="text" id="subtask" name="subtask"
-                            placeholder="Add new subtask" />
+                        <label for="subtask">Subtasks</label>
+                        <div class="subtask-input-wrap">
+                            <input class="input_add_task subtask_input_field" type="text" id="subtask" name="subtask"
+                                placeholder="Add new subtask" />
+                            <div class="subtask-actions d_none" id="subtask_actions">
+                                <button type="button" class="subtask-action-btn" id="clear_subtask_btn">✕</button>
+                                <span class="subtask-divider">|</span>
+                                <button type="button" class="subtask-action-btn" id="confirm_subtask_btn">✓</button>
+                            </div>
+                        </div>
+                        <div class="subtask-list" id="subtask_list"></div>
                     </form>
                 </section>
                 <section class="section_add_task_button">
                     <button class="clear_button_add_task" type="button">
-                        Cancel <img src="../assets/icons/close-icon.svg" alt="" />
+                        Clear <img src="../assets/icons/close-icon.svg" alt="" />
                     </button>
                     <button class="Create_button_add_task" type="submit">
                         Create Task <img src="../assets/icons/check-icon-white.svg" alt="" />

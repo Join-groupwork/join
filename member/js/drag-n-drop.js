@@ -1,23 +1,21 @@
 /**
- * @file Provides basic Kanban board rendering + drag-and-drop handling for tasks ("todos").
+ * @file Provides drag-and-drop handling for board tasks.
  *
  * This module:
- * - Keeps a temporary in-memory `todos` object (placeholder until Firebase is connected)
- * - Renders tasks into the four board columns (todo / in-progress / await-feedback / done)
- * - Toggles column placeholders when a column has no tasks
- * - Implements drag & drop using document-level event listeners
+ * - Tracks the currently dragged task card
+ * - Highlights valid drop zones during dragging
+ * - Updates the task status locally and in Firebase on drop
+ * - Clears drag preview and highlight states after drag operations
  *
  * DOM expectations:
- * - Columns with IDs: `todo`, `inProgress`, `awaitFeedback`, `done`
- * - Drop zones with class `.task__area` and `data-status` values matching todo.subtask
- * - Placeholder element inside each `.task__area`: `.task__area--placeholder`
- * - Task cards have class `.task__card` and an `id` that matches the todo key
+ * - Drop zones with class `.task__area` and `data-status` values matching task.status
+ * - Placeholder/task container `.task__list` inside each `.task__area`
+ * - Task cards with class `.task__card` and an `id` matching the task key
  *
  * @module drag-n-drop
  */
 import { database } from '../../scripts/firebase/firebase.js';
-import { loadTasks } from '../../scripts/firebase/get-firebase.js';
-import { generateTodosHTML } from './member-templates.js'
+import { todos, updateHTML } from './board.js';
 import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 /**
@@ -35,6 +33,8 @@ import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-
  * @typedef {"low" | "medium" | "urgent"} Priority
  */
 
+
+let activeSearchTerm = ''; // INFO This is currently only used in the search function
 /**
  * Represents a board task.
  *
@@ -55,7 +55,7 @@ import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-
  *
  * @type {Record<string, Todo>}
  */
-let todos = {};
+// let todos = {};
 
 /**
  * ID (key in {@link todos}) of the currently dragged task card.
@@ -63,25 +63,17 @@ let todos = {};
  *
  * @type {string|undefined}
  */
-let currentDraggedElement;
+export let currentDraggedElement;
+
 
 /**
+ * Persists a task status change to Firebase.
  *
- */
-async function initBoard() {
-  try {
-    todos = await loadTasks();
-    updateHTML();
-  } catch (error) {
-    console.error('Fehler bei Laden der Tasks:', error);
-  }
-}
-
-/**
- * Handles the upload to firebase after switch category.
+ * Updates `tasks/{taskId}` with the new `status` value.
  *
- * @param {string} taskId - ID from task
- * @param {string} newStatus - Status from task
+ * @param {string} taskId - ID of the task to update.
+ * @param {string} newStatus - New board status for the task.
+ * @returns {Promise<void>}
  */
 export async function updateTaskStatus(taskId, newStatus) {
   await update(ref(database, `tasks/${taskId}`), {
@@ -89,122 +81,22 @@ export async function updateTaskStatus(taskId, newStatus) {
   });
 }
 
-
 /**
- * Re-renders all board columns and updates placeholder visibility.
+ * Removes the highlight class from all drop zones.
  *
- * @export
  * @returns {void}
  */
-export async function updateHTML() {
-  // if this page doesn’t have a todo column we’re not on the board,
-  // so skip all DOM updates to avoid null errors
-  if (!document.getElementById('todo')) return;
-
-  updateTodo();
-  updateInProgress();
-  updateAwaitFeedback();
-  updateDone();
-  togglePlaceholder();
-};
-
-
-/**
- * Renders tasks with {@link Todo.subtask} === `"todo"` into the `#todo` column.
- *
- * @private
- * @returns {void}
- */
-function updateTodo() {
-  const container = document.getElementById('todo');
-  if (!container) return;
-  container.innerHTML = '';
-  for (const [id, element] of Object.entries(todos)) {
-    if (element.status === 'todo') {
-      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
-    }
-  }
-};
-
-
-/**
- * Renders tasks with {@link Todo.subtask} === `"in-progress"` into the `#inProgress` column.
- *
- * @private
- * @returns {void}
- */
-function updateInProgress() {
-  document.getElementById('inProgress').innerHTML = '';
-  for (const [id, element] of Object.entries(todos)) {
-    if (element.status === 'in-progress') {
-      document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
-    }
-  }
-};
-
-
-/**
- * Renders tasks with {@link Todo.subtask} === `"await-feedback"` into the `#awaitFeedback` column.
- *
- * @private
- * @returns {void}
- */
-function updateAwaitFeedback() {
-  document.getElementById('awaitFeedback').innerHTML = '';
-  for (const [id, element] of Object.entries(todos)) {
-    if (element.status === 'await-feedback') {
-      document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
-    }
-  }
-};
-
-
-/**
- * Renders tasks with {@link Todo.subtask} === `"done"` into the `#done` column.
- *
- * @private
- * @returns {void}
- */
-function updateDone() {
-  document.getElementById('done').innerHTML = '';
-  for (const [id, element] of Object.entries(todos)) {
-    if (element.status === 'done') {
-      document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
-    }
-  }
-};
-
-
-/**
- * Shows/hides the placeholder inside each `.task__area` depending on whether
- * at least one task exists for that column.
- *
- * Uses `.task__area[data - status]` to match against {@link Todo.status}.
- *
- * @private
- * @returns {void}
- */
-function togglePlaceholder() {
-  const taskAres = document.querySelectorAll('.task__area');
-  taskAres.forEach(area => {
-    let status = area.dataset.status;
-    const placeholder = area.querySelector('.task__area--placeholder');
-    let hasTask = Object.values(todos).some(task => task.status === status);
-    if (hasTask) {
-      placeholder.classList.add('d-none')
-    } else {
-      placeholder.classList.remove('d-none');
-    }
-  });
-};
-
-
 function clearDropHighlights() {
   document.querySelectorAll(".task__area--highlight").forEach(zone => {
     zone.classList.remove("task__area--highlight");
   });
 }
 
+/**
+ * Removes the preview class from all task lists.
+ *
+ * @returns {void}
+ */
 function clearDropCardPreview() {
   document.querySelectorAll(".task__list--preview").forEach(list => {
     list.classList.remove("task__list--preview");
@@ -260,11 +152,11 @@ document.addEventListener("dragover", function (event) {
   clearDropHighlights();
   clearDropCardPreview();
   if (!dropZone) return; // INFO If there is no drop zone, cancel.
-    const taskList = dropZone.querySelector(".task__list");
+  dropZone.classList.add("task__area--highlight");
+  const taskList = dropZone.querySelector(".task__list");
   if (!taskList) return;
   taskList.classList.add("task__list--preview");
 });
-
 
 /**
  * Handles `drop` within a `.task__area` drop zone.
@@ -316,4 +208,19 @@ document.addEventListener("dragleave", function (event) {
 });
 
 
-initBoard();
+
+function matchesSearch(task) {
+  if (!activeSearchTerm) return true;
+  const haystack = [task.title, task.description, task.category, task.priority]
+    .map(v => String(v || '').toLowerCase())
+    .join(' ');
+  return haystack.includes(activeSearchTerm);
+}
+
+function searchTask(value) {
+  activeSearchTerm = String(value || '').toLowerCase().trim();
+  updateHTML();
+}
+
+
+window.searchTask = searchTask;
