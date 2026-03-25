@@ -55,7 +55,7 @@ let activeSearchTerm = ''; // INFO This is currently only used in the search fun
  *
  * @type {Record<string, Todo>}
  */
-let todos = {};
+// let todos = {};
 
 /**
  * ID (key in {@link todos}) of the currently dragged task card.
@@ -221,8 +221,6 @@ function searchTask(value) {
   activeSearchTerm = String(value || '').toLowerCase().trim();
   updateHTML();
 }
-
-initBoard();
 
 
 window.searchTask = searchTask;

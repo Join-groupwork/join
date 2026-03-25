@@ -221,8 +221,5 @@ function setupAddTaskOverlay() {
  * @async
  * @returns {Promise<void>}
  */
-async function renderBoard() {
-  updateHTML();
-}
 
 // setupAddTaskOverlay();

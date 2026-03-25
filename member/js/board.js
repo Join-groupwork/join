@@ -1,5 +1,5 @@
 import { loadTasks } from '../../scripts/firebase/get-firebase.js';
-import { generateTodosHTML } from './member-templates.js';
+import { generateTodosHTML, generateProgressBar } from './member-templates.js';
 
 /**
  * Possible board states.
@@ -88,30 +88,43 @@ export function updateHTML() {
   togglePlaceholder();
 };
 
-function updateProgressBar(tasks, id) {
-  // let progressPercent = ;
-  let progressData = Object.values(tasks || {});
-  progressBarShow(tasks, id);
-}
 
+/**
+ *
+ * @param {object} tasks - JSON file with all tasks.
+ * @param {string} id - ID from then tasks.
+ * @returns {void}
+ */
 function progressBarShow(tasks, id) {
-  // const progressRef = document.getElementById(taskProgressBar(${ id }));
-
-  if (!tasks[id].subtasks || tasks[id].subtasks.length == 0) {
+  const progressRef = document.getElementById(`taskProgressBar-${id}`);
+  if (!tasks[id].subtasks || Object.values(tasks[id].subtasks).length == 0) {
     progressRef.classList.add('d-none');
     return;
   } else {
-    let totalSubtasks = tasks[id].subtasks.length;
-    // let doneSubtasks = subtasksStatus(tasks, id);
-    subtaskStatus(tasks, id);
+    updateProgressBar(tasks, id);
     progressRef.classList.remove('d-none');
   }
 }
 
 
-function subtaskStatus(tasks, id) {
+function updateProgressBar(tasks, id) {
+  let totalSubtasks = Object.values(tasks[id].subtasks).length;
+  let subtaskRef = Object.values(tasks[id].subtasks)
+  let doneSubtasks = 0;
+  subtaskRef.forEach(subtask => {
+    if (subtask.status === true) {
+      doneSubtasks++;
+    }
+  });
+  let progressPercent = doneSubtasks / totalSubtasks * 100;
+  let progressRef = document.getElementById(`taskProgressBar-${id}`);
+  // progressRef = "";
+  progressRef.innerHTML += generateProgressBar(totalSubtasks, progressPercent, doneSubtasks);
+}
 
-  return doneSubtasks;
+
+function toggleSubtaskStatus(tasks, id, subtaskKey) {
+
 }
 
 
@@ -127,8 +140,8 @@ function updateTodo() {
   container.innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'todo') {
-      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.subtask, element.priority);
-      // progressBarShow(todos, id);
+      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      progressBarShow(todos, id);
     }
   }
 };
@@ -145,7 +158,7 @@ function updateInProgress() {
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'in-progress') {
       document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
-      // progressBarShow(todos, id);
+      progressBarShow(todos, id);
     }
   }
 };
@@ -162,7 +175,7 @@ function updateAwaitFeedback() {
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'await-feedback') {
       document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
-      // progressBarShow(todos, id);
+      progressBarShow(todos, id);
     }
   }
 };
@@ -179,7 +192,7 @@ function updateDone() {
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'done') {
       document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
-      // progressBarShow(todos, id);
+      progressBarShow(todos, id);
     }
   }
 };
