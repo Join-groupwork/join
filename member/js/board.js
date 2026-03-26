@@ -1,34 +1,8 @@
-import { loadTasks } from '../../scripts/firebase/get-firebase.js';
-import { generateTodosHTML, generateProgressBar } from './member-templates.js';
-
-/**
- * Possible board states.
- * @typedef {"todo" | "in-progress" | "await-feedback" | "done"} TaskStatus
- */
-
-/**
- * Possible task categories.
- * @typedef {"user-story" | "technical-task"} Category
- */
-
-/**
- * Possible priority values.
- * @typedef {"low" | "medium" | "urgent"} Priority
- */
-
-/**
- * Represents a board task.
- *
- * @typedef {Object} Todo
- * @property {string} title - Task title.
- * @property {string} description - Task description.
- * @property {string} date - Due date (YYYY-MM-DD) or empty string.
- * @property {Priority} priority - Task priority level.
- * @property {string} assignedTo - Person(s) assigned to this task (currently unused).
- * @property {Category} category - Task category.
- * @property {TaskStatus} status - Current board column/status.
- */
-
+import { loadTasks } from './scripts/firebase/get-firebase.js';
+import { getTaskOverlayTemplate } from './member-templates.js';
+import { ref, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import { database } from "../../scripts/firebase/firebase.js";
+import { updateHTML,todos  } from './drag-n-drop.js';
 /**
  * References to the DOM containers (board columns) where tasks are rendered.
  *

@@ -9,6 +9,9 @@ let contacts = {};
 let tasks = {};
 let category = {};
 
+export function getContacts() {
+  return contacts;
+}
 
 //  authentifizierung
 auth.onAuthStateChanged((user) => {
@@ -23,7 +26,7 @@ auth.onAuthStateChanged((user) => {
 
 
 // Daten laden
-export async function loadData() {
+export async function loadData(onContactsLoaded) {
   const contactsRef = ref(database, 'contacts');
   // contacts auslesen
   onValue(contactsRef, (firebaseData) => {
@@ -32,6 +35,7 @@ export async function loadData() {
     if (document.getElementById('contact_list')) {
       renderContactsList(contacts);
     }
+    if (onContactsLoaded) onContactsLoaded();
   }, (error) => {
     console.error('Fehler beim Laden der Contacts:', error);
   });

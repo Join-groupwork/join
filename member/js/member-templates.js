@@ -1,3 +1,5 @@
+import { getInitials, getAvatarColor } from './contacts-render.js';
+
 /**
  * @file HTML template factory functions for member pages.
  *
@@ -103,6 +105,7 @@ export function getSidebarTemplate() {
  *
  * @returns {string} HTML string representing the add-task form section.
  */
+
 export function getTaskTemplate() {
   return `
      <section class="overlay_add_task">
@@ -114,13 +117,13 @@ export function getTaskTemplate() {
 
             <section>
                 <form class="form_add_task">
-                    <label for="title">Title*</label>
+                    <label for="title">Title<span class="required">*</span></label>
                     <input class="input_add_task" type="text" id="title" name="title" required placeholder="Enter a title">
 
                     <label for="description">Description</label>
                     <textarea class="textarea_add_task" id="description" name="description" required placeholder="Enter a Description"></textarea>
 
-                    <label for="due_date">Due date*</label>
+                    <label for="due_date">Due date<span class="required">*</span></label>
                     <input class="input_add_task" type="date" id="due_date" name="due_date" required placeholder="dd/mm/yyyy">
                 </form>
             </section>
@@ -210,8 +213,8 @@ export function getAddOverlayTemplate() {
                 </div>
 
                 <div class="buttons_add_contact">
-                    <button type="button" class="btn_save_contact" onclick="hideAddContactOverlay()">Cancel <img src="../../assets/icons/close-icon.svg" alt=""></button>
-                    <button type="submit" form="add_contact_form" class="btn_cancel_contact">Create contact <img src="../../assets/icons/check-icon-white.svg" alt=""></button>
+                    <button type="button" class="btn_save_contact" onclick="hideAddContactOverlay()">Cancel <img src="../../assets/icons/close-icon.svg" alt="Close Icon"></button>
+                    <button type="submit" form="add_contact_form" class="btn_cancel_contact">Create contact <img src="../../assets/icons/check-icon-white.svg" alt="Check Icon"></button>
                 </div>
 
             </div>
@@ -290,8 +293,8 @@ export function generateTodosHTML(id, title, category, description, priority) {
   const safePriority = priority || "low";
 
   return `
-    <div class="task__card" id="${id}" draggable="true">
-      <span class="task__category--${category}">${categoryLabel}</span><br>
+    <div class="task__card" id="${id}" onclick="openTaskOverlay('${id}')" draggable="true" >
+      <span class="task__category--${category}">${category}</span><br>
       <h4 class="task__title">${title}</h4><br>
       <p class="task__text">${description}</p><br>
       <div class="task__bar" id="taskProgressBar-${id}">
@@ -330,8 +333,13 @@ export function getActiveContactTemplate(contact, initials, bgColor, phone) {
         <div>
           <h2 class="contact_detail_name">${contact.name || ''}</h2>
           <div class="contact_detail_actions">
-            <button type="button" class="link_btn" onclick="editContact('${contact.id}')"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
-            <button type="button" class="link_btn" onclick="deleteContact('${contact.id}')"><img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
+            <button type="button" class="link_btn" onclick="editContact('${contact.id}')">
+              <img src="../../assets/icons/pencil-icon.svg" alt="Pencil icon to edit contact details"><span>Edit</span>
+            </button>
+
+            <button type="button" class="link_btn" onclick="deleteContact('${contact.id}')">
+              <img src="../../assets/icons/trash-icon.svg" alt="Trash can icon to delete contact"><span>Delete</span>
+            </button>
           </div>
         </div>
       </div>
@@ -392,3 +400,62 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
   `;
 }
 
+export function getTaskOverlayTemplate(id, category,title, description, due_date , priority, assigned_to, subtasks ) {
+  console.log('subtasks input:', subtasks);
+  const assignedArray = Array.isArray(assigned_to)
+  ? assigned_to
+  : assigned_to.split(', ');
+
+  const subtaskArray = subtasks && typeof subtasks === 'object'
+  ? Object.values(subtasks)
+  : [];
+
+  return `
+  <div class="task-overlay-content">
+      <div class="overlaytemplate-first-section">
+        <p class="task__category--${category} overlaytemplate-category"> ${category.replace(/-/g, " ")}</p>
+        <button onclick="closeTaskOverlay()"><img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt=""></button>
+      </div>
+
+    <h2 class="overlaytemplate-title">${title}</h2>
+    <p class="overlaytemplate-description">${description}</p>
+    <p class="overlaytemplate-due_date">Due date: ${due_date.replace(/-/g, "/")}</p>
+    <div class="overlaytemplate-priority-container">
+        <p class="overlaytemplate-priority">Priority: ${priority}</p>
+        <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
+    </div>
+    <div class="overlaytemplate-assigned_to">
+      <p>Assigned To:</p>
+      ${assignedArray.map(person => `
+        <div class="assigned_contact">
+          <div class="contact_avatar" style="background-color: ${getAvatarColor(person)}">
+            ${getInitials(person)}
+          </div>
+          <span>${person}</span>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="overlaytemplate-subtask">
+      <p>Subtasks:</p>
+      <div class="overlaytemplate-subtask-checkbox">
+
+        ${subtaskArray.map(s => `
+
+          <div class="subtask-item-taskoverlay">
+          <img class="checkbox-icon" src="../assets/icons/checkbox/checkbox-icon unchecked.svg" alt="">
+            ${s.title}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="taskoverlay_detail_actions">
+      <button type="button" class="link_btn-taskoverlay" onclick="deleteTask('${id}')"><img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
+      <div class="divider-grey"></div>
+      <button type="button" class="link_btn-taskoverlay" onclick="editContact()"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
+    </div>
+
+  </div>
+  `;
+}
