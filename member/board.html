@@ -21,7 +21,11 @@
   <script type="module" src="./js/drag-n-drop.js"></script>
   <script type="module" src="./js/member-script.js"></script>
   <script type="module" src="./js/add-task.js"></script>
+  <script type="module" src="/member/js/board.js"></script>
 </head>
+<!-- bitte id vergeben, die man gut zuordnen kann, overlay container kann alles sein -->
+  <div id="overlay_container" class="d_none"></div>
+  <!-- zum beispiel: task_detail_overlay -->
 
 <section id="add_task_overlay" class="board-overlay d_none">
   <div id="add_task" class="board-overlay__content"></div>
@@ -87,9 +91,7 @@
     </section>
 
   </main>
-  
-  <div id="overlay_container" class="d_none"></div>
-  <script type="module" src="/member/js/board.js"></script>
+
 </body>
 
 </html>
