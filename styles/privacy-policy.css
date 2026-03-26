@@ -7,9 +7,11 @@
 .policy {
   width: 100%;
   padding: 48px 64px;
+  max-width: 1440px;
 }
 
 .policy__title {
-  font-size: 60px;
+  font-size: 55px;
   font-weight: 700;
+  margin-bottom: 60px;
 }
