@@ -7,15 +7,6 @@ const AVATAR_COLORS = [
   '#FC71FF', '#FFC701', '#0038FF', '#C3FF2B'
 ];
 
-let assignedContainer;
-let assignedInput;
-let assignedTrigger;
-let assignedOptions;
-let selectedDisplay;
-
-let selectedAssignees = [];
-let currentContacts = {};
-
 /**
  * Initializes the assignee module with all required DOM elements.
  *
@@ -32,12 +23,18 @@ let currentContacts = {};
  * @returns {void}
  */
 export function initAssignees(elements) {
-  assignedContainer = elements.assignedContainer;
-  assignedInput = elements.assignedInput;
-  assignedTrigger = elements.assignedTrigger;
-  assignedOptions = elements.assignedOptions;
-  selectedDisplay = elements.selectedDisplay;
-  bindAssigneeEvents();
+  const state = {
+    assignedContainer: elements.assignedContainer,
+    assignedInput: elements.assignedInput,
+    assignedTrigger: elements.assignedTrigger,
+    assignedOptions: elements.assignedOptions,
+    selectedDisplay: elements.selectedDisplay,
+    selectedAssignees: [],
+    currentContacts: {}
+  };
+
+  bindAssigneeEvents(state);
+  return state;
 }
 
 /**
@@ -49,9 +46,11 @@ export function initAssignees(elements) {
  * @function trackContactsForUser
  * @returns {void}
  */
-export function trackContactsForUser() {
+export function trackContactsForUser(state) {
   const contactsRef = ref(database, 'contacts');
-  onValue(contactsRef, (snapshot) => populateAssignedToDropdown(snapshot.val() || {}));
+  onValue(contactsRef, (snapshot) => {
+    populateAssignedToDropdown(state, snapshot.val() || {});
+  });
 }
 
 /**
@@ -67,8 +66,8 @@ export function trackContactsForUser() {
  * @function getAssignedNames
  * @returns {Object<number, string>} Object containing selected assignee names.
  */
-export function getAssignedNames() {
-  return selectedAssignees.reduce((result, item, index) => {
+export function getAssignedNames(state) {
+  return state.selectedAssignees.reduce((result, item, index) => {
     result[index] = item.name;
     return result;
   }, {});
@@ -82,11 +81,11 @@ export function getAssignedNames() {
  * @function clearSelectedAssignees
  * @returns {void}
  */
-export function clearSelectedAssignees() {
-  selectedAssignees = [];
-  updateAssignedInput();
-  renderSelectedAssignees();
-  populateAssignedToDropdown(currentContacts);
+export function clearSelectedAssignees(state) {
+  state.selectedAssignees = [];
+  updateAssignedInput(state);
+  renderSelectedAssignees(state);
+  populateAssignedToDropdown(state, state.currentContacts);
 }
 
 /**
@@ -95,9 +94,11 @@ export function clearSelectedAssignees() {
  * @function bindAssigneeEvents
  * @returns {void}
  */
-function bindAssigneeEvents() {
-  document.addEventListener('click', handleOutsideClick);
-  assignedTrigger?.addEventListener('click', handleTriggerClick);
+function bindAssigneeEvents(state) {
+  document.addEventListener('click', (event) => handleOutsideClick(event, state));
+  state.assignedTrigger?.addEventListener('click', (event) =>
+    handleTriggerClick(event, state)
+  );
 }
 
 /**
@@ -107,9 +108,9 @@ function bindAssigneeEvents() {
  * @param {MouseEvent} event - The document click event.
  * @returns {void}
  */
-function handleOutsideClick(event) {
-  if (!assignedContainer || assignedContainer.contains(event.target)) return;
-  closeAssignedOptions();
+function handleOutsideClick(event, state) {
+  if (!state.assignedContainer || state.assignedContainer.contains(event.target)) return;
+  closeAssignedOptions(state);
 }
 
 /**
@@ -121,9 +122,9 @@ function handleOutsideClick(event) {
  * @param {MouseEvent} event - The trigger click event.
  * @returns {void}
  */
-function handleTriggerClick(event) {
+function handleTriggerClick(event, state) {
   event.preventDefault();
-  toggleAssignedOptions();
+  toggleAssignedOptions(state);
 }
 
 /**
@@ -184,8 +185,8 @@ function getContactData(id, contact) {
  * @param {string} id - The contact id.
  * @returns {boolean} True if the contact is selected, otherwise false.
  */
-function isSelected(id) {
-  return selectedAssignees.some((item) => item.id === id);
+function isSelected(state, id) {
+  return state.selectedAssignees.some((item) => item.id === id);
 }
 
 /**
@@ -194,8 +195,10 @@ function isSelected(id) {
  * @function updateAssignedInput
  * @returns {void}
  */
-function updateAssignedInput() {
-  if (assignedInput) assignedInput.value = getAssignedNames();
+function updateAssignedInput(state) {
+  if (state.assignedInput) {
+    state.assignedInput.value = JSON.stringify(getAssignedNames(state));
+  }
 }
 
 /**
@@ -204,11 +207,14 @@ function updateAssignedInput() {
  * @function renderSelectedAssignees
  * @returns {void}
  */
-function renderSelectedAssignees() {
-  if (!selectedDisplay) return;
-  selectedDisplay.innerHTML = selectedAssignees
+function renderSelectedAssignees(state) {
+  if (!state.selectedDisplay) return;
+
+  state.selectedDisplay.innerHTML = state.selectedAssignees
     .map((item) => {
-      return `<span class="contact_avatar" title="${item.name}" style="background-color: ${item.avatarColor}">${item.initials}</span>`;
+      return `<span class="contact_avatar" title="${item.name}" style="background-color: ${item.avatarColor}">
+        ${item.initials}
+      </span>`;
     })
     .join('');
 }
@@ -222,12 +228,13 @@ function renderSelectedAssignees() {
  * @param {{id: string, name: string, initials: string, avatarColor: string}} contactData - The contact to toggle.
  * @returns {void}
  */
-function toggleAssignee(contactData) {
-  selectedAssignees = isSelected(contactData.id)
-    ? selectedAssignees.filter((item) => item.id !== contactData.id)
-    : [...selectedAssignees, contactData];
-  updateAssignedInput();
-  renderSelectedAssignees();
+function toggleAssignee(state, contactData) {
+  state.selectedAssignees = isSelected(state, contactData.id)
+    ? state.selectedAssignees.filter((item) => item.id !== contactData.id)
+    : [...state.selectedAssignees, contactData];
+
+  updateAssignedInput(state);
+  renderSelectedAssignees(state);
 }
 
 /**
@@ -270,9 +277,9 @@ function buildOptionMain(data) {
  * @param {HTMLInputElement} checkbox - The checkbox to synchronize.
  * @returns {void}
  */
-function syncOptionToggle(data, checkbox) {
-  toggleAssignee(data);
-  checkbox.checked = isSelected(data.id);
+function syncOptionToggle(state, data, checkbox) {
+  toggleAssignee(state, data);
+  checkbox.checked = isSelected(state, data.id);
 }
 
 /**
@@ -283,16 +290,16 @@ function syncOptionToggle(data, checkbox) {
  * @param {Object} contact - The contact object.
  * @returns {HTMLDivElement} The rendered dropdown option.
  */
-function buildContactOptionElement(id, contact) {
+function buildContactOptionElement(state, id, contact) {
   const data = getContactData(id, contact);
   const option = document.createElement('div');
   const main = buildOptionMain(data);
-  const checkbox = buildCheckbox(isSelected(id));
+  const checkbox = buildCheckbox(isSelected(state, id));
   option.className = 'custom-select__option';
   option.append(main, checkbox);
-  option.addEventListener('click', () => syncOptionToggle(data, checkbox));
+  option.addEventListener('click', () => syncOptionToggle(state, data, checkbox));
   checkbox.addEventListener('click', (event) => event.stopPropagation());
-  checkbox.addEventListener('change', () => toggleAssignee(data));
+  checkbox.addEventListener('change', () => toggleAssignee(state, data));
   return option;
 }
 
@@ -313,11 +320,11 @@ function getSortedContacts(contacts) {
  * @function renderNoContacts
  * @returns {void}
  */
-function renderNoContacts() {
+function renderNoContacts(state) {
   const empty = document.createElement('div');
   empty.className = 'custom-select__empty';
   empty.textContent = 'No contacts found (add a contact first)';
-  assignedOptions.appendChild(empty);
+  state.assignedOptions.appendChild(empty);
 }
 
 /**
@@ -327,8 +334,12 @@ function renderNoContacts() {
  * @param {Array<[string, Object]>} entries - Sorted contact entries.
  * @returns {void}
  */
-function renderContactOptions(entries) {
-  entries.forEach(([id, contact]) => assignedOptions.appendChild(buildContactOptionElement(id, contact)));
+function renderContactOptions(state, entries) {
+  entries.forEach(([id, contact]) =>
+    state.assignedOptions.appendChild(
+      buildContactOptionElement(state, id, contact)
+    )
+  );
 }
 
 /**
@@ -341,13 +352,20 @@ function renderContactOptions(entries) {
  * @param {Object<string, Object>} contacts - The contacts object from Firebase.
  * @returns {void}
  */
-function populateAssignedToDropdown(contacts) {
-  if (!assignedOptions || !assignedTrigger || !assignedInput) return;
-  currentContacts = contacts || {};
-  assignedOptions.innerHTML = '';
-  const entries = getSortedContacts(currentContacts);
-  if (entries.length === 0) return renderNoContacts();
-  renderContactOptions(entries);
+function populateAssignedToDropdown(state, contacts) {
+  if (!state.assignedOptions) return;
+
+  state.currentContacts = contacts || {};
+  state.assignedOptions.innerHTML = '';
+
+  const entries = getSortedContacts(state.currentContacts);
+
+  if (entries.length === 0) {
+    renderNoContacts(state);
+    return;
+  }
+
+  renderContactOptions(state, entries);
 }
 
 /**
@@ -356,8 +374,8 @@ function populateAssignedToDropdown(contacts) {
  * @function closeAssignedOptions
  * @returns {void}
  */
-function closeAssignedOptions() {
-  assignedOptions?.classList.add('d_none');
+function closeAssignedOptions(state) {
+  state.assignedOptions?.classList.add('d_none');
 }
 
 /**
@@ -366,6 +384,6 @@ function closeAssignedOptions() {
  * @function toggleAssignedOptions
  * @returns {void}
  */
-function toggleAssignedOptions() {
-  assignedOptions?.classList.toggle('d_none');
+function toggleAssignedOptions(state) {
+  state.assignedOptions?.classList.toggle('d_none');
 }

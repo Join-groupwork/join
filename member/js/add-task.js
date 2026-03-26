@@ -1,5 +1,5 @@
 import { pushTask } from '../../scripts/firebase/push-task.js';
-import { auth } from '../../scripts/firebase/firebase.js';
+
 import {
   initAssignees,
   trackContactsForUser,
@@ -24,14 +24,14 @@ import {
  *
  * @event DOMContentLoaded
  */
-document.addEventListener('DOMContentLoaded', () => {
-  const createBtn = document.querySelector('.Create_button_add_task');
-  const cancelBtn = document.querySelector('.clear_button_add_task');
-  const titleInput = document.getElementById('title');
-  const descInput = document.getElementById('description');
-  const dueInput = document.getElementById('due_date');
-  const categorySelect = document.getElementById('category');
-  const priorityButtons = document.querySelectorAll('.priority_button');
+export function initAddTask(container, options = {}) {
+  const createBtn = container.querySelector('.Create_button_add_task');
+  const cancelBtn = container.querySelector('.clear_button_add_task');
+  const titleInput = container.querySelector('#title');
+  const descInput = container.querySelector('#description');
+  const dueInput = container.querySelector('#due_date');
+  const categorySelect = container.querySelector('#category');
+  const priorityButtons = container.querySelectorAll('.priority_button');
 
   let selectedPriority = null;
 
@@ -91,31 +91,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const requiredFields = [titleInput, dueInput];
   setupRequiredFieldValidation(requiredFields);
 
-  initAssignees({
-    assignedContainer: document.getElementById('assigned_to'),
-    assignedInput: document.getElementById('assigned_to_input'),
-    assignedTrigger: document.getElementById('assigned_to_trigger'),
-    assignedOptions: document.getElementById('assigned_to_options'),
-    selectedDisplay: document.getElementById('selected_assignees_display')
+  const assigneeState = initAssignees(container, {
+    assignedContainer: container.querySelector('#assigned_to'),
+    assignedInput: container.querySelector('#assigned_to_input'),
+    assignedTrigger: container.querySelector('#assigned_to_trigger'),
+    assignedOptions: container.querySelector('#assigned_to_options'),
+    selectedDisplay: container.querySelector('#selected_assignees_display')
   });
 
-  initSubtasks({
-    subtaskInput: document.getElementById('subtask'),
-    subtaskActions: document.getElementById('subtask_actions'),
-    confirmSubtaskBtn: document.getElementById('confirm_subtask_btn'),
-    clearSubtaskBtn: document.getElementById('clear_subtask_btn'),
-    subtaskList: document.getElementById('subtask_list')
+  trackContactsForUser(assigneeState);
+
+  const subtaskState = initSubtasks(container, {
+    subtaskInput: container.querySelector('#subtask'),
+    subtaskActions: container.querySelector('#subtask_actions'),
+    confirmSubtaskBtn: container.querySelector('#confirm_subtask_btn'),
+    clearSubtaskBtn: container.querySelector('#clear_subtask_btn'),
+    subtaskList: container.querySelector('#subtask_list')
   });
 
   setDefaultPriority();
-
-  auth.onAuthStateChanged((user) => {
-    if (user) trackContactsForUser(user.uid);
-  });
-
-  if (auth.currentUser) {
-    trackContactsForUser(auth.currentUser.uid);
-  }
 
   priorityButtons.forEach((btn) => {
     btn.addEventListener('click', (event) =>
@@ -134,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskData = buildTaskData();
     if (!taskData) return;
 
-    await submitTask(taskData, createBtn);
+    await submitTask(taskData, createBtn, options);
   });
 
   cancelBtn?.addEventListener('click', (event) => {
@@ -180,8 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (dueInput) dueInput.value = '';
     if (categorySelect) categorySelect.selectedIndex = 0;
 
-    clearSelectedAssignees();
-    clearSubtasks();
+    clearSelectedAssignees(assigneeState);
+    clearSubtasks(subtaskState);
 
     clearFieldError(titleInput);
     clearFieldError(dueInput);
@@ -218,14 +212,14 @@ document.addEventListener('DOMContentLoaded', () => {
       description: descInput?.value?.trim() || '',
       due_date: dueDate,
       priority: selectedPriority || 'medium',
-      assigned_to: getAssignedNames(),
+      assigned_to: getAssignedNames(assigneeState),
       category: categorySelect?.value || '',
-      subtasks: getSubtasks(),
+      subtasks: getSubtasks(subtaskState),
       status: 'todo',
       createdAt: new Date().toISOString()
     };
   }
-});
+}
 
 /**
  * Validates a required form field.
@@ -315,13 +309,21 @@ function setupRequiredFieldValidation(fields) {
  * @returns {Promise<void>}
  * @throws {Error} Throws if Firebase push fails.
  */
-async function submitTask(taskData, createBtn) {
+async function submitTask(taskData, createBtn, options = {}) {
   createBtn.disabled = true;
 
   try {
     const key = await pushTask(taskData);
     console.log('Pushed task, key:', key);
     alert('Task created successfully');
+
+    if (options.mode === 'overlay') {
+      if (typeof options.onClose === 'function') {
+        options.onClose();
+      }
+      return;
+    }
+
     window.location.href = './board.html';
   } catch (error) {
     console.error(error);
@@ -330,3 +332,10 @@ async function submitTask(taskData, createBtn) {
     createBtn.disabled = false;
   }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.container_add_task');
+  if (!container) return;
+
+  initAddTask(container, { mode: 'page' });
+});

@@ -108,59 +108,104 @@ export function getSidebarTemplate() {
 
 export function getTaskTemplate() {
   return `
-     <section class="overlay_add_task">
-        <button class="add-task-close-btn" type="button" aria-label="Close">
-          <img src="../assets/icons/close-icon.svg" alt="">
-        </button>
-        <h1 class="h1_add_task">Add Task</h1>
-            <section class="section_add_task">
+    <section class="overlay_add_task">
+      <button class="add-task-close-btn" type="button" aria-label="Close">
+        <img src="../assets/icons/close-icon.svg" alt="">
+      </button>
 
-            <section>
-                <form class="form_add_task">
-                    <label for="title">Title<span class="required">*</span></label>
-                    <input class="input_add_task" type="text" id="title" name="title" required placeholder="Enter a title">
+      <h1 class="h1_add_task">Add Task</h1>
 
-                    <label for="description">Description</label>
-                    <textarea class="textarea_add_task" id="description" name="description" required placeholder="Enter a Description"></textarea>
+      <form class="add-task-form" id="add_task_form">
+        <section class="section_add_task">
+          <section class="form_add_task">
+            <div class="form-field">
+              <label for="title">Title <span class="required">*</span></label>
+              <input class="input_add_task" type="text" id="title" name="title" required placeholder="Enter a title">
+              <span class="error-message">This field is required</span>
+            </div>
 
-                    <label for="due_date">Due date<span class="required">*</span></label>
-                    <input class="input_add_task" type="date" id="due_date" name="due_date" required placeholder="dd/mm/yyyy">
-                </form>
+            <div class="form-field">
+              <label for="description">Description</label>
+              <textarea class="textarea_add_task" id="description" name="description" placeholder="Enter a Description"></textarea>
+            </div>
+
+            <div class="form-field">
+              <label for="due_date">Due date <span class="required">*</span></label>
+              <input class="input_add_task" type="date" id="due_date" name="due_date" required>
+              <span class="error-message">This field is required</span>
+            </div>
+          </section>
+
+          <hr class="hr_add_task">
+
+          <section class="select_add_task">
+            <section class="section_priority">
+              <label for="priority">Priority</label>
+              <div id="priority" class="priority" name="priority">
+                <button type="button" class="priority_button" value="urgent">
+                  Urgent <img src="../assets/icons/urgent-prio-icon.svg" alt="">
+                </button>
+                <button type="button" class="priority_button" value="medium">
+                  Medium <img src="../assets/icons/medium-prio-icon.svg" alt="">
+                </button>
+                <button type="button" class="priority_button" value="low">
+                  Low <img src="../assets/icons/low-prio-icon.svg" alt="">
+                </button>
+              </div>
             </section>
-            <hr class="hr_add_task">
-            <form class="select_add_task">
-                <section class="section_priority">
-                    <label for="priority">Priority</label>
-                    <div id="priority" class="priority" name="priority">
-                        <button class="priority_button" value="urgent">Urgent <img src="../assets/icons/urgent-prio-icon.svg" alt=""></button>
-                        <button class="priority_button" value="medium">Medium <img src="../assets/icons/medium-prio-icon.svg" alt=""></button>
-                        <button class="priority_button" value="low">Low <img src="../assets/icons/low-prio-icon.svg" alt=""></button>
-                    </div>
-                </section>
 
-                <label for="">Assigned to</label>
-                <select class="input_add_task margin_bottom_add_task" id="assigned_to" name="assigned_to" required>
-                    <option value="select_contact" disabled selected>Select contacts to assign</option>
-                </select>
+            <label for="assigned_to_input">Assigned to</label>
+            <div class="custom-select margin_bottom_add_task" id="assigned_to">
+              <button type="button" class="custom-select__trigger" id="assigned_to_trigger">
+                <span class="custom-select__trigger-label">Select contacts to assign</span>
+                <span class="custom-select__arrow">▾</span>
+              </button>
+              <div class="custom-select__options d_none" id="assigned_to_options"></div>
+            </div>
+            <input type="hidden" id="assigned_to_input" name="assigned_to">
+            <div class="selected-assignees" id="selected_assignees_display"></div>
 
-                <label for="">Category</label>
-                <select class="input_add_task margin_bottom_add_task" id="category" name="category" required placeholder="">
-                    <option value="select_task_category">Select task category</option>
-                    <option value="technical-task">Technical Task</option>
-                    <option value="user-story">User Story</option>
-                </select>
+            <label for="category">Category</label>
+            <div class="select-native-wrapper margin_bottom_add_task">
+              <select class="input_add_task input_add_task--select" id="category" name="category" required>
+                <option value="select_task_category">Select task category</option>
+                <option value="technical-task">Technical Task</option>
+                <option value="user-story">User Story</option>
+              </select>
+              <span class="custom-select__arrow">▾</span>
+            </div>
 
-                <label for="">Subtasks</label>
-                <input class="input_add_task" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
-            </form>
+            <label for="subtask">Subtasks</label>
+            <div class="subtask-input-wrap">
+              <input class="input_add_task subtask_input_field" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
+              <div class="subtask-actions d_none" id="subtask_actions">
+                <button type="button" class="subtask-action-btn" id="clear_subtask_btn">✕</button>
+                <span class="subtask-divider">|</span>
+                <button type="button" class="subtask-action-btn" id="confirm_subtask_btn">✓</button>
+              </div>
+            </div>
+            <div class="subtask-list" id="subtask_list"></div>
+          </section>
         </section>
+
         <section class="section_add_task_button">
-            <button class="clear_button_add_task" type="button">Cancel <img src="../assets/icons/close-icon.svg" alt=""></button>
-            <button class="Create_button_add_task" type="submit">Create Task <img src="../assets/icons/check-icon-white.svg" alt=""></button>
+          <span class="required-fields-hint">
+            <span class="required-star">*</span> This field is required
+          </span>
+
+          <div class="add-task-buttons-right">
+            <button class="clear_button_add_task" type="button">
+              Cancel <img src="../assets/icons/close-icon.svg" alt="">
+            </button>
+            <button class="Create_button_add_task" type="button">
+              Create Task <img src="../assets/icons/check-icon-white.svg" alt="">
+            </button>
+          </div>
         </section>
+      </form>
     </section>
-    `;
-};
+  `;
+}
 
 // contact overlays einbinden --->id="editC_overlay" oder id="addC_overlay" in den <body> einfügen,
 // (siehe contact_add_overlay.html/contact_edit_overlay.html <-- können danach gelöscht werden)
@@ -261,8 +306,8 @@ export function generateTodosHTML(id, title, category, description, priority) {
     category === "user-story"
       ? "User Story"
       : category === "technical-task"
-      ? "Technical Task"
-      : category;
+        ? "Technical Task"
+        : category;
 
   return `
             <div class="task__card" id="${id}" onclick="openTaskOverlay('${id}')" draggable="true" >
@@ -366,15 +411,15 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
   `;
 }
 
-export function getTaskOverlayTemplate(id, category,title, description, due_date , priority, assigned_to, subtasks ) {
+export function getTaskOverlayTemplate(id, category, title, description, due_date, priority, assigned_to, subtasks) {
   console.log('subtasks input:', subtasks);
   const assignedArray = Array.isArray(assigned_to)
-  ? assigned_to
-  : assigned_to.split(', ');  
+    ? assigned_to
+    : assigned_to.split(', ');
 
   const subtaskArray = subtasks && typeof subtasks === 'object'
-  ? Object.values(subtasks)
-  : []; 
+    ? Object.values(subtasks)
+    : [];
 
   return `
   <div class="task-overlay-content">

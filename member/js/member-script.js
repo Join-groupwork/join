@@ -1,3 +1,5 @@
+import { initAddTask } from './add-task.js';
+
 /**
  * @file Member page bootstrapper: renders header/sidebar/task UI and wires up header menu + logout.
  *
@@ -99,10 +101,18 @@ function renderSidebar() {
  */
 function renderAddTask() {
   const addTaskRef = document.getElementById('add_task');
-  if (addTaskRef) {
-    addTaskRef.innerHTML = getTaskTemplate();
+  const overlay = document.getElementById('add_task_overlay');
+
+  if (addTaskRef && overlay) {
+    addTaskRef.innerHTML = getTaskTemplate({ isOverlay: true });
+
+    initAddTask(addTaskRef, {
+      mode: 'overlay',
+      onClose: () => closeAddTaskOverlay(overlay)
+    });
+
   } else {
-    console.error('Add Task-Element nicht gefunden!');
+    console.error('Add Task-Element oder Overlay nicht gefunden!');
   }
 };
 
@@ -170,12 +180,6 @@ function closeAddTaskOverlay(overlay) {
   }, { once: true });
 }
 
-function clearOverlayAddTaskForm(overlay) {
-  overlay.querySelector('.form_add_task')?.reset();
-  overlay.querySelector('.select_add_task')?.reset();
-  overlay.querySelectorAll('.priority_button').forEach((btn) => btn.classList.remove('selected'));
-}
-
 function setupOpenButton(openBtn, overlay) {
   openBtn.addEventListener('click', () => openAddTaskOverlay(overlay));
 }
@@ -188,16 +192,6 @@ function setupBackdropAndCloseButton(overlay) {
   });
 }
 
-function setupClearButton(overlay) {
-  const clearBtn = overlay.querySelector('.clear_button_add_task');
-  if (!clearBtn) return;
-
-  clearBtn.addEventListener('click', (event) => {
-    event.preventDefault();
-    closeAddTaskOverlay(overlay);
-  });
-}
-
 function setupAddTaskOverlay() {
   const openBtn = document.getElementById('openAddTaskOverlay');
   const overlay = document.getElementById('add_task_overlay');
@@ -205,7 +199,6 @@ function setupAddTaskOverlay() {
 
   setupOpenButton(openBtn, overlay);
   setupBackdropAndCloseButton(overlay);
-  setupClearButton(overlay);
 }
 /**
  * Triggers the board rendering.

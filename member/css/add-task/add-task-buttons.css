@@ -106,3 +106,26 @@
     height: 12px;
     margin-left: 5px;
 }
+
+.section_add_task_button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.required-fields-hint {
+    font-size: 14px;
+    color: #2A3647;
+}
+
+.required-star {
+    color: #FF8190;
+    font-weight: 700;
+}
+
+.add-task-buttons-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}

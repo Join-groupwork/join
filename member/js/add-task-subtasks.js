@@ -1,12 +1,3 @@
-let subtaskInput;
-let subtaskActions;
-let confirmSubtaskBtn;
-let clearSubtaskBtn;
-let subtaskList;
-
-let subtasks = [];
-let editingSubtaskIndex = -1;
-
 /**
  * Initializes the subtask module with all required DOM elements.
  *
@@ -22,13 +13,20 @@ let editingSubtaskIndex = -1;
  * @param {HTMLElement|null} elements.subtaskList - The container for the rendered subtask list.
  * @returns {void}
  */
-export function initSubtasks(elements) {
-  subtaskInput = elements.subtaskInput;
-  subtaskActions = elements.subtaskActions;
-  confirmSubtaskBtn = elements.confirmSubtaskBtn;
-  clearSubtaskBtn = elements.clearSubtaskBtn;
-  subtaskList = elements.subtaskList;
-  bindSubtaskEvents();
+export function initSubtasks(container, elements) {
+  const state = {
+    container,
+    subtaskInput: elements.subtaskInput,
+    subtaskActions: elements.subtaskActions,
+    confirmSubtaskBtn: elements.confirmSubtaskBtn,
+    clearSubtaskBtn: elements.clearSubtaskBtn,
+    subtaskList: elements.subtaskList,
+    subtasks: [],
+    editingSubtaskIndex: -1
+  };
+
+  bindSubtaskEvents(state);
+  return state;
 }
 
 /**
@@ -50,8 +48,8 @@ export function initSubtasks(elements) {
  * @returns {Object<string, {status: boolean, title: string}>}
  * An object containing all subtasks formatted for Firebase.
  */
-export function getSubtasks() {
-  return subtasks.reduce((result, title, index) => {
+export function getSubtasks(state) {
+  return state.subtasks.reduce((result, title, index) => {
     result[`Subtask${index + 1}`] = {
       status: false,
       title
@@ -68,11 +66,11 @@ export function getSubtasks() {
  * @function clearSubtasks
  * @returns {void}
  */
-export function clearSubtasks() {
-  subtasks = [];
-  editingSubtaskIndex = -1;
-  renderSubtasks();
-  clearSubtaskInput();
+export function clearSubtasks(state) {
+  state.subtasks = [];
+  state.editingSubtaskIndex = -1;
+  renderSubtasks(state);
+  clearSubtaskInput(state);
 }
 
 /**
@@ -81,12 +79,12 @@ export function clearSubtasks() {
  * @function bindSubtaskEvents
  * @returns {void}
  */
-function bindSubtaskEvents() {
-  subtaskInput?.addEventListener('input', toggleSubtaskActions);
-  subtaskInput?.addEventListener('keydown', handleSubtaskKeydown);
-  confirmSubtaskBtn?.addEventListener('click', addSubtask);
-  clearSubtaskBtn?.addEventListener('click', clearSubtaskInput);
-  subtaskList?.addEventListener('click', handleSubtaskListClick);
+function bindSubtaskEvents(state) {
+  state.subtaskInput?.addEventListener('input', () => toggleSubtaskActions(state));
+  state.subtaskInput?.addEventListener('keydown', (event) => handleSubtaskKeydown(event, state));
+  state.confirmSubtaskBtn?.addEventListener('click', () => addSubtask(state));
+  state.clearSubtaskBtn?.addEventListener('click', () => clearSubtaskInput(state));
+  state.subtaskList?.addEventListener('click', (event) => handleSubtaskListClick(event, state));
 }
 
 /**
@@ -98,10 +96,10 @@ function bindSubtaskEvents() {
  * @param {KeyboardEvent} event - The keyboard event from the subtask input.
  * @returns {void}
  */
-function handleSubtaskKeydown(event) {
+function handleSubtaskKeydown(event, state) {
   if (event.key !== 'Enter') return;
   event.preventDefault();
-  addSubtask();
+  addSubtask(state);
 }
 
 /**
@@ -111,9 +109,9 @@ function handleSubtaskKeydown(event) {
  * @function toggleSubtaskActions
  * @returns {void}
  */
-function toggleSubtaskActions() {
-  if (!subtaskActions || !subtaskInput) return;
-  subtaskActions.classList.toggle('d_none', !subtaskInput.value.trim());
+function toggleSubtaskActions(state) {
+  if (!state.subtaskActions || !state.subtaskInput) return;
+  state.subtaskActions.classList.toggle('d_none', !state.subtaskInput.value.trim());
 }
 
 /**
@@ -122,11 +120,11 @@ function toggleSubtaskActions() {
  * @function clearSubtaskInput
  * @returns {void}
  */
-function clearSubtaskInput() {
-  if (!subtaskInput) return;
-  subtaskInput.value = '';
-  editingSubtaskIndex = -1;
-  toggleSubtaskActions();
+function clearSubtaskInput(state) {
+  if (!state.subtaskInput) return;
+  state.subtaskInput.value = '';
+  state.editingSubtaskIndex = -1;
+  toggleSubtaskActions(state);
 }
 
 /**
@@ -136,8 +134,8 @@ function clearSubtaskInput() {
  * @param {string} value - The subtask text to add.
  * @returns {void}
  */
-function saveNewSubtask(value) {
-  subtasks = [...subtasks, value];
+function saveNewSubtask(state, value) {
+  state.subtasks = [...state.subtasks, value];
 }
 
 /**
@@ -147,9 +145,9 @@ function saveNewSubtask(value) {
  * @param {string} value - The updated subtask text.
  * @returns {void}
  */
-function saveEditedSubtask(value) {
-  subtasks[editingSubtaskIndex] = value;
-  editingSubtaskIndex = -1;
+function saveEditedSubtask(state, value) {
+  state.subtasks[state.editingSubtaskIndex] = value;
+  state.editingSubtaskIndex = -1;
 }
 
 /**
@@ -160,9 +158,13 @@ function saveEditedSubtask(value) {
  * @param {string} value - The subtask text to save.
  * @returns {void}
  */
-function saveSubtaskValue(value) {
-  if (editingSubtaskIndex > -1) return saveEditedSubtask(value);
-  saveNewSubtask(value);
+function saveSubtaskValue(state, value) {
+  if (state.editingSubtaskIndex > -1) {
+    saveEditedSubtask(state, value);
+    return;
+  }
+
+  saveNewSubtask(state, value);
 }
 
 /**
@@ -219,10 +221,12 @@ function buildSubtaskItem(text, index) {
  * @function renderSubtasks
  * @returns {void}
  */
-function renderSubtasks() {
-  if (!subtaskList) return;
-  subtaskList.innerHTML = '';
-  subtasks.forEach((text, index) => subtaskList.appendChild(buildSubtaskItem(text, index)));
+function renderSubtasks(state) {
+  if (!state.subtaskList) return;
+  state.subtaskList.innerHTML = '';
+  state.subtasks.forEach((text, index) => {
+    state.subtaskList.appendChild(buildSubtaskItem(text, index));
+  });
 }
 
 /**
@@ -234,12 +238,13 @@ function renderSubtasks() {
  * @function addSubtask
  * @returns {void}
  */
-function addSubtask() {
-  const value = subtaskInput?.value.trim();
+function addSubtask(state) {
+  const value = state.subtaskInput?.value.trim();
   if (!value) return;
-  saveSubtaskValue(value);
-  renderSubtasks();
-  clearSubtaskInput();
+
+  saveSubtaskValue(state, value);
+  renderSubtasks(state);
+  clearSubtaskInput(state);
 }
 
 /**
@@ -252,12 +257,12 @@ function addSubtask() {
  * @param {number} index - The index of the subtask to edit.
  * @returns {void}
  */
-function editSubtask(index) {
-  if (!subtaskInput) return;
-  subtaskInput.value = subtasks[index] || '';
-  editingSubtaskIndex = index;
-  toggleSubtaskActions();
-  subtaskInput.focus();
+function editSubtask(state, index) {
+  if (!state.subtaskInput) return;
+  state.subtaskInput.value = state.subtasks[index] || '';
+  state.editingSubtaskIndex = index;
+  toggleSubtaskActions(state);
+  state.subtaskInput.focus();
 }
 
 /**
@@ -267,9 +272,9 @@ function editSubtask(index) {
  * @param {number} index - The index of the subtask to delete.
  * @returns {void}
  */
-function deleteSubtask(index) {
-  subtasks = subtasks.filter((_, i) => i !== index);
-  renderSubtasks();
+function deleteSubtask(state, index) {
+  state.subtasks = state.subtasks.filter((_, i) => i !== index);
+  renderSubtasks(state);
 }
 
 /**
@@ -282,9 +287,10 @@ function deleteSubtask(index) {
  * @param {MouseEvent} event - The click event from the subtask list.
  * @returns {void}
  */
-function handleSubtaskListClick(event) {
+function handleSubtaskListClick(event, state) {
   const editIndex = event.target.dataset.edit;
   const deleteIndex = event.target.dataset.delete;
-  if (editIndex !== undefined) editSubtask(Number(editIndex));
-  if (deleteIndex !== undefined) deleteSubtask(Number(deleteIndex));
+
+  if (editIndex !== undefined) editSubtask(state, Number(editIndex));
+  if (deleteIndex !== undefined) deleteSubtask(state, Number(deleteIndex));
 }
