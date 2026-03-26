@@ -95,10 +95,15 @@ export function clearSelectedAssignees(state) {
  * @returns {void}
  */
 function bindAssigneeEvents(state) {
-  document.addEventListener('click', (event) => handleOutsideClick(event, state));
+  state.assignedContainer?.addEventListener('click', (event) => {
+    event.stopPropagation();
+  });
+
   state.assignedTrigger?.addEventListener('click', (event) =>
     handleTriggerClick(event, state)
   );
+
+  document.addEventListener('click', (event) => handleOutsideClick(event, state));
 }
 
 /**

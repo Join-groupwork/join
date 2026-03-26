@@ -91,7 +91,7 @@ export function initAddTask(container, options = {}) {
   const requiredFields = [titleInput, dueInput];
   setupRequiredFieldValidation(requiredFields);
 
-  const assigneeState = initAssignees(container, {
+  const assigneeState = initAssignees({
     assignedContainer: container.querySelector('#assigned_to'),
     assignedInput: container.querySelector('#assigned_to_input'),
     assignedTrigger: container.querySelector('#assigned_to_trigger'),
