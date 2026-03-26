@@ -1,8 +1,8 @@
-import { loadTasks } from './scripts/firebase/get-firebase.js';
-import { getTaskOverlayTemplate } from './member-templates.js';
+import { loadTasks } from '../../scripts/firebase/get-firebase.js';
+import { generateTodosHTML, generateProgressBar, getTaskOverlayTemplate } from './member-templates.js';
 import { ref, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 import { database } from "../../scripts/firebase/firebase.js";
-import { updateHTML,todos  } from './drag-n-drop.js';
+
 /**
  * References to the DOM containers (board columns) where tasks are rendered.
  *
