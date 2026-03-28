@@ -1,21 +1,24 @@
-
 .legal {
   width: 100%;
   padding: 48px 64px;
 }
 
 .legal__title {
-  font-size: 60px;
+  font-size: 55px;
   font-weight: 700;
+  margin-bottom: 60px;
 }
+
+
+
 
 /* Base */
 
 /* Content area */
 .legal-page {
-  padding: 120px 96px 50px 107px;
+  padding: 80px 85px 40px 80px;
   width: 100%;
-  
+
 
 }
 

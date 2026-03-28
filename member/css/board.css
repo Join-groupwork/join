@@ -324,6 +324,7 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   justify-content: flex-start;
   margin: 148px 15px 0 284px;
   padding-bottom: 24px;
+  max-width: 1160px;
 }
 
 .board-header__title {

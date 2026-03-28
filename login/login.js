@@ -28,50 +28,123 @@ if (location.protocol === 'https:') {
  * @listens Document#DOMContentLoaded
  * @returns {void}
  */
-document.addEventListener("DOMContentLoaded", () => {
-  const loginBtn = document.getElementById("loginBtn");
-  const guestBtn = document.getElementById("guestBtn");
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
+// 
+// document.addEventListener("DOMContentLoaded", () => {
+//   const loginBtn = document.getElementById("loginBtn");
+//   const guestBtn = document.getElementById("guestBtn");
+//   const emailInput = document.getElementById("email");
+//   const passwordInput = document.getElementById("password");
+//   const splashLogo = document.querySelector(".logo-splash__img");
+//   const targetLogo = document.querySelector(".join__logo");
+//   const splashOverlay = document.querySelector(".logo-splash");
 
-  loginBtn.addEventListener("click", async (event) => {
-    event.preventDefault();
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
+//   if (splashLogo && targetLogo && splashOverlay) {
+//     const targetRect = targetLogo.getBoundingClientRect();
 
-    if (!email || !password) {
-      alert("Check your email and password. Pleasy try again.");
-      return;
-    }
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log("Login erforlgreich:", userCredential.user);
-      window.location.href = "./member/summary.html"; // target page after login
-    } catch (error) {
-      console.error("Login Fehlgeschlagen:", error.message);
-      alert("Login fehlgeschlagen");
-    }
-    console.log("LOGIN CLICK");
-    console.log("Email:", email);
-    console.log("Password:", password);
-  })
+//     document.documentElement.style.setProperty("--logo-target-top", `${targetRect.top}px`);
+//     document.documentElement.style.setProperty("--logo-target-left", `${targetRect.left}px`);
+//     document.documentElement.style.setProperty("--logo-target-width", `${targetRect.width}px`);
+//   }
 
-  guestBtn.addEventListener("click", async () => {
-    try {
-      const userCredential = await signInAnonymously(auth);
-      console.log("GUEST LOGIN CLICK");
-      window.location.href = "./member/summary.html"; // target page after login
-    } catch (error) {
-      console.error(error.message);
-      alert("Gast-Login fehlgeschlagen");
-    }
+//   loginBtn.addEventListener("click", async (event) => {
+//     event.preventDefault();
+//     const email = emailInput.value.trim();
+//     const password = passwordInput.value;
+
+//     if (!email || !password) {
+//       alert("Check your email and password. Pleasy try again.");
+//       return;
+//     }
+//     try {
+//       const userCredential = await signInWithEmailAndPassword(
+//         auth,
+//         email,
+//         password
+//       );
+//       console.log("Login erforlgreich:", userCredential.user);
+//       window.location.href = "./member/summary.html"; // target page after login
+//     } catch (error) {
+//       console.error("Login Fehlgeschlagen:", error.message);
+//       alert("Login fehlgeschlagen");
+//     }
+//     console.log("LOGIN CLICK");
+//     console.log("Email:", email);
+//     console.log("Password:", password);
+//   })
+
+//   guestBtn.addEventListener("click", async () => {
+//     try {
+//       const userCredential = await signInAnonymously(auth);
+//       console.log("GUEST LOGIN CLICK");
+//       window.location.href = "./member/summary.html"; // target page after login
+//     } catch (error) {
+//       console.error(error.message);
+//       alert("Gast-Login fehlgeschlagen");
+//     }
+//   });
+
+// })
+
+document.addEventListener("DOMContentLoaded", initLoginPage);
+
+function initLoginPage() {
+  const elements = getLoginElements();
+  syncSplashLogoTarget(elements);
+  bindLoginButton(elements);
+  bindGuestButton(elements);
+}
+
+function getLoginElements() {
+  return {
+    loginBtn: document.getElementById("loginBtn"),
+    guestBtn: document.getElementById("guestBtn"),
+    emailInput: document.getElementById("email"),
+    passwordInput: document.getElementById("password"),
+    splashLogo: document.querySelector(".logo-splash__img"),
+    targetLogo: document.querySelector(".join__logo")
+  };
+}
+
+function syncSplashLogoTarget(elements) {
+  if (!elements.splashLogo || !elements.targetLogo) return;
+
+  const { top, left, width } = elements.targetLogo.getBoundingClientRect();
+  const root = document.documentElement;
+
+  root.style.setProperty("--logo-target-top", `${top}px`);
+  root.style.setProperty("--logo-target-left", `${left}px`);
+  root.style.setProperty("--logo-target-width", `${width}px`);
+}
+
+function bindLoginButton(elements) {
+  if (!elements.loginBtn) return;
+  elements.loginBtn.addEventListener("click", (event) => {
+    void handleLoginClick(event, elements);
   });
+}
 
-})
+function bindGuestButton(elements) {
+  if (!elements.guestBtn) return;
+  elements.guestBtn.addEventListener("click", () => {
+    void loginAsGuest();
+  });
+}
+
+async function handleLoginClick(event, elements) {
+  event.preventDefault();
+
+  const email = elements.emailInput.value.trim();
+  const password = elements.passwordInput.value;
+
+  if (!hasLoginData(email, password)) return;
+  await loginWithEmail(email, password);
+}
+
+function hasLoginData(email, password) {
+  if (email && password) return true;
+  alert("Check your email and password. Pleasy try again.");
+  return false;
+}
 
 
 /**
@@ -82,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
  * @returns {Promise<void>} Resolves when login flow is complete
  */
 export function loginWithEmail(email, password) {
-  signInWithEmailAndPassword(auth, email, password)
+  return signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
       console.log("Login erfolgreich:", userCredential.user);
       window.location.href = "./member/summary.html";
@@ -93,14 +166,13 @@ export function loginWithEmail(email, password) {
     });
 }
 
-
 /**
  * Login as guest without mail and password
  *
  * @returns {Promise<void>} Resolves when login flow is complete
  */
 export function loginAsGuest() {
-  signInAnonymously(auth)
+  return signInAnonymously(auth)
     .then(userCredential => {
       console.log("Gast eingeloggt:", userCredential.user);
       window.location.href = "./member/summary.html";

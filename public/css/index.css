@@ -103,9 +103,9 @@ body {
     transform: translate(-50%, -50%);
   }
   100% {
-    top: 80px;
-    left: 76px;
-    width: 100px;
+    top: var(--logo-target-top);
+    left: var(--logo-target-left);
+    width: var(--logo-target-width);
     transform: translate(0, 0);
   }
 }
@@ -115,4 +115,10 @@ body {
     opacity: 0;
     visibility: hidden;
   }
+}
+
+:root {
+  --logo-target-top: 80px;
+  --logo-target-left: 76px;
+  --logo-target-width: 100px;
 }

@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="../styles/join.css">
   <link rel="stylesheet" href="../styles/fonts.css">
   <link rel="stylesheet" href="../styles/colors.css">
-   <link rel="stylesheet" href="../styles/contacts.css">
+  <link rel="stylesheet" href="../styles/contacts.css">
   <link rel="stylesheet" href="../styles/assets.css">
   <link rel="stylesheet" href="./css/board.css">
   <link rel="stylesheet" href="./css/add-task.css">
@@ -21,7 +21,11 @@
   <script type="module" src="./js/drag-n-drop.js"></script>
   <script type="module" src="./js/member-script.js"></script>
   <script type="module" src="./js/add-task.js"></script>
+  <script type="module" src="/member/js/board.js"></script>
 </head>
+<!-- bitte id vergeben, die man gut zuordnen kann, overlay container kann alles sein -->
+<div id="overlay_container" class="d_none"></div>
+<!-- zum beispiel: task_detail_overlay -->
 
 <section id="add_task_overlay" class="board-overlay d_none">
   <div id="add_task" class="board-overlay__content"></div>
@@ -39,7 +43,8 @@
         oninput="searchTask(this.value)">
       <img class="board-search-icon" src="../assets/icons/search.svg" alt="Search">
     </div>
-    <button type="button" id="openAddTaskOverlay" class="board-add-btn">Add task <img class="board-add-icon" src="../assets/icons/add-icon-white.svg" alt=""></button>
+    <button type="button" id="openAddTaskOverlay" class="board-add-btn">Add task <img class="board-add-icon"
+        src="../assets/icons/add-icon-white.svg" alt=""></button>
   </section>
   <main class="task">
 
@@ -87,9 +92,7 @@
     </section>
 
   </main>
-  
-  <div id="overlay_container" class="d_none"></div>
-  <script type="module" src="/member/js/board.js"></script>
+
 </body>
 
 </html>
