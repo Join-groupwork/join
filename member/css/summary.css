@@ -16,60 +16,11 @@ body {
   height: 100vh;
 }
 
-.sidebar {
-  width: 230px;
-  /* height ergänzt wegen add_task */
-  height: 100%;
-  background: #1a2c47;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 40px;
-  /* ergänzt für add_task */
-  /* erstmal für summary-page entfernt */
-  /* position: fixed;
-  left: 0;
-  top: 0;
-  z-index: +1; */
-}
 
 .logo {
   margin-left: 20px;
   margin-top: 12px;
   margin-bottom: 8px;
-}
-
-.nav {
-  margin-top: 88px;
-  display: flex;
-  flex-direction: column;
-}
-
-.nav-item {
-  width: calc(100% + 80px);
-  margin-left: -40px;
-  margin-right: -40px;
-  padding: 10px 40px;
-  margin-top: 10px;
-  cursor: pointer;
-  color: #ced1d7;
-}
-
-.nav-item:hover {
-  background: #2a3e59;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.nav-icon {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
 }
 
 .legal a {

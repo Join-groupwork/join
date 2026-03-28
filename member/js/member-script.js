@@ -53,6 +53,7 @@ async function init() {
 async function render() {
   await renderHeader();
   await renderSidebar();
+  highlightActiveNavItem();
 
   if (document.getElementById('add_task')) {
     await renderAddTask();
@@ -199,6 +200,14 @@ function setupAddTaskOverlay() {
 
   setupOpenButton(openBtn, overlay);
   setupBackdropAndCloseButton(overlay);
+}
+
+function highlightActiveNavItem() {
+  const currentPage = window.location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-item').forEach(link => {
+    const linkPage = link.getAttribute('href').split('/').pop();
+    link.classList.toggle('nav-item--active', linkPage === currentPage);
+  });
 }
 /**
  * Triggers the board rendering.
