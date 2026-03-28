@@ -133,7 +133,12 @@ export function initAddTask(container, options = {}) {
 
   cancelBtn?.addEventListener('click', (event) => {
     event.preventDefault();
+
     clearAddTaskForm(priorityButtons);
+
+    if (options.mode === 'overlay' && typeof options.onClose === 'function') {
+      options.onClose();
+    }
   });
 
   /**
