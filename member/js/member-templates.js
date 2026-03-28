@@ -44,7 +44,7 @@ export function getHeaderTemplate() {
           <div class="topbar-right">
               <a href="./help.html"class="help-circle" title="Help">?</a>
               <div id="headerMenue" class="profile">
-                  SM
+                  <span id="profileInitials"></span>
                   <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
                       <ul>
                           <a href="./legal-notice-user.html">Legal Notice</a>
