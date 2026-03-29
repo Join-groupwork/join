@@ -1,8 +1,10 @@
 import { loadTasks } from '/scripts/firebase/get-firebase.js';
-import { getTaskOverlayTemplate } from './member-templates.js';
-import { ref, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import { getTaskOverlayTemplate, getEditTaskOverlayTemplate } from './member-templates.js';
+import { ref, onValue, remove, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 import { database } from "../../scripts/firebase/firebase.js";
 import { updateHTML,todos  } from './drag-n-drop.js';
+import { initAssignees, trackContactsForUser, getAssignedNames } from './add-task-assignees.js';
+import { initSubtasks, getSubtasks } from './add-task-subtasks.js';
 
 let tasks = {}; 
 
@@ -174,4 +176,250 @@ async function deleteTask(taskId) {
 }
 
 window.deleteTask = deleteTask;
+
+/** editTask   
+ * @param {string} taskId 
+ * @param {Object} task - Task object
+ */
+function renderEditOverlay(taskId, task) {
+  const overlayContainer = document.getElementById("overlay_container");
+  overlayContainer.innerHTML = getEditTaskOverlayTemplate(
+    taskId, task.category, task.title, task.description,
+    task.due_date, task.priority, task.assigned_to, task.subtasks
+  );
+}
+
+
+function setupPriorityButtons() {
+  document.querySelectorAll('.priority_button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.priority_button').forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+}
+
+/**
+ * @returns {Object} Assignee state
+  */
+function initializeEditAssignees() {
+  const assigneeState = initAssignees({
+    assignedContainer: document.getElementById('edit_assigned_to'),
+    assignedInput: document.getElementById('edit_assigned_to_input'),
+    assignedTrigger: document.getElementById('edit_assigned_to_trigger'),
+    assignedOptions: document.getElementById('edit_assigned_to_options'),
+    selectedDisplay: document.getElementById('edit_selected_assignees_display')
+  });
+  trackContactsForUser(assigneeState);
+  return assigneeState;
+}
+
+/**
+ * Initializes the subtasks module for edit mode.
+ * @param {HTMLElement} container - Overlay container
+ * @returns {Object} Subtask state
+ */
+function initializeEditSubtasks(container) {
+  return initSubtasks(container, {
+    subtaskInput: document.getElementById('edit_subtask'),
+    subtaskActions: document.getElementById('edit_subtask_actions'),
+    confirmSubtaskBtn: document.getElementById('edit_confirm_subtask_btn'),
+    clearSubtaskBtn: document.getElementById('edit_clear_subtask_btn'),
+    subtaskList: document.getElementById('edit_subtask_list_new')
+  });
+}
+
+/**
+ * Opens the edit task overlay.
+ * @param {string} taskId 
+ */
+function editTask(taskId) {
+  const task = tasks[taskId];
+  if (!task) return console.warn("Task nicht gefunden:", taskId);
+
+  renderEditOverlay(taskId, task);
+  setupPriorityButtons();
+  
+  window.editAssigneeState = initializeEditAssignees();
+  window.editSubtaskState = initializeEditSubtasks(document.getElementById("overlay_container"));
+  window.currentTaskId = taskId;
+}
+
+window.editTask = editTask;
+
+/**
+ * Collects form data from edit overlay.
+ * @returns {Object} Form data
+ */
+function collectEditFormData() {
+  return {
+    title: document.getElementById('edit_title').value,
+    description: document.getElementById('edit_description').value,
+    due_date: document.getElementById('edit_due_date').value,
+    priority: document.querySelector('.priority_button.selected')?.dataset.priority || 'medium',
+    assignedNames: window.editAssigneeState ? getAssignedNames(window.editAssigneeState) : {},
+    newSubtasks: window.editSubtaskState ? getSubtasks(window.editSubtaskState) : {}
+  };
+}
+
+/**
+ * Builds the task update object.
+ * @param {string} taskId 
+ * @param {Object} formData 
+ * @returns {Object} Update object
+ */
+function buildTaskUpdateObject(taskId, formData) {
+  const updatedTask = {
+    title: formData.title,
+    description: formData.description,
+    due_date: formData.due_date,
+    priority: formData.priority
+  };
+
+  if (Object.keys(formData.assignedNames).length > 0) {
+    updatedTask.assigned_to = formData.assignedNames;
+  }
+
+  const existingSubtasks = tasks[taskId]?.subtasks || {};
+  const mergedSubtasks = { ...existingSubtasks, ...formData.newSubtasks };
+  if (Object.keys(mergedSubtasks).length > 0) {
+    updatedTask.subtasks = mergedSubtasks;
+  }
+
+  return updatedTask;
+}
+
+/**
+ * Updates task in Firebase and local storage.
+ * @param {string} taskId 
+ * @param {Object} updatedTask
+ */
+async function updateTaskInFirebase(taskId, updatedTask) {
+  await update(ref(database, `tasks/${taskId}`), updatedTask);
+  tasks[taskId] = { ...tasks[taskId], ...updatedTask };
+}
+
+/**
+ * Refreshes board and shows updated task.
+ * @param {string} taskId 
+ */
+async function refreshBoardAndShowTask(taskId) {
+  await initTasks();
+  updateHTML();
+  openTaskOverlay(taskId);
+}
+
+/**
+ * Saves the edited task.
+ * @param {string} taskId 
+ */
+async function saveEditedTask(taskId) {
+  try {
+    const formData = collectEditFormData();
+    const updatedTask = buildTaskUpdateObject(taskId, formData);
+    await updateTaskInFirebase(taskId, updatedTask);
+    await refreshBoardAndShowTask(taskId);
+  } catch (error) {
+    console.error("Error saving task:", error);
+  }
+}
+
+window.saveEditedTask = saveEditedTask;
+
+/**
+ * Deletes an existing subtask from a task.
+ * @param {string} taskId 
+ * @param {string} subtaskKey 
+ */
+async function deleteExistingSubtask(taskId, subtaskKey) {
+  try {
+    const task = tasks[taskId];
+    if (!task || !task.subtasks) return;
+    
+    const updatedSubtasks = { ...task.subtasks };
+    delete updatedSubtasks[subtaskKey];
+    
+    await update(ref(database, `tasks/${taskId}/subtasks`), updatedSubtasks);
+    tasks[taskId].subtasks = updatedSubtasks;
+    
+    editTask(taskId);
+  } catch (error) {
+    console.error("Error deleting subtask:", error);
+  }
+}
+
+window.deleteExistingSubtask = deleteExistingSubtask;
+
+/**
+ * Creates an input element for editing a subtask.
+ * @param {string} currentText 
+ * @returns {HTMLInputElement} 
+ */
+function createSubtaskEditInput(currentText) {
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.value = currentText;
+  input.className = 'input_add_task';
+  input.style.fontSize = '16px';
+  input.style.marginBottom = '0';
+  return input;
+}
+
+/**
+ * Sets up event listeners for subtask edit
+ * @param {HTMLInputElement} input 
+ * @param {string} taskId 
+ * @param {string} subtaskKey 
+ */
+function setupSubtaskEditListeners(input, taskId, subtaskKey) {
+  input.addEventListener('blur', () => saveSubtaskEdit(taskId, subtaskKey, input));
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') saveSubtaskEdit(taskId, subtaskKey, input);
+    if (e.key === 'Escape') editTask(taskId);
+  });
+}
+
+/**
+ * Enables editing mode for an existing subtask.
+ * @param {string} taskId 
+ * @param {string} subtaskKey 
+ */
+function editExistingSubtask(taskId, subtaskKey) {
+  const textElement = document.getElementById(`subtask_text_${subtaskKey}`);
+  if (!textElement) return;
+  
+  const input = createSubtaskEditInput(textElement.textContent);
+  textElement.replaceWith(input);
+  input.focus();
+  input.select();
+  setupSubtaskEditListeners(input, taskId, subtaskKey);
+}
+
+window.editExistingSubtask = editExistingSubtask;
+
+/**
+ * Saves the edited subtask 
+ * @param {string} taskId 
+ * @param {string} subtaskKey 
+ * @param {HTMLInputElement} input 
+ */
+async function saveSubtaskEdit(taskId, subtaskKey, input) {
+  const newText = input.value.trim();
+  if (!newText) return editTask(taskId);
+  
+  try {
+    await update(ref(database, `tasks/${taskId}/subtasks/${subtaskKey}`), {
+      title: newText,
+      status: tasks[taskId].subtasks[subtaskKey].status
+    });
+    
+    tasks[taskId].subtasks[subtaskKey].title = newText;
+    editTask(taskId);
+  } catch (error) {
+    console.error("Error saving subtask:", error);
+  }
+}
+
+
+
 /* renderBoard(); */

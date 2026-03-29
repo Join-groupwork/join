@@ -169,7 +169,7 @@ main {
 }
 
 .task-overlay-content {
-  width: 400px;
+  width: 525px;
   padding: 40px;
   border-radius: 24px;
   background-color: var(--color-background-input);
@@ -177,7 +177,10 @@ main {
   display: flex;        
   flex-direction: column;
   height: auto;      
-  min-height: 600px; 
+  min-height: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 
@@ -186,11 +189,11 @@ main {
 .overlaytemplate-first-section{
   display: flex;
   align-items: center;
-  justify-content: space-between ;
+  justify-content: flex-end;
   width: 100%;                    
   box-sizing: border-box;        
   gap: 10px;  
-  padding-bottom: 20px;
+  padding-bottom: 8px;
 }
 
 .overlaytemplate-title{
@@ -391,6 +394,107 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   text-decoration: none;
   white-space: nowrap;
   width: 152px;
+}
+
+/* Edit Task Overlay Styles */
+.edit-task-form {
+  max-height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.edit-task-form .form_add_task {
+  width: 100%;
+  gap: 0;
+  margin-top: 0;
+}
+
+.edit-task-form .form-field {
+  margin-bottom: 12px;
+}
+
+.edit-task-form label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #2a3647;
+  font-weight: 400;
+}
+
+.edit-task-form .input_add_task {
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+.edit-task-form .textarea_add_task {
+  margin-bottom: 16px;
+  font-size: 16px;
+  min-height: 80px;
+}
+
+.edit-task-form .section_priority {
+  margin-bottom: 16px;
+}
+
+.edit-task-form .section_priority label {
+  margin-bottom: 8px;
+}
+
+.edit-task-form .add-task-buttons-right {
+  margin-top: 40px;
+  justify-content: flex-end;
+}
+
+.edit-task-form .subtask-input-wrap {
+  position: relative;
+}
+
+.edit-task-form .subtask_input_field:focus {
+  outline: none;
+  border-color: #29abe2;
+  box-shadow: 0 0 0 1px #29abe2;
+}
+
+.edit-task-form .custom-select__trigger:focus,
+.edit-task-form .custom-select__trigger:focus-within {
+  outline: none;
+  border-color: #29abe2;
+  box-shadow: 0 0 0 1px #29abe2;
+}
+
+.edit-task-form .custom-select.active .custom-select__trigger {
+  border-color: #29abe2;
+  box-shadow: 0 0 0 1px #29abe2;
+}
+
+.edit-task-form .subtask-item {
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.edit-task-form .subtask-item:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.edit-task-form .subtask-item-actions {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.edit-task-form .subtask-item:hover .subtask-item-actions {
+  opacity: 1;
+}
+
+.edit-task-form .subtask-icon-btn {
+  transition: opacity 0.2s ease;
+}
+
+.edit-task-form .subtask-icon-btn:hover {
+  opacity: 0.7;
+}
+
+.edit-task-form .subtask-icon-btn img {
+  display: block;
 }
 
 .board-add-btn:hover {

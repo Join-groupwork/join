@@ -464,9 +464,124 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
     <div class="taskoverlay_detail_actions">
       <button type="button" class="link_btn-taskoverlay" onclick="deleteTask('${id}')"><img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
       <div class="divider-grey"></div>
-      <button type="button" class="link_btn-taskoverlay" onclick="editContact()"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
+      <button type="button" class="link_btn-taskoverlay" onclick="editTask('${id}')"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
     </div>
 
+  </div>
+  `;
+}
+
+/**
+ * Generates the edit task overlay HTML.
+ *
+ * @param {string} id - Task ID
+ * @param {string} category - Task category
+ * @param {string} title - Task title  
+ * @param {string} description - Task description
+ * @param {string} due_date - Due date
+ * @param {string} priority - Priority level
+ * @param {string|Array} assigned_to - Assigned contacts
+ * @param {Object} subtasks - Subtasks object
+ * @returns {string} HTML string for edit task overlay
+ */
+export function getEditTaskOverlayTemplate(id, category, title, description, due_date, priority, assigned_to, subtasks) {
+  const assignedArray = Array.isArray(assigned_to) ? assigned_to : assigned_to.split(', ');
+  const subtaskArray = subtasks && typeof subtasks === 'object' ? Object.values(subtasks) : [];
+  
+  return `
+  <div class="task-overlay-content edit-task-form">
+    <div class="overlaytemplate-first-section">
+      <button onclick="closeTaskOverlay()">
+        <img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt="">
+      </button>
+    </div>
+    
+    <form id="edit_task_form" class="form_add_task">
+      <div class="form-field">
+        <input type="text" id="edit_title" class="input_add_task" value="${title}" required placeholder="Enter a title" style="border: none; border-bottom: 1px solid #d1d1d1; border-radius: 0; padding: 8px 0; margin-bottom: 16px; font-size: 16px;">
+      </div>
+      
+      <div class="form-field">
+        <label for="edit_description" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Description</label>
+        <textarea id="edit_description" class="textarea_add_task" placeholder="Enter a description" style="min-height: 80px; font-size: 16px; resize: vertical;">${description}</textarea>
+      </div>
+      
+      <div class="form-field">
+        <label for="edit_due_date" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Due date</label>
+        <input type="date" id="edit_due_date" class="input_add_task" value="${due_date}" required style="font-size: 16px;">
+      </div>
+      
+      <div class="section_priority">
+        <label style="font-size: 14px; color: #2a3647; font-weight: 400;">Priority</label>
+        <div class="priority">
+          <button type="button" class="priority_button ${priority === 'urgent' ? 'selected' : ''}" value="urgent" data-priority="urgent">
+            Urgent <img src="../assets/icons/urgent-prio-icon.svg" alt="">
+          </button>
+          <button type="button" class="priority_button ${priority === 'medium' ? 'selected' : ''}" value="medium" data-priority="medium">
+            Medium <img src="../assets/icons/medium-prio-icon.svg" alt="">
+          </button>
+          <button type="button" class="priority_button ${priority === 'low' ? 'selected' : ''}" value="low" data-priority="low">
+            Low <img src="../assets/icons/low-prio-icon.svg" alt="">
+          </button>
+        </div>
+      </div>
+      
+      <div class="form-field">
+        <label for="edit_assigned_to" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Assigned to</label>
+        <div class="custom-select" id="edit_assigned_to" style="margin-bottom: 12px;">
+          <button type="button" class="custom-select__trigger" id="edit_assigned_to_trigger">
+            <span class="custom-select__trigger-label">Select contacts to assign</span>
+            <span class="custom-select__arrow">▾</span>
+          </button>
+          <div class="custom-select__options d_none" id="edit_assigned_to_options"></div>
+        </div>
+        <input type="hidden" id="edit_assigned_to_input" name="edit_assigned_to">
+        <div class="selected-assignees" id="edit_selected_assignees_display" style="display: flex; gap: 8px; margin-bottom: 22px;">
+          ${assignedArray.map(person => `
+            <div class="contact_avatar" style="background-color: ${getAvatarColor(person)}; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 500; font-size: 14px;">
+              ${getInitials(person)}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      
+      <div class="form-field">
+        <label style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Subtasks</label>
+        <div class="subtask-input-wrap" style="position: relative; margin-bottom: 12px;">
+          <input class="input_add_task subtask_input_field" type="text" id="edit_subtask" name="edit_subtask" placeholder="Add new subtask" style="font-size: 16px;">
+          <div class="subtask-actions d_none" id="edit_subtask_actions">
+            <button type="button" class="subtask-action-btn" id="edit_clear_subtask_btn">✕</button>
+            <span class="subtask-divider">|</span>
+            <button type="button" class="subtask-action-btn" id="edit_confirm_subtask_btn">✓</button>
+          </div>
+        </div>
+        <div class="subtask-list" id="edit_subtask_list" style="margin-bottom: 8px;">
+          ${Object.entries(subtasks && typeof subtasks === 'object' ? subtasks : {}).map(([key, s]) => `
+            <div class="subtask-item" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 12px; font-size: 16px; color: #2a3647;">
+              <div style="display: flex; align-items: center; gap: 8px; flex: 1;">
+                <span style="line-height: 1.5;">•</span>
+                <span style="line-height: 1.5; flex: 1;" id="subtask_text_${key}">${s.title}</span>
+              </div>
+              <div class="subtask-item-actions" style="display: flex; gap: 8px;">
+                <button type="button" class="subtask-icon-btn" onclick="editExistingSubtask('${id}', '${key}')" title="Edit" style="border: none; background: transparent; cursor: pointer; font-size: 18px; padding: 0;">
+                  <img src="../assets/icons/pencil-icon.svg" alt="Edit" style="width: 16px; height: 16px;">
+                </button>
+                <button type="button" class="subtask-icon-btn" onclick="deleteExistingSubtask('${id}', '${key}')" title="Delete" style="border: none; background: transparent; cursor: pointer; font-size: 18px; padding: 0;">
+                  <img src="../assets/icons/trash-icon.svg" alt="Delete" style="width: 16px; height: 16px;">
+                </button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="subtask-list" id="edit_subtask_list_new"></div>
+      </div>
+      
+      <div class="add-task-buttons-right" style="margin-top: 40px;">
+        <button type="button" class="Create_button_add_task" onclick="saveEditedTask('${id}')">
+          Ok <img src="../assets/icons/check-icon-white.svg" alt="">
+        </button>
+      </div>
+    </form>
   </div>
   `;
 }
