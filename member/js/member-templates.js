@@ -472,8 +472,6 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
 }
 
 /**
- * Generates the edit task overlay HTML.
- *
  * @param {string} id - Task ID
  * @param {string} category - Task category
  * @param {string} title - Task title  
@@ -535,7 +533,6 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
           </button>
           <div class="custom-select__options d_none" id="edit_assigned_to_options"></div>
         </div>
-        <input type="hidden" id="edit_assigned_to_input" name="edit_assigned_to">
         <div class="selected-assignees" id="edit_selected_assignees_display" style="display: flex; gap: 8px; margin-bottom: 22px;">
           ${assignedArray.map(person => `
             <div class="contact_avatar" style="background-color: ${getAvatarColor(person)}; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 500; font-size: 14px;">
@@ -547,33 +544,17 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
       
       <div class="form-field">
         <label style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Subtasks</label>
-        <div class="subtask-input-wrap" style="position: relative; margin-bottom: 12px;">
+        <div class="subtask-input-wrap" style="margin-bottom: 12px;">
           <input class="input_add_task subtask_input_field" type="text" id="edit_subtask" name="edit_subtask" placeholder="Add new subtask" style="font-size: 16px;">
-          <div class="subtask-actions d_none" id="edit_subtask_actions">
-            <button type="button" class="subtask-action-btn" id="edit_clear_subtask_btn">✕</button>
-            <span class="subtask-divider">|</span>
-            <button type="button" class="subtask-action-btn" id="edit_confirm_subtask_btn">✓</button>
-          </div>
         </div>
-        <div class="subtask-list" id="edit_subtask_list" style="margin-bottom: 8px;">
-          ${Object.entries(subtasks && typeof subtasks === 'object' ? subtasks : {}).map(([key, s]) => `
-            <div class="subtask-item" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 12px; font-size: 16px; color: #2a3647;">
-              <div style="display: flex; align-items: center; gap: 8px; flex: 1;">
-                <span style="line-height: 1.5;">•</span>
-                <span style="line-height: 1.5; flex: 1;" id="subtask_text_${key}">${s.title}</span>
-              </div>
-              <div class="subtask-item-actions" style="display: flex; gap: 8px;">
-                <button type="button" class="subtask-icon-btn" onclick="editExistingSubtask('${id}', '${key}')" title="Edit" style="border: none; background: transparent; cursor: pointer; font-size: 18px; padding: 0;">
-                  <img src="../assets/icons/pencil-icon.svg" alt="Edit" style="width: 16px; height: 16px;">
-                </button>
-                <button type="button" class="subtask-icon-btn" onclick="deleteExistingSubtask('${id}', '${key}')" title="Delete" style="border: none; background: transparent; cursor: pointer; font-size: 18px; padding: 0;">
-                  <img src="../assets/icons/trash-icon.svg" alt="Delete" style="width: 16px; height: 16px;">
-                </button>
-              </div>
+        <div class="subtask-list" id="edit_subtask_list">
+          ${subtaskArray.map((s, index) => `
+            <div class="subtask-item" style="display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; font-size: 16px; color: #2a3647;">
+              <span style="line-height: 1.5;">•</span>
+              <span style="line-height: 1.5;">${s.title}</span>
             </div>
           `).join('')}
         </div>
-        <div class="subtask-list" id="edit_subtask_list_new"></div>
       </div>
       
       <div class="add-task-buttons-right" style="margin-top: 40px;">
