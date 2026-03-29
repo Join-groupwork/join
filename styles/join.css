@@ -220,9 +220,16 @@ form {
 }
 
 /* nav hover color  */
-.nav-item:hover {
+.nav-item:not(.nav-item--active):hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* nav active state */
+.nav-item--active,
+.nav-item--active:hover {
   background: var(--color-nav-hover);
-  /* background: #091931; */
+  color: #ffffff;
 }
 
 .nav-item {

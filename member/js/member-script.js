@@ -1,5 +1,6 @@
 import { initAddTask } from './add-task.js';
-
+import { getInitials } from './contacts-render.js';
+import { getContacts, loadData } from '../../scripts/firebase/get-firebase.js';
 /**
  * @file Member page bootstrapper: renders header/sidebar/task UI and wires up header menu + logout.
  *
@@ -52,7 +53,9 @@ async function init() {
  */
 async function render() {
   await renderHeader();
+  renderProfileInitials()
   await renderSidebar();
+  highlightActiveNavItem();
 
   if (document.getElementById('add_task')) {
     await renderAddTask();
@@ -199,6 +202,30 @@ function setupAddTaskOverlay() {
 
   setupOpenButton(openBtn, overlay);
   setupBackdropAndCloseButton(overlay);
+}
+
+function highlightActiveNavItem() {
+  const currentPage = window.location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-item').forEach(link => {
+    const linkPage = link.getAttribute('href').split('/').pop();
+    link.classList.toggle('nav-item--active', linkPage === currentPage);
+  });
+}
+
+function renderProfileInitials() {
+  auth.onAuthStateChanged((user) => {
+    const initialsElem = document.getElementById('profileInitials');
+    if (!initialsElem) return;
+    if (user && !user.isAnonymous) {
+      loadData(() => {
+        const contacts = getContacts();
+        const contact = Object.values(contacts).find(c => c.uid === user.uid);
+        initialsElem.textContent = getInitials(contact?.name || user.displayName || user.email || 'U');
+      });
+    } else {
+      initialsElem.textContent = 'G';
+    }
+  });
 }
 /**
  * Triggers the board rendering.
