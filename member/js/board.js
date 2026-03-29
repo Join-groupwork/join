@@ -122,14 +122,26 @@ function openTaskOverlay(taskId) {
    setTimeout(() => {
     overlayContainer.classList.add('show');
   }, 10);
+
+  overlayContainer.addEventListener('click', handleOverlayClick);
 }
 window.openTaskOverlay = openTaskOverlay;
+
+
+function handleOverlayClick(event) {
+  const overlayContainer = document.getElementById("overlay_container");
+  if (event.target === overlayContainer) {
+    closeTaskOverlay();
+  }
+}
 
 function closeTaskOverlay() {
   const overlayContainer = document.getElementById("overlay_container");
   overlayContainer.classList.remove('show');
-  overlayContainer.classList.add('d_none'); 
+  overlayContainer.classList.add('d_none');
+  
 
+  overlayContainer.removeEventListener('click', handleOverlayClick);
 }
 
 window.closeTaskOverlay = closeTaskOverlay;
