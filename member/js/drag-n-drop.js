@@ -17,7 +17,8 @@
  */
 import { database } from '../../scripts/firebase/firebase.js';
 import { loadTasks } from '../../scripts/firebase/get-firebase.js';
-import { generateTodosHTML } from './member-templates.js'
+import { generateTodosHTML } from './member-templates.js';
+import { getInitials, getAvatarColor } from './contacts-render.js';
 import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 /**
@@ -91,6 +92,57 @@ export async function updateTaskStatus(taskId, newStatus) {
   });
 }
 
+/**
+ * Calculates subtask progress.
+ * @param {Object} subtasks
+ * @returns {string} HTML for progress bar
+ */
+function calculateSubtaskProgress(subtasks = {}) {
+  const subtaskArray = Object.values(subtasks);
+  const totalSubtasks = subtaskArray.length;
+  if (totalSubtasks === 0) return '';
+  
+  const completedSubtasks = subtaskArray.filter(s => s.status === true || s.completed === true).length;
+  const progressPercent = (completedSubtasks / totalSubtasks) * 100;
+
+  return `
+    <div class="task__progress">
+      <div class="task__progress-bar">
+        <div class="task__progress-fill" style="width: ${progressPercent}%"></div>
+      </div>
+      <span class="task__progress-text">${completedSubtasks}/${totalSubtasks} Subtasks</span>
+    </div>`;
+}
+
+/**
+ * Generates assignee avatars HTML.
+ * @param {Object|Array|string} assigned_to
+ * @returns {string} HTML for avatars
+ */
+function generateAssigneeAvatars(assigned_to = {}) {
+  let assigneeArray = [];
+  
+  if (assigned_to && typeof assigned_to === 'object' && !Array.isArray(assigned_to)) {
+    assigneeArray = Object.values(assigned_to);
+  } else if (Array.isArray(assigned_to)) {
+    assigneeArray = assigned_to;
+  } else if (typeof assigned_to === 'string' && assigned_to.trim()) {
+    assigneeArray = assigned_to.split(',').map(s => s.trim());
+  }
+
+  return assigneeArray
+    .slice(0, 3)
+    .map(contact => {
+      const name = typeof contact === 'string' ? contact : (contact?.name || '');
+      if (!name) return '';
+      const initials = getInitials(name);
+      const color = getAvatarColor(name);
+      return `<div class="task__assignee-avatar" style="background-color: ${color}">${initials}</div>`;
+    })
+    .filter(html => html)
+    .join('');
+}
+
 
 /**
  * Re-renders all board columns and updates placeholder visibility.
@@ -123,7 +175,9 @@ function updateTodo() {
   container.innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'todo' && matchesSearch(element)) {
-      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      const progressHTML = calculateSubtaskProgress(element.subtasks);
+      const avatarsHTML = generateAssigneeAvatars(element.assigned_to);
+      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
     }
   }
 };
@@ -139,7 +193,9 @@ function updateInProgress() {
   document.getElementById('inProgress').innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'in-progress' && matchesSearch(element)) {
-      document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      const progressHTML = calculateSubtaskProgress(element.subtasks);
+      const avatarsHTML = generateAssigneeAvatars(element.assigned_to);
+      document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
     }
   }
 };
@@ -155,7 +211,9 @@ function updateAwaitFeedback() {
   document.getElementById('awaitFeedback').innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'await-feedback' && matchesSearch(element)) {
-      document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      const progressHTML = calculateSubtaskProgress(element.subtasks);
+      const avatarsHTML = generateAssigneeAvatars(element.assigned_to);
+      document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
     }
   }
 };
@@ -171,7 +229,9 @@ function updateDone() {
   document.getElementById('done').innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'done' && matchesSearch(element)) {
-      document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+      const progressHTML = calculateSubtaskProgress(element.subtasks);
+      const avatarsHTML = generateAssigneeAvatars(element.assigned_to);
+      document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
     }
   }
 };

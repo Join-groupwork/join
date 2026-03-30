@@ -13,6 +13,17 @@ async function initTasks() {
   tasks = await loadTasks();
 }
 
+/**
+ * Syncs tasks and todos objects
+ */
+function syncTasksAndTodos() {
+  Object.keys(tasks).forEach(taskId => {
+    if (todos[taskId]) {
+      todos[taskId] = { ...tasks[taskId] };
+    }
+  });
+}
+
 initTasks();
 
 /**
@@ -149,13 +160,38 @@ function closeTaskOverlay() {
 window.closeTaskOverlay = closeTaskOverlay;
 
 
-function toggleCheckbox(img) {
-  if (img.src.includes("unchecked")) {
-    img.src = "../assets/icons/checkbox/checkbox-icon-checked.svg";
-  } else {
-    img.src = "../assets/icons/checkbox/checkbox-icon unchecked.svg";
+async function toggleCheckbox(img) {
+  const taskId = img.dataset.taskId;
+  const subtaskKey = img.dataset.subtaskKey;
+  
+  if (!taskId || !subtaskKey) return;
+  
+  try {
+    const currentStatus = tasks[taskId]?.subtasks?.[subtaskKey]?.status || false;
+    const newStatus = !currentStatus;
+    
+    await update(ref(database, `tasks/${taskId}/subtasks/${subtaskKey}`), {
+      status: newStatus
+    });
+    
+    if (tasks[taskId]?.subtasks?.[subtaskKey]) {
+      tasks[taskId].subtasks[subtaskKey].status = newStatus;
+    }
+    
+    if (todos[taskId]?.subtasks?.[subtaskKey]) {
+      todos[taskId].subtasks[subtaskKey].status = newStatus;
+    }
+    
+    img.src = newStatus 
+      ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
+      : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
+    
+    updateHTML();
+  } catch (error) {
+    console.error("Error toggling subtask:", error);
   }
 }
+
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("checkbox-icon")) {
     toggleCheckbox(e.target);
@@ -305,6 +341,7 @@ async function updateTaskInFirebase(taskId, updatedTask) {
  */
 async function refreshBoardAndShowTask(taskId) {
   await initTasks();
+  syncTasksAndTodos();
   updateHTML();
   openTaskOverlay(taskId);
 }
@@ -342,6 +379,11 @@ async function deleteExistingSubtask(taskId, subtaskKey) {
     await update(ref(database, `tasks/${taskId}/subtasks`), updatedSubtasks);
     tasks[taskId].subtasks = updatedSubtasks;
     
+    if (todos[taskId]) {
+      todos[taskId].subtasks = updatedSubtasks;
+    }
+    
+    updateHTML();
     editTask(taskId);
   } catch (error) {
     console.error("Error deleting subtask:", error);
@@ -414,6 +456,12 @@ async function saveSubtaskEdit(taskId, subtaskKey, input) {
     });
     
     tasks[taskId].subtasks[subtaskKey].title = newText;
+    
+    if (todos[taskId]?.subtasks?.[subtaskKey]) {
+      todos[taskId].subtasks[subtaskKey].title = newText;
+    }
+    
+    updateHTML();
     editTask(taskId);
   } catch (error) {
     console.error("Error saving subtask:", error);

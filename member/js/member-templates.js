@@ -301,24 +301,15 @@ export function signupMassegeTemplate() {
  * @param {Priority} priority - Task priority label.
  * @returns {string} HTML string representing the task card.
  */
-export function generateTodosHTML(id, title, category, description, priority) {
-  const categoryLabel =
-    category === "user-story"
-      ? "User Story"
-      : category === "technical-task"
-        ? "Technical Task"
-        : category;
-
+export function generateTodosHTML(id, title, category, description, priority, subtaskProgressHTML = '', assigneeAvatarsHTML = '') {
   return `
             <div class="task__card" id="${id}" onclick="openTaskOverlay('${id}')" draggable="true" >
               <span class="task__category--${category}">${category}</span><br>
               <h4 class="task__title">${title}</h4><br>
               <p class="task__text">${description}</p><br>
-              <div class="task__bar">
-                <progress></progress>
-              </div><br>
+              ${subtaskProgressHTML}
               <div class="task__footer">
-                <div>users</div>
+                <div class="task__assignees">${assigneeAvatarsHTML}</div>
                 <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
               </div>
             </div>
@@ -417,8 +408,8 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
     ? assigned_to
     : assigned_to.split(', ');
 
-  const subtaskArray = subtasks && typeof subtasks === 'object'
-    ? Object.values(subtasks)
+  const subtaskEntries = subtasks && typeof subtasks === 'object'
+    ? Object.entries(subtasks)
     : [];
 
   return `
@@ -451,13 +442,17 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
       <p>Subtasks:</p>
       <div class="overlaytemplate-subtask-checkbox">
         
-        ${subtaskArray.map(s => `
-          
+        ${subtaskEntries.map(([key, s]) => {
+          const isChecked = s.status === true || s.completed === true;
+          const iconSrc = isChecked 
+            ? "../assets/icons/checkbox/checkbox-icon-checked.svg" 
+            : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
+          return `
           <div class="subtask-item-taskoverlay">
-          <img class="checkbox-icon" src="../assets/icons/checkbox/checkbox-icon unchecked.svg" alt="">
+            <img class="checkbox-icon" src="${iconSrc}" alt="" data-task-id="${id}" data-subtask-key="${key}">
             ${s.title}
           </div>
-        `).join('')}
+        `}).join('')}
       </div>
     </div>
 

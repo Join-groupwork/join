@@ -186,6 +186,7 @@ export function getContactDetailContainer() {
 }
 
 export function getInitials(name) {
+    if (!name || typeof name !== 'string') return '';
     return name
         .split(' ')
         .map(word => word.charAt(0).toUpperCase())
