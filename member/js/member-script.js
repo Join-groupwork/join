@@ -1,6 +1,8 @@
 import { initAddTask } from './add-task.js';
 import { getInitials } from './contacts-render.js';
-import { getContacts, loadData } from '../../scripts/firebase/get-firebase.js';
+import { getContacts, loadData, loadTasks } from '../../scripts/firebase/get-firebase.js';
+import { tasks, initTasks } from './board.js';
+
 /**
  * @file Member page bootstrapper: renders header/sidebar/task UI and wires up header menu + logout.
  *
@@ -25,7 +27,7 @@ import { getContacts, loadData } from '../../scripts/firebase/get-firebase.js';
  * @module member-ui
  */
 import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate, getAddOverlayTemplate, generateTodosHTML } from './member-templates.js';
-import { updateHTML } from './drag-n-drop.js';
+import { updateHTML, todos } from './drag-n-drop.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { auth } from "../../scripts/firebase/firebase.js";
 
@@ -59,7 +61,7 @@ async function render() {
 
   if (document.getElementById('add_task')) {
     await renderAddTask();
-    setupAddTaskOverlay(); 
+    setupAddTaskOverlay();
   }
 
   await renderBoard();
@@ -111,7 +113,12 @@ function renderAddTask() {
 
     initAddTask(addTaskRef, {
       mode: 'overlay',
-      onClose: () => closeAddTaskOverlay(overlay)
+      onClose: () => closeAddTaskOverlay(overlay),
+      onSuccess: async () => {
+        await initTasks();
+        Object.assign(todos, tasks);
+        updateHTML();
+      }
     });
 
   } else {

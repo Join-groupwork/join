@@ -6,10 +6,10 @@ import { updateHTML,todos  } from './drag-n-drop.js';
 import { initAssignees, trackContactsForUser, getAssignedNames } from './add-task-assignees.js';
 import { initSubtasks, getSubtasks } from './add-task-subtasks.js';
 
-let tasks = {}; 
+export let tasks = {}; 
 
 
-async function initTasks() {
+export async function initTasks() {
   tasks = await loadTasks();
 }
 

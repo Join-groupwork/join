@@ -323,6 +323,9 @@ async function submitTask(taskData, createBtn, options = {}) {
     alert('Task created successfully');
 
     if (options.mode === 'overlay') {
+      if (typeof options.onSuccess === 'function') {
+        await options.onSuccess();  
+      }
       if (typeof options.onClose === 'function') {
         options.onClose();
       }
