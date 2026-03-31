@@ -25,13 +25,13 @@ import {
  * @event DOMContentLoaded
  */
 export function initAddTask(container, options = {}) {
-  const createBtn = container.querySelector('.Create_button_add_task');
-  const cancelBtn = container.querySelector('.clear_button_add_task');
+  const createBtn = container.querySelector('.add-task__button--primary');
+  const cancelBtn = container.querySelector('.add-task__button--secondary');
   const titleInput = container.querySelector('#title');
   const descInput = container.querySelector('#description');
   const dueInput = container.querySelector('#due_date');
   const categorySelect = container.querySelector('#category');
-  const priorityButtons = container.querySelectorAll('.priority_button');
+  const priorityButtons = container.querySelectorAll('.add-task__priority-button');
 
   let selectedPriority = null;
 
@@ -342,7 +342,7 @@ async function submitTask(taskData, createBtn, options = {}) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const container = document.querySelector('.container_add_task');
+  const container = document.querySelector('.add-task__container');
   if (!container) return;
 
   initAddTask(container, { mode: 'page' });
