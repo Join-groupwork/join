@@ -422,11 +422,11 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
     <h2 class="overlaytemplate-title">${title}</h2>
     <p class="overlaytemplate-description">${description}</p>
     <p class="overlaytemplate-due_date">Due date: ${due_date.replace(/-/g, "/")}</p>
-    <div class="overlaytemplate-priority-container">
-        <p class="overlaytemplate-priority">Priority: ${priority}</p>
+    <div class="overlaytemplate__priority--container">
+        <p class="overlaytemplate__priority">Priority: ${priority}</p>
         <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
     </div>
-    <div class="overlaytemplate-assigned_to">
+    <div class="overlaytemplate__assigned-to">
       <p>Assigned To:</p>
       ${assignedArray.map(person => `
         <div class="assigned_contact">

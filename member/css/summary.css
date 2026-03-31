@@ -118,7 +118,7 @@ body {
 .card.icon-card:hover,
 .card.urgent-info:hover,
 .small-card:hover {
-  background:#2a3547;
+  background: #2a3547;
   transform: scale(1.10);
   transition: transform 0.18s ease;
 }
@@ -141,11 +141,24 @@ body {
   background-image: url('../../assets/icons/check-circle-white.svg');
 }
 
-.heading-join {
+.summary__title {
   display: flex;
   align-items: center;
   gap: 16px;
   margin-bottom: 20px;
+}
+
+.summary__title::after {
+  content: "";
+  position: absolute;
+  margin: 0px auto 0px auto;
+  width: 2px;
+  height: 64px;
+  background-color: var(--border__bar);
+  left: 57.5%;
+  transform: translateX(-50%);
+  align-self: center;
+  border-radius: 8px;
 }
 
 h1 {
@@ -160,14 +173,6 @@ h3 {
 .heading-join h1,
 .heading-join h3 {
   margin: 0;
-}
-
-.divider-blue {
-  width: 2px;
-  height: 64px;
-  background: #2fa9db;
-  align-self: center;
-  border-radius: 8px;
 }
 
 /* Cards that show an icon on the left and content on the right */
@@ -309,10 +314,13 @@ h3 {
   color: #2b3544;
 }
 
-a.card, a.small-card, a.cards {
+a.card,
+a.small-card,
+a.cards {
   color: inherit;
   text-decoration: none;
 }
+
 a.card .card-title,
 a.card .card-sub,
 a.small-card .big,

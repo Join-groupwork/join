@@ -36,6 +36,7 @@
   /* Background-colors */
   --color-background-primary: #F6F7F8;
   --color-background-input: #FFFFFF;
+  --background__button: #2a3647;
   --background__primary: #F6F7F8;
   --background__secondary: #FFFFFF;
   --background__task--placeholder: #E7E7E7;
@@ -46,40 +47,11 @@
   --border__button: ;
   --border__button: ;
   --border__button: ;
+  --border__bar: #2fa9db;
   /* Priority-colors */
   --priority-urgent: #FF0000;
   --priority-medium: #FFA800;
   --priority-low: #7AE229;
-}
-
-.bg-primary {
-  background-color: var(--color-background-primary);
-  /* background-color: #f6f7f8; */
-}
-
-.bg-menue {
-  /* color: var(--color-menu-bg); */
-  background-color: #2a3647;
-}
-
-.bg-card {
-  background-color: var(--color-background-input);
-  /* background-color: #ffffff; */
-}
-
-.bg-card-us {
-  background-color: var(--color-avatar-blue-dark);
-  /* background-color: #0038FF; */
-}
-
-.bg-card-tt {
-  background-color: var(--color-avatar-turquise);
-  /* background-color: #1FD7C1; */
-}
-
-.bg-contact {
-  background-color: var(--color-background-input);
-  /* background-color: #ffffff; */
 }
 
 /*  Perhaps an overlay for user avatars would be an option? */
@@ -90,24 +62,4 @@
 
 .bg-contact:hover {
   background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
-}
-
-.color-menue {
-  color: var(--color-text-secondary);
-  /* color: #cdcdcd; */
-}
-
-.scrollbar-color {
-  scrollbar-color: var(--color-scrollbar);
-  /* scrollbar-color: #4589FF; */
-}
-
-.color__text--light-blue {
-  color: var(--color-text-tertiary);
-  /* color: #29ABE2 */
-}
-
-.nav-menue:hover {
-  background-color: var(--color-nav-hover);
-  /* background-color: #091931; */
 }

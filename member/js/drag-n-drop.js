@@ -107,10 +107,10 @@ function calculateSubtaskProgress(subtasks = {}) {
 
   return `
     <div class="task__progress">
-      <div class="task__progress-bar">
-        <div class="task__progress-fill" style="width: ${progressPercent}%"></div>
+      <div class="task__progress--bar">
+        <div class="task__progress--fill" style="width: ${progressPercent}%"></div>
       </div>
-      <span class="task__progress-text">${completedSubtasks}/${totalSubtasks} Subtasks</span>
+      <span class="task__progress--text">${completedSubtasks}/${totalSubtasks} Subtasks</span>
     </div>`;
 }
 
@@ -137,7 +137,7 @@ function generateAssigneeAvatars(assigned_to = {}) {
       if (!name) return '';
       const initials = getInitials(name);
       const color = getAvatarColor(name);
-      return `<div class="task__assignee-avatar" style="background-color: ${color}">${initials}</div>`;
+      return `<div class="task__assignee--avatar" style="background-color: ${color}">${initials}</div>`;
     })
     .filter(html => html)
     .join('');
