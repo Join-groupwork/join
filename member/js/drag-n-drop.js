@@ -253,9 +253,9 @@ function togglePlaceholder() {
     const placeholder = area.querySelector('.task__area--placeholder');
     let hasTask = Object.values(todos).some(task => task.status === status && matchesSearch(task));
     if (hasTask) {
-      placeholder.classList.add('d-none')
+      placeholder.classList.add('d_none')
     } else {
-      placeholder.classList.remove('d-none');
+      placeholder.classList.remove('d_none');
     }
   });
 };
