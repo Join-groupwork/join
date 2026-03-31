@@ -39,6 +39,10 @@ main {
   text-align: center;
 }
 
+.task__list {
+  min-height: 24px;
+}
+
 .task__list--preview::after {
   content: "";
   display: block;
@@ -238,3 +242,8 @@ main {
 }
 
 .overlaytemplate-title {
+  font-size: 61px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-menu-bg);
+}
