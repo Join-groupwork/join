@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-secondary);
   font-size: 16px;
 }
 
@@ -50,11 +50,11 @@
   background: transparent;
   cursor: pointer;
   font-size: 18px;
-  color: #2a3647;
+  color: var(--color-menu-bg);
   padding: 0;
 }
 
-.subtask-divider { color: #999; }
+.subtask-divider { color: var(--color-text-subtle); }
 
 .subtask-list {
   display: flex;
@@ -68,6 +68,12 @@
   justify-content: space-between;
   gap: 12px;
   padding-left: 18px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.subtask-item:hover {
+  background-color: var(--color-overlay-subtle);
 }
 
 .subtask-item-text {
@@ -85,56 +91,23 @@
 .subtask-item-actions {
   display: flex;
   gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.subtask-item:hover .subtask-item-actions {
+  opacity: 1;
 }
 
 .subtask-icon-btn {
   border: none;
   background: transparent;
   cursor: pointer;
+  transition: opacity 0.2s ease;
 }
 
-.add-task__required-hint {
-  font-size: 14px;
-  color: #2a3647;
-}
-
-.add-task__required-star {
-  color: #ff8190;
-  font-weight: 700;
-}
-
-.add-task__actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.button.add-task__button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 48px;
-  border-radius: 10px;
-  padding: 0 20px;
-  font-weight: 600;
-  gap: 5px;
-}
-
-.add-task__button--secondary {
-  background: #fff;
-  border: 1px solid #2a3647;
-  color: #2a3647;
-}
-
-.add-task__button--primary {
-  background: #2a3647;
-  border: 1px solid #2a3647;
-  color: #fff;
-}
-
-.add-task__button img {
-  height: 12px;
-  margin-left: 5px;
+.subtask-icon-btn:hover {
+  opacity: 0.7;
 }
 
 .add-task-close-btn {
@@ -148,6 +121,11 @@
   cursor: pointer;
 }
 
+.add-task__subtask-action-btn:hover,
+.add-task-close-btn:hover {
+  color: var(--color-hover);
+}
+
 .overlay_add_task {
   position: relative;
   display: flex;
@@ -155,9 +133,9 @@
   width: 53%;
   max-height: 90vh;
   overflow-y: auto;
-  background: #fff;
+  background: var(--color-secondary);
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px var(--color-shadow-soft);
   padding: 60px;
   gap: 20px;
 }

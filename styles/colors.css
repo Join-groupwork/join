@@ -19,10 +19,14 @@
   --color-text-primary: #000000;
   --color-text-secondary: #CDCDCD;
   --color-text-tertiary: #29ABE2;
+  --color-text-muted: #666666;
+  --color-text-subtle: #999999;
+  --color-text-required: #FF8190;
   --color-text-mail: #007CEE;
   --color-text-button: #FFFFFF;
   --color-hover: #29ABE2;
   --color-danger: #E60026;
+  --color-danger-soft: #FF3D00;
   --color-footer: #AAA;
   --color-footer-p: #AFB8C5;
   --color-menu-bg: #2A3647;
@@ -33,9 +37,14 @@
   --color-secondary: #FFFFFF;
   --color-input-placeholder: #D1D1D1;
   --color-input-icon: #A8A8A8;
+  --color-divider: #E0E0E0;
   /* Background-colors */
   --color-background-primary: #F6F7F8;
   --color-background-input: #FFFFFF;
+  --color-overlay-subtle: rgba(0, 0, 0, 0.04);
+  --color-shadow-soft: rgba(0, 0, 0, 0.1);
+  --color-shadow-medium: rgba(0, 0, 0, 0.12);
+  --color-shadow-hover-strong: rgba(0, 0, 0, 0.2);
   --background__button: #2a3647;
   --background__primary: #F6F7F8;
   --background__secondary: #FFFFFF;
