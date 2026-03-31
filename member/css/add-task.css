@@ -1,5 +1,2 @@
-@import url('./add-task/add-task-base.css');
-@import url('./add-task/add-task-layout.css');
-@import url('./add-task/add-task-form.css');
-@import url('./add-task/add-task-buttons.css');
-@import url('./add-task/add-task-subtasks.css');
+@import url('./add-task/add-task-layout-and-form.css');
+@import url('./add-task/add-task-components.css');

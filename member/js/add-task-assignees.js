@@ -217,7 +217,7 @@ function renderSelectedAssignees(state) {
 
   state.selectedDisplay.innerHTML = state.selectedAssignees
     .map((item) => {
-      return `<span class="contact_avatar" title="${item.name}" style="background-color: ${item.avatarColor}">
+      return `<span class="add-task__avatar" title="${item.name}" style="background-color: ${item.avatarColor}">
         ${item.initials}
       </span>`;
     })
@@ -268,7 +268,7 @@ function buildOptionMain(data) {
   const main = document.createElement('div');
   main.className = 'custom-select__option-main';
   main.innerHTML = `
-    <span class="contact_avatar" style="background-color: ${data.avatarColor}">${data.initials}</span>
+    <span class="add-task__avatar" style="background-color: ${data.avatarColor}">${data.initials}</span>
     <span class="custom-select__option-label">${data.name}</span>
   `;
   return main;

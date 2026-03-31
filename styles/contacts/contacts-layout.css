@@ -1,0 +1,240 @@
+.contact_container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 85%;
+    transition: background-color 0.2s;
+}
+
+.contact_container:hover {
+    background-color: #f6f7f8;
+}
+
+.contact_avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.contact_info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.contact_name {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+}
+
+.contact_item--active .contact_name {
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.contact_email {
+    font-size: 14px;
+    color: #007CEE;
+}
+
+.btn_cancel_contact img {
+    height: 10px;
+    margin: unset;
+    padding-left: 8px;
+}
+
+.btn_save_contact img {
+    height: 10px;
+    margin: unset;
+    padding-left: 8px;
+}
+
+.h2_underline {
+    width: 90px;
+
+}
+
+.body_overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+
+.close_overlay_icon_container {
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    top: 4%;
+    right: 2%;
+}
+
+.close_overlay_icon {
+    margin-right: 32px !important;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+.close_overlay_icon:hover {
+    opacity: 0.7;
+}
+
+.success_message {
+    position: fixed;
+    bottom: 10%;
+    left: 60%;
+    transform: translateX(-50%);
+    background: #2A3647;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 3000;
+    font-size: 18px;
+}
+
+#contact_detail {
+    padding: 36px 36px 36px 69px;
+    min-height: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(48px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.contact_detail_card {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    max-width: 520px;
+}
+
+.contact_detail_card--enter {
+    animation: slideInFromRight 280ms ease-out;
+    will-change: transform, opacity;
+}
+
+.contact_detail_header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.contact_avatar--large {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.contact_detail_name {
+    margin: 0;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #000;
+}
+
+.contact_detail_actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 16px;
+}
+
+.link_btn {
+    border: none;
+    background: transparent;
+    padding: 0;
+    gap: 5px;
+    font-size: 16px;
+    color: #2a3647;
+    cursor: pointer;
+    justify-content: center;
+    display: inline-flex;
+    align-items: center;
+}
+
+.link_btn:hover,
+.link_btn:focus-visible,
+.link_btn:active {
+    background-color: transparent;
+    transition: color 0.2s ease;
+}
+
+
+.link_btn:hover {
+    color: #29abe2;
+}
+
+.link_btn img {
+    transition: filter 0.2s ease;
+}
+
+.link_btn:hover img {
+    filter: brightness(0) saturate(100%) invert(61%) sepia(67%) saturate(1699%) hue-rotate(163deg) brightness(92%) contrast(86%);
+}
+
+.contact_detail_subtitle {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 400;
+    color: #2a3647;
+}
+
+.contact_detail_info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.contact_detail_info strong {
+    font-size: 16px;
+    color: #2a3647;
+}
+
+.contact_detail_info a {
+    font-size: 16px;
+    color: #007cee;
+    text-decoration: none;
+}
+
+.contact_detail_info a:hover {
+    text-decoration: underline;
+}
+
+
+.contact_item--active .contact_container {
+    background: #2a3647;
+    color: #fff;
