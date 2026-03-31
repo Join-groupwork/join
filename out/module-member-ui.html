@@ -38,7 +38,26 @@
     <div class="container-overview">
     
         
-            <div class="description">Member page bootstrapper: renders header/sidebar/task UI and wires up header menu + logout.This module initializes the member UI by injecting HTML templates into the page,then triggers board rendering (currently via `updateHTML()` from the drag & drop module).DOM requirements (IDs must exist in the HTML):- `header`       : container for the header template- `sidebar`      : container for the sidebar template- `add_task`     : container for the "add task" template- `editC_overlay`: (optional) container for contact edit overlay- `addC_overlay` : (optional) container for contact add overlay- `headerMenue`  : profile/menu button in the header- `headerMenueNav`: dropdown/navigation container toggled by profile button- `logoutBtn`    : logout buttonExternal dependencies:- Template functions from `member-templates.js`- `updateHTML()` from `drag-n-drop.js`- Firebase Auth instance `auth` and `signOut()`</div>
+            <div class="description">Member page bootstrapper: renders header, sidebar and task UI,
+then initializes the board and wires up header menu + logout.
+
+This module injects shared HTML templates into the page and starts
+board rendering via `initBoard()` from `board.js`.
+
+DOM requirements (IDs must exist in the HTML):
+- `header`        : container for the header template
+- `sidebar`       : container for the sidebar template
+- `add_task`      : container for the "add task" template
+- `editC_overlay` : optional container for contact edit overlay
+- `addC_overlay`  : optional container for contact add overlay
+- `headerMenue`   : profile/menu button in the header
+- `headerMenueNav`: dropdown container toggled by profile button
+- `logoutBtn`     : logout button
+
+External dependencies:
+- Template functions from `member-templates.js`
+- `initBoard()` from `board.js`
+- Firebase Auth instance `auth` and `signOut()`</div>
         
 
         
@@ -152,7 +171,8 @@
 
 
 <div class="description">
-    Entry point for module initialization.Renders all UI parts in sequence.
+    Entry point for module initialization.
+Renders all UI parts in sequence.
 </div>
 
 
@@ -196,7 +216,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line39">line 39</a>
+        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line45">line 45</a>
     </li></ul></dd>
     
 
@@ -302,7 +322,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line51">line 51</a>
+        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line57">line 57</a>
     </li></ul></dd>
     
 
@@ -408,7 +428,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line102">line 102</a>
+        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line108">line 108</a>
     </li></ul></dd>
     
 
@@ -445,112 +465,6 @@
     <dd>
         
 <span class="param-type">void</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="~renderBoard"><span class="type-signature">(async, inner) </span>renderBoard<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Triggers the board rendering.Currently delegates to `updateHTML()` in `drag-n-drop.js`, which renders theboard columns based on the current in-memory tasks.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line166">line 166</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;void></span>
 
 
     </dd>
@@ -620,7 +534,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line117">line 117</a>
+        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line123">line 123</a>
     </li></ul></dd>
     
 
@@ -726,7 +640,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line71">line 71</a>
+        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line77">line 77</a>
     </li></ul></dd>
     
 
@@ -832,7 +746,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line86">line 86</a>
+        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line92">line 92</a>
     </li></ul></dd>
     
 
@@ -902,7 +816,9 @@
 
 
 <div class="description">
-    Registers UI event listeners after the DOM is ready:- Toggle header dropdown menu- Sign out user and redirect to index page
+    Registers UI event listeners after the DOM is ready:
+- Toggle header dropdown menu
+- Sign out user and redirect to index page
 </div>
 
 
@@ -946,7 +862,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line128">line 128</a>
+        <a href="member_js_member-script.js.html">member/js/member-script.js</a>, <a href="member_js_member-script.js.html#line134">line 134</a>
     </li></ul></dd>
     
 
@@ -1011,13 +927,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Mar 12 2026 11:09:41 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

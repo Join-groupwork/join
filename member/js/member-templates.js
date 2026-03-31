@@ -418,7 +418,7 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
         <p class="task__category--${category} overlaytemplate-category"> ${category.replace(/-/g, " ")}</p>
         <button onclick="closeTaskOverlay()"><img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt=""></button>
       </div>
-    
+
     <h2 class="overlaytemplate-title">${title}</h2>
     <p class="overlaytemplate-description">${description}</p>
     <p class="overlaytemplate-due_date">Due date: ${due_date.replace(/-/g, "/")}</p>
@@ -437,15 +437,15 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
         </div>
       `).join('')}
     </div>
-          
+
     <div class="overlaytemplate-subtask">
       <p>Subtasks:</p>
       <div class="overlaytemplate-subtask-checkbox">
-        
+
         ${subtaskEntries.map(([key, s]) => {
           const isChecked = s.status === true || s.completed === true;
-          const iconSrc = isChecked 
-            ? "../assets/icons/checkbox/checkbox-icon-checked.svg" 
+          const iconSrc = isChecked
+            ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
             : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
           return `
           <div class="subtask-item-taskoverlay">
@@ -469,7 +469,7 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
 /**
  * @param {string} id - Task ID
  * @param {string} category - Task category
- * @param {string} title - Task title  
+ * @param {string} title - Task title
  * @param {string} description - Task description
  * @param {string} due_date - Due date
  * @param {string} priority - Priority level
@@ -480,7 +480,7 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
 export function getEditTaskOverlayTemplate(id, category, title, description, due_date, priority, assigned_to, subtasks) {
   const assignedArray = Array.isArray(assigned_to) ? assigned_to : assigned_to.split(', ');
   const subtaskArray = subtasks && typeof subtasks === 'object' ? Object.values(subtasks) : [];
-  
+
   return `
   <div class="task-overlay-content edit-task-form">
     <div class="overlaytemplate-first-section">
@@ -488,22 +488,22 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
         <img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt="">
       </button>
     </div>
-    
+
     <form id="edit_task_form" class="form_add_task">
       <div class="form-field">
         <input type="text" id="edit_title" class="input_add_task" value="${title}" required placeholder="Enter a title" style="border: none; border-bottom: 1px solid #d1d1d1; border-radius: 0; padding: 8px 0; margin-bottom: 16px; font-size: 16px;">
       </div>
-      
+
       <div class="form-field">
         <label for="edit_description" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Description</label>
         <textarea id="edit_description" class="textarea_add_task" placeholder="Enter a description" style="min-height: 80px; font-size: 16px; resize: vertical;">${description}</textarea>
       </div>
-      
+
       <div class="form-field">
         <label for="edit_due_date" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Due date</label>
         <input type="date" id="edit_due_date" class="input_add_task" value="${due_date}" required style="font-size: 16px;">
       </div>
-      
+
       <div class="section_priority">
         <label style="font-size: 14px; color: #2a3647; font-weight: 400;">Priority</label>
         <div class="priority">
@@ -518,7 +518,7 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
           </button>
         </div>
       </div>
-      
+
       <div class="form-field">
         <label for="edit_assigned_to" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Assigned to</label>
         <div class="custom-select" id="edit_assigned_to" style="margin-bottom: 12px;">
@@ -536,7 +536,7 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
           `).join('')}
         </div>
       </div>
-      
+
       <div class="form-field">
         <label style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Subtasks</label>
         <div class="subtask-input-wrap" style="position: relative; margin-bottom: 12px;">
@@ -567,7 +567,7 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
         </div>
         <div class="subtask-list" id="edit_subtask_list_new"></div>
       </div>
-      
+
       <div class="add-task-buttons-right" style="margin-top: 40px;">
         <button type="button" class="Create_button_add_task" onclick="saveEditedTask('${id}')">
           Ok <img src="../assets/icons/check-icon-white.svg" alt="">

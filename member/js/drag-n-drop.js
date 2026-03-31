@@ -101,7 +101,7 @@ function calculateSubtaskProgress(subtasks = {}) {
   const subtaskArray = Object.values(subtasks);
   const totalSubtasks = subtaskArray.length;
   if (totalSubtasks === 0) return '';
-  
+
   const completedSubtasks = subtaskArray.filter(s => s.status === true || s.completed === true).length;
   const progressPercent = (completedSubtasks / totalSubtasks) * 100;
 
@@ -121,7 +121,7 @@ function calculateSubtaskProgress(subtasks = {}) {
  */
 function generateAssigneeAvatars(assigned_to = {}) {
   let assigneeArray = [];
-  
+
   if (assigned_to && typeof assigned_to === 'object' && !Array.isArray(assigned_to)) {
     assigneeArray = Object.values(assigned_to);
   } else if (Array.isArray(assigned_to)) {

@@ -6,7 +6,7 @@ import { updateHTML,todos  } from './drag-n-drop.js';
 import { initAssignees, trackContactsForUser, getAssignedNames } from './add-task-assignees.js';
 import { initSubtasks, getSubtasks } from './add-task-subtasks.js';
 
-export let tasks = {}; 
+export let tasks = {};
 
 
 export async function initTasks() {
@@ -71,8 +71,8 @@ const columns = {
         <p>${task.title}</p>
         <p>${task.description}</p>
         <p>${task.assigned_to}</p>
-        
-      
+
+
     </div>
     `;  } */
 
@@ -152,7 +152,7 @@ function closeTaskOverlay() {
   const overlayContainer = document.getElementById("overlay_container");
   overlayContainer.classList.remove('show');
   overlayContainer.classList.add('d_none');
-  
+
 
   overlayContainer.removeEventListener('click', handleOverlayClick);
 }
@@ -163,29 +163,29 @@ window.closeTaskOverlay = closeTaskOverlay;
 async function toggleCheckbox(img) {
   const taskId = img.dataset.taskId;
   const subtaskKey = img.dataset.subtaskKey;
-  
+
   if (!taskId || !subtaskKey) return;
-  
+
   try {
     const currentStatus = tasks[taskId]?.subtasks?.[subtaskKey]?.status || false;
     const newStatus = !currentStatus;
-    
+
     await update(ref(database, `tasks/${taskId}/subtasks/${subtaskKey}`), {
       status: newStatus
     });
-    
+
     if (tasks[taskId]?.subtasks?.[subtaskKey]) {
       tasks[taskId].subtasks[subtaskKey].status = newStatus;
     }
-    
+
     if (todos[taskId]?.subtasks?.[subtaskKey]) {
       todos[taskId].subtasks[subtaskKey].status = newStatus;
     }
-    
-    img.src = newStatus 
+
+    img.src = newStatus
       ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
       : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
-    
+
     updateHTML();
   } catch (error) {
     console.error("Error toggling subtask:", error);
@@ -201,7 +201,7 @@ document.addEventListener("click", (e) => {
 async function deleteTask(taskId) {
   try {
     await remove(ref(database, `tasks/${taskId}`));
-    delete todos[taskId]; 
+    delete todos[taskId];
 
     closeTaskOverlay();
     updateHTML();
@@ -213,8 +213,8 @@ async function deleteTask(taskId) {
 
 window.deleteTask = deleteTask;
 
-/** editTask   
- * @param {string} taskId 
+/** editTask
+ * @param {string} taskId
  * @param {Object} task - Task object
  */
 function renderEditOverlay(taskId, task) {
@@ -267,7 +267,7 @@ function initializeEditSubtasks(container) {
 
 /**
  * Opens the edit task overlay.
- * @param {string} taskId 
+ * @param {string} taskId
  */
 function editTask(taskId) {
   const task = tasks[taskId];
@@ -275,7 +275,7 @@ function editTask(taskId) {
 
   renderEditOverlay(taskId, task);
   setupPriorityButtons();
-  
+
   window.editAssigneeState = initializeEditAssignees();
   window.editSubtaskState = initializeEditSubtasks(document.getElementById("overlay_container"));
   window.currentTaskId = taskId;
@@ -300,8 +300,8 @@ function collectEditFormData() {
 
 /**
  * Builds the task update object.
- * @param {string} taskId 
- * @param {Object} formData 
+ * @param {string} taskId
+ * @param {Object} formData
  * @returns {Object} Update object
  */
 function buildTaskUpdateObject(taskId, formData) {
@@ -327,7 +327,7 @@ function buildTaskUpdateObject(taskId, formData) {
 
 /**
  * Updates task in Firebase and local storage.
- * @param {string} taskId 
+ * @param {string} taskId
  * @param {Object} updatedTask
  */
 async function updateTaskInFirebase(taskId, updatedTask) {
@@ -337,7 +337,7 @@ async function updateTaskInFirebase(taskId, updatedTask) {
 
 /**
  * Refreshes board and shows updated task.
- * @param {string} taskId 
+ * @param {string} taskId
  */
 async function refreshBoardAndShowTask(taskId) {
   await initTasks();
@@ -348,7 +348,7 @@ async function refreshBoardAndShowTask(taskId) {
 
 /**
  * Saves the edited task.
- * @param {string} taskId 
+ * @param {string} taskId
  */
 async function saveEditedTask(taskId) {
   try {
@@ -365,24 +365,24 @@ window.saveEditedTask = saveEditedTask;
 
 /**
  * Deletes an existing subtask from a task.
- * @param {string} taskId 
- * @param {string} subtaskKey 
+ * @param {string} taskId
+ * @param {string} subtaskKey
  */
 async function deleteExistingSubtask(taskId, subtaskKey) {
   try {
     const task = tasks[taskId];
     if (!task || !task.subtasks) return;
-    
+
     const updatedSubtasks = { ...task.subtasks };
     delete updatedSubtasks[subtaskKey];
-    
+
     await update(ref(database, `tasks/${taskId}/subtasks`), updatedSubtasks);
     tasks[taskId].subtasks = updatedSubtasks;
-    
+
     if (todos[taskId]) {
       todos[taskId].subtasks = updatedSubtasks;
     }
-    
+
     updateHTML();
     editTask(taskId);
   } catch (error) {
@@ -394,8 +394,8 @@ window.deleteExistingSubtask = deleteExistingSubtask;
 
 /**
  * Creates an input element for editing a subtask.
- * @param {string} currentText 
- * @returns {HTMLInputElement} 
+ * @param {string} currentText
+ * @returns {HTMLInputElement}
  */
 function createSubtaskEditInput(currentText) {
   const input = document.createElement('input');
@@ -409,9 +409,9 @@ function createSubtaskEditInput(currentText) {
 
 /**
  * Sets up event listeners for subtask edit
- * @param {HTMLInputElement} input 
- * @param {string} taskId 
- * @param {string} subtaskKey 
+ * @param {HTMLInputElement} input
+ * @param {string} taskId
+ * @param {string} subtaskKey
  */
 function setupSubtaskEditListeners(input, taskId, subtaskKey) {
   input.addEventListener('blur', () => saveSubtaskEdit(taskId, subtaskKey, input));
@@ -423,13 +423,13 @@ function setupSubtaskEditListeners(input, taskId, subtaskKey) {
 
 /**
  * Enables editing mode for an existing subtask.
- * @param {string} taskId 
- * @param {string} subtaskKey 
+ * @param {string} taskId
+ * @param {string} subtaskKey
  */
 function editExistingSubtask(taskId, subtaskKey) {
   const textElement = document.getElementById(`subtask_text_${subtaskKey}`);
   if (!textElement) return;
-  
+
   const input = createSubtaskEditInput(textElement.textContent);
   textElement.replaceWith(input);
   input.focus();
@@ -440,27 +440,27 @@ function editExistingSubtask(taskId, subtaskKey) {
 window.editExistingSubtask = editExistingSubtask;
 
 /**
- * Saves the edited subtask 
- * @param {string} taskId 
- * @param {string} subtaskKey 
- * @param {HTMLInputElement} input 
+ * Saves the edited subtask
+ * @param {string} taskId
+ * @param {string} subtaskKey
+ * @param {HTMLInputElement} input
  */
 async function saveSubtaskEdit(taskId, subtaskKey, input) {
   const newText = input.value.trim();
   if (!newText) return editTask(taskId);
-  
+
   try {
     await update(ref(database, `tasks/${taskId}/subtasks/${subtaskKey}`), {
       title: newText,
       status: tasks[taskId].subtasks[subtaskKey].status
     });
-    
+
     tasks[taskId].subtasks[subtaskKey].title = newText;
-    
+
     if (todos[taskId]?.subtasks?.[subtaskKey]) {
       todos[taskId].subtasks[subtaskKey].title = newText;
     }
-    
+
     updateHTML();
     editTask(taskId);
   } catch (error) {

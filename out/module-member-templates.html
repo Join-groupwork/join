@@ -38,7 +38,10 @@
     <div class="container-overview">
     
         
-            <div class="description">HTML template factory functions for member pages.Provides functions that return HTML strings for commonly used UI parts:header, sidebar, add-task form, contact overlays, signup message, and board task cards.</div>
+            <div class="description">HTML template factory functions for member pages.
+
+Provides functions that return HTML strings for commonly used UI parts:
+header, sidebar, add-task form, contact overlays, signup message, and board task cards.</div>
         
 
         
@@ -152,7 +155,11 @@
 
 
 <div class="description">
-    Generates a task card HTML string for the board (drag-and-drop).NOTE:- `category` is used to build the CSS class name `task__category--${category}`- `priority` is used to build the icon path `/assets/icons/${priority}-prio-icon.svg`
+    Generates a task card HTML string for the board (drag-and-drop).
+
+NOTE:
+- `category` is used to build the CSS class name `task__category--${category}`
+- `priority` is used to build the icon path `/assets/icons/${priority}-prio-icon.svg`
 </div>
 
 
@@ -240,7 +247,7 @@
             <td class="type">
             
                 
-<span class="param-type">Category</span>
+<span class="param-type"><a href="global.html#Category">Category</a></span>
 
 
             
@@ -286,7 +293,7 @@
             <td class="type">
             
                 
-<span class="param-type">Priority</span>
+<span class="param-type"><a href="global.html#Priority">Priority</a></span>
 
 
             
@@ -337,7 +344,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line304">line 304</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line257">line 257</a>
     </li></ul></dd>
     
 
@@ -395,6 +402,234 @@
     
 
     
+    <h4 class="name" id=".getActiveContactTemplate"><span class="type-signature">(static) </span>getActiveContactTemplate<span class="signature">(contact, initials, bgColor, phone)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Two show contact details overlay.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>contact</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name frome Contact</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>initials</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Initials from Contact Name</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>bgColor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Background Color for Avatar</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>phone</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Phonenumber from Contact</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line289">line 289</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - HTML string representing the contact details
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id=".getAddOverlayTemplate"><span class="type-signature">(static) </span>getAddOverlayTemplate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
@@ -403,7 +638,9 @@
 
 
 <div class="description">
-    Generates the contact add overlay HTML.Intended to be injected into a container element like `#addC_overlay`.
+    Generates the contact add overlay HTML.
+
+Intended to be injected into a container element like `#addC_overlay`.
 </div>
 
 
@@ -447,7 +684,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line226">line 226</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line182">line 182</a>
     </li></ul></dd>
     
 
@@ -505,7 +742,7 @@
     
 
     
-    <h4 class="name" id=".getEditOverlayTemplate"><span class="type-signature">(static) </span>getEditOverlayTemplate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id=".getEditOverlayTemplate"><span class="type-signature">(static) </span>getEditOverlayTemplate<span class="signature">(contactId, contact, initials, color)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -513,7 +750,7 @@
 
 
 <div class="description">
-    Generates the contact edit overlay HTML.Intended to be injected into a container element like `#editC_overlay`.
+    Show the overlay to editing contact details.
 </div>
 
 
@@ -522,6 +759,124 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>contactId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>contact</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>initials</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -557,7 +912,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line173">line 173</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line329">line 329</a>
     </li></ul></dd>
     
 
@@ -586,7 +941,7 @@
 
         
 <div class="param-desc">
-    HTML string representing the edit-contact overlay.
+    - HTML string representing the contact editing overlay.
 </div>
 
 
@@ -623,7 +978,16 @@
 
 
 <div class="description">
-    Generates the header HTML for member pages.Includes:- Help link- Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)DOM hooks created by this template:- `#headerMenue` (toggle button)- `#headerMenueNav` (dropdown container)- `#logoutBtn` (logout trigger)
+    Generates the header HTML for member pages.
+
+Includes:
+- Help link
+- Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)
+
+DOM hooks created by this template:
+- `#headerMenue` (toggle button)
+- `#headerMenueNav` (dropdown container)
+- `#logoutBtn` (logout trigger)
 </div>
 
 
@@ -733,7 +1097,12 @@
 
 
 <div class="description">
-    Generates the sidebar HTML for member pages.Includes:- Logo- Navigation links (Summary / Add Task / Board / Contacts)- Footer links (Privacy Policy / Legal Notice)
+    Generates the sidebar HTML for member pages.
+
+Includes:
+- Logo
+- Navigation links (Summary / Add Task / Board / Contacts)
+- Footer links (Privacy Policy / Legal Notice)
 </div>
 
 
@@ -843,7 +1212,11 @@
 
 
 <div class="description">
-    Generates the "Add Task" form HTML.NOTE:This function only returns markup. Event handling (submit, priority button selection,form validation, etc.) should be implemented in the page/controller script.
+    Generates the "Add Task" form HTML.
+
+NOTE:
+This function only returns markup. Event handling (submit, priority button selection,
+form validation, etc.) should be implemented in the page/controller script.
 </div>
 
 
@@ -997,7 +1370,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line279">line 279</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line232">line 232</a>
     </li></ul></dd>
     
 
@@ -1063,7 +1436,8 @@
 
 
 <div class="description">
-    Task categories supported by the board UI.Used for CSS class naming (e.g. `task__category--user-story`).
+    Task categories supported by the board UI.
+Used for CSS class naming (e.g. `task__category--user-story`).
 </div>
 
 
@@ -1141,7 +1515,8 @@
 
 
 <div class="description">
-    Priority values supported by the board UI.Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
+    Priority values supported by the board UI.
+Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
 </div>
 
 
@@ -1228,13 +1603,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-public-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getCardTemplate">getCardTemplate</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderBoard">renderBoard</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 10 2026 12:49:30 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

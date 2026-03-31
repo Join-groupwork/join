@@ -10,7 +10,7 @@ let tasks = {};
 let category = {};
 
 export function getContacts() {
-  return contacts; 
+  return contacts;
 }
 
 //  authentifizierung
@@ -26,7 +26,7 @@ auth.onAuthStateChanged((user) => {
 
 
 // Daten laden
-export function loadData(onContactsLoaded) {
+export async function loadData(onContactsLoaded) {
   const contactsRef = ref(database, 'contacts');
   // contacts auslesen
   onValue(contactsRef, (firebaseData) => {
