@@ -227,9 +227,9 @@ function renderEditOverlay(taskId, task) {
 
 
 function setupPriorityButtons() {
-  document.querySelectorAll('.priority_button').forEach(btn => {
+  document.querySelectorAll('.add-task__priority-button').forEach(btn => {
     btn.addEventListener('click', function() {
-      document.querySelectorAll('.priority_button').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('.add-task__priority-button').forEach(b => b.classList.remove('selected'));
       this.classList.add('selected');
     });
   });
@@ -292,7 +292,7 @@ function collectEditFormData() {
     title: document.getElementById('edit_title').value,
     description: document.getElementById('edit_description').value,
     due_date: document.getElementById('edit_due_date').value,
-    priority: document.querySelector('.priority_button.selected')?.dataset.priority || 'medium',
+    priority: document.querySelector('.add-task__priority-button.selected')?.dataset.priority || 'medium',
     assignedNames: window.editAssigneeState ? getAssignedNames(window.editAssigneeState) : {},
     newSubtasks: window.editSubtaskState ? getSubtasks(window.editSubtaskState) : {}
   };
@@ -401,7 +401,7 @@ function createSubtaskEditInput(currentText) {
   const input = document.createElement('input');
   input.type = 'text';
   input.value = currentText;
-  input.className = 'input_add_task';
+  input.className = 'add-task__input';
   input.style.fontSize = '16px';
   input.style.marginBottom = '0';
   return input;
