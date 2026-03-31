@@ -1,3 +1,4 @@
+.edit-task-form label {
   font-size: 16px;
 }
 
@@ -26,20 +27,20 @@
 
 .edit-task-form .add-task__subtask-input:focus {
   outline: none;
-  border-color: #29abe2;
-  box-shadow: 0 0 0 1px #29abe2;
+  border-color: var(--color-text-tertiary);
+  box-shadow: 0 0 0 1px var(--color-text-tertiary);
 }
 
 .edit-task-form .custom-select__trigger:focus,
 .edit-task-form .custom-select__trigger:focus-within {
   outline: none;
-  border-color: #29abe2;
-  box-shadow: 0 0 0 1px #29abe2;
+  border-color: var(--color-text-tertiary);
+  box-shadow: 0 0 0 1px var(--color-text-tertiary);
 }
 
 .edit-task-form .custom-select.active .custom-select__trigger {
-  border-color: #29abe2;
-  box-shadow: 0 0 0 1px #29abe2;
+  border-color: var(--color-text-tertiary);
+  box-shadow: 0 0 0 1px var(--color-text-tertiary);
 }
 
 .edit-task-form .subtask-item {
@@ -73,7 +74,7 @@
 }
 
 .board-add-btn:hover {
-  background: #29abe2;
+  background: var(--color-text-tertiary);
 }
 
 .board-add-icon {
@@ -85,7 +86,7 @@
 .board-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: var(--color-overlay-medium);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -152,7 +153,7 @@
 
 .add-task__required-hint {
   font-size: 14px;
-  color: #2A3647;
+  color: var(--color-menu-bg);
 }
 
 .add-task__required-star {

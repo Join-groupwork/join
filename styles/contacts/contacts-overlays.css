@@ -1,3 +1,6 @@
+.contact_item--active .contact_container {
+    background: var(--color-menu-bg);
+    color: var(--color-text-button);
     border-radius: 10px;
     min-width: 231px;
     padding: 10px;
@@ -19,10 +22,14 @@
     display: none !important;
 }
 
+.d-none {
+    display: none !important;
+}
+
 .addContact_overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.18);
+    background: var(--color-overlay-soft);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,16 +41,16 @@
     width: 100%;
     max-width: 1100px;
     min-height: 580px;
-    background: #ffffff;
+    background: var(--color-background-input);
     border-radius: 30px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 24px var(--color-shadow-medium);
     display: flex;
     overflow: hidden;
     animation: overlaySlideInFromRight 260ms ease-out forwards;
     justify-content: center;
     align-items: center;
     height: 550px;
-    color: #ffffff;
+    color: var(--color-text-button);
     font-size: 16px;
     gap: 20px;
 
@@ -63,14 +70,14 @@
 
 .overlay_add_contact_left {
     width: 47%;
-    background: #2a3647;
-    color: #fff;
+    background: var(--color-menu-bg);
+    color: var(--color-text-button);
     padding: 64px 48px;
     display: flex;
     flex-direction: column;
     gap: 16px;
     align-items: flex-start;
-    border-right: 1px solid #e0e0e0;
+    border-right: 1px solid var(--color-background-primary);
     height: 100%;
     justify-content: center;
     border-radius: 16px 0 0 16px;
@@ -91,7 +98,7 @@
 .overlay_add_contact h2 {
     font-size: 58px;
     margin: unset;
-    color: #ffffff;
+    color: var(--color-text-button);
 }
 
 .overlay_add_contact_left p {
@@ -138,7 +145,7 @@
 .input_add_contact {
     width: 100%;
     height: 48px;
-    border: 1px solid #d1d1d1;
+    border: 1px solid var(--color-border-light);
     border-radius: 10px;
     padding: 0 16px;
     font-size: 16px;
@@ -165,8 +172,8 @@
 #contact_name:focus,
 #contact_email:focus,
 #contact_phone:focus {
-    border-color: #29abe2;
-    box-shadow: 0 0 0 1px #29abe2;
+    border-color: var(--color-text-tertiary);
+    box-shadow: 0 0 0 1px var(--color-text-tertiary);
 }
 
 .buttons_add_contact {
@@ -183,7 +190,7 @@
     height: 48px;
     border-radius: 10px;
     padding: 0 20px;
-    border: 1px solid #2a3647;
+    border: 1px solid var(--color-menu-bg);
     cursor: pointer;
     font-size: 16px;
     display: flex;
@@ -193,13 +200,13 @@
 }
 
 .btn_save_contact {
-    background: #fff;
-    color: #2a3647;
+    background: var(--color-background-input);
+    color: var(--color-menu-bg);
 }
 
 .btn_cancel_contact {
-    background: #2a3647;
-    color: #fff;
+    background: var(--color-menu-bg);
+    color: var(--color-text-button);
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -214,22 +221,41 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff;
+    color: var(--color-text-button);
     font-size: 47px;
     font-weight: 500;
     line-height: 1;
-    border: 3px solid #fff;
+    border: 3px solid var(--color-background-input);
     /* margin: 20px 55px 20px 33px; */
 }
 
 .overlay-form input {
-    border: 1px solid #d1d1d1;
+    border: 1px solid var(--color-border-light);
     border-radius: 10px;
     font-size: 20px;
-    color: #2a3647;
+    color: var(--color-menu-bg);
 }
 
 .overlay-form input:focus {
-    border-color: #29abe2;
+    border-color: var(--color-text-tertiary);
     outline: none;
+}
+
+
+.contact-add-section {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1200;
+}
+
+.contact-add-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-overlay-soft);
+    pointer-events: auto;
+    z-index: 1200;
 }

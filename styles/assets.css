@@ -60,6 +60,15 @@ button p {
   height: 30px;
 }
 
+.btn-s-40 {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
 /* Input */
 input {
   border: unset;
