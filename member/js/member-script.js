@@ -1,38 +1,38 @@
+import { initAddTask } from './add-task.js';
+import { getInitials } from './contacts-render.js';
+import { getContacts, loadData, loadTasks } from '../../scripts/firebase/get-firebase.js';
+import { tasks, initTasks } from './board.js';
+
 /**
- * @file Member page bootstrapper: renders header, sidebar and task UI,
- * then initializes the board and wires up header menu + logout.
+ * @file Member page bootstrapper: renders header/sidebar/task UI and wires up header menu + logout.
  *
- * This module injects shared HTML templates into the page and starts
- * board rendering via `initBoard()` from `board.js`.
+ * This module initializes the member UI by injecting HTML templates into the page,
+ * then triggers board rendering (currently via `updateHTML()` from the drag & drop module).
  *
  * DOM requirements (IDs must exist in the HTML):
- * - `header`        : container for the header template
- * - `sidebar`       : container for the sidebar template
- * - `add_task`      : container for the "add task" template
- * - `editC_overlay` : optional container for contact edit overlay
- * - `addC_overlay`  : optional container for contact add overlay
- * - `headerMenue`   : profile/menu button in the header
- * - `headerMenueNav`: dropdown container toggled by profile button
- * - `logoutBtn`     : logout button
+ * - `header`       : container for the header template
+ * - `sidebar`      : container for the sidebar template
+ * - `add_task`     : container for the "add task" template
+ * - `editC_overlay`: (optional) container for contact edit overlay
+ * - `addC_overlay` : (optional) container for contact add overlay
+ * - `headerMenue`  : profile/menu button in the header
+ * - `headerMenueNav`: dropdown/navigation container toggled by profile button
+ * - `logoutBtn`    : logout button
  *
  * External dependencies:
  * - Template functions from `member-templates.js`
- * - `initBoard()` from `board.js`
+ * - `updateHTML()` from `drag-n-drop.js`
  * - Firebase Auth instance `auth` and `signOut()`
  *
  * @module member-ui
  */
-import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate } from './member-templates.js';
-import { initBoard } from './board.js';
+import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate, getAddOverlayTemplate, generateTodosHTML } from './member-templates.js';
+import { updateHTML, todos } from './drag-n-drop.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { auth } from "../../scripts/firebase/firebase.js";
 
 init();
 
-
-async function renderBoard() {
-  await initBoard();
-}
 
 /**
  * Entry point for module initialization.
@@ -55,7 +55,9 @@ async function init() {
  */
 async function render() {
   await renderHeader();
+  renderProfileInitials()
   await renderSidebar();
+  highlightActiveNavItem();
 
   if (document.getElementById('add_task')) {
     await renderAddTask();
@@ -104,10 +106,23 @@ function renderSidebar() {
  */
 function renderAddTask() {
   const addTaskRef = document.getElementById('add_task');
-  if (addTaskRef) {
-    addTaskRef.innerHTML = getTaskTemplate();
+  const overlay = document.getElementById('add_task_overlay');
+
+  if (addTaskRef && overlay) {
+    addTaskRef.innerHTML = getTaskTemplate({ isOverlay: true });
+
+    initAddTask(addTaskRef, {
+      mode: 'overlay',
+      onClose: () => closeAddTaskOverlay(overlay),
+      onSuccess: async () => {
+        await initTasks();
+        Object.assign(todos, tasks);
+        updateHTML();
+      }
+    });
+
   } else {
-    console.error('Add Task-Element nicht gefunden!');
+    console.error('Add Task-Element oder Overlay nicht gefunden!');
   }
 };
 
@@ -175,12 +190,6 @@ function closeAddTaskOverlay(overlay) {
   }, { once: true });
 }
 
-function clearOverlayAddTaskForm(overlay) {
-  overlay.querySelector('.form_add_task')?.reset();
-  overlay.querySelector('.select_add_task')?.reset();
-  overlay.querySelectorAll('.priority_button').forEach((btn) => btn.classList.remove('selected'));
-}
-
 function setupOpenButton(openBtn, overlay) {
   openBtn.addEventListener('click', () => openAddTaskOverlay(overlay));
 }
@@ -193,16 +202,6 @@ function setupBackdropAndCloseButton(overlay) {
   });
 }
 
-function setupClearButton(overlay) {
-  const clearBtn = overlay.querySelector('.clear_button_add_task');
-  if (!clearBtn) return;
-
-  clearBtn.addEventListener('click', (event) => {
-    event.preventDefault();
-    closeAddTaskOverlay(overlay);
-  });
-}
-
 function setupAddTaskOverlay() {
   const openBtn = document.getElementById('openAddTaskOverlay');
   const overlay = document.getElementById('add_task_overlay');
@@ -210,7 +209,30 @@ function setupAddTaskOverlay() {
 
   setupOpenButton(openBtn, overlay);
   setupBackdropAndCloseButton(overlay);
-  setupClearButton(overlay);
+}
+
+function highlightActiveNavItem() {
+  const currentPage = window.location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-item').forEach(link => {
+    const linkPage = link.getAttribute('href').split('/').pop();
+    link.classList.toggle('nav-item--active', linkPage === currentPage);
+  });
+}
+
+function renderProfileInitials() {
+  auth.onAuthStateChanged((user) => {
+    const initialsElem = document.getElementById('profileInitials');
+    if (!initialsElem) return;
+    if (user && !user.isAnonymous) {
+      loadData(() => {
+        const contacts = getContacts();
+        const contact = Object.values(contacts).find(c => c.uid === user.uid);
+        initialsElem.textContent = getInitials(contact?.name || user.displayName || user.email || 'U');
+      });
+    } else {
+      initialsElem.textContent = 'G';
+    }
+  });
 }
 /**
  * Triggers the board rendering.
@@ -221,5 +243,8 @@ function setupAddTaskOverlay() {
  * @async
  * @returns {Promise<void>}
  */
+async function renderBoard() {
+  updateHTML();
+}
 
 // setupAddTaskOverlay();

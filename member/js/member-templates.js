@@ -44,7 +44,7 @@ export function getHeaderTemplate() {
           <div class="topbar-right">
               <a href="./help.html"class="help-circle" title="Help">?</a>
               <div id="headerMenue" class="profile">
-                  SM
+                  <span id="profileInitials"></span>
                   <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
                       <ul>
                           <a href="./legal-notice-user.html">Legal Notice</a>
@@ -108,59 +108,104 @@ export function getSidebarTemplate() {
 
 export function getTaskTemplate() {
   return `
-     <section class="overlay_add_task">
-        <button class="add-task-close-btn" type="button" aria-label="Close">
-          <img src="../assets/icons/close-icon.svg" alt="">
-        </button>
-        <h1 class="h1_add_task">Add Task</h1>
-            <section class="section_add_task">
+    <section class="overlay_add_task">
+      <button class="add-task-close-btn" type="button" aria-label="Close">
+        <img src="../assets/icons/close-icon.svg" alt="">
+      </button>
 
-            <section>
-                <form class="form_add_task">
-                    <label for="title">Title<span class="required">*</span></label>
-                    <input class="input_add_task" type="text" id="title" name="title" required placeholder="Enter a title">
+      <h1 class="h1_add_task">Add Task</h1>
 
-                    <label for="description">Description</label>
-                    <textarea class="textarea_add_task" id="description" name="description" required placeholder="Enter a Description"></textarea>
+      <form class="add-task-form" id="add_task_form">
+        <section class="section_add_task">
+          <section class="form_add_task">
+            <div class="form-field">
+              <label for="title">Title <span class="required">*</span></label>
+              <input class="input_add_task" type="text" id="title" name="title" required placeholder="Enter a title">
+              <span class="error-message">This field is required</span>
+            </div>
 
-                    <label for="due_date">Due date<span class="required">*</span></label>
-                    <input class="input_add_task" type="date" id="due_date" name="due_date" required placeholder="dd/mm/yyyy">
-                </form>
+            <div class="form-field">
+              <label for="description">Description</label>
+              <textarea class="textarea_add_task" id="description" name="description" placeholder="Enter a Description"></textarea>
+            </div>
+
+            <div class="form-field">
+              <label for="due_date">Due date <span class="required">*</span></label>
+              <input class="input_add_task" type="date" id="due_date" name="due_date" required>
+              <span class="error-message">This field is required</span>
+            </div>
+          </section>
+
+          <hr class="hr_add_task">
+
+          <section class="select_add_task">
+            <section class="section_priority">
+              <label for="priority">Priority</label>
+              <div id="priority" class="priority" name="priority">
+                <button type="button" class="priority_button" value="urgent">
+                  Urgent <img src="../assets/icons/urgent-prio-icon.svg" alt="">
+                </button>
+                <button type="button" class="priority_button" value="medium">
+                  Medium <img src="../assets/icons/medium-prio-icon.svg" alt="">
+                </button>
+                <button type="button" class="priority_button" value="low">
+                  Low <img src="../assets/icons/low-prio-icon.svg" alt="">
+                </button>
+              </div>
             </section>
-            <hr class="hr_add_task">
-            <form class="select_add_task">
-                <section class="section_priority">
-                    <label for="priority">Priority</label>
-                    <div id="priority" class="priority" name="priority">
-                        <button class="priority_button" value="urgent">Urgent <img src="../assets/icons/urgent-prio-icon.svg" alt=""></button>
-                        <button class="priority_button" value="medium">Medium <img src="../assets/icons/medium-prio-icon.svg" alt=""></button>
-                        <button class="priority_button" value="low">Low <img src="../assets/icons/low-prio-icon.svg" alt=""></button>
-                    </div>
-                </section>
 
-                <label for="">Assigned to</label>
-                <select class="input_add_task margin_bottom_add_task" id="assigned_to" name="assigned_to" required>
-                    <option value="select_contact" disabled selected>Select contacts to assign</option>
-                </select>
+            <label for="assigned_to_input">Assigned to</label>
+            <div class="custom-select margin_bottom_add_task" id="assigned_to">
+              <button type="button" class="custom-select__trigger" id="assigned_to_trigger">
+                <span class="custom-select__trigger-label">Select contacts to assign</span>
+                <span class="custom-select__arrow">▾</span>
+              </button>
+              <div class="custom-select__options d_none" id="assigned_to_options"></div>
+            </div>
+            <input type="hidden" id="assigned_to_input" name="assigned_to">
+            <div class="selected-assignees" id="selected_assignees_display"></div>
 
-                <label for="">Category</label>
-                <select class="input_add_task margin_bottom_add_task" id="category" name="category" required placeholder="">
-                    <option value="select_task_category">Select task category</option>
-                    <option value="technical-task">Technical Task</option>
-                    <option value="user-story">User Story</option>
-                </select>
+            <label for="category">Category</label>
+            <div class="select-native-wrapper margin_bottom_add_task">
+              <select class="input_add_task input_add_task--select" id="category" name="category" required>
+                <option value="select_task_category">Select task category</option>
+                <option value="technical-task">Technical Task</option>
+                <option value="user-story">User Story</option>
+              </select>
+              <span class="custom-select__arrow">▾</span>
+            </div>
 
-                <label for="">Subtasks</label>
-                <input class="input_add_task" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
-            </form>
+            <label for="subtask">Subtasks</label>
+            <div class="subtask-input-wrap">
+              <input class="input_add_task subtask_input_field" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
+              <div class="subtask-actions d_none" id="subtask_actions">
+                <button type="button" class="subtask-action-btn" id="clear_subtask_btn">✕</button>
+                <span class="subtask-divider">|</span>
+                <button type="button" class="subtask-action-btn" id="confirm_subtask_btn">✓</button>
+              </div>
+            </div>
+            <div class="subtask-list" id="subtask_list"></div>
+          </section>
         </section>
+
         <section class="section_add_task_button">
-            <button class="clear_button_add_task" type="button">Cancel <img src="../assets/icons/close-icon.svg" alt=""></button>
-            <button class="Create_button_add_task" type="submit">Create Task <img src="../assets/icons/check-icon-white.svg" alt=""></button>
+          <span class="required-fields-hint">
+            <span class="required-star">*</span> This field is required
+          </span>
+
+          <div class="add-task-buttons-right">
+            <button class="clear_button_add_task" type="button">
+              Cancel <img src="../assets/icons/close-icon.svg" alt="">
+            </button>
+            <button class="Create_button_add_task" type="button">
+              Create Task <img src="../assets/icons/check-icon-white.svg" alt="">
+            </button>
+          </div>
         </section>
+      </form>
     </section>
-    `;
-};
+  `;
+}
 
 // contact overlays einbinden --->id="editC_overlay" oder id="addC_overlay" in den <body> einfügen,
 // (siehe contact_add_overlay.html/contact_edit_overlay.html <-- können danach gelöscht werden)
@@ -253,66 +298,23 @@ export function signupMassegeTemplate() {
  * @param {string} title - Task title.
  * @param {Category} category - Task category label.
  * @param {string} description - Task description.
- * @param {Array} subtask - Array with subtasks.
- * @param {string} subtasks - subtasks into subtask.
  * @param {Priority} priority - Task priority label.
  * @returns {string} HTML string representing the task card.
  */
-// export function generateTodosHTML(id, title, category, description, doneSubtasks, totalSubtasks, priority) {
-//   const categoryLabel =
-//     category === "user-story"
-//       ? "User Story"
-//       : category === "technical-task"
-//       ? "Technical Task"
-//       : category;
-
-//   return `
-//             <div class="task__card" id="${id}" draggable="true">
-//               <span class="task__category--${category}">${categoryLabel}</span><br>
-//               <h4 class="task__title">${title}</h4><br>
-//               <p class="task__text">${description}</p><br>
-//               <div class="task__bar" id="taskProgressBar(${id})">
-//                 <progress>Das Template wird returned</progress>
-//                 ${doneSubtasks} von ${totalSubtasks}
-//               </div><br>
-//               <div class="task__footer">
-//                 <div>users</div>
-//                 <img src="../../assets/icons/${priority}-prio-icon.svg" alt="">
-//               </div>
-//             </div>
-//           `;
-// };
-export function generateTodosHTML(id, title, category, description, priority) {
-  const categoryLabel =
-    category === "user-story"
-      ? "User Story"
-      : category === "technical-task"
-        ? "Technical Task"
-        : category;
-
-  const safePriority = priority || "low";
-
+export function generateTodosHTML(id, title, category, description, priority, subtaskProgressHTML = '', assigneeAvatarsHTML = '') {
   return `
-    <div class="task__card" id="${id}" onclick="openTaskOverlay('${id}')" draggable="true" >
-      <span class="task__category--${category}">${category}</span><br>
-      <h4 class="task__title">${title}</h4><br>
-      <p class="task__text">${description}</p><br>
-      <div class="task__bar" id="taskProgressBar-${id}">
-      </div><br>
-      <div class="task__footer">
-        <div>users</div>
-        <img src="../../assets/icons/${safePriority}-prio-icon.svg" alt="">
-      </div>
-    </div>
-  `;
-}
-
-export function generateProgressBar(totalSubtasks, progressPercent, doneSubtasks) {
-  return `
-          <progress max="100" value="${progressPercent}"></progress> ${doneSubtasks} von ${totalSubtasks}
-`
-}
-
+            <div class="task__card" id="${id}" onclick="openTaskOverlay('${id}')" draggable="true" >
+              <span class="task__category--${category}">${category}</span><br>
+              <h4 class="task__title">${title}</h4><br>
+              <p class="task__text">${description}</p><br>
+              ${subtaskProgressHTML}
+              <div class="task__footer">
+                <div class="task__assignees">${assigneeAvatarsHTML}</div>
+                <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
+              </div>
+            </div>
+          `;
+};
 
 /**
  * Two show contact details overlay.
@@ -400,15 +402,15 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
   `;
 }
 
-export function getTaskOverlayTemplate(id, category,title, description, due_date , priority, assigned_to, subtasks ) {
+export function getTaskOverlayTemplate(id, category, title, description, due_date, priority, assigned_to, subtasks) {
   console.log('subtasks input:', subtasks);
   const assignedArray = Array.isArray(assigned_to)
-  ? assigned_to
-  : assigned_to.split(', ');
+    ? assigned_to
+    : assigned_to.split(', ');
 
-  const subtaskArray = subtasks && typeof subtasks === 'object'
-  ? Object.values(subtasks)
-  : [];
+  const subtaskEntries = subtasks && typeof subtasks === 'object'
+    ? Object.entries(subtasks)
+    : [];
 
   return `
   <div class="task-overlay-content">
@@ -440,22 +442,138 @@ export function getTaskOverlayTemplate(id, category,title, description, due_date
       <p>Subtasks:</p>
       <div class="overlaytemplate-subtask-checkbox">
 
-        ${subtaskArray.map(s => `
-
+        ${subtaskEntries.map(([key, s]) => {
+          const isChecked = s.status === true || s.completed === true;
+          const iconSrc = isChecked
+            ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
+            : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
+          return `
           <div class="subtask-item-taskoverlay">
-          <img class="checkbox-icon" src="../assets/icons/checkbox/checkbox-icon unchecked.svg" alt="">
+            <img class="checkbox-icon" src="${iconSrc}" alt="" data-task-id="${id}" data-subtask-key="${key}">
             ${s.title}
           </div>
-        `).join('')}
+        `}).join('')}
       </div>
     </div>
 
     <div class="taskoverlay_detail_actions">
       <button type="button" class="link_btn-taskoverlay" onclick="deleteTask('${id}')"><img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
       <div class="divider-grey"></div>
-      <button type="button" class="link_btn-taskoverlay" onclick="editContact()"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
+      <button type="button" class="link_btn-taskoverlay" onclick="editTask('${id}')"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
     </div>
 
+  </div>
+  `;
+}
+
+/**
+ * @param {string} id - Task ID
+ * @param {string} category - Task category
+ * @param {string} title - Task title
+ * @param {string} description - Task description
+ * @param {string} due_date - Due date
+ * @param {string} priority - Priority level
+ * @param {string|Array} assigned_to - Assigned contacts
+ * @param {Object} subtasks - Subtasks object
+ * @returns {string} HTML string for edit task overlay
+ */
+export function getEditTaskOverlayTemplate(id, category, title, description, due_date, priority, assigned_to, subtasks) {
+  const assignedArray = Array.isArray(assigned_to) ? assigned_to : assigned_to.split(', ');
+  const subtaskArray = subtasks && typeof subtasks === 'object' ? Object.values(subtasks) : [];
+
+  return `
+  <div class="task-overlay-content edit-task-form">
+    <div class="overlaytemplate-first-section">
+      <button onclick="closeTaskOverlay()">
+        <img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt="">
+      </button>
+    </div>
+
+    <form id="edit_task_form" class="form_add_task">
+      <div class="form-field">
+        <input type="text" id="edit_title" class="input_add_task" value="${title}" required placeholder="Enter a title" style="border: none; border-bottom: 1px solid #d1d1d1; border-radius: 0; padding: 8px 0; margin-bottom: 16px; font-size: 16px;">
+      </div>
+
+      <div class="form-field">
+        <label for="edit_description" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Description</label>
+        <textarea id="edit_description" class="textarea_add_task" placeholder="Enter a description" style="min-height: 80px; font-size: 16px; resize: vertical;">${description}</textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="edit_due_date" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Due date</label>
+        <input type="date" id="edit_due_date" class="input_add_task" value="${due_date}" required style="font-size: 16px;">
+      </div>
+
+      <div class="section_priority">
+        <label style="font-size: 14px; color: #2a3647; font-weight: 400;">Priority</label>
+        <div class="priority">
+          <button type="button" class="priority_button ${priority === 'urgent' ? 'selected' : ''}" value="urgent" data-priority="urgent">
+            Urgent <img src="../assets/icons/urgent-prio-icon.svg" alt="">
+          </button>
+          <button type="button" class="priority_button ${priority === 'medium' ? 'selected' : ''}" value="medium" data-priority="medium">
+            Medium <img src="../assets/icons/medium-prio-icon.svg" alt="">
+          </button>
+          <button type="button" class="priority_button ${priority === 'low' ? 'selected' : ''}" value="low" data-priority="low">
+            Low <img src="../assets/icons/low-prio-icon.svg" alt="">
+          </button>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="edit_assigned_to" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Assigned to</label>
+        <div class="custom-select" id="edit_assigned_to" style="margin-bottom: 12px;">
+          <button type="button" class="custom-select__trigger" id="edit_assigned_to_trigger">
+            <span class="custom-select__trigger-label">Select contacts to assign</span>
+            <span class="custom-select__arrow">▾</span>
+          </button>
+          <div class="custom-select__options d_none" id="edit_assigned_to_options"></div>
+        </div>
+        <div class="selected-assignees" id="edit_selected_assignees_display" style="display: flex; gap: 8px; margin-bottom: 22px;">
+          ${assignedArray.map(person => `
+            <div class="contact_avatar" style="background-color: ${getAvatarColor(person)}; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 500; font-size: 14px;">
+              ${getInitials(person)}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Subtasks</label>
+        <div class="subtask-input-wrap" style="position: relative; margin-bottom: 12px;">
+          <input class="input_add_task subtask_input_field" type="text" id="edit_subtask" name="edit_subtask" placeholder="Add new subtask" style="font-size: 16px;">
+          <div class="subtask-actions d_none" id="edit_subtask_actions">
+            <button type="button" class="subtask-action-btn" id="edit_clear_subtask_btn">✕</button>
+            <span class="subtask-divider">|</span>
+            <button type="button" class="subtask-action-btn" id="edit_confirm_subtask_btn">✓</button>
+          </div>
+        </div>
+        <div class="subtask-list" id="edit_subtask_list" style="margin-bottom: 8px;">
+          ${Object.entries(subtasks && typeof subtasks === 'object' ? subtasks : {}).map(([key, s]) => `
+            <div class="subtask-item" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 12px; font-size: 16px; color: #2a3647;">
+              <div style="display: flex; align-items: center; gap: 8px; flex: 1;">
+                <span style="line-height: 1.5;">•</span>
+                <span style="line-height: 1.5; flex: 1;" id="subtask_text_${key}">${s.title}</span>
+              </div>
+              <div class="subtask-item-actions" style="display: flex; gap: 8px;">
+                <button type="button" class="subtask-icon-btn" onclick="editExistingSubtask('${id}', '${key}')" title="Edit" style="border: none; background: transparent; cursor: pointer; font-size: 18px; padding: 0;">
+                  <img src="../assets/icons/pencil-icon.svg" alt="Edit" style="width: 16px; height: 16px;">
+                </button>
+                <button type="button" class="subtask-icon-btn" onclick="deleteExistingSubtask('${id}', '${key}')" title="Delete" style="border: none; background: transparent; cursor: pointer; font-size: 18px; padding: 0;">
+                  <img src="../assets/icons/trash-icon.svg" alt="Delete" style="width: 16px; height: 16px;">
+                </button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="subtask-list" id="edit_subtask_list_new"></div>
+      </div>
+
+      <div class="add-task-buttons-right" style="margin-top: 40px;">
+        <button type="button" class="Create_button_add_task" onclick="saveEditedTask('${id}')">
+          Ok <img src="../assets/icons/check-icon-white.svg" alt="">
+        </button>
+      </div>
+    </form>
   </div>
   `;
 }
