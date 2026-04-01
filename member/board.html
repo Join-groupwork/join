@@ -46,46 +46,46 @@
     <button type="button" id="openAddTaskOverlay" class="board-add-btn">Add task <img class="board-add-icon"
         src="../assets/icons/add-icon-white.svg" alt=""></button>
   </section>
-  <main class="task">
+  <main class="board__tasks">
 
     <section name="todo" class="task__section">
-      <div class="task__area--title">
+      <div class="task task__area--title">
         <h3 class="task__title">To do</h3>
         <img class="circle-plus-icon" src="../assets/icons/square-plus.svg" alt="Add task">
       </div>
-      <div class="task__area" data-status="todo">
+      <div class="task task__area" data-status="todo">
         <p class="task__area--placeholder d-none">No tasks to do</p>
         <div id="todo" class="task__list"></div>
       </div>
     </section>
 
     <section name="in Progress" class="task__section">
-      <div class="task__area--title">
+      <div class="task task__area--title">
         <h3 class="task__title">In Progress</h3><img class="circle-plus-icon" src="../assets/icons/square-plus.svg"
           alt="plus-icon">
       </div>
-      <div class="task__area" data-status="in-progress">
+      <div class="task task__area" data-status="in-progress">
         <p class="task__area--placeholder d-none">No tasks in Progress</p>
         <div id="inProgress" class="task__list"></div>
       </div>
     </section>
 
     <section name="Await Feedback" class="task__section">
-      <div class="task__area--title">
+      <div class="task task__area--title">
         <h3 class="task__title">Await Feedback</h3><img class="circle-plus-icon" src="../assets/icons/square-plus.svg"
           alt="plus-icon">
       </div>
-      <div class="task__area" data-status="await-feedback">
+      <div class="task task__area" data-status="await-feedback">
         <p class="task__area--placeholder d-none">No tasks await Feedback</p>
         <div id="awaitFeedback" class="task__list"></div>
       </div>
     </section>
 
     <section name="Done" class="task__section">
-      <div class="task__area--title">
+      <div class="task task__area--title">
         <h3 class="task__title">Done</h3>
       </div>
-      <div class="task__area" data-status="done">
+      <div class="task task__area" data-status="done">
         <p class="task__area--placeholder d-none">No tasks done</p>
         <div id="done" class="task__list"></div>
       </div>
