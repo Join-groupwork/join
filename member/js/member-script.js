@@ -248,3 +248,27 @@ async function renderBoard() {
 }
 
 // setupAddTaskOverlay();
+
+
+// addtask-status-handling
+
+function setupAddTaskForAllColumns() {
+  const overlay = document.getElementById('add_task_overlay');
+  if (!overlay) return;
+
+  document.querySelectorAll('.circle-plus-icon').forEach(icon => {
+    icon.addEventListener('click', () => {
+      // Wir gehen von Icon -> .task__section -> .task__area
+      const section = icon.closest('.task__section');
+      const taskArea = section?.querySelector('.task__area');
+      const status = taskArea?.dataset.status || 'todo'; 
+      overlay.dataset.target = status; 
+      openAddTaskOverlay(overlay);
+    });
+  });
+}
+
+renderBoard().then(() => {
+  setupAddTaskOverlay();       
+  setupAddTaskForAllColumns(); 
+});
