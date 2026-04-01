@@ -115,32 +115,86 @@ function calculateSubtaskProgress(subtasks = {}) {
 }
 
 /**
- * Generates assignee avatars HTML.
- * @param {Object|Array|string} assigned_to
- * @returns {string} HTML for avatars
+ * Generates HTML for assignee avatars.
+ *
+ * Displays up to 3 avatars and adds a "+X" avatar
+ * if more assignees are present.
+ *
+ * @param {Object|Array|string} assigned_to - Assigned contacts data.
+ * @returns {string} HTML string for avatar rendering.
  */
 function generateAssigneeAvatars(assigned_to = {}) {
-  let assigneeArray = [];
+  const names = extractAssigneeNames(assigned_to);
+  const visible = names.slice(0, 3);
+  const remaining = names.length - 3;
 
-  if (assigned_to && typeof assigned_to === 'object' && !Array.isArray(assigned_to)) {
-    assigneeArray = Object.values(assigned_to);
-  } else if (Array.isArray(assigned_to)) {
-    assigneeArray = assigned_to;
-  } else if (typeof assigned_to === 'string' && assigned_to.trim()) {
-    assigneeArray = assigned_to.split(',').map(s => s.trim());
+  return `
+    ${renderVisibleAvatars(visible)}
+    ${renderExtraAvatar(remaining)}
+  `;
+}
+
+/**
+ * Extracts assignee names from different data formats.
+ *
+ * Supports objects, arrays, and comma-separated strings.
+ *
+ * @param {Object|Array|string} assigned_to - Raw assigned data.
+ * @returns {string[]} Array of valid assignee names.
+ */
+function extractAssigneeNames(assigned_to) {
+  if (Array.isArray(assigned_to)) return assigned_to;
+
+  if (assigned_to && typeof assigned_to === 'object') {
+    return Object.values(assigned_to)
+      .map(c => typeof c === 'string' ? c : c?.name)
+      .filter(Boolean);
   }
 
-  return assigneeArray
-    .slice(0, 3)
-    .map(contact => {
-      const name = typeof contact === 'string' ? contact : (contact?.name || '');
-      if (!name) return '';
-      const initials = getInitials(name);
-      const color = getAvatarColor(name);
-      return `<div class="task__assignee--avatar" style="background-color: ${color}">${initials}</div>`;
-    })
-    .filter(html => html)
-    .join('');
+  if (typeof assigned_to === 'string') {
+    return assigned_to.split(',').map(s => s.trim()).filter(Boolean);
+  }
+
+  return [];
+}
+
+/**
+ * Renders HTML for visible assignee avatars.
+ *
+ * @param {string[]} names - List of assignee names.
+ * @returns {string} HTML string for avatar elements.
+ */
+function renderVisibleAvatars(names) {
+  return names.map(name => {
+    return `
+      <div 
+        class="task__assignee--avatar"
+        style="background-color: ${getAvatarColor(name)}"
+        title="${name}"
+      >
+        ${getInitials(name)}
+      </div>
+    `;
+  }).join('');
+}
+
+/**
+ * Renders an avatar displaying remaining assignee count.
+ *
+ * @param {number} count - Number of hidden assignees.
+ * @returns {string} HTML string for overflow avatar.
+ */
+function renderExtraAvatar(count) {
+  if (count <= 0) return '';
+
+  return `
+    <div 
+      class="task__assignee--avatar task__assignee--avatar--extra"
+      title="${count} more assignees"
+    >
+      +${count}
+    </div>
+  `;
 }
 
 

@@ -135,10 +135,6 @@ main {
   gap: 0px;
 }
 
-.task__assignee--avatar:not(:first-child) {
-  margin-left: -8px;
-}
-
 .task__assignee--avatar {
   width: 32px;
   height: 32px;
@@ -150,6 +146,19 @@ main {
   font-size: 12px;
   font-weight: 400;
   border: 2px solid white;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.task__assignee--avatar:not(:first-child) {
+  margin-left: -8px;
+}
+
+.task__assignee--avatar--extra {
+  background-color: #2a3647;
+  color: white;
+  font-weight: 700;
+  opacity: 0.85;
 }
 
 .task__footer {
