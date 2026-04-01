@@ -131,8 +131,12 @@ main {
 
 .task__assignees {
   display: flex;
-  gap: 4px;
   align-items: center;
+  gap: 0px;
+}
+
+.task__assignee--avatar:not(:first-child) {
+  margin-left: -8px;
 }
 
 .task__assignee--avatar {
