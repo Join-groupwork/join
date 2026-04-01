@@ -10,13 +10,16 @@ main {
 
 /* CHECK evtl statt main eine klasse verwenden, sonst könnte es zu Konflikten kommen */
 
-.task {
+.board__tasks {
   display: flex;
   flex-direction: row;
 }
 
+.task {
+  width: 260px;
+}
+
 .task__section {
-  width: 256px;
   display: flex;
   flex-direction: column;
 }
