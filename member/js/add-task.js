@@ -128,7 +128,7 @@ export function initAddTask(container, options = {}) {
     const taskData = buildTaskData();
     if (!taskData) return;
 
-    await submitTask(taskData, createBtn, options);
+    await submitTask(taskData, createBtn, options, priorityButtons, clearAddTaskForm);
   });
 
   cancelBtn?.addEventListener('click', (event) => {
@@ -314,7 +314,7 @@ function setupRequiredFieldValidation(fields) {
  * @returns {Promise<void>}
  * @throws {Error} Throws if Firebase push fails.
  */
-async function submitTask(taskData, createBtn, options = {}) {
+async function submitTask(taskData, createBtn, options = {}, priorityButtons, clearForm) {
   createBtn.disabled = true;
 
   try {
@@ -323,12 +323,16 @@ async function submitTask(taskData, createBtn, options = {}) {
     alert('Task created successfully');
 
     if (options.mode === 'overlay') {
+      clearForm(priorityButtons);
+
       if (typeof options.onSuccess === 'function') {
         await options.onSuccess();
       }
+
       if (typeof options.onClose === 'function') {
         options.onClose();
       }
+
       return;
     }
 
