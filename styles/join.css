@@ -22,7 +22,10 @@ body {
 }
 
 .main {
-  margin: 80px 0 0 var(--main-offset);
+  margin-top: 80px;
+  margin-right: auto;
+  margin-bottom: 0;
+  margin-left: max(var(--main-offset), calc((100vw - var(--layout-max-width)) / 2 + var(--main-offset)));
   width: calc(100% - var(--main-offset));
   max-width: calc(var(--layout-max-width) - var(--main-offset));
 }
@@ -161,7 +164,7 @@ form {
   padding: 40px;
   /* ergänzt für add_task */
   position: fixed;
-  left: 0;
+  left: max(0px, calc((100vw - var(--layout-max-width)) / 2));
   top: 0;
   z-index: 1000;
 }
@@ -223,7 +226,7 @@ header {
 .topbar {
   position: fixed;
   top: 0;
-  left: var(--sidebar-width);
+  left: calc(max(0px, calc((100vw - var(--layout-max-width)) / 2)) + var(--sidebar-width));
   width: min(calc(100% - var(--sidebar-width)), calc(var(--layout-max-width) - var(--sidebar-width)));
   height: 96px;
   background: #ffffff;
@@ -239,7 +242,7 @@ header {
   padding: 0 40px 0 56px;
   width: 100%;
   max-width: calc(var(--layout-max-width) - var(--sidebar-width));
-  margin: 0;
+  margin: 0 auto;
 }
 
 
