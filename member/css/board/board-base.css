@@ -1,28 +1,28 @@
 main {
-  margin: 24px 60px 0 258px;
-  padding: 50px 0 0 28px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+  margin: 30px 60px 0 258px;
+  padding: 22px 0 0 28px;
   justify-content: flex-start;
   gap: 50px;
 }
 
 /* CHECK evtl statt main eine klasse verwenden, sonst könnte es zu Konflikten kommen */
 
-.task {
+.board__tasks {
   display: flex;
   flex-direction: row;
 }
 
+.task {
+  width: 260px;
+}
+
 .task__section {
-  width: 256px;
   display: flex;
   flex-direction: column;
 }
 
 .task__area {
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 360px);
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
@@ -37,6 +37,10 @@ main {
 
 .task__area--placeholder {
   text-align: center;
+}
+
+.task__list {
+  min-height: 24px;
 }
 
 .task__list--preview::after {
@@ -248,8 +252,4 @@ main {
   box-sizing: border-box;
   gap: 10px;
   padding-bottom: 8px;
-}
-
-.overlaytemplate-title {
-  font-size: 16px;
 }

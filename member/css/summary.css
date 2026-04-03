@@ -66,10 +66,16 @@ body {
   /* width: calc(100% - 200px); */
 }
 
-/* .dashboard-left {
+.dashboard-left {
   flex: 0 0 50%;
   max-width: 460px;
-} */
+}
+
+.all-tasks,
+.tasks-in-progress,
+.await-feedback-info {
+  text-decoration: none;
+}
 
 .dashboard-right {
   flex: 0 0 50%;
