@@ -133,8 +133,7 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: 148px 15px 0 284px;
-  padding-bottom: 24px;
+  margin: 182px 15px 30px 284px;
   max-width: 1160px;
 }
 
