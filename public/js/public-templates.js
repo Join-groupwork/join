@@ -23,7 +23,9 @@
  */
 export function getHeaderTemplate() {
   return `
-        <div class="topbar-left">Kanban Project Management Tool</div>
+        <header>
+          <div class="topbar-left">Kanban Project Management Tool</div>
+        </header>
       `;
 
 };
