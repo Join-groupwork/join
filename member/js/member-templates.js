@@ -286,6 +286,25 @@ export function signupMassegeTemplate() {
     `;
 };
 
+/**
+ * Formats an internal task category value into a user-friendly label.
+ *
+ * Converts values like "user-story" or "technical-task"
+ * into readable UI labels such as "User Story" and "Technical Task".
+ *
+ * Falls keine Zuordnung vorhanden ist, wird der Originalwert zurückgegeben.
+ *
+ * @param {string} category - The raw category value from Firebase.
+ * @returns {string} The formatted category label for display in the UI.
+ */
+function formatCategoryLabel(category) {
+  const labels = {
+    'user-story': 'User Story',
+    'technical-task': 'Technical Task'
+  };
+
+  return labels[category] || category;
+}
 
 /**
  * Generates a task card HTML string for the board (drag-and-drop).
@@ -304,7 +323,7 @@ export function signupMassegeTemplate() {
 export function generateTodosHTML(id, title, category, description, priority, subtaskProgressHTML = '', assigneeAvatarsHTML = '') {
   return `
             <div class="task__card" id="${id}" onclick="openTaskOverlay('${id}')" draggable="true" >
-              <span class="task__category--${category}">${category}</span><br>
+              <span class="task__category--${category}">${formatCategoryLabel(category)}</span><br>
               <h4 class="task__title">${title}</h4><br>
               <p class="task__text">${description}</p><br>
               ${subtaskProgressHTML}
@@ -415,7 +434,7 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
   return `
   <div class="task-overlay-content">
       <div class="overlaytemplate-first-section">
-        <p class="task__category--${category} overlaytemplate-category"> ${category.replace(/-/g, " ")}</p>
+        <p class="task__category--${category} overlaytemplate-category">${formatCategoryLabel(category)}</p>
         <button onclick="closeTaskOverlay()"><img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt=""></button>
       </div>
 
