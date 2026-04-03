@@ -22,6 +22,7 @@ main {
 }
 
 .task__area {
+  min-height: calc(100vh - 400px);
   max-height: calc(100vh - 360px);
   overflow-y: auto;
   overflow-x: hidden;

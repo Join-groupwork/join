@@ -167,7 +167,7 @@ function extractAssigneeNames(assigned_to) {
 function renderVisibleAvatars(names) {
   return names.map(name => {
     return `
-      <div 
+      <div
         class="task__assignee--avatar"
         style="background-color: ${getAvatarColor(name)}"
         title="${name}"
@@ -188,7 +188,7 @@ function renderExtraAvatar(count) {
   if (count <= 0) return '';
 
   return `
-    <div 
+    <div
       class="task__assignee--avatar task__assignee--avatar--extra"
       title="${count} more assignees"
     >
@@ -376,7 +376,7 @@ document.addEventListener("dragover", function (event) {
   clearDropHighlights();
   clearDropCardPreview();
   if (!dropZone) return; // INFO If there is no drop zone, cancel.
-    const taskList = dropZone.querySelector(".task__list");
+  const taskList = dropZone.querySelector(".task__list");
   if (!taskList) return;
   taskList.classList.add("task__list--preview");
 });
@@ -400,7 +400,6 @@ document.addEventListener("drop", async function (event) {
   const oldStatus = todos[currentDraggedElement]?.status;
   dropZone.classList.remove("task__list--preview");
   todos[currentDraggedElement].status = newStatus;
-
   updateHTML();
   try {
     await updateTaskStatus(currentDraggedElement, newStatus)
