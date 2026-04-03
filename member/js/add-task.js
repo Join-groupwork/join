@@ -207,24 +207,27 @@ export function initAddTask(container, options = {}) {
    * @returns {Object|null} The task data object, or null if required data is missing.
    */
   function buildTaskData() {
-    const title = titleInput?.value?.trim();
-    const dueDate = dueInput?.value || '';
+  const title = titleInput?.value?.trim();
+  const dueDate = dueInput?.value || '';
 
-    if (!title || !dueDate) return null;
+  if (!title || !dueDate) return null;
+  const overlay = document.getElementById('add_task_overlay');
+  const status = overlay?.dataset.target || 'todo';
 
-    return {
-      title,
-      description: descInput?.value?.trim() || '',
-      due_date: dueDate,
-      priority: selectedPriority || 'medium',
-      assigned_to: getAssignedNames(assigneeState),
-      category: categorySelect?.value || '',
-      subtasks: getSubtasks(subtaskState),
-      status: 'todo',
-      createdAt: new Date().toISOString()
-    };
-  }
+  return {
+    title,
+    description: descInput?.value?.trim() || '',
+    due_date: dueDate,
+    priority: selectedPriority || 'medium',
+    assigned_to: getAssignedNames(assigneeState),
+    category: categorySelect?.value || '',
+    subtasks: getSubtasks(subtaskState),
+    status,           
+    createdAt: new Date().toISOString()
+  };
+} 
 }
+
 
 /**
  * Validates a required form field.
