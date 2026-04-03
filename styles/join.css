@@ -1,7 +1,12 @@
+:root {
+  --layout-max-width: 1440px;
+  --sidebar-width: 230px;
+  --main-offset: 240px;
+}
+
 html,
 body {
   width: 100%;
-  /* max-width: 1440px; */
   margin-right: auto;
   margin-left: auto;
   font-family: 'Inter', sans-serif;
@@ -17,7 +22,12 @@ body {
 }
 
 .main {
-  margin: 80px 0 0 240px;
+  margin-top: 80px;
+  margin-right: auto;
+  margin-bottom: 0;
+  margin-left: max(var(--main-offset), calc((100vw - var(--layout-max-width)) / 2 + var(--main-offset)));
+  width: calc(100% - var(--main-offset));
+  max-width: calc(var(--layout-max-width) - var(--main-offset));
 }
 
 /* fonts */
@@ -142,7 +152,7 @@ form {
 
 /* sidebar */
 .sidebar {
-  width: 230px;
+  width: var(--sidebar-width);
   /* height ergänzt wegen add_task */
   height: 100%;
   background: var(--color-sidemenu-active);
@@ -154,7 +164,7 @@ form {
   padding: 40px;
   /* ergänzt für add_task */
   position: fixed;
-  left: 0;
+  left: max(0px, calc((100vw - var(--layout-max-width)) / 2));
   top: 0;
   z-index: 1000;
 }
@@ -216,8 +226,8 @@ header {
 .topbar {
   position: fixed;
   top: 0;
-  left: 230px;
-  width: calc(100% - 230px);
+  left: calc(max(0px, calc((100vw - var(--layout-max-width)) / 2)) + var(--sidebar-width));
+  width: min(calc(100% - var(--sidebar-width)), calc(var(--layout-max-width) - var(--sidebar-width)));
   height: 96px;
   background: #ffffff;
   border-bottom: 1px solid #d1d1d1;
@@ -230,6 +240,9 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 0 40px 0 56px;
+  width: 100%;
+  max-width: calc(var(--layout-max-width) - var(--sidebar-width));
+  margin: 0 auto;
 }
 
 
