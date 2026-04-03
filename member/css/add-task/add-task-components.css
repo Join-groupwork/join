@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-text-button);
   font-size: 16px;
 }
 
@@ -50,11 +50,11 @@
   background: transparent;
   cursor: pointer;
   font-size: 18px;
-  color: #2a3647;
+  color: var(--color-menu-bg);
   padding: 0;
 }
 
-.subtask-divider { color: #999; }
+.subtask-divider { color: var(--color-muted); }
 
 .subtask-list {
   display: flex;
@@ -95,7 +95,7 @@
 
 .add-task__required-hint {
   font-size: 14px;
-  color: #2a3647;
+  color: var(--color-menu-bg);
 }
 
 .add-task__required-star {
@@ -121,15 +121,15 @@
 }
 
 .add-task__button--secondary {
-  background: #fff;
-  border: 1px solid #2a3647;
-  color: #2a3647;
+  background: var(--color-background-input);
+  border: 1px solid var(--color-menu-bg);
+  color: var(--color-menu-bg);
 }
 
 .add-task__button--primary {
-  background: #2a3647;
-  border: 1px solid #2a3647;
-  color: #fff;
+  background: var(--color-menu-bg);
+  border: 1px solid var(--color-menu-bg);
+  color: var(--color-text-button);
 }
 
 .add-task__button img {
@@ -155,9 +155,18 @@
   width: 53%;
   max-height: 90vh;
   overflow-y: auto;
-  background: #fff;
+  background: var(--color-background-input);
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px var(--color-shadow-soft);
   padding: 60px;
   gap: 20px;
+}
+
+.custom-select__empty {
+  padding: 12px 16px;
+  color: var(--color-input-icon);
+}
+
+.custom-select__option-label {
+  color: var(--color-menu-bg);
 }
