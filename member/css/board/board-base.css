@@ -27,7 +27,6 @@ main {
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
-  border-radius: 24px;
   scrollbar-gutter: stable;
 }
 
@@ -37,7 +36,14 @@ main {
 }
 
 .task__area--placeholder {
+  width: 260px;
+  /* height: 48px; */
+  color: var(--color__placeholder--board);
+  padding: 13px 0px;
+  border: 1px dashed var(--border__task--highlight);
+  border-radius: 10px;
   text-align: center;
+  background-color: var(--background__placeholder--board);
 }
 
 .task__list {
