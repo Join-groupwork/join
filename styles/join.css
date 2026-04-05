@@ -12,7 +12,6 @@ body {
 }
 
 body {
-
   min-height: calc(100vh - 200px);
 }
 
@@ -389,4 +388,11 @@ footer p {
 
 .sidebar .footer a:hover {
   color: #29abe2;
+}
+
+@media (max-width: 580px) {
+  .join__logo {
+    width: 78px;
+    margin: 48px 0 0 40px;
+  }
 }

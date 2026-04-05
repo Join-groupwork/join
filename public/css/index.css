@@ -16,6 +16,10 @@ body {
   align-items: center;
 }
 
+.index__menu--responive {
+  display: none;
+}
+
 .login {
   width: 550px;
   height: 450px;
@@ -102,6 +106,7 @@ body {
     width: 250px;
     transform: translate(-50%, -50%);
   }
+
   100% {
     top: var(--logo-target-top);
     left: var(--logo-target-left);
@@ -121,4 +126,24 @@ body {
   --logo-target-top: 80px;
   --logo-target-left: 76px;
   --logo-target-width: 100px;
+}
+
+
+@media (max-width: 580px) {
+  .index__menu {
+    display: none;
+  }
+
+  .index__menu--responive {
+    font-size: 20px;
+    font-weight: 400;
+    display: flex;
+    gap: 35px;
+    align-items: center;
+  }
+
+  .login {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
 }
