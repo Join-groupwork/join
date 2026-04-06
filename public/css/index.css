@@ -128,7 +128,10 @@ body {
   --logo-target-width: 100px;
 }
 
-
+/* ==========
+RESPONSIVE
+   ==========
+*/
 @media (max-width: 580px) {
   .index__menu {
     display: none;
@@ -137,7 +140,9 @@ body {
   .index__menu--responive {
     font-size: 20px;
     font-weight: 400;
+    margin-top: 80px;
     display: flex;
+    justify-content: center;
     gap: 35px;
     align-items: center;
   }

@@ -16,7 +16,7 @@
 
 button:hover {
   cursor: pointer;
-  background-color: var(--color-hover);
+  background-color: var(--background__button--hover);
 }
 
 .button__index--signup {
@@ -25,7 +25,7 @@ button:hover {
   margin-right: 120px;
   font-size: 16px;
   color: var(--color-text-button);
-  background-color: var(--color-menu-bg);
+  background-color: var(--background__button);
 }
 
 .button__login {
@@ -102,3 +102,15 @@ input {
 }
 
 /* Logo */
+
+
+/* ==========
+RESPONSIVE
+   ==========
+*/
+@media (max-width:580px) {
+  .button__index--signup {
+    width: 100px;
+    margin: 0;
+  }
+}
