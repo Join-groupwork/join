@@ -336,3 +336,23 @@ a.cards .card-title,
 a.cards .card-sub {
   color: inherit;
 }
+
+
+/* ==========
+RESPONSIVE
+   ========== */
+@media (max-width: 580px) {
+  h1 {
+    font-size: 48px;
+  }
+
+  .dashboard {
+    padding: 0;
+  }
+
+  .summary__title {
+    margin: 0;
+    flex-direction: column;
+  }
+
+}
