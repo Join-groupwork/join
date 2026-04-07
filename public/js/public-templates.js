@@ -24,6 +24,9 @@
 export function getHeaderTemplate() {
   return `
         <div class="topbar-left">Kanban Project Management Tool</div>
+        <div class="topbar__mobile">
+          <img class="topbar__mobile--logo" src="../assets/img/logo-dark.svg" alt="Logo">
+        </div>
       `;
 
 };

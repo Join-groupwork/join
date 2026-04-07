@@ -244,6 +244,10 @@ header {
   line-height: 1.2;
 }
 
+.topbar__mobile {
+  display: none;
+}
+
 .topbar-right {
   padding: 0;
   display: flex;
@@ -408,8 +412,6 @@ footer p {
     margin: 0;
   }
 
-
-
   .topbar {
     width: 100%;
     left: 0;
@@ -417,7 +419,16 @@ footer p {
   }
 
   .topbar-left {
-    background-image: url(../assets/img/logo-dark.svg);
+    display: none;
+  }
+
+  .topbar__mobile {
+    display: block;
+  }
+
+  .topbar__mobile--logo {
+    height: 40px;
+    padding-left: 8px;
   }
 
   .topbar>header {
