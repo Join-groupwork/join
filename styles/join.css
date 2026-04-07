@@ -454,4 +454,23 @@ footer p {
     align-items: center;
     gap: 8px;
   }
+
+  .footer__responsive--public {
+    justify-content: space-around;
+    /* align-items: center; */
+  }
+
+  .footer__mobile--right {
+    width: 55%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer__mobile--font {
+    color: var(--color-secondary);
+    font-family: open-sans, sans-serif;
+    font-weight: 400;
+    padding: 16px 0;
+
+  }
 }
