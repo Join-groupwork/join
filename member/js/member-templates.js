@@ -462,11 +462,11 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
       <div class="overlaytemplate-subtask-checkbox">
 
         ${subtaskEntries.map(([key, s]) => {
-          const isChecked = s.status === true || s.completed === true;
-          const iconSrc = isChecked
-            ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
-            : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
-          return `
+    const isChecked = s.status === true || s.completed === true;
+    const iconSrc = isChecked
+      ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
+      : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
+    return `
           <div class="subtask-item-taskoverlay">
             <img class="checkbox-icon" src="${iconSrc}" alt="" data-task-id="${id}" data-subtask-key="${key}">
             ${s.title}
