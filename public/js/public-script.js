@@ -17,7 +17,7 @@
  *
  * @module public-ui
  */
-import { getHeaderTemplate, getSidebarTemplate } from './public-templates.js';
+import { getHeaderTemplate, getSidebarTemplate, getPublicFooterTemplate } from './public-templates.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { auth } from "../../scripts/firebase/firebase.js";
 
@@ -45,6 +45,7 @@ async function init() {
 function render() {
   renderHeader();
   renderSidebar();
+  renderMobileFooter();
 };
 
 
@@ -77,6 +78,13 @@ function renderSidebar() {
   }
 };
 
+
+function renderMobileFooter() {
+  const mobileFooterRef = document.getElementById('footerMobilePublic');
+  if (mobileFooterRef) {
+    mobileFooterRef.innerHTML = getPublicFooterTemplate();
+  }
+}
 // CHECK Why this function? Function don't used!
 /**
  * Renders the "Add Task" section by injecting the task template into `#add_task`.

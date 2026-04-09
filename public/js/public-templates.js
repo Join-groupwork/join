@@ -77,7 +77,7 @@ export function signupMassegeTemplate() {
 
 export function getPublicFooterTemplate() {
   return `
-    <footer class="footer__responsive">
+    // <footer class="footer__responsive">
     <a href="../../index.html" class="button button__mobile">
       <img class="icon__mobile" src="../../assets/icons/menu/login__mobile.svg" alt="login mobile">
     </a>
@@ -89,6 +89,6 @@ export function getPublicFooterTemplate() {
       <img class="icon__mobile" src="../../assets/icons/menu/legal__mobile.svg" alt="legal notice mobile">
     </a>
 
-  </footer>
+  // </footer>
   `
 }
