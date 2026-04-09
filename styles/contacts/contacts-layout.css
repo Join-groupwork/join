@@ -242,3 +242,73 @@
     min-width: 231px;
     padding: 10px;
 }
+
+@media (max-width: 1000px) {
+    .hr_line_contacts {
+        height: auto;
+        width: 90px;
+    }
+
+    .contact_slogan {
+        flex-direction: column;
+        gap: unset;
+        padding-left: 10%;
+    }
+
+    .contact_slogan p{
+        padding-top: unset;
+
+    }
+
+    #contact_detail {
+        padding: 36px 36px 36px 10%;
+    }
+
+    .contact_detail_header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 822px) {
+    .contact_detail_card {
+        display: none;
+    }
+
+    .contact_slogan {
+        display: none;
+    }
+
+    .contactside_section {
+        width: 100%;
+    }
+
+    #contact_detail{
+        display: none;
+    }
+}
+
+@media (max-width: 601px) {
+    .body_contacts {
+        display: unset;
+
+    }
+
+    .contactside_section {
+        margin:0;
+        width: 100%;
+    }
+
+    body{
+        margin: 0;
+    }
+
+    .contact_btn_addNew {
+        display: none;
+    }
+
+    .labelfor_contactList {
+        padding-top: 32px;
+    }
+
+}
