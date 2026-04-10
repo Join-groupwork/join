@@ -49,12 +49,19 @@ body {
   background-color: var(--color-text-tertiary);
 }
 
-.login__form {
+.login__form--inputs {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 30px;
+}
+
+.login__form--buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  height: 30px;
 }
 
 .login__input {
@@ -132,6 +139,20 @@ body {
 RESPONSIVE
    ==========
 */
+@media (max-width:601px) {
+  .login {
+    width: calc(100% - 32px);
+  }
+
+  .login__form {
+    width: calc(100% - 32px);
+  }
+
+  .login__input {
+    width: 100%;
+  }
+}
+
 @media (max-width: 580px) {
   .index__menu {
     display: none;
@@ -147,8 +168,14 @@ RESPONSIVE
     align-items: center;
   }
 
-  .login {
-    padding-left: 32px;
-    padding-right: 32px;
+  .login__form--buttons {
+    padding-top: 20px;
+    flex-direction: column;
+    margin: 0 auto 0 auto;
   }
+
+  /* .login__input {
+    width: calc(100% - 32px);
+
+  } */
 }
