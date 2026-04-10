@@ -69,13 +69,3 @@
   --priority-medium: #FFA800;
   --priority-low: #7AE229;
 }
-
-/*  Perhaps an overlay for user avatars would be an option? */
-/*  Vielleicht wäre ein overlay für die user avatare eine option?*/
-.bg-menue-user-profil:hover {
-  background-color: var(--color-success-highlight);
-}
-
-.bg-contact:hover {
-  background: linear-gradient(180deg, var(--color-surface-hover-top) 0%, var(--color-surface-hover-bottom) 100%);
-}
