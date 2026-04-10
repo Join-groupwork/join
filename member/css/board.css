@@ -14,7 +14,7 @@
     height: 50px;
     width: 50px;
     background: var(--color-menu-bg);
-    color: var(--color-text-button);
+  
     border-radius: 10px;
     font-size: 18px;
     text-decoration: none;
@@ -43,6 +43,8 @@
     .board__search--wrapper{
         width: 100%;
         display: flex;
+        padding-left: 16px;
+        padding-right: 16px;
     }    
     .board-hide-add-btn {
         display: none;  
@@ -52,11 +54,24 @@
     }
     .board__search--input {
         flex: 1;
+        margin-top: 30px;
     }
     .board__top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; 
-    width: 100%;
-}
+        display: flex;
+        justify-content: space-between;
+        align-items: center; 
+        width: 100%;
+        padding-top: 45px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    .board__search--icon {
+        top: 67%;
+        right: 52px;
+    }
+    .board__search--wrapper::after {
+        top: 67%;
+        right: 85px;
+        
+    }
 }
