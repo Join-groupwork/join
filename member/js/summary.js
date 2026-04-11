@@ -1,22 +1,5 @@
 import { auth } from '../../scripts/firebase/firebase.js';
-import { loadTasks } from '../../scripts/firebase/get-firebase.js';
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getContacts, loadData  } from '../../scripts/firebase/get-firebase.js';
-
-
-// function todoTasks(tasks) {
-//   const count = tasks.filter(task => task.status === "todo").length;
-//   document.getElementById("todo-count").textContent = count;
-// }
-
-
-
-// initSummary(); window.addEventListener('load', initSummary); calls the initSummary function when the page loads already
-
-
-// INFO die tasks von firebase müssen abgerufen werden
-// INFO firebase tasks auslesen "subtask"
-// INFO need greetings for user and guest
+import { loadTasks, getContacts, loadData } from '../../scripts/firebase/get-firebase.js';
 
 /**
  * Counts the number of tasks with the status "todo" or "to do"
@@ -29,25 +12,21 @@ import { getContacts, loadData  } from '../../scripts/firebase/get-firebase.js';
  * @async
  * @function todoTasks
  * @param {Array<Object>} tasks - Array of task objects retrieved from the database.
- * @param {string} [tasks[].status] - The current status of the task (e.g. "todo", "in progress", "done").
+ * @param {string} [tasks[].status] - The current status of the task.
  * @param {string} [tasks[].subtask] - Legacy property used as a fallback for the task status.
- *
  * @returns {Promise<void>} Resolves after the UI has been updated.
  */
 async function todoTasks(tasks) {
-  // ensure every task has a `status` property (else fall back to old `subtask`)
   tasks.forEach(task => {
     if (!task.status && task.subtask) {
       task.status = task.subtask;
     }
   });
 
- const count = tasks.filter(task => {
+  const count = tasks.filter(task => {
     const s = (task.status || '').toLowerCase().trim();
     return s === 'todo' || s === 'to do';
   }).length;
-
-  console.log('Computed todo count:', count);
 
   const element = document.querySelector('.todo .card-title');
   if (element) {
@@ -57,7 +36,13 @@ async function todoTasks(tasks) {
   }
 }
 
-// [ ] show how much tasks "done"
+/**
+ * Counts tasks with status "done" and updates the summary UI.
+ *
+ * @async
+ * @param {Array<Object>} tasks - Array of task objects.
+ * @returns {Promise<void>}
+ */
 async function doneTasks(tasks) {
   tasks.forEach(task => {
     if (!task.status && task.subtask) {
@@ -65,12 +50,10 @@ async function doneTasks(tasks) {
     }
   });
 
- const count = tasks.filter(task => {
+  const count = tasks.filter(task => {
     const s = (task.status || '').toLowerCase().trim();
-    return s === 'done' ;
+    return s === 'done';
   }).length;
-
-  console.log('Computed done count:', count);
 
   const element = document.querySelector('.done .card-title');
   if (element) {
@@ -79,17 +62,19 @@ async function doneTasks(tasks) {
     console.warn("Element '.done .card-title' nicht gefunden!");
   }
 }
-// INFO Urgent task
-// INFO functoin for "when is the next deadline?"
-// [ ] show how much task "urgent"
 
+/**
+ * Counts urgent tasks and updates the summary UI.
+ *
+ * @async
+ * @param {Array<Object>} tasks - Array of task objects.
+ * @returns {Promise<void>}
+ */
 async function urgentTasks(tasks) {
- const count = tasks.filter(task => {
+  const count = tasks.filter(task => {
     const s = (task.priority || '').toLowerCase().trim();
-    return s === 'urgent' ;
+    return s === 'urgent';
   }).length;
-
-  console.log('Computed urgent count:', count);
 
   const element = document.querySelector('.urgent-info .card-title');
   if (element) {
@@ -99,18 +84,13 @@ async function urgentTasks(tasks) {
   }
 }
 
-// [ ] show how much "tasks in "board"
-// async function tasksInBoard(tasks) {
-//   const count = tasks.length;
-//   const element = document.querySelector('.all-tasks .big');
-//   if (element) {
-//     element.textContent = count;
-//   } else {
-//     console.warn("Element '.all-tasks .big' nicht gefunden!");
-//   }
-// }
-// INFO the count of tasks in board was not correct, now it counts only the tasks with the status "todo", "in progress", "await feedback" and "done". Because only these tasks are in the board.
-//
+/**
+ * Counts tasks that are valid board tasks and updates the summary UI.
+ *
+ * @async
+ * @param {Array<Object>} tasks - Array of task objects.
+ * @returns {Promise<void>}
+ */
 async function tasksInBoard(tasks) {
   const validStatuses = new Set(['todo', 'in-progress', 'await-feedback', 'done']);
 
@@ -127,41 +107,34 @@ async function tasksInBoard(tasks) {
   }
 }
 
-// [ ] show how much "task in progress"
-// async function tasksInProgress(tasks) {
-//   tasks.forEach(task => {
-//     if (!task.status && task.subtask) {
-//       task.status = task.subtask;
-//     }
-//   });
-//   const count = tasks.filter(task => task.status === 'inProgress').length;
-//   console.log('Computed inProgress count:', count);
-//   const element = document.querySelector('.tasks-in-progress .big');
-//   if (element) {
-//     element.textContent = count;
-//   } else {
-//     console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
-//   }
-// }
-
-// inProgress didn't count correct, because in firebase the status is "in-progress" not "inProgress".
+/**
+ * Counts tasks with status "in-progress" and updates the summary UI.
+ *
+ * @async
+ * @param {Array<Object>} tasks - Array of task objects.
+ * @returns {Promise<void>}
+ */
 async function tasksInProgress(tasks) {
-const count = tasks.filter(task => {
-const status = (task.status || '').toLowerCase().trim();
-return status === 'in-progress';
-}).length;
+  const count = tasks.filter(task => {
+    const status = (task.status || '').toLowerCase().trim();
+    return status === 'in-progress';
+  }).length;
 
-console.log('Computed in-progress count (strict):', count);
-
-const element = document.querySelector('.tasks-in-progress .big');
-if (element) {
-element.textContent = count;
-} else {
-console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
-}
+  const element = document.querySelector('.tasks-in-progress .big');
+  if (element) {
+    element.textContent = count;
+  } else {
+    console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
+  }
 }
 
-// [ ] show how much tasks "await feedback"
+/**
+ * Counts tasks with status "await-feedback" and updates the summary UI.
+ *
+ * @async
+ * @param {Array<Object>} tasks - Array of task objects.
+ * @returns {Promise<void>}
+ */
 async function awaitFeedbackTasks(tasks) {
   tasks.forEach(task => {
     if (!task.status && task.subtask) {
@@ -174,7 +147,6 @@ async function awaitFeedbackTasks(tasks) {
     return s === 'await-feedback';
   }).length;
 
-  console.log('Computed await-feedback count:', count);
   const element = document.querySelector('.await-feedback-info .big');
   if (element) {
     element.textContent = count;
@@ -183,57 +155,35 @@ async function awaitFeedbackTasks(tasks) {
   }
 }
 
-
 /**
- * Displays a greeting message based on the current time of day
- * and shows the name of the currently authenticated user.
+ * Displays the greeting text based on the current time of day.
  *
- * The function:
- * - Determines the appropriate greeting ("Good morning", "Good afternoon", "Good evening")
- *   based on the user's local time.
- * - Updates the greeting text in the DOM.
- * - Checks whether a user is authenticated.
- * - Displays the user's display name or email if logged in,
- *   otherwise falls back to "Guest".
- * - Listens for authentication state changes and updates the name dynamically.
- *
- * @async
- * @function greetings
- * @returns {Promise<void>} Resolves after initializing the greeting display and auth listener.
+ * @returns {void}
  */
-async function greetings() {
+function greetings() {
   const daytimeElem = document.getElementById('greetingTime');
-  const nameElem = document.getElementById('greetingName');
+  if (!daytimeElem) return;
 
-  // determine time-based message
   const hour = new Date().getHours();
-  let greetingText;
+  let greetingText = 'Good evening';
+
   if (hour < 12) greetingText = 'Good morning';
   else if (hour < 18) greetingText = 'Good afternoon';
-  else greetingText = 'Good evening';
 
-  if (daytimeElem) {
-    daytimeElem.textContent = greetingText;
-  }
+  daytimeElem.textContent = greetingText;
 }
 
-  // BUGFIX email is the wrong name to use for greeting. It musst use the user name or displayuser name
-  // BUGFIX the displayuser name in firebase is dosn't the right name
-  /**
-   * Assigns the displayed username depending on the authentication state.
-   *
-   * If a logged-in user exists and is not anonymous, their display name
-   * or email will be shown. Otherwise, the label "Guest" will be used.
-   *
-   * @param {Object|null} user - The authenticated user object from Firebase Auth.
-   * @param {string} [user.displayName] - The user's display name.
-   * @param {string} [user.email] - The user's email address.
-   * @param {boolean} [user.isAnonymous] - Indicates whether the user is anonymous.
-   * @returns {void}
-   */
+/**
+ * Assigns the displayed username depending on the authentication state.
+ *
+ * If a logged-in user exists and is not anonymous, their contact name
+ * will be shown. Otherwise, the label "Guest" will be used.
+ *
+ * @param {Object|null} user - The authenticated user object from Firebase Auth.
+ * @param {HTMLElement|null} nameElem - DOM element for the greeting name.
+ * @returns {void}
+ */
 export function assignName(user, nameElem) {
-  console.log('assignName aufgerufen', { user, nameElem });
-
   if (!nameElem) {
     console.warn('Kein nameElem vorhanden!');
     return;
@@ -241,69 +191,116 @@ export function assignName(user, nameElem) {
 
   if (user && !user.isAnonymous) {
     const contacts = getContacts();
-    console.log('contacts aktuell:', contacts);
-
-    const contact = Object.values(contacts).find(c => c.uid === user.uid);
-    console.log('Gefundener contact:', contact);
-
+    const contact = Object.values(contacts || {}).find(c => c.uid === user.uid);
     nameElem.textContent = contact?.name || 'User';
-  } else {
-    console.log('User ist anonym oder null, setze Guest');
-    nameElem.textContent = 'Guest';
+    return;
+  }
+
+  nameElem.textContent = 'Guest';
+}
+
+/**
+ * Finds the next upcoming deadline among urgent tasks
+ * and renders it into the summary UI.
+ *
+ * @param {Array<Object>} tasks - Array of task objects.
+ * @returns {void}
+ */
+function urgentTasksDeadLine(tasks) {
+  const urgentTasks = tasks
+    .filter(task => task.priority === 'urgent' && task.due_date)
+    .sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+
+  const deadlineElement = document.getElementById('urgentTasks-dead-line');
+  if (!deadlineElement) return;
+
+  if (urgentTasks.length > 0) {
+    const nextDate = new Date(urgentTasks[0].due_date);
+    deadlineElement.textContent = nextDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   }
 }
 
+/**
+ * Shows the greeting overlay on mobile devices for a short time
+ * and then hides it.
+ *
+ * Copies the already rendered desktop greeting text into the
+ * mobile overlay elements before hiding the overlay.
+ *
+ * @returns {void}
+ */
+function initMobileGreetingOverlay() {
+  const overlay = document.getElementById('mobileGreetingOverlay');
+  const desktopTime = document.getElementById('greetingTime');
+  const desktopName = document.getElementById('greetingName');
+  const mobileTime = document.getElementById('mobileGreetingTime');
+  const mobileName = document.getElementById('mobileGreetingName');
 
+  if (!overlay || !desktopTime || !desktopName || !mobileTime || !mobileName) return;
+  if (window.innerWidth > 600) return;
+  if (overlay.dataset.started === 'true') return;
 
+  const timeText = desktopTime.textContent.trim();
+  const nameText = desktopName.textContent.trim();
 
-function urgentTasksDeadLine(tasks) {
-    const urgentTasks = tasks
-        .filter(task => task.priority === "urgent" && task.due_date)
-        .sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+  if (!timeText || !nameText) return;
 
-    if (urgentTasks.length > 0) {
-        const nextDate = new Date(urgentTasks[0].due_date);
+  mobileTime.textContent = timeText;
+  mobileName.textContent = nameText;
 
-        document.getElementById("urgentTasks-dead-line").textContent =
-            nextDate.toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-            });
-    }
+  overlay.dataset.started = 'true';
+  overlay.classList.remove('hide');
+  overlay.classList.add('show');
+
+  setTimeout(() => {
+    overlay.classList.remove('show');
+    overlay.classList.add('hide');
+  }, 200);
 }
 
+/**
+ * Initializes the summary page:
+ * - loads tasks
+ * - updates all counters
+ * - sets greeting text
+ * - loads contact data
+ * - resolves and renders the current user's name
+ * - starts the mobile greeting overlay
+ *
+ * @async
+ * @returns {Promise<void>}
+ */
 export async function initSummary() {
   const tasksData = await loadTasks();
   const tasks = Object.values(tasksData || {});
 
-  // --- Task-Zähler hier ---
-  todoTasks(tasks);
-  doneTasks(tasks);
-  urgentTasks(tasks);
-  tasksInBoard(tasks);
-  tasksInProgress(tasks);
-  awaitFeedbackTasks(tasks);
+  await todoTasks(tasks);
+  await doneTasks(tasks);
+  await urgentTasks(tasks);
+  await tasksInBoard(tasks);
+  await tasksInProgress(tasks);
+  await awaitFeedbackTasks(tasks);
   urgentTasksDeadLine(tasks);
 
-  // --- Zeitbegrüßung ---
   greetings();
 
   const nameElem = document.getElementById('greetingName');
 
-  // --- Auth + contacts sicher synchronisieren ---
   auth.onAuthStateChanged((user) => {
     if (user) {
-      // contacts müssen geladen sein → loadData() aufrufen
       loadData(() => {
         assignName(user, nameElem);
+        initMobileGreetingOverlay();
       });
     } else {
-      assignName(null, nameElem); // Guest
+      assignName(null, nameElem);
+      initMobileGreetingOverlay();
     }
   });
 }
-
-// --- Aufruf beim Laden der Seite ---
 
 window.addEventListener('load', initSummary);

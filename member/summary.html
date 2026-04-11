@@ -20,18 +20,11 @@
 </head>
 
 <body class="summary-page">
-
-
-  <!-- CHECK müssen wir die css KLasse "app" nutzen? oder könne wir das auch anders Lösen? -->
   <div class="app">
-    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar"></aside>
-
-    <!-- TOPBAR -->
     <header class="topbar" id="header"></header>
-    <!-- MAIN -->
+
     <main class="main">
-      <!-- DASHBOARD -->
       <section class="dashboard">
         <div class="summary__title">
           <h1>Join 360</h1>
@@ -94,16 +87,22 @@
           </div>
 
           <div class="dashboard-right">
-            <div class="greeting">
-              <div class="greeting-line" id="greetingTime">didn't work</div>
-              <div class="greeting-line greeting-name" id="greetingName">name or empty</div>
+            <div class="greeting desktop-greeting">
+              <div class="greeting-line" id="greetingTime"></div>
+              <div class="greeting-line greeting-name" id="greetingName"></div>
             </div>
           </div>
         </div>
       </section>
     </main>
   </div>
-</body>
 
+  <div class="mobile-greeting-overlay" id="mobileGreetingOverlay">
+    <div class="mobile-greeting-content">
+      <div class="greeting-line" id="mobileGreetingTime"></div>
+      <div class="greeting-line greeting-name" id="mobileGreetingName"></div>
+    </div>
+  </div>
+</body>
 
 </html>
