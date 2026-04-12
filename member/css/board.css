@@ -2,6 +2,7 @@
 @import url('./board/board-overlay.css');
 @import url('./board/board-edit-and-animations.css');
 
+
 .board__search--section {
     margin-left: auto;
     margin-right: 16px;
@@ -39,11 +40,11 @@
   
     }
     
-  
     .board__header--title {
        padding-bottom: 0;
        margin-bottom: -52px;
     }
+
     .board__search--wrapper{
         width: 100%;
         display: flex;
@@ -51,14 +52,11 @@
         padding-right: 16px;
     }    
     
-   
-    
     .board__search--input {
         flex: 1;
         margin-top: 30px;
     }
-    
-   
+
     .board__top-row {
         display: flex;
         justify-content: space-between;
@@ -68,21 +66,26 @@
         padding-left: 16px;
 
     }
+
     .board__search--icon {
         top: 67%;
         right: 52px;
     }
+
     .board__search--wrapper::after {
         top: 67%;
         right: 85px;  
     }
+
     .board__tasks {
     flex-direction: column;
     }
+
     main {
         margin: 0;
         padding: 0;
     }
+    
     .task {
         width: 100%;
         padding-left: 16px;
