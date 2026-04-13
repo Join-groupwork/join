@@ -599,7 +599,7 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
 
 export function getMobileFooterTemplate() {
   return `
-    <footer class="footer__responsive footer__responsive--public">
+    <footer class="footer__responsive footer__responsive--member">
       <a href="./summary.html" class="button button__mobile button__mobile--member">
         <img class="icon__mobile" src="../assets/icons/menu/summary__mobile.svg" alt="summary mobile">
       </a>

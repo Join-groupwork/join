@@ -490,6 +490,18 @@ footer p {
   }
 }
 
+@media (max-width: 530px) {
+  .footer__responsive--public {
+    padding: 0;
+  }
+}
+
+@media (max-width: 492px) {
+  .button__mobile--public {
+    width: 121px;
+  }
+}
+
 @media (max-width:355px) {
   .footer__responsive {
     padding: 0;
