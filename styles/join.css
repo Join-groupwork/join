@@ -398,16 +398,9 @@ footer p {
   color: #29abe2;
 }
 
-/* @media (max-width: 601px) {
-  .topbar {
-    position
-    height: 96px;
-    background: var(--color-background-input);
-    border-bottom: 1px solid var(--color-border-light);
-
-  }
-} */
-
+/* ==========
+   RESPONSIIVE
+   ========== */
 @media (max-width: 601px) {
   .join__logo {
     width: 78px;
@@ -456,8 +449,6 @@ footer p {
 
   .sidebar {
     display: none;
-    /* height: 80px;
-    flex: 1; */
   }
 
   .cards {
@@ -483,7 +474,6 @@ footer p {
 
   .footer__responsive--public {
     justify-content: space-around;
-    /* align-items: center; */
   }
 
   .footer__mobile--right {
@@ -497,6 +487,11 @@ footer p {
     font-family: open-sans, sans-serif;
     font-weight: 400;
     padding: 16px 0;
+  }
+}
 
+@media (max-width:355px) {
+  .footer__responsive {
+    padding: 0;
   }
 }
