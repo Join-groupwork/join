@@ -77,18 +77,20 @@ export function signupMassegeTemplate() {
 
 export function getPublicFooterTemplate() {
   return `
-    // <footer class="footer__responsive">
-    <a href="../../index.html" class="button button__mobile">
+
+    <a href="../../index.html" class="button button__mobile button__mobile--public">
       <img class="icon__mobile" src="../../assets/icons/menu/login__mobile.svg" alt="login mobile">
     </a>
+    <div class="footer__mobile--right">
+      <a href="../privacy-policy-public.html" class="button button__mobile button__mobile--public">
+        <span class="footer__mobile--font">Privacy Policy</span>
+      </a>
+      <a href="../legal-notice-public.html" class="button button__mobile button__mobile--public">
+        <span class="footer__mobile--font">Legal Notice</span>
+      </a>
+    </div>
 
-    <a href="../privacy-policy-public.html" class="button button__mobile">
-      <img class="icon__mobile" src="../../assets/icons/menu/privacy__mobile.svg alt="privacy policy mobile">
-    </a>
-    <a href="../legal-notice-public.html" class="button button__mobile">
-      <img class="icon__mobile" src="../../assets/icons/menu/legal__mobile.svg" alt="legal notice mobile">
-    </a>
 
-  // </footer>
   `
 }
+// <footer class="footer__responsive">  // </footer>

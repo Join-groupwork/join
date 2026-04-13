@@ -80,10 +80,14 @@ function renderSidebar() {
 
 
 function renderMobileFooter() {
-  const mobileFooterRef = document.getElementById('footerMobilePublic');
-  if (mobileFooterRef) {
-    mobileFooterRef.innerHTML = getPublicFooterTemplate();
-  }
+  const testRef = document.getElementById('footerMobilePublic');
+  if (testRef) {
+    testRef.innerHTML = getPublicFooterTemplate();
+  } else {
+    console.error('Footer-Element not found!');
+  } console.log(testRef);
+
+
 }
 // CHECK Why this function? Function don't used!
 /**
