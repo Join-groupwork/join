@@ -2,6 +2,29 @@ import { getActiveContactTemplate } from './member-templates.js';
 
 let contacts = {};
 let activeContactId = null;
+const MOBILE_BREAKPOINT = 822;
+let isMobileDetailOpen = false;
+
+function isMobileViewport() {
+    return window.innerWidth <= MOBILE_BREAKPOINT;
+}
+
+function setMobileView(mode) {
+    const body = document.body;
+    if (!body) return;
+    body.classList.toggle('contacts-mobile-detail-open', mode === 'detail');
+    isMobileDetailOpen = mode === 'detail';
+}
+
+function openMobileDetailView() {
+    if (!isMobileViewport()) return;
+    setMobileView('detail');
+}
+
+export function closeMobileDetailView() {
+    if (!isMobileViewport()) return;
+    setMobileView('list');
+}
 
 function groupContactsByLetter(contactsObjects) {
     const grouped = {};
@@ -37,6 +60,10 @@ export function renderContactsList(contactsObjects) {
 
     renderGroupedContacts(contactList, contacts);
     rerenderActiveContactDetail(contacts);
+
+    if (!isMobileViewport() && isMobileDetailOpen) {
+        setMobileView('list');
+    }
 }
 
 function getContactListElement() {
@@ -120,9 +147,11 @@ function setActiveContact(contactId, contactData) {
     clearActiveContactClass();
     activateContactListItem(contactId);
     renderActiveContactDetail(contactData);
+    openMobileDetailView();
 }
 
 export function setActiveContactId(contactId) {
+
     activeContactId = contactId;
 }
 
@@ -208,3 +237,5 @@ export function getAvatarColor(name) {
 
     return colors[Math.abs(hash) % colors.length];
 }
+
+window.closeMobileDetailView = closeMobileDetailView;

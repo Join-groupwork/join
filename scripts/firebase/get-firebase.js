@@ -1,9 +1,6 @@
-
 import { database, auth, BASE_URL } from './firebase.js';
 import { ref, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 import { renderContactsList } from '../../member/js/contacts.js';
-
-
 
 let contacts = {};
 let tasks = {};
@@ -22,8 +19,6 @@ auth.onAuthStateChanged((user) => {
     console.error('No user authenticated');
   }
 });
-
-
 
 // Daten laden
 export async function loadData(onContactsLoaded) {
