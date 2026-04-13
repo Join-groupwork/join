@@ -100,8 +100,14 @@
     }
 
     .task__area {
-        
-        height: auto;
-
+       min-height: 0;    
+    }
+    .task__list {
+    min-height: 24px;
+    display: flex;
+    flex-direction: row;
+    }
+    .task__category--technical-task {
+    white-space: nowrap;
     }
 }
