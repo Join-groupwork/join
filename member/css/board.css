@@ -2,6 +2,7 @@
 @import url('./board/board-overlay.css');
 @import url('./board/board-edit-and-animations.css');
 
+
 .board__search--section {
     margin-left: auto;
     margin-right: 16px;
@@ -16,76 +17,97 @@
         margin: 0;
         display: flex;
         flex-direction: column;
-        
-        
     }
-    .board-add-btn{
-    height: 50px;
-    width: 50px;
-    background: var(--color-menu-bg);
-    border-radius: 10px;
-    font-size: 0;
-    text-decoration: none;  
-    padding: 0;
-    margin-right: 16px;
-    
 
-}
+    .board-add-btn {
+        height: 50px;
+        width: 50px;
+        background: var(--color-menu-bg);
+        border-radius: 10px;
+        font-size: 0;
+        text-decoration: none;
+        padding: 0;
+        margin-right: 16px;
+    }
+
     .board__search--section {
         display: flex;
         flex-direction: column-reverse;
         align-items: flex-end;
         width: 100%;
-  
+
     }
-    
-  
+
     .board__header--title {
-       padding-bottom: 0;
-       margin-bottom: -52px;
+        padding-bottom: 0;
+        margin-bottom: -52px;
     }
-    .board__search--wrapper{
+
+    .board__search--wrapper {
         width: 100%;
         display: flex;
         padding-left: 16px;
         padding-right: 16px;
-    }    
-    
-   
-    
+    }
+
     .board__search--input {
         flex: 1;
         margin-top: 30px;
     }
-    
-   
+
     .board__top-row {
         display: flex;
         justify-content: space-between;
-        align-items: center; 
+        align-items: center;
         width: 100%;
         padding-top: 45px;
         padding-left: 16px;
 
     }
+
     .board__search--icon {
         top: 67%;
         right: 52px;
     }
+
     .board__search--wrapper::after {
         top: 67%;
-        right: 85px;  
+        right: 85px;
     }
+
     .board__tasks {
-    flex-direction: column;
+        flex-direction: column;
     }
+
     main {
         margin: 0;
         padding: 0;
     }
+
     .task {
         width: 100%;
         padding-left: 16px;
         padding-right: 16px;
+        margin-top: 20px;
+    }
+
+    .content {
+        padding-bottom: 100px;
+    }
+
+    .layout {
+        
+    }
+
+    .task__area {
+       min-height: 0;    
+    }
+    .task__list {
+    min-height: 24px;
+    display: flex;
+    flex-direction: row;
+    }
+    .task__category--technical-task {
+    white-space: nowrap;
     }
 }
