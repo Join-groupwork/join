@@ -115,7 +115,7 @@ RESPONSIVE
    ==========
 */
 @media (max-width:580px) {
-  .button {
+  .button__mobile {
     width: 180px;
     height: 50px;
     padding: 16px;
@@ -125,5 +125,12 @@ RESPONSIVE
   .button__index--signup {
     width: 100px;
     margin: 0;
+  }
+}
+
+@media (max-width:480px) {
+  .button__mobile {
+    width: 80px;
+    height: 76px;
   }
 }
