@@ -43,20 +43,27 @@
         <div class="board__top-row">
           <h1 class="board__header--title">Board</h1>
         </div>
-    
+
 
         <div class="board__search--section">
-        <div class="board__search--wrapper">
-          <input type="text" id="searchInput" class="board__search--input" placeholder="Find Task"
-            oninput="searchTask(this.value)">
-          <img class="board__search--icon" src="../assets/icons/search.svg" alt="Search">
-          
-        </div>
-        <div>
-        <button type="button" id="openAddTaskOverlay" class="board-add-btn ">Add task <img class="board-add-icon"
-            src="../assets/icons/add-icon-white.svg" alt=""></button></div>
+          <div class="board__search--wrapper">
+            <input type="text" id="searchInput" class="board__search--input" placeholder="Find Task"
+              oninput="searchTask(this.value)">
+            <img class="board__search--icon" src="../assets/icons/search.svg" alt="Search">
 
-          
+          </div>
+          <div class="board__task">
+            <button type="button" id="openAddTaskOverlay" class="button board-add-btn ">
+              Add task
+              <img class="board-add-icon" src="../assets/icons/add-icon-white.svg" alt="">
+            </button>
+          </div>
+          <div class="board__task--mobile">
+            <button type="button" id="openAddTaskOverlay" class="button button__mobile board-add-btn ">
+              <img class="board-add-icon" src="../assets/icons/add-icon-white.svg" alt="">
+            </button>
+          </div>
+
       </section>
       <main class="board__tasks">
 
@@ -84,8 +91,8 @@
 
         <section name="Await Feedback" class="task__section">
           <div class="task task__area--title">
-            <h3 class="task__title">Await Feedback</h3><img class="circle-plus-icon" src="../assets/icons/square-plus.svg"
-              alt="plus-icon">
+            <h3 class="task__title">Await Feedback</h3><img class="circle-plus-icon"
+              src="../assets/icons/square-plus.svg" alt="plus-icon">
           </div>
           <div class="task task__area" data-status="await-feedback">
             <p class="task__area--placeholder">No tasks await Feedback</p>
@@ -102,7 +109,7 @@
             <div id="done" class="task__list"></div>
           </div>
         </section>
-        
+
       </main>
     </div>
   </div>

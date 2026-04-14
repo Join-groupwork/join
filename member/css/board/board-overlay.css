@@ -189,16 +189,19 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   pointer-events: none;
 }
 
+.board__task--mobile {
+  display: none;
+}
+
 .board-add-btn {
-  display: flex;
-  align-items: center;
+
   height: 50px;
   padding: 0 24px;
   background: var(--color-menu-bg);
   color: var(--color-text-button);
   border-radius: 10px;
-  font-size: 18px;
-  font-weight: 200;
+  font-size: 21px;
+  font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
   width: 152px;
