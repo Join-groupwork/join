@@ -309,6 +309,18 @@ select {
   .add-task__main {
     bottom: 160px;
     position: relative;
+    margin-top: 172px;
+  }
+
+  .add-task__actions{
+    width: 86%;
+  }
+
+  .add-task__footer {
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    align-items: stretch;
   }
 }
 
@@ -331,12 +343,13 @@ select {
 
   .button.add-task__button {
     padding: 0;
+    width: unset;
   }
 
   .add-task__actions {
     justify-content: center;
     position: fixed;
-    left: 14%;
+    left: 5%;
     bottom: 95px;
   }
 
@@ -348,5 +361,5 @@ select {
     justify-content: center;
   }
 
- 
+
 }
