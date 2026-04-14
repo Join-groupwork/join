@@ -110,7 +110,7 @@ export function getTaskTemplate() {
   return `
     <section class="overlay_add_task">
       <button class="add-task-close-btn" type="button" aria-label="Close">
-        <img src="../assets/icons/close-icon.svg" alt="">
+        <img src="../assets/icons/close-white.svg" alt="">
       </button>
 
       <h1 class="add-task__title">Add Task</h1>

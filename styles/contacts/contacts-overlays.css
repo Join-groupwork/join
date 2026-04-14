@@ -112,14 +112,14 @@
 }
 
 .overlay_add_contact_right img {
-    margin: 20px 0px;
+    margin: 30px 0px;
 }
 
 .overlay_add_contact_right form {
     display: flex;
     flex-direction: column;
     padding: 0px 25px 20px 0px;
-    gap: 28px;
+    gap: 35px;
     width: 63%;
     border-radius: 16px;
 }
@@ -305,6 +305,7 @@
     .overlay_add_contact_right form {
         width: 100%;
         padding: 0;
+        margin-bottom: 46px;
     }
 
     .edit_overlay_avatar,
@@ -331,7 +332,8 @@
         padding: 16px 24px;
         border-radius: 16px 16px 0 0;
         height: 100%;
-        gap: 8px;  /* vorher 1px */
+        gap: 8px;
+        /* vorher 1px */
     }
 
     .overlay_add_contact h2 {
@@ -340,7 +342,8 @@
     }
 
     .overlay_add_contact_left p {
-        display: block;  /* vorher: display: none; */
+        display: block;
+        /* vorher: display: none; */
         font-size: 16px;
         margin: 0;
     }
@@ -356,7 +359,7 @@
 
 
     .overlay_add_contact_right {
-        padding: 20px 24px 24px;
+        padding: 0px 24px 24px;
     }
 
     .overlay_avatar {
@@ -424,99 +427,12 @@
     }
 }
 
-/* @media (max-width: 601px) {
-    .overlay_add_contact {
-        max-width: calc(100% - 32px);
-        height: calc(100% - 194px);
-        margin: 16px;
-        border-radius: 16px;
-    }
 
-    .overlay_add_contact_left {
-        padding: 16px 24px;
-        border-radius: 16px 16px 0 0;
-        height: 100%;
-        gap: 1px;
-    }
-
-    .overlay_add_contact h2 {
-        font-size: 48px;
-        margin: 0;
-    }
-
-    .overlay_add_contact_left p {
-        display: none;
-    }
-
-    .join_logo_overlay {
-        display: none;
-    }
-
-
-
-    .overlay_add_contact_right {
-        padding: 0px 24px 24px;
-    }
-
-    .edit_overlay_avatar {
-        width: 100px;
-        height: 100px;
-        min-width: 100px;
-        font-size: 32px;
-        margin-top: -88px !important;
-    }
-
-    .addContact_form_container {
-        gap: 16px;
-    }
-
-    .form_add_contact {
-        gap: 12px;
-    }
-
-    .input_add_contact {
-        font-size: 16px;
-        height: 44px;
-    }
-
-    .buttons_add_contact {
-        flex-direction: row;
-        gap: 12px;
-        margin-top: 12px;
-        margin-bottom: 0;
-        padding-right: 0;
-        justify-content: center;
-    }
-
-    .btn_save_contact,
-    .btn_cancel_contact {
-        width: auto;
-        min-width: 120px;
-        height: 44px;
-    }
-
-    .close_overlay_icon_container {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        z-index: 10;
-    }
-
-    .close_overlay_icon {
-        width: 24px;
-        height: 24px;
-        cursor: pointer;
-    }
-} */
 
 @media (max-width: 400px) {
     .overlay_add_contact {
         max-width: calc(100% - 16px);
         margin: 8px;
-    }
-
-    .overlay_add_contact h2 {
-        font-size: 36px;
     }
 
     .edit_overlay_avatar {
