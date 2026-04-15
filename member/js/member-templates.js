@@ -39,8 +39,7 @@ import { getInitials, getAvatarColor } from './contacts-render.js';
  */
 export function getHeaderTemplate() {
   return `
-        <header>
-          <div class="topbar-left f-s-20">Kanban Project Management Tool</div>
+          <div class="topbar-left">Kanban Project Management Tool</div>
           <div class="topbar-right">
               <a href="./help.html"class="help-circle" title="Help">?</a>
               <div id="headerMenue" class="profile">
@@ -60,7 +59,6 @@ export function getHeaderTemplate() {
                   </nav>
               </div>
           </div>
-        </header>
       `;
 };
 
