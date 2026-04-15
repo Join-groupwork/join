@@ -19,19 +19,12 @@
   <script type="module" src="../member/js/summary.js"></script>
 </head>
 
-<body>
-
-
-  <!-- CHECK müssen wir die css KLasse "app" nutzen? oder könne wir das auch anders Lösen? -->
+<body class="summary-page">
   <div class="app">
-    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar"></aside>
-
-    <!-- TOPBAR -->
     <header class="topbar" id="header"></header>
-    <!-- MAIN -->
+
     <main class="main">
-      <!-- DASHBOARD -->
       <section class="dashboard">
         <div class="summary__title">
           <h1>Join 360</h1>
@@ -93,15 +86,22 @@
             </div>
           </div>
 
-          <div class="dashboard__right">
-            <div class="greeting">
-              <div class="greeting-line" id="greetingTime">didn't work</div>
-              <div class="greeting-line greeting-name" id="greetingName">name or empty</div>
+          <div class="dashboard-right">
+            <div class="greeting desktop-greeting">
+              <div class="greeting-line" id="greetingTime"></div>
+              <div class="greeting-line greeting-name" id="greetingName"></div>
             </div>
           </div>
         </div>
       </section>
     </main>
+  </div>
+
+  <div class="mobile-greeting-overlay" id="mobileGreetingOverlay">
+    <div class="mobile-greeting-content">
+      <div class="greeting-line" id="mobileGreetingTime"></div>
+      <div class="greeting-line greeting-name" id="mobileGreetingName"></div>
+    </div>
   </div>
 
   <footer class="footer__responsive">
@@ -120,6 +120,5 @@
   </footer>
 
 </body>
-
 
 </html>

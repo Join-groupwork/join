@@ -1,20 +1,18 @@
 * {
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
+.summary-page {
   font-family: "Open Sans", sans-serif;
-  position: fixed;
-  left: 0;
-  /* bitte klassen verwenden, sonst könnte es zu Konflikten kommen, keine direkte Stile auf body bzw html tags, da wir so viele seiten haben */
+  min-width: 320px;
 }
 
 .app {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 }
-
 
 .logo {
   margin-left: 20px;
@@ -37,51 +35,42 @@ body {
 }
 
 .legal a:hover {
-  /* background: #091932; */
   color: #2ba9e5;
   font-weight: bold;
 }
 
-/* .main {
+.main {
   flex: 1;
-  background: #f6f7f8;
+  min-width: 0;
   overflow-y: auto;
-} */
+}
 
 .dashboard {
-  padding: 160px 0px 0px 110px;
+  padding: 160px 24px 32px;
 }
 
-.cards {
-  margin-top: 20px;
-  display: flex;
-  gap: 30px;
-}
-
-/* Dashboard two-column layout: left = cards, right = greeting (50% / 50%) */
 .dashboard__top {
   display: flex;
+  flex-wrap: wrap;
   gap: 24px;
   align-items: center;
-  /* width: calc(100% - 200px); */
+}
+
+.dashboard__left,
+.dashboard-right {
+  flex: 1 1 320px;
+  min-width: 0;
 }
 
 .dashboard__left {
-  flex: 0 0 50%;
-  max-width: 460px;
+  width: 100%;
+  max-width: 720px;
 }
 
-.all-tasks,
-.tasks-in-progress,
-.await-feedback-info {
-  text-decoration: none;
-}
-
-.dashboard__right {
-  flex: 0 0 50%;
+.dashboard-right {
   display: flex;
   align-items: center;
-  justify-content: flex-start
+  justify-content: flex-start;
 }
 
 .greeting {
@@ -101,6 +90,19 @@ body {
   font-size: 64px;
   font-weight: 700;
   color: #45a0c5;
+  word-break: break-word;
+}
+
+.cards {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.cards>.card {
+  flex: 1 1 calc(50% - 15px);
+  min-width: 0;
 }
 
 .card {
@@ -112,12 +114,10 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Hover styles: To-do / Done (icon cards), urgent info card, and small statistic cards */
-
 .card.icon-card,
 .card.urgent-info,
 .small-card {
-  transition: background 0.18s ease, color 0.18s ease;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
   cursor: pointer;
 }
 
@@ -126,7 +126,6 @@ body {
 .small-card:hover {
   background: #2a3547;
   transform: scale(1.10);
-  transition: transform 0.18s ease;
 }
 
 .card.icon-card:hover .card-title,
@@ -152,6 +151,7 @@ body {
   align-items: center;
   gap: 16px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .summary__title h3 {
@@ -166,6 +166,7 @@ body {
   height: 60px;
   background-color: var(--border__bar);
   border-radius: 8px;
+  flex-shrink: 0;
 }
 
 h1 {
@@ -182,14 +183,13 @@ h3 {
   margin: 0;
 }
 
-/* Cards that show an icon on the left and content on the right */
 .icon-card {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
   text-align: left;
-  width: 250px;
+  min-width: 0;
 }
 
 .card-left-icon {
@@ -199,9 +199,9 @@ h3 {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  flex-shrink: 0;
 }
 
-/* Default icons for todo/done/urgent */
 .card.icon-card.todo>.card-left-icon {
   background-image: url('../../assets/icons/pencil-circle.svg');
 }
@@ -214,7 +214,6 @@ h3 {
   background-image: url('../../assets/icons/urgent-prio-summary.svg');
 }
 
-/* Hover swap */
 .card.icon-card.todo:hover>.card-left-icon {
   background-image: url('../../assets/icons/pencil-circle-white.svg');
 }
@@ -226,23 +225,22 @@ h3 {
 .card-right {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .info-row {
   margin-top: 30px;
-  display: flex;
-  gap: 20px;
+  display: block;
+  width: 100%;
 }
 
 .urgent-info {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  /* gap: 16px; */
   width: 100%;
   padding: 30px;
   box-sizing: border-box;
-  width: 530px;
 }
 
 .urgent-left {
@@ -257,6 +255,7 @@ h3 {
   height: 80px;
   background: #d1d1d1;
   align-self: center;
+  flex-shrink: 0;
 }
 
 .urgent-right {
@@ -299,7 +298,13 @@ h3 {
 .small-cards {
   margin-top: 30px;
   display: flex;
+  flex-wrap: wrap;
   gap: 30px;
+}
+
+.small-cards>.small-card {
+  flex: 1 1 calc(33.333% - 20px);
+  min-width: 0;
 }
 
 .small-card {
@@ -342,7 +347,7 @@ a.cards .card-sub {
 RESPONSIVE
    ========== */
 @media (max-width:1185px) {
-  .dashboard__right {
+  .dashboard-right {
     display: none;
   }
 }
@@ -368,4 +373,263 @@ RESPONSIVE
     flex-direction: column;
   }
 
+}
+
+/* ===== MOBILE GREETING OVERLAY ===== */
+.mobile-greeting-overlay {
+  position: fixed;
+  inset: 0;
+  background: #f6f7f8;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 180ms ease, visibility 180ms ease;
+}
+
+.mobile-greeting-overlay.show {
+  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.mobile-greeting-overlay.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.mobile-greeting-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.mobile-greeting-content .greeting-line {
+  font-size: 32px;
+  color: #2c374b;
+}
+
+.mobile-greeting-content .greeting-name {
+  font-size: 40px;
+  font-weight: 700;
+  color: #45a0c5;
+  word-break: break-word;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .dashboard {
+    padding: 140px 24px 32px;
+  }
+
+  .dashboard__left {
+    max-width: 680px;
+  }
+
+  .greeting {
+    padding-left: 24px;
+  }
+
+  .greeting-line {
+    font-size: 40px;
+  }
+
+  .greeting-name {
+    font-size: 52px;
+  }
+
+  .card-title,
+  .big {
+    font-size: 60px;
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard {
+    padding: 120px 20px 24px;
+  }
+
+  .summary__title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .summary__title h3::before {
+    display: none;
+  }
+
+  .dashboard__top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dashboard__left,
+  .dashboard-right {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .dashboard-right {
+    order: -1;
+  }
+
+  .greeting {
+    padding-left: 0;
+  }
+
+  .cards,
+  .small-cards {
+    gap: 20px;
+  }
+
+  .cards>.card,
+  .small-cards>.small-card {
+    flex: 1 1 calc(50% - 10px);
+  }
+
+  .urgent-info {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard {
+    padding: 104px 16px 20px;
+  }
+
+  .dashboard-right {
+    display: none;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
+  h3 {
+    font-size: 22px;
+  }
+
+  .greeting-line {
+    font-size: 32px;
+  }
+
+  .greeting-name {
+    font-size: 40px;
+  }
+
+  .card,
+  .urgent-info,
+  .small-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .cards,
+  .small-cards {
+    gap: 12px;
+  }
+
+  .cards {
+    flex-wrap: nowrap;
+  }
+
+  .small-cards {
+    flex-wrap: nowrap;
+  }
+
+  .cards>.card {
+    flex: 1 1 calc(50% - 6px);
+  }
+
+  .small-cards>.small-card {
+    flex: 1 1 calc(33.333% - 8px);
+  }
+
+  .icon-card {
+    justify-content: center;
+  }
+
+  .card-left-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .card-title,
+  .big {
+    font-size: 36px;
+  }
+
+  .card-sub,
+  .label,
+  .urgent-right .small-sub {
+    font-size: 14px;
+  }
+
+  .urgent-right .date {
+    font-size: 18px;
+  }
+
+  .divider {
+    height: 60px;
+  }
+
+  .mobile-greeting-content .greeting-line {
+    font-size: 28px;
+  }
+
+  .mobile-greeting-content .greeting-name {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 380px) {
+  .dashboard {
+    padding: 24px 12px 16px;
+  }
+
+  .card,
+  .urgent-info,
+  .small-card {
+    padding: 16px;
+  }
+
+  .cards,
+  .small-cards {
+    gap: 10px;
+  }
+
+  .card-title,
+  .big {
+    font-size: 30px;
+  }
+
+  .card-sub,
+  .label,
+  .urgent-right .small-sub {
+    font-size: 13px;
+  }
+
+  .urgent-right .date {
+    font-size: 16px;
+  }
+
+  .card-left-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .mobile-greeting-content .greeting-line {
+    font-size: 24px;
+  }
+
+  .mobile-greeting-content .greeting-name {
+    font-size: 30px;
+  }
 }

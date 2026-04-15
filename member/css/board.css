@@ -2,121 +2,273 @@
 @import url('./board/board-overlay.css');
 @import url('./board/board-edit-and-animations.css');
 
+.board__top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 16px;
 
-.board__search--section {
-  margin-left: auto;
-  margin-right: 16px;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
 }
+.board__search--section {
+    margin-left: auto;
+    margin-right: 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width:1480px) {
+    main {
+        gap: 25px;
+    }
+}
+
+@media (max-width:1410px) {
+    main {
+        gap: 10px;
+    }
+}
+
+@media (max-width:1360px) {
+    .board__tasks {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+}
+
+
+
 
 @media (max-width:940px) {
-  .board__task {
-    display: none;
-  }
 
-  .board__task--mobile {
+    .board__search--section {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: flex-end;
+   
+
+    }
+    .board__header {
     display: block;
-  }
+      
+
+    max-width: 1160px;
+}
+   
+ 
+
+    .board__task {
+        display: none;
+    }
+
+    .board__task--mobile {
+        display: block;
+    }
+
+       .board__header--title {
+        padding-bottom: 0;
+        margin-bottom: -52px;
+        padding-left: 16px;
+        font-size: 44px;
+    }
+
+    .board__search--wrapper {
+        width: 100%;
+        display: flex;
+        padding-left: 16px;
+        
+        flex: 1;
+    
+    }
+
+
+    .board__search--input {
+        flex: 1;
+        margin-top: 30px;
+    }
+
+    .board__search--icon {
+        top: 67%;
+    }
+
+    .board__search--wrapper::after {
+        top: 67%;
+       right: 58px;
+
+    }
 }
 
-@media (max-width: 600px) {
-  .board__header {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-  }
 
-  .board-add-btn {
-    height: 50px;
-    width: 50px;
-    background: var(--color-menu-bg);
-    border-radius: 10px;
-    font-size: 0;
-    text-decoration: none;
-    padding: 0;
-    margin-right: 16px;
-  }
 
-  .board__search--section {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: flex-end;
-    width: 100%;
+@media (max-width:820px) {
+    .board-add-btn {
+        height: 50px;
+        width: 50px;
+        background: var(--color-menu-bg);
+        border-radius: 10px;
+        font-size: 0;
+        text-decoration: none;
+        padding: 0;
+        margin-right: 0;
+    }
+    .sidebar {
+    display: none;
+    }
+    .board__header {
+      margin: 0;
+      margin-top: 170px;
+    }
 
-  }
+  
+    main {
+        margin: 0;
+        padding: 0;
+    }
 
-  .board__header--title {
-    padding-bottom: 0;
-    margin-bottom: -52px;
-  }
+   
 
-  .board__search--wrapper {
-    width: 100%;
-    display: flex;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
+     .task {
+        width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+        margin-top: 20px;
+    }
 
-  .board__search--input {
-    flex: 1;
-    margin-top: 30px;
-  }
+     .content {
+        padding-bottom: 100px;
+    }
 
-  .board__top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding-top: 45px;
-    padding-left: 16px;
 
-  }
 
-  .board__search--icon {
-    top: 67%;
-    right: 52px;
-  }
+     .task__area {
+        min-height: 0;
+    }
 
-  .board__search--wrapper::after {
-    top: 67%;
-    right: 85px;
-  }
+     .task__list {
+        min-height: 24px;
+        display: flex;
+        flex-direction: column;
+    }
 
-  .board__tasks {
-    flex-direction: column;
-  }
+     .task__category--technical-task {
+        white-space: nowrap;
+    }
+}
 
-  main {
-    margin: 0;
-    padding: 0;
-  }
 
-  .task {
-    width: 100%;
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-top: 20px;
-  }
 
-  .content {
-    padding-bottom: 100px;
-  }
 
-  .layout {}
 
-  .task__area {
-    min-height: 0;
-  }
+@media (max-width: 601px) {
+    .board__header {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
 
-  .task__list {
-    min-height: 24px;
-    display: flex;
-    flex-direction: row;
-  }
+    .board-add-btn {
+        height: 50px;
+        width: 50px;
+        background: var(--color-menu-bg);
+        border-radius: 10px;
+        font-size: 0;
+        text-decoration: none;
+        padding: 0;
+        margin-right: 16px;
+    }
 
-  .task__category--technical-task {
-    white-space: nowrap;
-  }
+    .board__search--section {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: flex-end;
+        width: 100%;
+
+    }
+
+    .board__header--title {
+        padding-bottom: 0;
+        margin-bottom: -52px;
+        padding-left: 0;
+        font-size: 35px;
+    }
+
+    .board__search--wrapper {
+        width: 100%;
+        display: flex;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .board__search--input {
+        flex: 1;
+        margin-top: 30px;
+    }
+
+    .board__top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding-top: 45px;
+        padding-left: 16px;
+
+    }
+
+    .board__search--icon {
+        top: 67%;
+        right: 37px;
+    }
+
+    .board__search--wrapper::after {
+        top: 67%;
+        right: 70px;
+    }
+
+    .board__tasks {
+        flex-direction: column;
+    }
+
+    main {
+        margin: 0;
+        padding: 0;
+    }
+
+    .task {
+        width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+        margin-top: 20px;
+    }
+
+    .content {
+        padding-bottom: 100px;
+    }
+
+    .layout {}
+
+    .task__area {
+        min-height: 0;
+    }
+
+    .task__list {
+        min-height: 24px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .task__category--technical-task {
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 500px) {
+     {
+ 
+    }
+    
 }
