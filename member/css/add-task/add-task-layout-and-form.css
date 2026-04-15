@@ -290,30 +290,6 @@ select {
 }
 
 @media (max-width: 720px) {
-.add-task__container .add-task-close-btn--page {
-display: flex;
-align-items: center;
-justify-content: center;
-top: 0;
-right: 0;
-width: 28px;
-height: 28px;
-padding: 0;
-border: none;
-border-radius: 50%;
-background: #2a3647;
-z-index: 10;
-}
-
-.add-task__container .add-task-close-btn--page img {
-width: 14px;
-height: 14px;
-filter: none;
-}
-
-.add-task__container .button.add-task__button--secondary {
-display: none;
-}
 
 
   .add-task__priority-options {
