@@ -254,7 +254,7 @@ main {
 .overlaytemplate-first-section {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
   box-sizing: border-box;
   gap: 10px;

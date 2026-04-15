@@ -72,12 +72,12 @@
     display: block;
   }
 
-  .board__header--title {
-    padding-bottom: 0;
-    margin-bottom: -52px;
-    padding-left: 16px;
-    font-size: 44px;
-  }
+    .board__header--title {
+        padding-bottom: 0;
+        margin-bottom: -52px;
+        padding-left: 16px;
+        font-size: 44px;
+    }
 
   .board__search--wrapper {
     width: 100%;
@@ -198,12 +198,12 @@
 
   }
 
-  .board__header--title {
-    padding-bottom: 0;
-    margin-bottom: -52px;
-    padding-left: 0;
-    font-size: 35px;
-  }
+    .board__header--title {
+        padding-bottom: 0;
+        margin-bottom: -40px;
+        padding-left: 0;
+        font-size: 35px;
+    }
 
   .board__search--wrapper {
     width: 100%;
@@ -217,13 +217,13 @@
     margin-top: 30px;
   }
 
-  .board__top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding-top: 45px;
-    padding-left: 16px;
+    .board__top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding-top: 57px;
+        padding-left: 16px;
 
   }
 
@@ -269,9 +269,95 @@
     flex-direction: column;
   }
 
-  .task__category--technical-task {
-    white-space: nowrap;
-  }
+    .task__category--technical-task {
+        white-space: nowrap;
+    }
+
+    .board-add-icon {
+        margin: 0;
+    }
+
+    .board-add-btn {
+
+        height: 40px;
+        width: 40px;
+
+    }
+
 }
 
-@media (max-width: 500px) {}
+@media (max-width: 366px) {
+    .board__search--input {
+
+        padding: 0;
+    }
+
+    input::placeholder {
+        padding-left: 10px;
+    }
+}
+
+/*task-overlay-content*/
+@media (max-width: 992px) {
+    .task-overlay-content {
+        width: 369px;
+
+    }
+
+   .task-overlay-content h2 {
+        font-size: 40px;
+    }
+    .task-overlay-content p {
+    font-size: 20px;
+    }
+    .contact_avatar {
+    width: 38px;
+    height: 38px;
+    }
+    .assigned_contact {
+    font-size: 14px;
+    }
+    .overlaytemplate-subtask-checkbox {
+    font-size: 14px;
+    }
+    .taskoverlay_detail_actions button {
+    font-size: 14px;
+    }
+    .taskoverlay_detail_actions img {
+    width: 20px;
+    height: 20px;
+    }
+}
+@media (max-width: 535px) {
+        .task-overlay-content {
+        width: 275px;
+    }
+
+   .task-overlay-content h2 {
+        font-size: 30px;
+    }
+    .task-overlay-content p {
+    font-size: 16px;
+    }
+    .contact_avatar {
+    width: 30px;
+    height: 30px;
+    }
+    .assigned_contact {
+    font-size: 12px;
+    }
+    .overlaytemplate-subtask-checkbox {
+    font-size: 12px;
+    }
+    .taskoverlay_detail_actions button {
+    font-size: 12px;
+    }
+    .taskoverlay_detail_actions img {
+    width: 18px;
+    height: 18px;
+    }
+    .overlaytemplate-subtask-checkbox img {
+    width: 16px;
+    height: 16px;
+    }
+}
