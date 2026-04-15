@@ -201,7 +201,7 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   color: var(--color-text-button);
   border-radius: 10px;
   font-size: 21px;
-  font-weight: 700;
+  font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
   width: 152px;

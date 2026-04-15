@@ -192,7 +192,7 @@
 
     .board__header--title {
         padding-bottom: 0;
-        margin-bottom: -52px;
+        margin-bottom: -40px;
         padding-left: 0;
         font-size: 35px;
     }
@@ -214,7 +214,7 @@
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        padding-top: 45px;
+        padding-top: 57px;
         padding-left: 16px;
 
     }
@@ -264,11 +264,25 @@
     .task__category--technical-task {
         white-space: nowrap;
     }
+    .board-add-icon {
+     margin: 0 ;
+    }
+    .board-add-btn {
+
+        height: 40px;
+        width: 40px;
+
+    }
+
 }
 
-@media (max-width: 500px) {
-     {
- 
+@media (max-width: 366px) {
+        .board__search--input {
+     
+        padding: 0;
     }
+    input::placeholder {
+        padding-left: 10px;
+    }
+}    
     
-}
