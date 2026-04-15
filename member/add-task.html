@@ -2,133 +2,151 @@
 <html lang="de">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Join</title>
-    <link rel="icon" href="../assets/img/logo-dark.svg" type="image/svg" />
-    <link rel="stylesheet" href="../styles/standard.css" />
-    <link rel="stylesheet" href="../styles/join.css" />
-    <link rel="stylesheet" href="../styles/fonts.css" />
-    <link rel="stylesheet" href="../styles/colors.css" />
-    <link rel="stylesheet" href="../styles/assets.css" />
-    <link rel="stylesheet" href="./css/add-task.css" />
-    <script type="module" src="../scripts/firebase/firebase.js"></script>
-    <script type="module" src="../login/auth-guard.js"></script>
-    <script type="module" src="../member/js/member-templates.js"></script>
-    <script type="module" src="../member/js/member-script.js"></script>
-    <script type="module" src="../member/js/add-task.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join</title>
+  <link rel="icon" href="../assets/img/logo-dark.svg" type="image/svg" />
+  <link rel="stylesheet" href="../styles/standard.css" />
+  <link rel="stylesheet" href="../styles/join.css" />
+  <link rel="stylesheet" href="../styles/fonts.css" />
+  <link rel="stylesheet" href="../styles/colors.css" />
+  <link rel="stylesheet" href="../styles/assets.css" />
+  <link rel="stylesheet" href="./css/add-task.css" />
+  <script type="module" src="../scripts/firebase/firebase.js"></script>
+  <script type="module" src="../login/auth-guard.js"></script>
+  <script type="module" src="../member/js/member-templates.js"></script>
+  <script type="module" src="../member/js/member-script.js"></script>
+  <script type="module" src="../member/js/add-task.js"></script>
 </head>
 
 <!-- id="add_task" in body hinzufügen, wenn als template genutzt für das overlay_addTask -->
 
 <body class="add-task">
 
-    <aside class="sidebar" id="sidebar"></aside>
+  <aside class="sidebar" id="sidebar"></aside>
 
-    <header class="topbar" id="header"></header>
-    <section class="add-task__container">
-        <main class="add-task__main">
-            <div>
-                <h1 class="add-task__title">Add Task</h1>
+  <header class="topbar" id="header"></header>
+  <section class="add-task__container">
+    <main class="add-task__main">
+      <div class="add-task__page-content">
+        <div class="add-task__page-header">
+          <button class="add-task-close-btn add-task-close-btn--page" type="button" aria-label="Close">
+            <img src="../assets/icons/close-white.svg" alt="" />
+          </button>
+        </div>
+        <h1 class="add-task__title">Add Task</h1>
 
-                <form id="add_task_form">
-                    <section class="add-task__grid">
-                        <section class="add-task__column add-task__column--left">
-                            <div class="form-field">
-                                <label for="title">Title <span class="required">*</span></label>
-                                <input class="add-task__input" type="text" id="title" name="title" required
-                                    placeholder="Enter a title" />
-                                <span class="error-message">This field is required</span>
-                            </div>
+        <form id="add_task_form">
+          <section class="add-task__grid">
+            <section class="add-task__column add-task__column--left">
+              <div class="form-field">
+                <label for="title">Title <span class="required">*</span></label>
+                <input class="add-task__input" type="text" id="title" name="title" required
+                  placeholder="Enter a title" />
+                <span class="error-message">This field is required</span>
+              </div>
 
-                            <div class="form-field">
-                                <label for="description">Description</label>
-                                <textarea class="add-task__textarea" id="description" name="description"
-                                    placeholder="Enter a Description"></textarea>
-                            </div>
+              <div class="form-field">
+                <label for="description">Description</label>
+                <textarea class="add-task__textarea" id="description" name="description"
+                  placeholder="Enter a Description"></textarea>
+              </div>
 
-                            <div class="form-field">
-                                <label for="due_date">Due date <span class="required">*</span></label>
-                                <input class="add-task__input" type="date" id="due_date" name="due_date" required />
-                                <span class="error-message">This field is required</span>
-                            </div>
-                        </section>
+              <div class="form-field">
+                <label for="due_date">Due date <span class="required">*</span></label>
+                <input class="add-task__input" type="date" id="due_date" name="due_date" required />
+                <span class="error-message">This field is required</span>
+              </div>
+            </section>
 
-                        <hr class="add-task__divider" />
+            <hr class="add-task__divider" />
 
-                        <section class="add-task__column add-task__column--right">
-                            <section class="add-task__priority">
-                                <label for="priority">Priority</label>
-                                <div id="priority" class="add-task__priority-options" name="priority">
-                                    <button type="button" class="button add-task__priority-button" value="urgent">
-                                        Urgent
-                                        <img src="../assets/icons/urgent-prio-icon.svg" alt="" />
-                                    </button>
-                                    <button type="button" class="button add-task__priority-button" value="medium">
-                                        Medium
-                                        <img src="../assets/icons/medium-prio-icon.svg" alt="" />
-                                    </button>
-                                    <button type="button" class="button add-task__priority-button" value="low">
-                                        Low
-                                        <img src="../assets/icons/low-prio-icon.svg" alt="" />
-                                    </button>
-                                </div>
-                            </section>
+            <section class="add-task__column add-task__column--right">
+              <section class="add-task__priority">
+                <label for="priority">Priority</label>
+                <div id="priority" class="add-task__priority-options" name="priority">
+                  <button type="button" class="button add-task__priority-button" value="urgent">
+                    Urgent
+                    <img src="../assets/icons/urgent-prio-icon.svg" alt="" />
+                  </button>
+                  <button type="button" class="button add-task__priority-button" value="medium">
+                    Medium
+                    <img src="../assets/icons/medium-prio-icon.svg" alt="" />
+                  </button>
+                  <button type="button" class="button add-task__priority-button" value="low">
+                    Low
+                    <img src="../assets/icons/low-prio-icon.svg" alt="" />
+                  </button>
+                </div>
+              </section>
 
-                            <label for="assigned_to_input">Assigned to</label>
-                            <div class="custom-select add-task__field-spacing" id="assigned_to">
-                                <button type="button" class="custom-select__trigger" id="assigned_to_trigger">
-                                    <span class="custom-select__trigger-label">Select contacts to assign</span>
-                                    <span class="custom-select__arrow">▾</span>
-                                </button>
-                                <div class="custom-select__options d_none" id="assigned_to_options"></div>
-                            </div>
-                            <input type="hidden" id="assigned_to_input" name="assigned_to" />
-                            <div class="add-task__selected-assignees" id="selected_assignees_display"></div>
+              <label for="assigned_to_input">Assigned to</label>
+              <div class="custom-select add-task__field-spacing" id="assigned_to">
+                <button type="button" class="custom-select__trigger" id="assigned_to_trigger">
+                  <span class="custom-select__trigger-label">Select contacts to assign</span>
+                  <span class="custom-select__arrow">▾</span>
+                </button>
+                <div class="custom-select__options d_none" id="assigned_to_options"></div>
+              </div>
+              <input type="hidden" id="assigned_to_input" name="assigned_to" />
+              <div class="add-task__selected-assignees" id="selected_assignees_display"></div>
 
-                            <label for="category">Category</label>
-                            <div class="select-native-wrapper add-task__field-spacing">
-                                <select class="add-task__input add-task__input--select" id="category" name="category"
-                                    required>
-                                    <option value="select_task_category">Select task category</option>
-                                    <option value="technical-task">Technical Task</option>
-                                    <option value="user-story">User Story</option>
-                                </select>
-                                <span class="custom-select__arrow">▾</span>
-                            </div>
+              <label for="category">Category</label>
+              <div class="select-native-wrapper add-task__field-spacing">
+                <select class="add-task__input add-task__input--select" id="category" name="category" required>
+                  <option value="select_task_category">Select task category</option>
+                  <option value="technical-task">Technical Task</option>
+                  <option value="user-story">User Story</option>
+                </select>
+                <span class="custom-select__arrow">▾</span>
+              </div>
 
-                            <label for="subtask">Subtasks</label>
-                            <div class="add-task__subtask">
-                                <input class="add-task__input add-task__subtask-input" type="text" id="subtask"
-                                    name="subtask" placeholder="Add new subtask" />
-                                <div class="add-task__subtask-actions d_none" id="subtask_actions">
-                                    <button type="button" class="add-task__subtask-action-btn" id="clear_subtask_btn">✕</button>
-                                    <span class="subtask-divider">|</span>
-                                    <button type="button" class="add-task__subtask-action-btn" id="confirm_subtask_btn">✓</button>
-                                </div>
-                            </div>
-                            <div class="subtask-list" id="subtask_list"></div>
-                        </section>
-                    </section>
+              <label for="subtask">Subtasks</label>
+              <div class="add-task__subtask">
+                <input class="add-task__input add-task__subtask-input" type="text" id="subtask" name="subtask"
+                  placeholder="Add new subtask" />
+                <div class="add-task__subtask-actions d_none" id="subtask_actions">
+                  <button type="button" class="add-task__subtask-action-btn" id="clear_subtask_btn">✕</button>
+                  <span class="subtask-divider">|</span>
+                  <button type="button" class="add-task__subtask-action-btn" id="confirm_subtask_btn">✓</button>
+                </div>
+              </div>
+              <div class="subtask-list" id="subtask_list"></div>
+            </section>
+          </section>
 
-                    <section class="add-task__footer">
-                        <span class="add-task__required-hint">
-                            <span class="add-task__required-star">*</span> This field is required
-                        </span>
+          <section class="add-task__footer">
+            <span class="add-task__required-hint">
+              <span class="add-task__required-star">*</span> This field is required
+            </span>
 
-                        <div class="add-task__actions">
-                            <button class="button add-task__button add-task__button--secondary" type="button">
-                                Clear <img src="../assets/icons/close-icon.svg" alt="" />
-                            </button>
-                            <button class="button add-task__button add-task__button--primary" type="button">
-                                Create Task <img src="../assets/icons/check-icon-white.svg" alt="" />
-                            </button>
-                        </div>
-                    </section>
-                </form>
+            <div class="add-task__actions">
+              <button class="button add-task__button add-task__button--secondary" type="button">
+                Clear <img src="../assets/icons/close-icon.svg" alt="" />
+              </button>
+              <button class="button add-task__button add-task__button--primary" type="button">
+                Create Task <img src="../assets/icons/check-icon-white.svg" alt="" />
+              </button>
             </div>
-        </main>
-    </section>
+          </section>
+        </form>
+      </div>
+    </main>
+  </section>
+  <footer class="footer__responsive">
+    <a href="" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/summary__mobile.svg" alt="summary mobile">
+    </a>
+    <a href="" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/add-task__mobile.svg" alt="add-task mobile">
+    </a>
+    <a href="" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/board__mobile.svg" alt="board mobile">
+    </a>
+    <a href="" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/contacs__mobile.svg" alt="contacts mobile">
+    </a>
+  </footer>
 </body>
 
 </html>

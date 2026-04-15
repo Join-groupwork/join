@@ -32,11 +32,29 @@
   --color-sidemenu-active: #1A2C47;
   --color-secondary: #FFFFFF;
   --color-input-placeholder: #D1D1D1;
+  --color__placeholder--board: #A8A8A8;
   --color-input-icon: #A8A8A8;
+  --color-muted: #999999;
+  --color-border-light: #D1D1D1;
+  --color-border-mid: #AAAAAA;
+  --color-overlay-soft: rgba(0, 0, 0, 0.18);
+  --color-overlay-medium: rgba(0, 0, 0, 0.35);
+  --color-overlay-strong: rgba(0, 0, 0, 0.432);
+  --color-overlay-backdrop: rgba(0, 0, 0, 0.5);
+  --color-shadow-soft: rgba(0, 0, 0, 0.1);
+  --color-shadow-medium: rgba(0, 0, 0, 0.12);
+  --color-shadow-strong: rgba(0, 0, 0, 0.15);
+  --color-success-highlight: #E1E6BC;
+  --color-surface-hover-top: #F9F9F9;
+  --color-surface-hover-bottom: #F0F0F0;
   /* Background-colors */
   --color-background-primary: #F6F7F8;
   --color-background-input: #FFFFFF;
+  --background__placeholder--board: #E7E7E7;
   --background__button: #2a3647;
+  --background__menu: #2a3647;
+  --background__menu--hover: #091931;
+  --background__button--hover: #29ABE2;
   --background__primary: #F6F7F8;
   --background__secondary: #FFFFFF;
   --background__task--placeholder: #E7E7E7;
@@ -44,22 +62,10 @@
   --background__task--technical-task: #1FD7C1;
   /* Border-colors */
   --border__task--highlight: #A8A8A8;
-  --border__button: ;
-  --border__button: ;
-  --border__button: ;
+  --border__button: #2A3647;
   --border__bar: #2fa9db;
   /* Priority-colors */
   --priority-urgent: #FF0000;
   --priority-medium: #FFA800;
   --priority-low: #7AE229;
-}
-
-/*  Perhaps an overlay for user avatars would be an option? */
-/*  Vielleicht wäre ein overlay für die user avatare eine option?*/
-.bg-menue-user-profil:hover {
-  background-color: #E1E6BC;
-}
-
-.bg-contact:hover {
-  background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
 }

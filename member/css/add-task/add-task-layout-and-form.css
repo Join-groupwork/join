@@ -142,6 +142,14 @@ select {
   gap: 8px;
 }
 
+.add-task__page-header {
+  position: relative;
+}
+
+.add-task-close-btn--page {
+  display: none;
+}
+
 .add-task__priority-options {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -257,4 +265,135 @@ select {
   gap: 8px;
   margin: 8px 0 15px;
   min-height: 40px;
+}
+
+
+@media (max-width: 1000px) {
+  .add-task__grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .add-task__divider {
+    max-height: unset;
+    min-height: unset;
+    width: 90%;
+    border: 1px solid #e0e0e0;
+
+  }
+
+  .add-task__priority-options {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+.add-task__container .add-task-close-btn--page {
+display: flex;
+align-items: center;
+justify-content: center;
+top: 0;
+right: 0;
+width: 28px;
+height: 28px;
+padding: 0;
+border: none;
+border-radius: 50%;
+background: #2a3647;
+z-index: 10;
+}
+
+.add-task__container .add-task-close-btn--page img {
+width: 14px;
+height: 14px;
+filter: none;
+}
+
+.add-task__container .button.add-task__button--secondary {
+display: none;
+}
+
+
+  .add-task__priority-options {
+    grid-template-columns: repeat(3, 31%);
+    max-width: 100%;
+  }
+
+  .button.add-task__priority-button {
+    flex-direction: column;
+    height: 64px;
+  }
+
+  .button.add-task__button {
+    padding: 0;
+  }
+
+  .add-task__main {
+    bottom: 160px;
+    position: relative;
+  }
+
+  .add-task__required-hint {
+    position: relative;
+    bottom: 110px;
+  }
+
+  .add-task__main {
+    bottom: 160px;
+    position: relative;
+    margin-top: 172px;
+  }
+
+  .add-task__actions {
+    width: 86%;
+  }
+
+  .add-task__footer {
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 601px) {
+  .add-task__container {
+    left: 0;
+    width: 100%;
+    padding: 24px 16px;
+  }
+
+  .add-task__title {
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+
+  .button.add-task__priority-button {
+    width: 100%;
+  }
+
+
+  .button.add-task__button {
+    padding: 0;
+    width: unset;
+  }
+
+  .add-task__actions {
+    justify-content: center;
+    position: fixed;
+    left: 5%;
+    bottom: 95px;
+  }
+
+  .add-task__container {
+    padding: 24px 16px;
+  }
+
+  form {
+    justify-content: center;
+  }
+
+
 }

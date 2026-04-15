@@ -1,3 +1,4 @@
+.overlaytemplate-category {
   padding-bottom: 20px;
 }
 
@@ -43,7 +44,10 @@
   padding-top: 8px;
 }
 
-
+.overlaytemplate-subtask {
+  display: flex;
+  flex-direction: column;
+}
 
 .overlaytemplate-subtask-checkbox {
   gap: 8px;
@@ -110,7 +114,7 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   padding: 0;
   gap: 5px;
   font-size: 16px;
-  color: #2a3647;
+  color: var(--color-menu-bg);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -129,22 +133,21 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: 148px 15px 0 284px;
-  padding-bottom: 24px;
+  margin: 182px 15px 30px 284px;
   max-width: 1160px;
 }
 
 .board__header--title {
   font-size: 48px;
   font-weight: 700;
-  color: #2a3647;
+  color: var(--color-menu-bg);
 }
 
 .board__search--wrapper {
   margin-left: auto;
   margin-right: 16px;
   position: relative;
-  display: inline-flex;
+  display: flex;
   align-items: center;
 }
 
@@ -157,7 +160,7 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   transform: translateY(-50%);
   width: 1px;
   height: 24px;
-  background: #d1d1d1;
+  background: var(--color-border-light);
   pointer-events: none;
 }
 
@@ -166,14 +169,14 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   height: 50px;
   padding: 0 48px 0 16px;
   padding-right: 58px;
-  border: 1px solid #d1d1d1;
+  border: 1px solid var(--color-border-light);
   border-radius: 10px;
   font-size: 16px;
-  background: #ffffff;
+  background: var(--color-background-input);
 }
 
 .board__search--input:focus {
-  outline: 1px solid #29abe2;
+  outline: 1px solid var(--color-text-tertiary);
 }
 
 .board__search--icon {
@@ -186,16 +189,19 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   pointer-events: none;
 }
 
+.board__task--mobile {
+  display: none;
+}
+
 .board-add-btn {
-  display: flex;
-  align-items: center;
+
   height: 50px;
   padding: 0 24px;
-  background: #2a3647;
-  color: #ffffff;
+  background: var(--color-menu-bg);
+  color: var(--color-text-button);
   border-radius: 10px;
-  font-size: 18px;
-  font-weight: 200;
+  font-size: 21px;
+  font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
   width: 152px;
@@ -228,3 +234,6 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
 
 .edit-task-form .add-task__input {
   margin-bottom: 16px;
+  font-size: 16px;
+  color: var(--color-menu-bg);
+}

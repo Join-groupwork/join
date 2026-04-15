@@ -9,7 +9,7 @@
 
 button:hover {
   cursor: pointer;
-  background-color: var(--color-hover);
+  background-color: var(--background__button--hover);
 }
 
 .button__index--signup {
@@ -18,7 +18,7 @@ button:hover {
   margin-right: 120px;
   font-size: 16px;
   color: var(--color-text-button);
-  background-color: var(--color-menu-bg);
+  background-color: var(--background__button);
 }
 
 .button__login {
@@ -46,18 +46,46 @@ button p {
   font-size: 14px;
 }
 
-
 .guest-button {
   border-radius: 8px;
   border-width: 1px;
   width: 100px;
 }
 
-.buttons-section {
+.btn-s-40 {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.button__mobile {
+  height: 78px;
+  padding-top: 1px;
+  border-radius: 16px;
   display: flex;
   justify-content: center;
-  gap: 20px;
-  height: 30px;
+  align-items: center;
+}
+
+.button__mobile--member {
+  width: 78px;
+}
+
+.button__mobil--public {
+  width: 120px;
+}
+
+.button__mobile:hover {
+  background-color: var(--background__menu--hover);
+}
+
+/* icons */
+.icon__mobile {
+  width: 78px;
+  height: 78px;
 }
 
 /* Input */
@@ -80,3 +108,29 @@ input {
 }
 
 /* Logo */
+
+
+/* ==========
+RESPONSIVE
+   ==========
+*/
+@media (max-width:580px) {
+  .button__mobile {
+    width: 180px;
+    height: 50px;
+    padding: 16px;
+    font-size: 16px;
+  }
+
+  .button__index--signup {
+    width: 100px;
+    margin: 0;
+  }
+}
+
+@media (max-width:480px) {
+  .button__mobile {
+    width: 80px;
+    height: 76px;
+  }
+}

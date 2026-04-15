@@ -110,7 +110,7 @@ export function getTaskTemplate() {
   return `
     <section class="overlay_add_task">
       <button class="add-task-close-btn" type="button" aria-label="Close">
-        <img src="../assets/icons/close-icon.svg" alt="">
+        <img src="../assets/icons/close-white.svg" alt="">
       </button>
 
       <h1 class="add-task__title">Add Task</h1>
@@ -347,6 +347,18 @@ export function generateTodosHTML(id, title, category, description, priority, su
 export function getActiveContactTemplate(contact, initials, bgColor, phone) {
   return `
     <section class="contact_detail_card contact_detail_card--enter">
+
+      <div class="contact_mobile_heading_row">
+        <div class="contact_mobile_heading_text">
+          <h1 class="contact_mobile_title">Contacts</h1>
+          <p class="contact_mobile_subtitle">Better with a team</p>
+          <span class="contact_mobile_underline"></span>
+        </div>
+        <button type="button" class="contact_mobile_back_btn" onclick="closeMobileDetailView()" aria-label="Back to contacts">
+          <img src="../../assets/icons/arrow-left-icon.svg" alt="Back">
+        </button>
+      </div>
+
       <div class="contact_detail_header">
         <div class="contact_avatar contact_avatar--large" style="background-color:${bgColor}">
           ${initials}
@@ -355,11 +367,10 @@ export function getActiveContactTemplate(contact, initials, bgColor, phone) {
           <h2 class="contact_detail_name">${contact.name || ''}</h2>
           <div class="contact_detail_actions">
             <button type="button" class="link_btn" onclick="editContact('${contact.id}')">
-              <img src="../../assets/icons/pencil-icon.svg" alt="Pencil icon to edit contact details"><span>Edit</span>
+              <img src="../../assets/icons/pencil-icon.svg" alt="Edit"><span>Edit</span>
             </button>
-
             <button type="button" class="link_btn" onclick="deleteContact('${contact.id}')">
-              <img src="../../assets/icons/trash-icon.svg" alt="Trash can icon to delete contact"><span>Delete</span>
+              <img src="../../assets/icons/trash-icon.svg" alt="Delete"><span>Delete</span>
             </button>
           </div>
         </div>
@@ -369,13 +380,27 @@ export function getActiveContactTemplate(contact, initials, bgColor, phone) {
 
       <div class="contact_detail_info">
         <strong>Email</strong>
-        <a href="mailto:${contact.email || ''}">${contact.email || ''}</a>
+        <a class="contact_detail_email" href="mailto:${contact.email || ''}">${contact.email || ''}</a>
       </div>
 
       <div class="contact_detail_info">
         <strong>Phone</strong>
-        <a href="tel:${phone}">${phone}</a>
+        <a class="contact_detail_phone" href="tel:${phone}">${phone}</a>
       </div>
+
+      <button type="button" class="contact_mobile_fab_btn" onclick="toggleContactMobileActions()" aria-label="Open contact actions">
+        <span class="contact_mobile_fab_dots">&#8942;</span>
+      </button>
+
+      <div id="contact_mobile_actions_menu" class="contact_mobile_actions_menu d_none">
+        <button type="button" class="contact_mobile_action_btn" onclick="editContact('${contact.id}')">
+          <img src="../../assets/icons/pencil-icon.svg" alt="Edit"><span>Edit</span>
+        </button>
+        <button type="button" class="contact_mobile_action_btn" onclick="deleteContact('${contact.id}')">
+          <img src="../../assets/icons/trash-icon.svg" alt="Delete"><span>Delete</span>
+        </button>
+      </div>
+
     </section>
   `;
 }
@@ -462,11 +487,11 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
       <div class="overlaytemplate-subtask-checkbox">
 
         ${subtaskEntries.map(([key, s]) => {
-          const isChecked = s.status === true || s.completed === true;
-          const iconSrc = isChecked
-            ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
-            : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
-          return `
+    const isChecked = s.status === true || s.completed === true;
+    const iconSrc = isChecked
+      ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
+      : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
+    return `
           <div class="subtask-item-taskoverlay">
             <img class="checkbox-icon" src="${iconSrc}" alt="" data-task-id="${id}" data-subtask-key="${key}">
             ${s.title}
@@ -595,4 +620,23 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
     </form>
   </div>
   `;
+}
+
+export function getMobileFooterTemplate() {
+  return `
+    <footer class="footer__responsive footer__responsive--member">
+      <a href="./summary.html" class="button button__mobile button__mobile--member">
+        <img class="icon__mobile" src="../assets/icons/menu/summary__mobile.svg" alt="summary mobile">
+      </a>
+      <a href="./add-task.html" class="button button__mobile button__mobile--member">
+        <img class="icon__mobile" src="../assets/icons/menu/add-task__mobile.svg" alt="add-task mobile">
+      </a>
+      <a href="./board.html" class="button button__mobile button__mobile--member">
+        <img class="icon__mobile" src="../assets/icons/menu/board__mobile.svg" alt="board mobile">
+      </a>
+      <a href="./contacts.html" class="button button__mobile button__mobile--member">
+        <img class="icon__mobile" src="../assets/icons/menu/contacs__mobile.svg" alt="contacts mobile">
+      </a>
+    </footer>
+  `
 }

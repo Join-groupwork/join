@@ -27,6 +27,7 @@ import {
 export function initAddTask(container, options = {}) {
   const createBtn = container.querySelector('.add-task__button--primary');
   const cancelBtn = container.querySelector('.add-task__button--secondary');
+  const closeBtn = container.querySelector('.add-task-close-btn--page');
   const titleInput = container.querySelector('#title');
   const descInput = container.querySelector('#description');
   const dueInput = container.querySelector('#due_date');
@@ -56,6 +57,18 @@ export function initAddTask(container, options = {}) {
       button.value ||
       button.getAttribute('value') ||
       button.textContent.trim();
+  }
+
+  function closeAddTaskPage() {
+    const hasReferrer = Boolean(document.referrer);
+    const isInternalReferrer = hasReferrer && new URL(document.referrer).origin === window.location.origin;
+
+    if (isInternalReferrer && window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+
+    window.location.href = './board.html';
   }
 
   /**
@@ -141,6 +154,12 @@ export function initAddTask(container, options = {}) {
     }
   });
 
+  if (options.mode === 'page') {
+    closeBtn?.addEventListener('click', (event) => {
+      event.preventDefault();
+      closeAddTaskPage();
+    });
+  }
   /**
    * Handles priority button selection.
    *
@@ -311,6 +330,9 @@ function setupRequiredFieldValidation(fields) {
  * @function submitTask
  * @param {Object} taskData - The task object to store.
  * @param {HTMLButtonElement} createBtn - The create button element.
+ * @param {Object} options - Additional options for task submission.
+ * @param {Array<HTMLButtonElement>} priorityButtons - The priority buttons.
+ * @param {Function} clearForm - Function to clear the form.
  * @returns {Promise<void>}
  * @throws {Error} Throws if Firebase push fails.
  */
