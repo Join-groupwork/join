@@ -1,10 +1,4 @@
-.contact_item--active .contact_container {
-    background: var(--color-menu-bg);
-    color: var(--color-text-button);
-    border-radius: 10px;
-    min-width: 231px;
-    padding: 10px;
-}
+
 
 .contact_item--active .contact_email {
     color: #9fc8ff;

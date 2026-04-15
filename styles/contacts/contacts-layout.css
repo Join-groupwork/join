@@ -26,6 +26,12 @@
     min-width: 32px
 }
 
+.contact_avatar--large {
+    width: 120px;
+    height: 120px;
+    min-width: 60px;
+    font-size: 47px;
+}
 .contact_info {
     display: flex;
     flex-direction: column;
