@@ -22,7 +22,8 @@
     justify-content: center;
     color: white;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 16px;
+    min-width: 32px
 }
 
 .contact_info {
@@ -43,7 +44,7 @@
 }
 
 .contact_email {
-    font-size: 14px;
+    font-size: 16px;
     color: #007CEE;
 }
 
@@ -146,18 +147,6 @@
     gap: 24px;
 }
 
-.contact_avatar--large {
-    width: 80px;
-    height: 80px;
-    min-width: 80px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    color: #fff;
-    font-size: 28px;
-    font-weight: 500;
-    line-height: 1;
-}
 
 .contact_detail_name {
     margin: 0;
@@ -502,6 +491,12 @@
     .body_contacts {
         display: flex;
         flex-direction: column;
+    }
+
+    .contact_avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
     }
 
     .contactside_section {
