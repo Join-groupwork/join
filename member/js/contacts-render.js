@@ -19,13 +19,18 @@ function setMobileView(mode) {
 function openMobileDetailView() {
     if (!isMobileViewport()) return;
     setMobileView('detail');
+
+    const addBtn = document.querySelector('.contact_mobile_add_btn');  
+    if (addBtn) addBtn.style.display = 'none';                         
 }
 
 export function closeMobileDetailView() {
     if (!isMobileViewport()) return;
     setMobileView('list');
-}
 
+    const addBtn = document.querySelector('.contact_mobile_add_btn');  
+    if (addBtn) addBtn.style.display = '';                             
+}
 function groupContactsByLetter(contactsObjects) {
     const grouped = {};
     Object.entries(contactsObjects).forEach(([id, contact]) => {

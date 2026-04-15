@@ -2,14 +2,14 @@ import { database, auth } from '../../scripts/firebase/firebase.js';
 import { ref, push, set, update, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 import { getAddOverlayTemplate, getEditOverlayTemplate } from './member-templates.js';
 import {
-renderContactsList as renderContactsListView,
-renderActiveContactTemplate,
-getContactDetailContainer,
-getInitials,
-getAvatarColor,
-getActiveContactId,
-setActiveContactId,
-closeMobileDetailView
+    renderContactsList as renderContactsListView,
+    renderActiveContactTemplate,
+    getContactDetailContainer,
+    getInitials,
+    getAvatarColor,
+    getActiveContactId,
+    setActiveContactId,
+    closeMobileDetailView
 } from './contacts-render.js';
 let contacts = {};
 let editingContactId = null;
@@ -26,6 +26,9 @@ export function showAddContactOverlay() {
     overlay.innerHTML = getAddOverlayTemplate();
     overlay.style.display = 'flex';
 
+    const addBtn = document.querySelector('.contact_mobile_add_btn');
+    if (addBtn) addBtn.style.display = 'none';
+
     const form = document.getElementById('add_contact_form');
     if (form) form.onsubmit = handleAddContact;
 }
@@ -36,6 +39,11 @@ export function hideAddContactOverlay() {
 
     overlay.style.display = 'none';
     overlay.innerHTML = '';
+
+    const addBtn = document.querySelector('.contact_mobile_add_btn');
+    if (addBtn && !document.body.classList.contains('contacts-mobile-detail-open')) {
+        addBtn.style.display = '';
+    }
 }
 
 // Kontakt in Firebase speichern
@@ -119,30 +127,30 @@ const MOBILE_ACTION_CLOSE_MS = 140;
 let mobileActionsCloseTimer = null;
 
 function toggleContactMobileActions() {
-const menu = document.getElementById('contact_mobile_actions_menu');
-if (!menu) return;
+    const menu = document.getElementById('contact_mobile_actions_menu');
+    if (!menu) return;
 
-const isHidden = menu.classList.contains('d_none');
-if (isHidden) {
-clearTimeout(mobileActionsCloseTimer);
-menu.classList.remove('d_none', 'is-closing');
-return;
-}
+    const isHidden = menu.classList.contains('d_none');
+    if (isHidden) {
+        clearTimeout(mobileActionsCloseTimer);
+        menu.classList.remove('d_none', 'is-closing');
+        return;
+    }
 
-closeContactMobileActions(true);
+    closeContactMobileActions(true);
 }
 
 function closeContactMobileActions() {
-  const menu = document.getElementById('contact_mobile_actions_menu');
-  if (!menu || menu.classList.contains('d_none')) return;
+    const menu = document.getElementById('contact_mobile_actions_menu');
+    if (!menu || menu.classList.contains('d_none')) return;
 
-  clearTimeout(mobileActionsCloseTimer);
-  menu.classList.add('is-closing');
+    clearTimeout(mobileActionsCloseTimer);
+    menu.classList.add('is-closing');
 
-  mobileActionsCloseTimer = setTimeout(() => {
-    menu.classList.remove('is-closing');
-    menu.classList.add('d_none');
-  }, MOBILE_ACTION_CLOSE_MS);
+    mobileActionsCloseTimer = setTimeout(() => {
+        menu.classList.remove('is-closing');
+        menu.classList.add('d_none');
+    }, MOBILE_ACTION_CLOSE_MS);
 }
 
 function getEmptyContactDetailTemplate() {
@@ -219,6 +227,9 @@ function renderEditOverlay(overlay, contactId) {
     overlay.innerHTML = getEditOverlayTemplate(contactId, contact, initials, color);
     overlay.classList.remove('d_none');
     overlay.onclick = closeEditOverlay;
+
+    const addBtn = document.querySelector('.contact_mobile_add_btn');
+    if (addBtn) addBtn.style.display = 'none';
 }
 
 function bindEditFormSubmit() {
@@ -236,6 +247,11 @@ function closeEditOverlay() {
     overlay.classList.add('d_none');
     overlay.innerHTML = '';
     editingContactId = null;
+
+    const addBtn = document.querySelector('.contact_mobile_add_btn');
+    if (addBtn && !document.body.classList.contains('contacts-mobile-detail-open')) {
+        addBtn.style.display = '';
+    }
 }
 
 async function saveEditedContact(event) {
@@ -309,14 +325,14 @@ function logEditContactError(error) {
 
 
 document.addEventListener('click', (event) => {
-const menu = document.getElementById('contact_mobile_actions_menu');
-if (!menu) return;
+    const menu = document.getElementById('contact_mobile_actions_menu');
+    if (!menu) return;
 
-const clickedMenu = event.target.closest('#contact_mobile_actions_menu');
-const clickedFab = event.target.closest('.contact_mobile_fab_btn');
+    const clickedMenu = event.target.closest('#contact_mobile_actions_menu');
+    const clickedFab = event.target.closest('.contact_mobile_fab_btn');
 
-if (clickedMenu || clickedFab) return;
-closeContactMobileActions();
+    if (clickedMenu || clickedFab) return;
+    closeContactMobileActions();
 });
 
 
