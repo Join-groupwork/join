@@ -290,7 +290,7 @@ select {
 }
 
 @media (max-width: 720px) {
-
+ 
 
   .add-task__priority-options {
     grid-template-columns: repeat(3, 31%);

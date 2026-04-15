@@ -320,6 +320,17 @@
     }
 }
 
+@media (max-width: 720px) {
+    .btn_save_contact {
+        display: none;
+    }
+
+    .close_overlay_icon{
+        display: block;
+        z-index: 1200;
+    }
+}
+
 @media (max-width: 601px) {
     .overlay_add_contact {
         max-width: calc(100% - 32px);
@@ -421,8 +432,7 @@
     }
 
     .close_overlay_icon {
-        width: 24px;
-        height: 24px;
+    
         cursor: pointer;
     }
 }
