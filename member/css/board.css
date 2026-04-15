@@ -73,7 +73,8 @@
        .board__header--title {
         padding-bottom: 0;
         margin-bottom: -52px;
-         padding-left: 16px;
+        padding-left: 16px;
+        font-size: 44px;
     }
 
     .board__search--wrapper {
@@ -97,7 +98,8 @@
 
     .board__search--wrapper::after {
         top: 67%;
-        right: 85px;
+       right: 58px;
+
     }
 }
 
@@ -191,6 +193,8 @@
     .board__header--title {
         padding-bottom: 0;
         margin-bottom: -52px;
+        padding-left: 0;
+        font-size: 35px;
     }
 
     .board__search--wrapper {
@@ -217,12 +221,12 @@
 
     .board__search--icon {
         top: 67%;
-        right: 52px;
+        right: 37px;
     }
 
     .board__search--wrapper::after {
         top: 67%;
-        right: 85px;
+        right: 70px;
     }
 
     .board__tasks {
@@ -260,4 +264,11 @@
     .task__category--technical-task {
         white-space: nowrap;
     }
+}
+
+@media (max-width: 500px) {
+     {
+ 
+    }
+    
 }
