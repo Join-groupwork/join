@@ -30,6 +30,7 @@
     width: 120px;
     height: 120px;
     min-width: 60px;
+    min-height: 60px;
     font-size: 47px;
 }
 .contact_info {
