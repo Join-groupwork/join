@@ -317,9 +317,7 @@ footer {
 footer p {
   font-size: 14px;
   font-weight: bold;
-  /* font-family: sans-serif; */
   color: var(--color-footer-p);
-  /* color: #afb8c5; */
 }
 
 .footer-container {
