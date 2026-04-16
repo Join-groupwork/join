@@ -343,7 +343,6 @@
     .footer__responsive {
         display: flex;
         height: 80px;
-        padding: 0 20px;
         background-color: var(--background__menu);
         justify-content: space-between;
         align-items: center;
