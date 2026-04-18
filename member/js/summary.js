@@ -36,6 +36,7 @@ async function todoTasks(tasks) {
   }
 }
 
+
 /**
  * Counts tasks with status "done" and updates the summary UI.
  *
@@ -63,6 +64,7 @@ async function doneTasks(tasks) {
   }
 }
 
+
 /**
  * Counts urgent tasks and updates the summary UI.
  *
@@ -83,6 +85,7 @@ async function urgentTasks(tasks) {
     console.warn("Element '.urgent-info .card-title' nicht gefunden!");
   }
 }
+
 
 /**
  * Counts tasks that are valid board tasks and updates the summary UI.
@@ -107,6 +110,7 @@ async function tasksInBoard(tasks) {
   }
 }
 
+
 /**
  * Counts tasks with status "in-progress" and updates the summary UI.
  *
@@ -127,6 +131,7 @@ async function tasksInProgress(tasks) {
     console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
   }
 }
+
 
 /**
  * Counts tasks with status "await-feedback" and updates the summary UI.
@@ -155,6 +160,7 @@ async function awaitFeedbackTasks(tasks) {
   }
 }
 
+
 /**
  * Displays the greeting text based on the current time of day.
  *
@@ -172,6 +178,7 @@ function greetings() {
 
   daytimeElem.textContent = greetingText;
 }
+
 
 /**
  * Assigns the displayed username depending on the authentication state.
@@ -199,6 +206,7 @@ export function assignName(user, nameElem) {
   nameElem.textContent = 'Guest';
 }
 
+
 /**
  * Finds the next upcoming deadline among urgent tasks
  * and renders it into the summary UI.
@@ -223,6 +231,7 @@ function urgentTasksDeadLine(tasks) {
     });
   }
 }
+
 
 /**
  * Shows the greeting overlay on mobile devices for a short time
@@ -261,6 +270,7 @@ function initMobileGreetingOverlay() {
     overlay.classList.add('hide');
   }, 200);
 }
+
 
 /**
  * Initializes the summary page:
@@ -302,5 +312,6 @@ export async function initSummary() {
     }
   });
 }
+
 
 window.addEventListener('load', initSummary);
