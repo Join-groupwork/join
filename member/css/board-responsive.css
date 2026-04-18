@@ -267,7 +267,7 @@
   }
 
   .task-overlay-content h2 {
-    font-size: 40px;
+    font-size: 37px;
   }
 
   .task-overlay-content p {
@@ -324,4 +324,24 @@
     width: 16px;
     height: 16px;
   }
+}
+/* overlay_add_task */
+@media (max-width: 1001px) {
+.overlay_add_task {
+  width:90% !important;
+  }
+  .add-task__title {
+    font-size: 52px;
+
+}
+  .add-task-close-btn {
+      top: 61px !important;
+
+  }
+.add-task__input,
+.add-task__textarea,
+.custom-select__trigger {
+  font-size: 16px !important;
+
+}
 }
