@@ -158,7 +158,7 @@
   background: var(--color-background-input);
   border-radius: 12px;
   box-shadow: 0 4px 8px var(--color-shadow-soft);
-  padding: 60px;
+  padding: 48px; /* prevent scrolling */
   gap: 20px;
 }
 

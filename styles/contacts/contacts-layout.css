@@ -491,6 +491,10 @@
         width: 16px;
         height: 16px;
     }
+    .board-overlay {
+    align-items: flex-start !important;
+
+}
 }
 
 @media (max-width: 601px) {
