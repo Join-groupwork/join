@@ -216,6 +216,7 @@
     min-height: 24px;
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
 
   .task__category--technical-task {
