@@ -325,23 +325,87 @@
     height: 16px;
   }
 }
+
 /* overlay_add_task */
 @media (max-width: 1001px) {
-.overlay_add_task {
-  width:90% !important;
+  .overlay_add_task {
+    width: 80% !important;
+    gap: 0 !important;
+    padding: 40px !important;
   }
+
   .add-task__title {
-    font-size: 52px;
-
-}
-  .add-task-close-btn {
-      top: 61px !important;
+    font-size: 52px !important;
+    margin-bottom: 20px !important;
 
   }
-.add-task__input,
-.add-task__textarea,
-.custom-select__trigger {
-  font-size: 16px !important;
 
+  .add-task-close-btn {
+    top: 50px !important;
+
+  }
+
+  .add-task__input,
+  .add-task__textarea,
+  .custom-select__trigger {
+    font-size: 16px !important;
+
+  }
+
+  .add-task__divider {
+    display: none;
+  }
+
+  .add-task__grid {
+    gap: 0 !important;
+  }
+
+  .add-task__selected-assignees {
+
+    margin: 0 !important;
+    min-height: 0 !important;
+  }
+
+  form {
+
+    gap: 0 !important;
+  }
+
+  .add-task__column {
+
+    gap: 2px !important;
+  }
+
+  .add-task__field-spacing {
+    margin-bottom: 5px;
+  }
+
+  .add-task__input {
+    margin-bottom: 10px !important;
+  }
+
+  .add-task__footer {
+    margin-top: 0 !important;
+    gap: 0 !important;
+  }
+
+  .add-task__priority {
+    margin-bottom: 10px;
+  }
+  .add-task__textarea {
+    min-height: 85px !important;
+   
+  }
+  .button.add-task__priority-button {
+
+
+    font-size: 18px !important; ;
+   
+  }
+  .button.add-task__button {
+
+    height: 40px !important;
+
+    font-size: 18px !important;
 }
 }
