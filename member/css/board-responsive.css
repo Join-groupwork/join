@@ -78,16 +78,6 @@
 }
 
 @media (max-width:822px) {
-  .board-add-btn {
-    height: 50px;
-    width: 50px;
-    background: var(--color-menu-bg);
-    border-radius: 10px;
-    font-size: 0;
-    text-decoration: none;
-    padding: 0;
-    margin: 0;
-  }
 
   .sidebar {
     display: none;
@@ -138,13 +128,7 @@
   }
 
   .board-add-btn {
-    height: 50px;
-    width: 50px;
-    background: var(--color-menu-bg);
-    border-radius: 10px;
-    font-size: 0;
-    text-decoration: none;
-    padding: 0;
+
     margin-right: 16px;
   }
 
@@ -243,7 +227,6 @@
   }
 
   .board-add-btn {
-
     height: 40px;
     width: 40px;
   }
