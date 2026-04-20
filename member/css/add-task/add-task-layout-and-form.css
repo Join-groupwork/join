@@ -27,7 +27,7 @@ select {
   height: calc(100vh - 96px);
   padding: 48px 56px 32px;
   box-sizing: border-box;
-  overflow: auto ;
+  overflow: auto;
 }
 
 .add-task__main {
@@ -262,7 +262,6 @@ select {
   min-height: 40px;
 }
 
-
 @media (max-width: 1000px) {
   .add-task__grid {
     display: flex;
@@ -275,7 +274,6 @@ select {
     min-height: unset;
     width: 90%;
     border: 1px solid #e0e0e0;
-
   }
 
   .add-task__priority-options {
@@ -313,7 +311,7 @@ select {
     padding: 24px 16px;
   }
 
-  .add-task__actions{
+  .add-task__actions {
     justify-content: center;
   }
 }
@@ -376,7 +374,6 @@ select {
     width: 100%;
   }
 
-
   .button.add-task__button {
     padding: 0;
     width: unset;
@@ -396,6 +393,4 @@ select {
   form {
     justify-content: center;
   }
-
-
 }
