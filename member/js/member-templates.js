@@ -40,11 +40,12 @@ import { getInitials, getAvatarColor } from './contacts-render.js';
 export function getHeaderTemplate() {
   return `
           <div class="topbar-left">Kanban Project Management Tool</div>
+          <div class="topbar__logo"><img class="header__logo" src="../../assets/img/logo-dark.svg" alt="" ></div>
           <div class="topbar-right">
               <a href="./help.html"class="help-circle" title="Help">?</a>
               <div id="headerMenue" class="profile">
                   <span id="profileInitials"></span>
-                  <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
+                  <nav id="headerMenueNav" class="header-menue-nav d_none">
                       <ul>
                           <a href="./legal-notice-user.html">Legal Notice</a>
                       </ul>
