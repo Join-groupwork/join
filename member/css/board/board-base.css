@@ -2,7 +2,7 @@ main {
   margin: 30px 60px 0 258px;
   padding: 22px 0 0 28px;
   justify-content: flex-start;
-  gap: 50px;
+  gap: 10px;
 }
 
 /* CHECK evtl statt main eine klasse verwenden, sonst könnte es zu Konflikten kommen */
