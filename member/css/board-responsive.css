@@ -5,9 +5,7 @@
     flex-direction: row;
     display: flex;
     overflow: auto;
-    /* width: 100%; */
     gap: 10px;
-
   }
 
   .task__card {
@@ -29,11 +27,9 @@
     margin-left: auto;
     margin-right: auto;
   }
-
 }
 
 @media (max-width:940px) {
-
   .board__search--section {
     display: flex;
     flex-direction: column-reverse;
@@ -61,7 +57,6 @@
   .board__header--title {
     padding-bottom: 0;
     margin-bottom: -52px;
-
     padding-left: 16px;
     font-size: 44px;
   }
@@ -74,7 +69,6 @@
     width: 100%;
     display: flex;
     padding: 0;
-    /* flex: 1; */
   }
 
   .board__search--input {
@@ -107,7 +101,6 @@
 }
 
 @media (max-width:830px) {
-
   .sidebar {
     display: none;
   }
@@ -174,8 +167,6 @@
 
     padding-right: 16px;
   }
-
-
 
   .board__top-row {
     display: flex;
@@ -250,7 +241,6 @@
 
 @media (max-width: 366px) {
   .board__search--input {
-
     padding: 0;
   }
 
@@ -263,7 +253,6 @@
 @media (max-width: 992px) {
   .task-overlay-content {
     width: 369px;
-
   }
 
   .task-overlay-content h2 {
@@ -329,7 +318,6 @@
 /* overlay_add_task */
 @media (max-width: 1001px) {
   .overlay_add_task {
-
     gap: 0 !important;
     padding: 28px !important;
   }
@@ -337,20 +325,17 @@
   .add-task__title {
     font-size: 52px !important;
     margin-bottom: 20px !important;
-
   }
 
   .add-task-close-btn {
     top: 50px !important;
     display: none;
-
   }
 
   .add-task__input,
   .add-task__textarea,
   .custom-select__trigger {
     font-size: 16px !important;
-
   }
 
   .add-task__divider {
@@ -362,18 +347,15 @@
   }
 
   .add-task__selected-assignees {
-
     margin: 0 !important;
     min-height: 0 !important;
   }
 
   form {
-
     gap: 0 !important;
   }
 
   .add-task__column {
-
     gap: 2px !important;
   }
 
@@ -396,20 +378,14 @@
 
   .add-task__textarea {
     min-height: 85px !important;
-
   }
 
   .button.add-task__priority-button {
-
-
     font-size: 18px !important;
-
   }
 
   .button.add-task__button {
-
     height: 40px !important;
-
     font-size: 16px !important;
   }
 }
@@ -422,14 +398,11 @@
   }
 
   .add-task__actions {
-
     bottom: 25px !important;
   }
 
   .add-task__title {
     font-size: 46px !important;
-
-
   }
 
   .button.add-task__button {
@@ -456,11 +429,9 @@
 
   .button.add-task__priority-button {
     font-size: 12px !important;
-
   }
 
   .add-task__priority-button[value="medium"].selected {
     padding-left: 14px !important;
   }
-
 }
