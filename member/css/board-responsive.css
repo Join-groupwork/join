@@ -4,10 +4,10 @@
   }
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1340px) {
 .task__list {
     min-height: 24px;
-    max-width: 74vw;
+    max-width: 66vw;
     flex-direction: row;
     display: flex;
     overflow: auto;
@@ -101,6 +101,10 @@
 
   .board-add-icon {
     margin: 0;
+  }
+
+  .task__list{
+    max-width: 62vw;
   }
 }
 
