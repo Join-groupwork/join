@@ -75,7 +75,7 @@
   .board__search--wrapper {
     width: 100%;
     display: flex;
-    padding: 0 ;
+    padding: 0;
     /* flex: 1; */
   }
 
@@ -91,6 +91,16 @@
 
   .board__search--wrapper::after {
     right: 58px;
+  }
+
+  .board-add-btn {
+    height: 40px;
+    width: 40px;
+    margin-right: 16px;
+  }
+
+  .board-add-icon {
+    margin: 0;
   }
 }
 
@@ -148,15 +158,6 @@
     flex-direction: column;
   }
 
-  .board-add-btn {
-
-    margin-right: 16px;
-  }
-
-  .board-add-icon {
-    margin: 0;
-  }
-
   .board__search--section {
     width: 100%;
   }
@@ -168,10 +169,10 @@
     font-size: 35px;
   }
 
-      .board__search--wrapper {
+  .board__search--wrapper {
 
-        padding-right: 16px;
-    }
+    padding-right: 16px;
+  }
 
 
   /* .board__search--wrapper {
@@ -246,11 +247,6 @@
 
   .board-add-icon {
     margin: 0;
-  }
-
-  .board-add-btn {
-    height: 40px;
-    width: 40px;
   }
 }
 
@@ -451,21 +447,26 @@
     font-weight: 400 !important;
     gap: 0px !important;
   }
+
   .overlay_add_task {
     height: 836px !important;
   }
+
   .add-task__priority-button img {
-     margin-left: 0 !important;
+    margin-left: 0 !important;
+  }
 }
-}
+
 @media (max-width: 430px) {
   .board-overlay__content {
     width: min(1100px, calc(116vw - 64px));
   }
-    .button.add-task__priority-button {
+
+  .button.add-task__priority-button {
     font-size: 12px !important;
 
   }
+
   .add-task__priority-button[value="medium"].selected {
     padding-left: 14px !important;
   }
