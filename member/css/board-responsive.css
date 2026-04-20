@@ -10,13 +10,6 @@
   }
 }
 
-@media (max-width:1360px) {
-  .board__tasks {
-    display: flex;
-    align-items: center;
-  }
-}
-
 @media (max-width:940px) {
 
   .board__search--section {
