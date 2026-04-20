@@ -147,6 +147,7 @@
     min-height: 24px;
     display: flex;
     width:100%;
+    max-width: 100vw;
   }
 
   .task__category--technical-task {
@@ -331,7 +332,6 @@
 /* overlay_add_task */
 @media (max-width: 1001px) {
   .overlay_add_task {
-
     gap: 0 !important;
     padding: 28px !important;
   }
@@ -370,12 +370,10 @@
   }
 
   form {
-
     gap: 0 !important;
   }
 
   .add-task__column {
-
     gap: 2px !important;
   }
 
