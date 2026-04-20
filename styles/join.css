@@ -400,6 +400,20 @@ footer p {
 /* ==========
    RESPONSIIVE
    ========== */
+@media (max-width: 820px){
+  .help-circle {
+    display: none;
+  }
+
+  header{
+    justify-content: flex-end;
+  }
+
+  .topbar-right {
+    padding-right: 20px;
+  }
+}
+
 @media (max-width: 601px) {
   .join__logo {
     width: 78px;
