@@ -255,6 +255,10 @@ async function renderBoard() {
 }
 
 // setupAddTaskOverlay();
+
+
+// addtask-status-handling
+
 function setupAddTaskForAllColumns() {
   const overlay = document.getElementById('add_task_overlay');
   if (!overlay) return;
