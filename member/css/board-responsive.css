@@ -4,6 +4,36 @@
   }
 }
 
+@media (max-width: 1300px) {
+.task__list {
+    min-height: 24px;
+    max-width: 74vw;
+    flex-direction: row;
+    display: flex;
+    overflow: auto;
+    /* width: 100%; */
+    gap: 10px;
+}
+.task__card{
+    min-width: 250px;
+}
+
+.board__tasks {
+    flex-direction: column;
+    max-width: 100vw;
+}
+
+.task {
+    width: unset;
+}
+
+.task__area {
+    min-height: 299px;
+    min-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+}
 @media (max-width:940px) {
 
   .board__search--section {
