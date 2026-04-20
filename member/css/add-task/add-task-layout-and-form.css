@@ -320,7 +320,6 @@ select {
 
 @media (max-width: 720px) {
   .add-task__priority-options {
-    
     max-width: 100%;
   }
 
