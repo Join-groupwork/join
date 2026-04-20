@@ -10,6 +10,7 @@
 
   .task__card {
     min-width: 250px;
+    min-height: 250px;
   }
 
   .board__tasks {
@@ -46,7 +47,6 @@
   }
 
   .task__area {
-    min-height: calc(100vh - 420px);
     max-height: calc(100vh - 420px);
   }
 
@@ -124,11 +124,6 @@
     padding-left: 16px;
     padding-right: 16px;
     margin-top: 20px;
-  }
-
-  .task__area {
-    min-height: calc(100vh - 495px);
-    max-height: calc(100vh - 495px);
   }
 
   .content {
