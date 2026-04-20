@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../styles/fonts.css">
   <link rel="stylesheet" href="../styles/colors.css">
   <link rel="stylesheet" href="../styles/assets.css">
-  <link rel="stylesheet" href="../styles/privacy-policy.css">
+  <link rel="stylesheet" href="../styles/legal-notice.css">
   <script type="module" src="./js/public-templates.js"></script>
   <script type="module" src="./js/public-script.js"></script>
 </head>
@@ -19,14 +19,15 @@
 <body>
   <div class="app">
 
+    <!-- TOPBAR -->
+    <header class="topbar" id="header"></header>
+
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar"></aside>
 
     <!-- MAIN -->
 
     <main class="main">
-      <!-- TOPBAR -->
-      <header class="topbar" id="header"></header>
 
       <section class="legal-page">
 
@@ -95,10 +96,20 @@
 
   </div>
 
-
-</body>
-
-</html>
+  <!-- <footer class="footer__responsive">
+  <a href="../../index.html" class="button button__mobile button__mobile--public">
+    <img class="icon__mobile" src="../../assets/icons/menu/login__mobile.svg" alt="login mobile">
+  </a>
+  <div class="footer__mobile--right">
+    <a href="../privacy-policy-public.html" class="button button__mobile button__mobile--public">
+      <span class="footer__mobile--font">Privacy Policy</span>
+    </a>
+    <a href="../legal-notice-public.html" class="button button__mobile button__mobile--public">
+      <span class="footer__mobile--font">Legal Notice</span>
+    </a>
+  </div>
+  </footer> -->
+  <footer id="footerMobilePublic" class="footer__responsive"></footer>
 </body>
 
 </html>

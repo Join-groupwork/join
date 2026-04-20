@@ -2,7 +2,35 @@ import { getActiveContactTemplate } from './member-templates.js';
 
 let contacts = {};
 let activeContactId = null;
+const MOBILE_BREAKPOINT = 822;
+let isMobileDetailOpen = false;
 
+function isMobileViewport() {
+    return window.innerWidth <= MOBILE_BREAKPOINT;
+}
+
+function setMobileView(mode) {
+    const body = document.body;
+    if (!body) return;
+    body.classList.toggle('contacts-mobile-detail-open', mode === 'detail');
+    isMobileDetailOpen = mode === 'detail';
+}
+
+function openMobileDetailView() {
+    if (!isMobileViewport()) return;
+    setMobileView('detail');
+
+    const addBtn = document.querySelector('.contact_mobile_add_btn');  
+    if (addBtn) addBtn.style.display = 'none';                         
+}
+
+export function closeMobileDetailView() {
+    if (!isMobileViewport()) return;
+    setMobileView('list');
+
+    const addBtn = document.querySelector('.contact_mobile_add_btn');  
+    if (addBtn) addBtn.style.display = '';                             
+}
 function groupContactsByLetter(contactsObjects) {
     const grouped = {};
     Object.entries(contactsObjects).forEach(([id, contact]) => {
@@ -37,6 +65,10 @@ export function renderContactsList(contactsObjects) {
 
     renderGroupedContacts(contactList, contacts);
     rerenderActiveContactDetail(contacts);
+
+    if (!isMobileViewport() && isMobileDetailOpen) {
+        setMobileView('list');
+    }
 }
 
 function getContactListElement() {
@@ -120,9 +152,11 @@ function setActiveContact(contactId, contactData) {
     clearActiveContactClass();
     activateContactListItem(contactId);
     renderActiveContactDetail(contactData);
+    openMobileDetailView();
 }
 
 export function setActiveContactId(contactId) {
+
     activeContactId = contactId;
 }
 
@@ -208,3 +242,5 @@ export function getAvatarColor(name) {
 
     return colors[Math.abs(hash) % colors.length];
 }
+
+window.closeMobileDetailView = closeMobileDetailView;

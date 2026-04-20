@@ -39,13 +39,13 @@ import { getInitials, getAvatarColor } from './contacts-render.js';
  */
 export function getHeaderTemplate() {
   return `
-        <header>
-          <div class="topbar-left f-s-20">Kanban Project Management Tool</div>
+          <div class="topbar-left">Kanban Project Management Tool</div>
+          <div class="topbar__logo"><img class="header__logo" src="../../assets/img/logo-dark.svg" alt="" ></div>
           <div class="topbar-right">
               <a href="./help.html"class="help-circle" title="Help">?</a>
               <div id="headerMenue" class="profile">
                   <span id="profileInitials"></span>
-                  <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
+                  <nav id="headerMenueNav" class="header-menue-nav d_none">
                       <ul>
                           <a href="./legal-notice-user.html">Legal Notice</a>
                       </ul>
@@ -60,7 +60,6 @@ export function getHeaderTemplate() {
                   </nav>
               </div>
           </div>
-        </header>
       `;
 };
 
@@ -109,7 +108,7 @@ export function getSidebarTemplate() {
 export function getTaskTemplate() {
   return `
     <section class="overlay_add_task">
-      <button class="add-task-close-btn" type="button" aria-label="Close">
+      <button class="add-task-close-btn " type="button" aria-label="Close">
         <img src="../assets/icons/close-icon.svg" alt="">
       </button>
 
@@ -243,7 +242,7 @@ export function getAddOverlayTemplate() {
             <div class="overlay_add_contact_right">
 
                 <div class="close_overlay_icon_container">
-                    <img class="close_overlay_icon" src="../../assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="hideAddContactOverlay()">
+                    <img class="close_overlay_icon" src="../../assets/icons/close-white.svg" alt="Close Overlay Icon" onclick="hideAddContactOverlay()">
                 </div>
                 <div class="addContact_form_container">
 
@@ -258,15 +257,15 @@ export function getAddOverlayTemplate() {
                 </div>
 
                 <div class="buttons_add_contact">
-                    <button type="button" class="btn_save_contact" onclick="hideAddContactOverlay()">Cancel <img src="../../assets/icons/close-icon.svg" alt="Close Icon"></button>
+                    <button type="button" class="btn_save_contact" onclick="hideAddContactOverlay()">Cancel <img src="../../assets/icons/close-white.svg" alt="Close Icon"></button>
                     <button type="submit" form="add_contact_form" class="btn_cancel_contact">Create contact <img src="../../assets/icons/check-icon-white.svg" alt="Check Icon"></button>
                 </div>
 
             </div>
 
-        </section>
+          </section>
 
-    </main>
+      </main>
     `;
 };
 
@@ -347,6 +346,18 @@ export function generateTodosHTML(id, title, category, description, priority, su
 export function getActiveContactTemplate(contact, initials, bgColor, phone) {
   return `
     <section class="contact_detail_card contact_detail_card--enter">
+
+      <div class="contact_mobile_heading_row">
+        <div class="contact_mobile_heading_text">
+          <h1 class="contact_mobile_title">Contacts</h1>
+          <p class="contact_mobile_subtitle">Better with a team</p>
+          <span class="contact_mobile_underline"></span>
+        </div>
+        <button type="button" class="contact_mobile_back_btn" onclick="closeMobileDetailView()" aria-label="Back to contacts">
+          <img src="../../assets/icons/arrow-left-icon.svg" alt="Back">
+        </button>
+      </div>
+
       <div class="contact_detail_header">
         <div class="contact_avatar contact_avatar--large" style="background-color:${bgColor}">
           ${initials}
@@ -355,11 +366,10 @@ export function getActiveContactTemplate(contact, initials, bgColor, phone) {
           <h2 class="contact_detail_name">${contact.name || ''}</h2>
           <div class="contact_detail_actions">
             <button type="button" class="link_btn" onclick="editContact('${contact.id}')">
-              <img src="../../assets/icons/pencil-icon.svg" alt="Pencil icon to edit contact details"><span>Edit</span>
+              <img src="../../assets/icons/pencil-icon.svg" alt="Edit"><span>Edit</span>
             </button>
-
             <button type="button" class="link_btn" onclick="deleteContact('${contact.id}')">
-              <img src="../../assets/icons/trash-icon.svg" alt="Trash can icon to delete contact"><span>Delete</span>
+              <img src="../../assets/icons/trash-icon.svg" alt="Delete"><span>Delete</span>
             </button>
           </div>
         </div>
@@ -369,13 +379,27 @@ export function getActiveContactTemplate(contact, initials, bgColor, phone) {
 
       <div class="contact_detail_info">
         <strong>Email</strong>
-        <a href="mailto:${contact.email || ''}">${contact.email || ''}</a>
+        <a class="contact_detail_email" href="mailto:${contact.email || ''}">${contact.email || ''}</a>
       </div>
 
       <div class="contact_detail_info">
         <strong>Phone</strong>
-        <a href="tel:${phone}">${phone}</a>
+        <a class="contact_detail_phone" href="tel:${phone}">${phone}</a>
       </div>
+
+      <button type="button" class="contact_mobile_fab_btn" onclick="toggleContactMobileActions()" aria-label="Open contact actions">
+        <span class="contact_mobile_fab_dots">&#8942;</span>
+      </button>
+
+      <div id="contact_mobile_actions_menu" class="contact_mobile_actions_menu d_none">
+        <button type="button" class="contact_mobile_action_btn" onclick="editContact('${contact.id}')">
+          <img src="../../assets/icons/pencil-icon.svg" alt="Edit"><span>Edit</span>
+        </button>
+        <button type="button" class="contact_mobile_action_btn" onclick="deleteContact('${contact.id}')">
+          <img src="../../assets/icons/trash-icon.svg" alt="Delete"><span>Delete</span>
+        </button>
+      </div>
+
     </section>
   `;
 }
@@ -400,7 +424,7 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
 
       <div class="overlay_add_contact_right">
        <div class="close_overlay_icon_container">
-                    <img class="close_overlay_icon" src="../../assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="closeEditOverlay()">
+                    <img class="close_overlay_icon" src="../../assets/icons/close-white.svg" alt="Close Overlay Icon" onclick="closeEditOverlay()">
                 </div>
         <div class="addContact_form_container">
             <div class="contact_avatar contact_avatar--large edit_overlay_avatar overlay_avatar" style="background-color:${color}">
@@ -462,11 +486,11 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
       <div class="overlaytemplate-subtask-checkbox">
 
         ${subtaskEntries.map(([key, s]) => {
-          const isChecked = s.status === true || s.completed === true;
-          const iconSrc = isChecked
-            ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
-            : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
-          return `
+    const isChecked = s.status === true || s.completed === true;
+    const iconSrc = isChecked
+      ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
+      : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
+    return `
           <div class="subtask-item-taskoverlay">
             <img class="checkbox-icon" src="${iconSrc}" alt="" data-task-id="${id}" data-subtask-key="${key}">
             ${s.title}
@@ -595,4 +619,23 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
     </form>
   </div>
   `;
+}
+
+export function getMobileFooterTemplate() {
+  return `
+    <footer class="footer__responsive footer__responsive--member">
+      <a href="./summary.html" class="button button__mobile button__mobile--member">
+        <img class="icon__mobile" src="../assets/icons/menu/summary__mobile.svg" alt="summary mobile">
+      </a>
+      <a href="./add-task.html" class="button button__mobile button__mobile--member">
+        <img class="icon__mobile" src="../assets/icons/menu/add-task__mobile.svg" alt="add-task mobile">
+      </a>
+      <a href="./board.html" class="button button__mobile button__mobile--member">
+        <img class="icon__mobile" src="../assets/icons/menu/board__mobile.svg" alt="board mobile">
+      </a>
+      <a href="./contacts.html" class="button button__mobile button__mobile--member">
+        <img class="icon__mobile" src="../assets/icons/menu/contacs__mobile.svg" alt="contacts mobile">
+      </a>
+    </footer>
+  `
 }

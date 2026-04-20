@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="../styles/fonts.css">
   <link rel="stylesheet" href="../styles/colors.css">
   <link rel="stylesheet" href="../styles/contacts.css">
+  <link rel="stylesheet" href="../member/css/board-responsive.css">
   <link rel="stylesheet" href="../styles/assets.css">
   <link rel="stylesheet" href="./css/board.css">
   <link rel="stylesheet" href="./css/add-task.css">
@@ -23,76 +24,111 @@
   <script type="module" src="./js/add-task.js"></script>
   <script type="module" src="./js/board.js"></script>
 </head>
-<!-- bitte id vergeben, die man gut zuordnen kann, overlay container kann alles sein -->
-<div id="overlay_container" class="d_none"></div>
-<!-- zum beispiel: task_detail_overlay -->
 
-<section id="add_task_overlay" class="board-overlay d_none">
-  <div id="add_task" class="board-overlay__content"></div>
-</section>
 
 <body>
+  <!-- bitte id vergeben, die man gut zuordnen kann, overlay container kann alles sein -->
+  <div id="overlay_container" class="d_none"></div>
+  <!-- zum beispiel: task_detail_overlay -->
+
+  <section id="add_task_overlay" class="board-overlay d_none">
+    <div id="add_task" class="board-overlay__content"></div>
+  </section>
 
   <header class="topbar" id="header"></header>
-  <aside class="sidebar" id="sidebar"></aside>
-  <!-- searchTask input -->
-  <section class="board__header">
-    <h1 class="board__header--title">Board</h1>
-    <div class="board__search--wrapper">
-      <input type="text" id="searchInput" class="board__search--input" placeholder="Find Task"
-        oninput="searchTask(this.value)">
-      <img class="board__search--icon" src="../assets/icons/search.svg" alt="Search">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="content">
+      <!-- searchTask input -->
+      <section class="board__header">
+        <div class="board__top-row">
+          <h1 class="board__header--title">Board</h1>
+        </div>
+
+
+        <div class="board__search--section">
+          <div class="board__search--wrapper">
+            <input type="text" id="searchInput" class="board__search--input" placeholder="Find Task"
+              oninput="searchTask(this.value)">
+            <img class="board__search--icon" src="../assets/icons/search.svg" alt="Search">
+
+          </div>
+          <div class="board__task">
+            <button type="button" id="openAddTaskOverlay" class="button board-add-btn ">
+              Add task
+              <img class="board-add-icon" src="../assets/icons/add-icon-white.svg" alt="">
+            </button>
+          </div>
+          <div class="board__task--mobile">
+            <button type="button" class="openAddTaskOverlay button button__mobile board-add-btn ">
+              <img class="board-add-icon" src="../assets/icons/add-icon-white.svg" alt="">
+            </button>
+          </div>
+
+      </section>
+      <main class="board__tasks">
+
+        <section name="todo" class="task__section">
+          <div class="task task__area--title">
+            <h3 class="task__title">To do</h3>
+            <img class="circle-plus-icon" src="../assets/icons/square-plus.svg" alt="Add task">
+          </div>
+          <div class="task task__area" data-status="todo">
+            <p class="task__area--placeholder">No tasks to do</p>
+            <div id="todo" class="task__list"></div>
+          </div>
+        </section>
+
+        <section name="in Progress" class="task__section">
+          <div class="task task__area--title">
+            <h3 class="task__title">In Progress</h3><img class="circle-plus-icon" src="../assets/icons/square-plus.svg"
+              alt="plus-icon">
+          </div>
+          <div class="task task__area" data-status="in-progress">
+            <p class="task__area--placeholder">No tasks in Progress</p>
+            <div id="inProgress" class="task__list"></div>
+          </div>
+        </section>
+
+        <section name="Await Feedback" class="task__section">
+          <div class="task task__area--title">
+            <h3 class="task__title">Await Feedback</h3><img class="circle-plus-icon"
+              src="../assets/icons/square-plus.svg" alt="plus-icon">
+          </div>
+          <div class="task task__area" data-status="await-feedback">
+            <p class="task__area--placeholder">No tasks await Feedback</p>
+            <div id="awaitFeedback" class="task__list"></div>
+          </div>
+        </section>
+
+        <section name="Done" class="task__section">
+          <div class="task task__area--title">
+            <h3 class="task__title">Done</h3>
+          </div>
+          <div class="task task__area" data-status="done">
+            <p class="task__area--placeholder">No tasks done</p>
+            <div id="done" class="task__list"></div>
+          </div>
+        </section>
+
+      </main>
     </div>
-    <button type="button" id="openAddTaskOverlay" class="board-add-btn">Add task <img class="board-add-icon"
-        src="../assets/icons/add-icon-white.svg" alt=""></button>
-  </section>
-  <main class="board__tasks">
+  </div>
 
-    <section name="todo" class="task__section">
-      <div class="task task__area--title">
-        <h3 class="task__title">To do</h3>
-        <img class="circle-plus-icon" src="../assets/icons/square-plus.svg" alt="Add task">
-      </div>
-      <div class="task task__area" data-status="todo">
-        <p class="task__area--placeholder">No tasks to do</p>
-        <div id="todo" class="task__list"></div>
-      </div>
-    </section>
-
-    <section name="in Progress" class="task__section">
-      <div class="task task__area--title">
-        <h3 class="task__title">In Progress</h3><img class="circle-plus-icon" src="../assets/icons/square-plus.svg"
-          alt="plus-icon">
-      </div>
-      <div class="task task__area" data-status="in-progress">
-        <p class="task__area--placeholder">No tasks in Progress</p>
-        <div id="inProgress" class="task__list"></div>
-      </div>
-    </section>
-
-    <section name="Await Feedback" class="task__section">
-      <div class="task task__area--title">
-        <h3 class="task__title">Await Feedback</h3><img class="circle-plus-icon" src="../assets/icons/square-plus.svg"
-          alt="plus-icon">
-      </div>
-      <div class="task task__area" data-status="await-feedback">
-        <p class="task__area--placeholder">No tasks await Feedback</p>
-        <div id="awaitFeedback" class="task__list"></div>
-      </div>
-    </section>
-
-    <section name="Done" class="task__section">
-      <div class="task task__area--title">
-        <h3 class="task__title">Done</h3>
-      </div>
-      <div class="task task__area" data-status="done">
-        <p class="task__area--placeholder">No tasks done</p>
-        <div id="done" class="task__list"></div>
-      </div>
-    </section>
-
-  </main>
-
+  <footer class="footer__responsive">
+    <a href="summary.html" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/summary__mobile.svg" alt="summary mobile">
+    </a>
+    <a href="add-task.html" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/add-task__mobile.svg" alt="add-task mobile">
+    </a>
+    <a href="board.html" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/board__mobile.svg" alt="board mobile">
+    </a>
+    <a href="contacts.html" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/contacs__mobile.svg" alt="contacts mobile">
+    </a>
+  </footer>
 </body>
 
 </html>

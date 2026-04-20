@@ -1,20 +1,20 @@
+@import url('./summary-responsive.css');
+
 * {
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
+.summary-page {
   font-family: "Open Sans", sans-serif;
-  position: fixed;
-  left: 0;
-  /* bitte klassen verwenden, sonst könnte es zu Konflikten kommen, keine direkte Stile auf body bzw html tags, da wir so viele seiten haben */
+  min-width: 320px;
 }
 
 .app {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 }
-
 
 .logo {
   margin-left: 20px;
@@ -37,51 +37,42 @@ body {
 }
 
 .legal a:hover {
-  /* background: #091932; */
   color: #2ba9e5;
   font-weight: bold;
 }
 
-/* .main {
+.main {
   flex: 1;
-  background: #f6f7f8;
+  min-width: 0;
   overflow-y: auto;
-} */
+}
 
 .dashboard {
-  padding: 160px 0px 0px 110px;
+  padding: 160px 24px 32px;
 }
 
-.cards {
-  margin-top: 20px;
+.dashboard__top {
   display: flex;
-  gap: 30px;
-}
-
-/* Dashboard two-column layout: left = cards, right = greeting (50% / 50%) */
-.dashboard-top {
-  display: flex;
+  flex-wrap: wrap;
   gap: 24px;
   align-items: center;
-  /* width: calc(100% - 200px); */
 }
 
-.dashboard-left {
-  flex: 0 0 50%;
-  max-width: 460px;
+.dashboard__left,
+.dashboard-right {
+  flex: 1 1 320px;
+  min-width: 0;
 }
 
-.all-tasks,
-.tasks-in-progress,
-.await-feedback-info {
-  text-decoration: none;
+.dashboard__left {
+  width: 100%;
+  max-width: 720px;
 }
 
 .dashboard-right {
-  flex: 0 0 50%;
   display: flex;
   align-items: center;
-  justify-content: flex-start
+  justify-content: flex-start;
 }
 
 .greeting {
@@ -101,6 +92,19 @@ body {
   font-size: 64px;
   font-weight: 700;
   color: #45a0c5;
+  word-break: break-word;
+}
+
+.cards {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.cards>.card {
+  flex: 1 1 calc(50% - 15px);
+  min-width: 0;
 }
 
 .card {
@@ -112,12 +116,10 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Hover styles: To-do / Done (icon cards), urgent info card, and small statistic cards */
-
 .card.icon-card,
 .card.urgent-info,
 .small-card {
-  transition: background 0.18s ease, color 0.18s ease;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
   cursor: pointer;
 }
 
@@ -126,7 +128,6 @@ body {
 .small-card:hover {
   background: #2a3547;
   transform: scale(1.10);
-  transition: transform 0.18s ease;
 }
 
 .card.icon-card:hover .card-title,
@@ -152,6 +153,7 @@ body {
   align-items: center;
   gap: 16px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .summary__title h3 {
@@ -166,6 +168,7 @@ body {
   height: 60px;
   background-color: var(--border__bar);
   border-radius: 8px;
+  flex-shrink: 0;
 }
 
 h1 {
@@ -182,14 +185,13 @@ h3 {
   margin: 0;
 }
 
-/* Cards that show an icon on the left and content on the right */
 .icon-card {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
   text-align: left;
-  width: 250px;
+  min-width: 0;
 }
 
 .card-left-icon {
@@ -199,9 +201,9 @@ h3 {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  flex-shrink: 0;
 }
 
-/* Default icons for todo/done/urgent */
 .card.icon-card.todo>.card-left-icon {
   background-image: url('../../assets/icons/pencil-circle.svg');
 }
@@ -214,7 +216,6 @@ h3 {
   background-image: url('../../assets/icons/urgent-prio-summary.svg');
 }
 
-/* Hover swap */
 .card.icon-card.todo:hover>.card-left-icon {
   background-image: url('../../assets/icons/pencil-circle-white.svg');
 }
@@ -226,23 +227,22 @@ h3 {
 .card-right {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .info-row {
   margin-top: 30px;
-  display: flex;
-  gap: 20px;
+  display: block;
+  width: 100%;
 }
 
 .urgent-info {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  /* gap: 16px; */
   width: 100%;
   padding: 30px;
   box-sizing: border-box;
-  width: 530px;
 }
 
 .urgent-left {
@@ -257,6 +257,7 @@ h3 {
   height: 80px;
   background: #d1d1d1;
   align-self: center;
+  flex-shrink: 0;
 }
 
 .urgent-right {
@@ -299,7 +300,13 @@ h3 {
 .small-cards {
   margin-top: 30px;
   display: flex;
+  flex-wrap: wrap;
   gap: 30px;
+}
+
+.small-cards>.small-card {
+  flex: 1 1 calc(33.333% - 20px);
+  min-width: 0;
 }
 
 .small-card {

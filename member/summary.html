@@ -19,27 +19,20 @@
   <script type="module" src="../member/js/summary.js"></script>
 </head>
 
-<body>
-
-
-  <!-- CHECK müssen wir die css KLasse "app" nutzen? oder könne wir das auch anders Lösen? -->
+<body class="summary-page">
   <div class="app">
-    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar"></aside>
-
-    <!-- TOPBAR -->
     <header class="topbar" id="header"></header>
-    <!-- MAIN -->
+
     <main class="main">
-      <!-- DASHBOARD -->
       <section class="dashboard">
         <div class="summary__title">
           <h1>Join 360</h1>
           <h3>Key Metrics at a Glance</h3>
         </div>
 
-        <div class="dashboard-top">
-          <div class="dashboard-left">
+        <div class="dashboard__top">
+          <div class="dashboard__left">
             <div class="cards">
               <a href="board.html#todo" class="card icon-card todo">
                 <span class="card-left-icon" aria-hidden="true"></span>
@@ -94,16 +87,38 @@
           </div>
 
           <div class="dashboard-right">
-            <div class="greeting">
-              <div class="greeting-line" id="greetingTime">didn't work</div>
-              <div class="greeting-line greeting-name" id="greetingName">name or empty</div>
+            <div class="greeting desktop-greeting">
+              <div class="greeting-line" id="greetingTime"></div>
+              <div class="greeting-line greeting-name" id="greetingName"></div>
             </div>
           </div>
         </div>
       </section>
     </main>
   </div>
-</body>
 
+  <div class="mobile-greeting-overlay" id="mobileGreetingOverlay">
+    <div class="mobile-greeting-content">
+      <div class="greeting-line" id="mobileGreetingTime"></div>
+      <div class="greeting-line greeting-name" id="mobileGreetingName"></div>
+    </div>
+  </div>
+
+  <footer class="footer__responsive">
+    <a href="./summary.html" class="button button__mobile button__mobile--member">
+      <img class="icon__mobile" src="../assets/icons/menu/summary__mobile.svg" alt="summary mobile">
+    </a>
+    <a href="./add-task.html" class="button button__mobile button__mobile--member">
+      <img class="icon__mobile" src="../assets/icons/menu/add-task__mobile.svg" alt="add-task mobile">
+    </a>
+    <a href="./board.html" class="button button__mobile button__mobile--member">
+      <img class="icon__mobile" src="../assets/icons/menu/board__mobile.svg" alt="board mobile">
+    </a>
+    <a href="./contacts.html" class="button button__mobile button__mobile--member">
+      <img class="icon__mobile" src="../assets/icons/menu/contacs__mobile.svg" alt="contacts mobile">
+    </a>
+  </footer>
+
+</body>
 
 </html>

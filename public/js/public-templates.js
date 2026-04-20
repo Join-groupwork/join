@@ -24,6 +24,9 @@
 export function getHeaderTemplate() {
   return `
         <div class="topbar-left">Kanban Project Management Tool</div>
+        <div class="topbar__mobile">
+          <img class="topbar__mobile--logo" src="../assets/img/logo-dark.svg" alt="Logo">
+        </div>
       `;
 
 };
@@ -71,3 +74,23 @@ export function signupMassegeTemplate() {
         </aside>
     `
 };
+
+export function getPublicFooterTemplate() {
+  return `
+
+    <a href="../../index.html" class="button button__mobile button__mobile--public">
+      <img class="icon__mobile" src="../../assets/icons/menu/login__mobile.svg" alt="login mobile">
+    </a>
+    <div class="footer__mobile--right">
+      <a href="../privacy-policy-public.html" class="button button__mobile button__mobile--public">
+        <span class="footer__mobile--font">Privacy Policy</span>
+      </a>
+      <a href="../legal-notice-public.html" class="button button__mobile button__mobile--public">
+        <span class="footer__mobile--font">Legal Notice</span>
+      </a>
+    </div>
+
+
+  `
+}
+// <footer class="footer__responsive">  // </footer>

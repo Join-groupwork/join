@@ -2,22 +2,22 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join</title>
-    <link rel="icon" href="../assets/img/logo-dark.svg" type="image/svg" />
-    <link rel="stylesheet" href="../styles/standard.css">
-    <link rel="stylesheet" href="../styles/join.css">
-    <link rel="stylesheet" href="../styles/fonts.css">
-    <link rel="stylesheet" href="../styles/colors.css">
-    <link rel="stylesheet" href="../styles/assets.css">
-    <link rel="stylesheet" href="../styles/contacts.css">
-    <script type="module" src="../scripts/firebase/firebase.js"></script>
-    <script type="module" src="../login/auth-guard.js"></script>
-    <script type="module" src="../scripts/firebase/get-firebase.js"></script>
-    <script type="module" src="./js/member-templates.js"></script>
-    <script type="module" src="./js/member-script.js"></script>
-    <script type="module" src="./js/contacts.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join</title>
+  <link rel="icon" href="../assets/img/logo-dark.svg" type="image/svg" />
+  <link rel="stylesheet" href="../styles/standard.css">
+  <link rel="stylesheet" href="../styles/join.css">
+  <link rel="stylesheet" href="../styles/fonts.css">
+  <link rel="stylesheet" href="../styles/colors.css">
+  <link rel="stylesheet" href="../styles/assets.css">
+  <link rel="stylesheet" href="../styles/contacts.css">
+  <script type="module" src="../scripts/firebase/firebase.js"></script>
+  <script type="module" src="../login/auth-guard.js"></script>
+  <script type="module" src="../scripts/firebase/get-firebase.js"></script>
+  <script type="module" src="./js/member-templates.js"></script>
+  <script type="module" src="./js/member-script.js"></script>
+  <script type="module" src="./js/contacts.js"></script>
 
 </head>
 
@@ -25,38 +25,55 @@
 
 <body class="body_contacts">
 
-    <header class="topbar" id="header"></header>
-    <aside class="sidebar" id="sidebar"></aside>
+  <header class="topbar" id="header"></header>
+  <aside class="sidebar" id="sidebar"></aside>
 
 
 
-    <section class="contactside_section" id="contacts_container">
-        <div class="contact_list" id="contact_list">
-            <button class="contact_btn_addNew" onclick="showAddContactOverlay()">Add new Contact
-                <img class="contact_addBtn_logo" src="../assets/icons/add-person-icon.svg">
-            </button>
-        </div>
-    </section>
-    <div>
-        <section class="contact_slogan">
-            <h1>Contacts</h1>
-            <hr class="hr_line_contacts">
-            <p>Better with a team</p>
-
-
-
-        </section>
-        <!-- <section id="contact_detail"></section> -->
-
-        <div id="contact_detail"></div>
-        <div id="editC_overlay" class="addContact_overlay d_none"></div>
-
-        <section class="contact-add-section">
-            <div class="contact-add-overlay" id="contact-add-overlay">
-                <!-- Add Contact Overlay will be injected here -->
-            </div>
-        </section>
+  <section class="contactside_section" id="contacts_container">
+    <div class="contact_list" id="contact_list">
+      <button class="contact_btn_addNew" onclick="showAddContactOverlay()">Add new Contact
+        <img class="contact_addBtn_logo" src="../assets/icons/add-person-icon.svg">
+      </button>
     </div>
+  </section>
+  <div>
+    <section class="contact_slogan">
+      <h1>Contacts</h1>
+      <hr class="hr_line_contacts">
+      <p>Better with a team</p>
+
+
+
+    </section>
+    <!-- <section id="contact_detail"></section> -->
+
+    <div id="contact_detail"></div>
+    <div id="editC_overlay" class="addContact_overlay d_none"></div>
+
+    <section class="contact-add-section">
+      <div class="contact-add-overlay" id="contact-add-overlay">
+        <!-- Add Contact Overlay will be injected here -->
+      </div>
+    </section>
+  </div>
+  <button class="contact_mobile_add_btn" onclick="showAddContactOverlay()" aria-label="Add new contact">
+    <img src="../assets/icons/add-person-icon.svg" alt="Add contact">
+  </button>
 </body>
+<footer class="footer__responsive">
+  <a href="summary.html" class="button button__mobile">
+    <img class="icon__mobile" src="../assets/icons/menu/summary__mobile.svg" alt="summary mobile">
+  </a>
+  <a href="add-task.html" class="button button__mobile">
+    <img class="icon__mobile" src="../assets/icons/menu/add-task__mobile.svg" alt="add-task mobile">
+  </a>
+  <a href="board.html" class="button button__mobile">
+    <img class="icon__mobile" src="../assets/icons/menu/board__mobile.svg" alt="board mobile">
+  </a>
+  <a href="contacts.html" class="button button__mobile">
+    <img class="icon__mobile" src="../assets/icons/menu/contacs__mobile.svg" alt="contacts mobile">
+  </a>
+</footer>
 
 </html>

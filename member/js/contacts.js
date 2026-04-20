@@ -8,9 +8,9 @@ import {
     getInitials,
     getAvatarColor,
     getActiveContactId,
-    setActiveContactId
+    setActiveContactId,
+    closeMobileDetailView
 } from './contacts-render.js';
-
 let contacts = {};
 let editingContactId = null;
 
@@ -26,6 +26,9 @@ export function showAddContactOverlay() {
     overlay.innerHTML = getAddOverlayTemplate();
     overlay.style.display = 'flex';
 
+    const addBtn = document.querySelector('.contact_mobile_add_btn');
+    if (addBtn) addBtn.style.display = 'none';
+
     const form = document.getElementById('add_contact_form');
     if (form) form.onsubmit = handleAddContact;
 }
@@ -36,6 +39,11 @@ export function hideAddContactOverlay() {
 
     overlay.style.display = 'none';
     overlay.innerHTML = '';
+
+    const addBtn = document.querySelector('.contact_mobile_add_btn');
+    if (addBtn && !document.body.classList.contains('contacts-mobile-detail-open')) {
+        addBtn.style.display = '';
+    }
 }
 
 // Kontakt in Firebase speichern
@@ -115,12 +123,43 @@ function showSuccessMessage(message) {
     }, 500);
 }
 
+const MOBILE_ACTION_CLOSE_MS = 140;
+let mobileActionsCloseTimer = null;
+
+function toggleContactMobileActions() {
+    const menu = document.getElementById('contact_mobile_actions_menu');
+    if (!menu) return;
+
+    const isHidden = menu.classList.contains('d_none');
+    if (isHidden) {
+        clearTimeout(mobileActionsCloseTimer);
+        menu.classList.remove('d_none', 'is-closing');
+        return;
+    }
+
+    closeContactMobileActions(true);
+}
+
+function closeContactMobileActions() {
+    const menu = document.getElementById('contact_mobile_actions_menu');
+    if (!menu || menu.classList.contains('d_none')) return;
+
+    clearTimeout(mobileActionsCloseTimer);
+    menu.classList.add('is-closing');
+
+    mobileActionsCloseTimer = setTimeout(() => {
+        menu.classList.remove('is-closing');
+        menu.classList.add('d_none');
+    }, MOBILE_ACTION_CLOSE_MS);
+}
+
 function getEmptyContactDetailTemplate() {
     return `
     `;
 }
 
 async function deleteContact(contactId) {
+    closeContactMobileActions();
     if (!isDeletableContact(contactId)) return;
 
     try {
@@ -147,9 +186,10 @@ function clearActiveContactIfDeleted(contactId) {
 
 function resetActiveContactDetail() {
     setActiveContactId(null);
+    closeMobileDetailView();
     renderEmptyContactDetail();
 }
-// rendern eines leeren contact details templates, wenn ein contact gelöscht wird, damit kein fehler auf
+
 function renderEmptyContactDetail() {
     const detailContainer = getContactDetailContainer();
     if (!detailContainer) return;
@@ -187,6 +227,9 @@ function renderEditOverlay(overlay, contactId) {
     overlay.innerHTML = getEditOverlayTemplate(contactId, contact, initials, color);
     overlay.classList.remove('d_none');
     overlay.onclick = closeEditOverlay;
+
+    const addBtn = document.querySelector('.contact_mobile_add_btn');
+    if (addBtn) addBtn.style.display = 'none';
 }
 
 function bindEditFormSubmit() {
@@ -198,11 +241,17 @@ function bindEditFormSubmit() {
 }
 
 function closeEditOverlay() {
+    closeContactMobileActions();
     const overlay = document.getElementById('editC_overlay');
     if (!overlay) return;
     overlay.classList.add('d_none');
     overlay.innerHTML = '';
     editingContactId = null;
+
+    const addBtn = document.querySelector('.contact_mobile_add_btn');
+    if (addBtn && !document.body.classList.contains('contacts-mobile-detail-open')) {
+        addBtn.style.display = '';
+    }
 }
 
 async function saveEditedContact(event) {
@@ -258,12 +307,12 @@ function applyEditedContactLocally(payload) {
         id: editingContactId
     };
 }
-// nach dem editieren eines contacts wird die contact list und die contact details neu gerendert, damit die änderungen sofort sichtbar sind
+
 function rerenderAfterContactEdit() {
     renderContactsList(contacts);
     renderEditedContactDetail();
 }
-// rendern der contact details mit den neuen werten nach dem editieren eines contacts
+
 function renderEditedContactDetail() {
     const contact = contacts[editingContactId];
     if (!contact) return;
@@ -275,7 +324,18 @@ function logEditContactError(error) {
 }
 
 
-// Make functions globally accessible
+document.addEventListener('click', (event) => {
+    const menu = document.getElementById('contact_mobile_actions_menu');
+    if (!menu) return;
+
+    const clickedMenu = event.target.closest('#contact_mobile_actions_menu');
+    const clickedFab = event.target.closest('.contact_mobile_fab_btn');
+
+    if (clickedMenu || clickedFab) return;
+    closeContactMobileActions();
+});
+
+
 window.deleteContact = deleteContact;
 window.showAddContactOverlay = showAddContactOverlay;
 window.hideAddContactOverlay = hideAddContactOverlay;
@@ -283,3 +343,4 @@ window.editContact = editContact;
 window.handleAddContact = handleAddContact;
 window.closeEditOverlay = closeEditOverlay;
 window.saveEditedContact = saveEditedContact;
+window.toggleContactMobileActions = toggleContactMobileActions;
