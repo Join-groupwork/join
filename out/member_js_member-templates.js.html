@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: member/js/member-templates.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: member/js/member-templates.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file HTML template factory functions for member pages.
+ *
+ * Provides functions that return HTML strings for commonly used UI parts:
+ * header, sidebar, add-task form, contact overlays, signup message, and board task cards.
+ *
+ * @module member-templates
+ */
+
+/**
+ * Task categories supported by the board UI.
+ * Used for CSS class naming (e.g. `task__category--user-story`).
+ *
+ * @typedef {"user-story" | "technical-task" | string} Category
+ */
+
+/**
+ * Priority values supported by the board UI.
+ * Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
+ *
+ * @typedef {"low" | "medium" | "urgent" | string} Priority
+ */
+
+/**
+ * Generates the header HTML for member pages.
+ *
+ * Includes:
+ * - Help link
+ * - Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)
+ *
+ * DOM hooks created by this template:
+ * - `#headerMenue` (toggle button)
+ * - `#headerMenueNav` (dropdown container)
+ * - `#logoutBtn` (logout trigger)
+ *
+ * @returns {string} HTML string representing the member header.
+ */
+export function getHeaderTemplate() {
+  return `
+        &lt;header>
+          &lt;div class="topbar-left f-s-20">Kanban Project Management Tool&lt;/div>
+          &lt;div class="topbar-right">
+              &lt;a href="./help.html"class="help-circle" title="Help">?&lt;/a>
+              &lt;div id="headerMenue" class="profile">
+                  SM
+                  &lt;nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
+                      &lt;ul>
+                          &lt;a href="./legal-notice-user.html">Legal Notice&lt;/a>
+                      &lt;/ul>
+                      &lt;ul>
+                          &lt;a href="./privacy-policy-user.html">Privacy Policy&lt;/a>
+                      &lt;/ul>
+                      &lt;ul>
+                          &lt;a id="logoutBtn">
+                              Log out
+                          &lt;/a>
+                      &lt;ul/>
+                  &lt;/nav>
+              &lt;/div>
+          &lt;/div>
+        &lt;/header>
+      `;
+};
+
+
+/**
+ * Generates the sidebar HTML for member pages.
+ *
+ * Includes:
+ * - Logo
+ * - Navigation links (Summary / Add Task / Board / Contacts)
+ * - Footer links (Privacy Policy / Legal Notice)
+ *
+ * @returns {string} HTML string representing the member sidebar.
+ */
+export function getSidebarTemplate() {
+  return `
+      &lt;div class="logo">
+        &lt;img src="../assets/img/logo-bright.svg" alt="" >
+      &lt;/div>
+
+      &lt;nav class="nav">
+        &lt;a class="nav-item" href="./summary.html">&lt;img src="../assets/icons/side-menu/summary-icon.svg" alt="Summary" class="nav-icon">Summary&lt;/a>
+        &lt;a class="nav-item" href="./add-task.html">&lt;img src="../assets/icons/side-menu/add-task-icon.svg" alt="Add Task" class="nav-icon">Add Task&lt;/a>
+        &lt;a class="nav-item" href="./board.html">&lt;img src="../assets/icons/side-menu/board-icon.svg" alt="Board" class="nav-icon">Board&lt;/a>
+        &lt;a class="nav-item" href="./contacts.html">&lt;img src="../assets/icons/side-menu/contacts-icon.svg" alt="Contacts" class="nav-icon">Contacts&lt;/a>
+      &lt;/nav>
+
+      &lt;div class="footer">
+        &lt;a href="./privacy-policy-user.html">Privacy Policy&lt;/a>
+        &lt;a href="./legal-notice-user.html">Legal Notice&lt;/a>
+      &lt;/div>
+    `;
+};
+
+// FIXME Line 129 - 131: icons in assets folder wrong. We musst change to correct icons or rename icons to BEM.
+/**
+ * Generates the "Add Task" form HTML.
+ *
+ * NOTE:
+ * This function only returns markup. Event handling (submit, priority button selection,
+ * form validation, etc.) should be implemented in the page/controller script.
+ *
+ * @returns {string} HTML string representing the add-task form section.
+ */
+export function getTaskTemplate() {
+  return `
+     &lt;section class="overlay_add_task">
+        &lt;h1 class="h1_add_task">Add Task&lt;/h1>
+            &lt;section class="section_add_task">
+
+            &lt;section>
+                &lt;form class="form_add_task">
+                    &lt;label for="title">Title*&lt;/label>
+                    &lt;input class="input_add_task" type="text" id="title" name="title" required placeholder="Enter a title">
+
+                    &lt;label for="description">Description&lt;/label>
+                    &lt;textarea class="textarea_add_task" id="description" name="description" required placeholder="Enter a Description">&lt;/textarea>
+
+                    &lt;label for="due_date">Due date*&lt;/label>
+                    &lt;input class="input_add_task" type="date" id="due_date" name="due_date" required placeholder="dd/mm/yyyy">
+                &lt;/form>
+            &lt;/section>
+            &lt;hr class="hr_add_task">
+            &lt;form class="select_add_task">
+                &lt;section class="section_priority">
+                    &lt;label for="priority">Priority&lt;/label>
+                    &lt;div id="priority" class="priority" name="priority">
+                        &lt;button class="priority_button" value="low">Urgent &lt;img src="../assets/icons/Property 1=Urgent.svg" alt="">&lt;/button>
+                        &lt;button class="priority_button" value="medium">Medium &lt;img src="../assets/icons/Property 1=Medium.svg" alt="">&lt;/button>
+                        &lt;button class="priority_button" value="high">Low &lt;img src="../assets/icons/Property 1=Low.svg" alt="">&lt;/button>
+                    &lt;/div>
+                &lt;/section>
+
+                &lt;label for="">Assigned to&lt;/label>
+                &lt;select class="input_add_task margin_bottom_add_task" type="text" id="assigned_to" name="assigned_to" required
+                    placeholder="Select contacts to assign">
+                    &lt;option value="select_contact">Select contacts to assign&lt;/option>
+                    &lt;option value="contact_1">Contact 1&lt;/option>
+                    &lt;option value="contact_2">Contact 2&lt;/option>
+                    &lt;option value="contact_3">Contact 3&lt;/option>
+                &lt;/select>
+
+                &lt;label for="">Category&lt;/label>
+                &lt;select class="input_add_task margin_bottom_add_task" id="category" name="category" required placeholder="">
+                    &lt;option value="select_task_category">Select task category&lt;/option>
+                    &lt;option value="technical_task">Technical Task&lt;/option>
+                    &lt;option value="user_story">User Story&lt;/option>
+                &lt;/select>
+
+                &lt;label for="">Subtasks&lt;/label>
+                &lt;input class="input_add_task" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
+            &lt;/form>
+        &lt;/section>
+        &lt;section class="section_add_task_button">
+            &lt;button class="clear_button_add_task" type="button">Cancel &lt;img src="../../assets/icons/close.svg" alt="">&lt;/button>
+            &lt;button class="Create_button_add_task" type="submit">Create Task &lt;img src="../../assets/icons/check.svg" alt="">&lt;/button>
+        &lt;/section>
+    &lt;/section>
+    `;
+};
+
+// contact overlays einbinden --->id="editC_overlay" oder id="addC_overlay" in den &lt;body> einfügen,
+// (siehe contact_add_overlay.html/contact_edit_overlay.html &lt;-- können danach gelöscht werden)
+// je nachdem welches overlay gebraucht wird --- ansonsten bis auf css fertig
+/**
+ * Generates the contact edit overlay HTML.
+ *
+ * Intended to be injected into a container element like `#editC_overlay`.
+ *
+ * @returns {string} HTML string representing the edit-contact overlay.
+ */
+
+// CHECK Line 192: Why not with pseudoclass ::after?
+/**
+ * Generates the contact add overlay HTML.
+ *
+ * Intended to be injected into a container element like `#addC_overlay`.
+ *
+ * @returns {string} HTML string representing the add-contact overlay.
+ */
+export function getAddOverlayTemplate() {
+  return `
+     &lt;main class="addContact_overlay">
+          &lt;section class="overlay_add_contact">
+
+            &lt;div class="overlay_add_contact_left">
+                &lt;img class="join_logo_overlay" src="../../assets/img/logo-bright.svg" alt="Join Logo">
+                &lt;div>
+                &lt;h2 class="heading_add_contact">Add Contact&lt;/h2>
+                &lt;p>Tasks are better with a team!&lt;/p>
+                &lt;img class="h2_underline" style="margin: unset; height: unset; width: 90px;" src="../../assets/icons/underline-blue.svg" alt="">
+                &lt;/div>
+            &lt;/div>
+
+            &lt;div class="overlay_add_contact_right">
+
+                &lt;div class="close_overlay_icon_container">
+                    &lt;img class="close_overlay_icon" src="../../assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="hideAddContactOverlay()">
+                &lt;/div>
+                &lt;div class="addContact_form_container">
+
+                    &lt;div>
+                        &lt;img class="overlay_avatar" src="../../assets/icons/contact-icon.svg" alt="Contact Icon">
+                    &lt;/div>
+                    &lt;form class="form_add_contact" id="add_contact_form">
+                        &lt;input type="text" id="contact_name" name="contact_name" class="input_add_contact" required>
+                        &lt;input type="email" id="contact_email" name="contact_email" class="input_add_contact" required>
+                        &lt;input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact">
+                    &lt;/form>
+                &lt;/div>
+
+                &lt;div class="buttons_add_contact">
+                    &lt;button type="button" class="btn_save_contact" onclick="hideAddContactOverlay()">Cancel &lt;img src="../../assets/icons/close-icon.svg" alt="">&lt;/button>
+                    &lt;button type="submit" form="add_contact_form" class="btn_cancel_contact">Create contact &lt;img src="../../assets/icons/check-icon-white.svg" alt="">&lt;/button>
+                &lt;/div>
+
+            &lt;/div>
+
+        &lt;/section>
+
+    &lt;/main>
+    `;
+};
+
+
+/**
+ * Generates a success message shown after a successful signup.
+ *
+ * @returns {string} HTML string representing a signup success message.
+ */
+export function signupMassegeTemplate() {
+  return `
+        &lt;aside class="signup-massege-box">
+            &lt;p>
+                You Signed Up successfully
+            &lt;/p>
+        &lt;/aside>
+    `;
+};
+
+
+/**
+ * Generates a task card HTML string for the board (drag-and-drop).
+ *
+ * NOTE:
+ * - `category` is used to build the CSS class name `task__category--${category}`
+ * - `priority` is used to build the icon path `/assets/icons/${priority}-prio-icon.svg`
+ *
+ * @param {string} id - Task ID (used as DOM element `id` and for drag &amp; drop).
+ * @param {string} title - Task title.
+ * @param {Category} category - Task category label.
+ * @param {string} description - Task description.
+ * @param {Priority} priority - Task priority label.
+ * @returns {string} HTML string representing the task card.
+ */
+export function generateTodosHTML(id, title, category, description, priority) {
+  return `
+            &lt;div class="task__card" id="${id}" draggable="true">
+              &lt;span class="task__category--${category}">${category}&lt;/span>&lt;br>
+              &lt;h4 class="task__title">${title}&lt;/h4>&lt;br>
+              &lt;p class="task__text">${description}&lt;/p>&lt;br>
+              &lt;div class="task__bar" id="taskProgressBar">&lt;/div>&lt;br>
+              &lt;div class="task__footer">
+                &lt;div>users&lt;/div>
+                &lt;img src="../assets/icons/${priority}-prio-icon.svg" alt="">
+              &lt;/div>
+            &lt;/div>
+          `;
+};
+
+
+export function generateProgressBar() {
+  return `
+          &lt;progress>&lt;/progress>
+`
+}
+
+
+/**
+ * Two show contact details overlay.
+ *
+ * @param {string} contact - Name frome Contact
+ * @param {string} initials - Initials from Contact Name
+ * @param {string} bgColor - Background Color for Avatar
+ * @param {number} phone - Phonenumber from Contact
+ * @returns {string} - HTML string representing the contact details
+ */
+export function getActiveContactTemplate(contact, initials, bgColor, phone) {
+  return `
+    &lt;section class="contact_detail_card contact_detail_card--enter">
+      &lt;div class="contact_detail_header">
+        &lt;div class="contact_avatar contact_avatar--large" style="background-color:${bgColor}">
+          ${initials}
+        &lt;/div>
+        &lt;div>
+          &lt;h2 class="contact_detail_name">${contact.name || ''}&lt;/h2>
+          &lt;div class="contact_detail_actions">
+            &lt;button type="button" class="link_btn" onclick="editContact('${contact.id}')">&lt;img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit&lt;/button>
+            &lt;button type="button" class="link_btn" onclick="deleteContact('${contact.id}')">&lt;img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete&lt;/button>
+          &lt;/div>
+        &lt;/div>
+      &lt;/div>
+
+      &lt;h3 class="contact_detail_subtitle">Contact Information&lt;/h3>
+
+      &lt;div class="contact_detail_info">
+        &lt;strong>Email&lt;/strong>
+        &lt;a href="mailto:${contact.email || ''}">${contact.email || ''}&lt;/a>
+      &lt;/div>
+
+      &lt;div class="contact_detail_info">
+        &lt;strong>Phone&lt;/strong>
+        &lt;a href="tel:${phone}">${phone}&lt;/a>
+      &lt;/div>
+    &lt;/section>
+  `;
+}
+
+/**
+ * Show the overlay to editing contact details.
+ *
+ * @param {string} contactId
+ * @param {string} contact
+ * @param {string} initials
+ * @param {string} color
+ * @returns {string} - HTML string representing the contact editing overlay.
+ */
+export function getEditOverlayTemplate(contactId, contact, initials, color) {
+  return `
+    &lt;section class="overlay_add_contact" onclick="event.stopPropagation()">
+      &lt;div class="overlay_add_contact_left">
+        &lt;img class="join_logo_overlay" src="../../assets/img/logo-bright.svg" alt="Join Logo">
+        &lt;h2 class="heading_add_contact">Edit Contact&lt;/h2>
+        &lt;img class="h2_underline" src="../../assets/icons/underline-blue.svg" alt="">
+      &lt;/div>
+
+      &lt;div class="overlay_add_contact_right">
+       &lt;div class="close_overlay_icon_container">
+                    &lt;img class="close_overlay_icon" src="../../assets/icons/close-icon.svg" alt="Close Overlay Icon" onclick="closeEditOverlay()">
+                &lt;/div>
+        &lt;div class="addContact_form_container">
+            &lt;div class="contact_avatar contact_avatar--large edit_overlay_avatar overlay_avatar" style="background-color:${color}">
+                ${initials}
+            &lt;/div>
+          &lt;form class="form_add_contact" id="edit_contact_form">
+            &lt;input type="text" id="contact_name" class="input_add_contact" placeholder="Name" value="${contact.name || ''}" required>
+            &lt;input type="email" id="contact_email" class="input_add_contact" placeholder="Email" value="${contact.email || ''}" required>
+            &lt;input type="tel" id="contact_phone" class="input_add_contact" placeholder="Phone" value="${contact.phone || ''}">
+            &lt;div class="buttons_add_contact">
+              &lt;button type="button" class="btn_save_contact" onclick="deleteContact('${contactId}')">Delete&lt;/button>
+              &lt;button type="submit" class="btn_cancel_contact">Save&lt;img src="../../assets/icons/check-icon-white.svg" alt="">&lt;/button>
+            &lt;/div>
+          &lt;/form>
+        &lt;/div>
+      &lt;/div>
+    &lt;/section>
+  `;
+}
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

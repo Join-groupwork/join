@@ -5,34 +5,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Join</title>
-  <link rel="icon" href="/assets/img/logo-dark.svg" type="image/svg" />
-  <link rel="stylesheet" href="/styles/standard.css">
-  <link rel="stylesheet" href="/styles/join.css">
-  <link rel="stylesheet" href="/styles/fonts.css">
-  <link rel="stylesheet" href="/styles/colors.css">
-  <link rel="stylesheet" href="/styles/assets.css">
-  <link rel="stylesheet" href="/member/css/legal-notice.css">
-  <script type="module" src="/scripts/firebase/firebase.js"></script>
-  <script type="module" src="/login/auth-guard.js"></script>
-  <script type="module" src="/member/js/member-templates.js"></script>
-  <script type="module" src="/member/js/member-script.js"></script>
+  <link rel="icon" href="../assets/img/logo-dark.svg" type="image/svg" />
+  <link rel="stylesheet" href="../styles/standard.css" />
+  <link rel="stylesheet" href="../styles/fonts.css" />
+  <link rel="stylesheet" href="../styles/colors.css" />
+  <link rel="stylesheet" href="../styles/assets.css" />
+  <link rel="stylesheet" href="../styles/join.css" />
+  <link rel="stylesheet" href="../styles/legal-notice.css">
+  <script type="module" src="../scripts/firebase/firebase.js"></script>
+  <script type="module" src="../login/auth-guard.js"></script>
+  <script type="module" src="./js/member-templates.js"></script>
+  <script type="module" src="./js/member-script.js"></script>
 </head>
 
 <body>
   <div class="app">
-    <!-- TOPBAR -->
-    <header class="topbar" id="header">
-    </header>
+
     <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-    </aside>
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <!-- TOPBAR -->
+    <header class="topbar" id="header"></header>
+
     <!-- MAIN -->
     <main class="main">
       <section class="legal-page">
         <!-- LEGAL NOTICE CONTENT -->
-        <h1 class="inter-700-bold f-s-60">Legal Notice</h1><br>
+        <h1 class="legal__title">Legal Notice</h1><br>
         <br>
-        <h2 class="inter-700-bold f-s-27">Imprint</h2>
+        <h2 class="">Imprint</h2>
 
         <ul>
           <li>Matthias Tausch</li>
@@ -45,25 +46,25 @@
         25821 Breklum
         <br>
         <br>
-        <h2 class="inter-700-bold f-s-27">Exploring the Board</h2>
+        <h2 class="">Exploring the Board</h2>
         <p>Email: <a href="mailto:#"></a>[Email]</p><br>
-        <br>
+
         <section>
-          <h2 class="inter-700-bold f-s-27">Acceptance of terms</h2><br>
+          <h2 class="">Acceptance of terms</h2><br>
           By accessing and using <span class="color__text--light-blue">Join</span> (Product), you a nockowledge and
           agree
           to the following terms and conditions, and
           any
-          policies, guidelines, or amendments thereto that may be presented to you from time to time. We, the listed
-          students, may update or change the terms and conditions from time to time without notice.
+          policies, guidelines, <br>or amendments thereto that may be presented to you from time to time. We, the listed
+          students, may update or change the terms and conditions <br> from time to time without notice.
         </section><br>
         <br>
-        <h2 class="inter-700-bold f-s-27">Scope and ownership of the product</h2>
+        <h2 class="">Scope and ownership of the product</h2>
         <section>
           <span class="color__text--light-blue">Join</span> has been developed as part of a student group project in a
           web development bootcamp at the <span class="color__text--light-blue">Developer Akademie GmbH</span>
-          . It has an educational purpose and is not intended for extensive personal & business usage. As
-          such, we cannot guarantee consistent availability, reliability, accuracy, or any other aspect of quality
+          . It has an educational <br>purpose and is not intended for extensive personal & business usage. As
+          such, we cannot guarantee consistent availability, reliability, accuracy, <br> or any other aspect of quality
           regarding this Product. <br>
           <br>
           The design of <span class="color__text--light-blue">Join</span> is owned by the <span
@@ -73,7 +74,7 @@
         </section><br>
         <br>
         <section>
-          <h2 class="inter-700-bold f-s-27">Proprietary rights</h2>
+          <h2 class="">Proprietary rights</h2>
           Aside from the design owned by <span class="color__text--light-blue">Developer Akademie GmbH</span>, we, the
           listed students, retain all proprietary rights
           in <span class="color__text--light-blue">Join</span>, including any associated copyrighted material,
@@ -81,7 +82,7 @@
         </section><br>
         <br>
         <section>
-          <h2 class="inter-700-bold f-s-27">Use of the product</h2>
+          <h2 class="">Use of the product</h2>
           <span class="color__text--light-blue">Join</span> is intended to be used for lawful purposes only, in
           accordance with all applicable laws and regulations.
           Any use of <span class="color__text--light-blue">Join</span> for illegal activities, or to harass, harm,
@@ -92,7 +93,7 @@
         </section><br>
         <br>
         <section>
-          <h2 class="inter-700-bold f-s-27">Disclaimer of warranties and limitation of liability</h2>
+          <h2 class="">Disclaimer of warranties and limitation of liability</h2>
           <span class="color__text--light-blue">Join</span> is provided "as is" without warranty of any kind, whether
           express or implied, including but not limited
           to
@@ -119,70 +120,24 @@
           <br>
           Date: July 26, 2023
         </section>
-        <!-- <h1 class="inter-700-bold f-s-60">Legal Notice</h1><br>
-        <br>
-        <section>
-          <h2>Information according to § 5 TMG</h2>
-          <p>
-            <strong>Website Owner:</strong> [Your Name]<br>
-            <strong>Address:</strong><br>
-            Musterstraße 12<br>
-            12345 Berlin<br>
-            Germany<br><br>
-            <strong>Email:</strong> [contact@example.com]
-          </p>
-        </section>
-
-        <section>
-          <h2>Project Information</h2>
-          <p>
-            This website is a non-commercial portfolio and demonstration project.
-            It was created for educational and presentation purposes only and is not
-            intended for commercial use.
-          </p>
-        </section>
-
-        <section>
-          <h2>Liability for Content</h2>
-          <p>
-            The contents of this website have been created with the greatest possible care.
-            However, no guarantee is given for the accuracy, completeness, or timeliness
-            of the content.
-          </p>
-        </section>
-
-        <section>
-          <h2>Liability for Links</h2>
-          <p>
-            This website may contain links to external third-party websites.
-            We have no influence over the content of those websites and therefore
-            cannot assume any liability for them.
-          </p>
-        </section>
-
-        <section>
-          <h2>Copyright</h2>
-          <p>
-            The content and works on this website are subject to copyright law.
-            Any duplication or use beyond the scope of copyright law requires
-            prior written consent from the website owner.
-          </p>
-        </section>
-
-        <section>
-          <h2>Contact</h2>
-          <p>
-            If you have any questions regarding this Legal Notice, please contact:<br>
-            <strong>[Your Name]</strong><br>
-            Email: [contact@example.com]
-          </p>
-        </section> -->
-
     </main>
 
   </div>
 
-
+  <footer class="footer__responsive">
+    <a href="" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/summary__mobile.svg" alt="summary mobile">
+    </a>
+    <a href="" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/add-task__mobile.svg" alt="add-task mobile">
+    </a>
+    <a href="" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/board__mobile.svg" alt="board mobile">
+    </a>
+    <a href="" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/contacs__mobile.svg" alt="contacts mobile">
+    </a>
+  </footer>
 </body>
 
 </html>

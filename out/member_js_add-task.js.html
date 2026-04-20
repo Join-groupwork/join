@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: member/js/add-task.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: member/js/add-task.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { pushTask } from '../../scripts/firebase/push-task.js';
+
+/**
+ * Initializes the task creation page after the DOM is fully loaded.
+ *
+ * Sets up:
+ * - Priority button selection handling
+ * - Create task button logic (including validation and Firebase push)
+ * - Cancel button navigation behavior
+ *
+ * @event DOMContentLoaded
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  const createBtn = document.querySelector('.Create_button_add_task');
+  const cancelBtn = document.querySelector('.clear_button_add_task');
+  const titleInput = document.getElementById('title');
+  const descInput = document.getElementById('description');
+  const dueInput = document.getElementById('due_date');
+  const assignedSelect = document.getElementById('assigned_to');
+  const categorySelect = document.getElementById('category');
+  const subtaskInput = document.getElementById('subtask');
+  const priorityButtons = document.querySelectorAll('.priority_button');
+
+  let selectedPriority = null;
+
+  /**
+   * Handles priority button selection.
+   *
+   * Removes the "selected" class from all priority buttons,
+   * assigns it to the clicked button and stores the selected value.
+   *
+   * @param {MouseEvent} e - The click event object.
+   */
+
+  priorityButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      priorityButtons.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedPriority = btn.value || btn.getAttribute('value') || btn.textContent.trim();
+    });
+  });
+
+  if (createBtn) {
+
+    /**
+     * Handles the task creation process.
+     *
+     * Validates input, constructs the task object,
+     * sends it to Firebase using pushTask(),
+     * and redirects to the board page on success.
+     *
+     * @async
+     * @param {MouseEvent} e - The click event object.
+     * @returns {Promise&lt;void>}
+     */
+
+    createBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const title = titleInput?.value?.trim();
+      if (!title) { alert('Title required'); return; }
+      const taskData = {
+        title,
+        description: descInput?.value?.trim() || '',
+        due_date: dueInput?.value || '',
+        priority: selectedPriority || 'low',
+        assigned_to: assignedSelect?.value || '',
+        category: categorySelect?.value || '',
+        subtask: subtaskInput?.value?.trim() || "",
+        status: 'todo',
+        createdAt: new Date().toISOString()
+      };
+      try {
+        createBtn.disabled = true;
+        const key = await pushTask(taskData);
+        console.log('Pushed task, key:', key);
+        alert('Task created successfully');
+        window.location.href = './member/board.html';
+      } catch (err) {
+        console.error(err);
+        alert('Failed to create task');
+      } finally {
+        createBtn.disabled = false;
+      }
+    });
+  }
+
+  if (cancelBtn) {
+
+    /**
+     * Handles cancel button click.
+     *
+     * Prevents default behavior and navigates back
+     * to the previous page in browser history.
+     *
+     * @param {MouseEvent} e - The click event object.
+     */
+
+    cancelBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.history.back();
+    });
+  }
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

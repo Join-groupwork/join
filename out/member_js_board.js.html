@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: member/js/board.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: member/js/board.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { loadTasks } from '../../scripts/firebase/get-firebase.js';
+import { generateTodosHTML } from './member-templates.js';
+
+/**
+ * Possible board states.
+ * @typedef {"todo" | "in-progress" | "await-feedback" | "done"} TaskStatus
+ */
+
+/**
+ * Possible task categories.
+ * @typedef {"user-story" | "technical-task"} Category
+ */
+
+/**
+ * Possible priority values.
+ * @typedef {"low" | "medium" | "urgent"} Priority
+ */
+
+/**
+ * Represents a board task.
+ *
+ * @typedef {Object} Todo
+ * @property {string} title - Task title.
+ * @property {string} description - Task description.
+ * @property {string} date - Due date (YYYY-MM-DD) or empty string.
+ * @property {Priority} priority - Task priority level.
+ * @property {string} assignedTo - Person(s) assigned to this task (currently unused).
+ * @property {Category} category - Task category.
+ * @property {TaskStatus} status - Current board column/status.
+ */
+
+/**
+ * References to the DOM containers (board columns) where tasks are rendered.
+ *
+ * @type {{
+ *   todo: HTMLElement|null,
+ *   inProgress: HTMLElement|null,
+ *   awaitFeedback: HTMLElement|null,
+ *   done: HTMLElement|null
+ * }}
+ */
+const columns = {
+  /** @type {HTMLElement|null} */ todo: document.getElementById('todo'),
+  /** @type {HTMLElement|null} */ inProgress: document.getElementById('inProgress'),
+  /** @type {HTMLElement|null} */ awaitFeedback: document.getElementById('awaitFeedback'),
+  /** @type {HTMLElement|null} */ done: document.getElementById('done'),
+};
+/**
+ * Task collection indexed by id.
+ * NOTE: Placeholder data until Firebase is connected.
+ *
+ * @type {Record&lt;string, Todo>}
+ */
+export let todos = {};
+
+
+/**
+ * Loads all tasks from Firebase and renders them into the board.
+ *
+ * @async
+ * @returns {Promise&lt;void>}
+ */
+export async function initBoard() {
+  try {
+    todos = await loadTasks();
+    updateHTML();
+  } catch (error) {
+    console.error('Fehler bei Laden der Tasks:', error);
+  }
+}
+
+
+/**
+ * Re-renders all board columns and updates placeholder visibility.
+ *
+ * Skips rendering when the board DOM is not present.
+ *
+ * @returns {void}
+ */
+export function updateHTML() {
+  // if this page doesn’t have a todo column we’re not on the board,
+  // so skip all DOM updates to avoid null errors
+  if (!document.getElementById('todo')) return;
+  updateTodo();
+  updateInProgress();
+  updateAwaitFeedback();
+  updateDone();
+  togglePlaceholder();
+};
+
+
+/**
+ * Renders tasks with {@link Todo.status} === "todo" into the `#todo` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateTodo() {
+  const container = document.getElementById('todo');
+  if (!container) return;
+  container.innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'todo') {
+      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.status} === `"in-progress"` into the `#inProgress` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateInProgress() {
+  document.getElementById('inProgress').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'in-progress') {
+      document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.status} === `"await-feedback"` into the `#awaitFeedback` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateAwaitFeedback() {
+  document.getElementById('awaitFeedback').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'await-feedback') {
+      document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.status} === `"done"` into the `#done` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateDone() {
+  document.getElementById('done').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'done') {
+      document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
+    }
+  }
+};
+
+
+/**
+ * Shows/hides the placeholder inside each `.task__area` depending on whether
+ * at least one task exists for that column.
+ *
+ * Uses `.task__area[data-status]` to match against {@link Todo.status}.
+ *
+ * @private
+ * @returns {void}
+ */
+function togglePlaceholder() {
+  const taskAreas = document.querySelectorAll('.task__area');
+  taskAreas.forEach(area => {
+    let status = area.dataset.status;
+    const placeholder = area.querySelector('.task__area--placeholder');
+    let hasTask = Object.values(todos).some(task => task.status === status);
+    if (hasTask) {
+      placeholder.classList.add('d-none')
+    } else {
+      placeholder.classList.remove('d-none');
+    }
+  });
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

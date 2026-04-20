@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: member/js/member-script.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: member/js/member-script.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Member page bootstrapper: renders header, sidebar and task UI,
+ * then initializes the board and wires up header menu + logout.
+ *
+ * This module injects shared HTML templates into the page and starts
+ * board rendering via `initBoard()` from `board.js`.
+ *
+ * DOM requirements (IDs must exist in the HTML):
+ * - `header`        : container for the header template
+ * - `sidebar`       : container for the sidebar template
+ * - `add_task`      : container for the "add task" template
+ * - `editC_overlay` : optional container for contact edit overlay
+ * - `addC_overlay`  : optional container for contact add overlay
+ * - `headerMenue`   : profile/menu button in the header
+ * - `headerMenueNav`: dropdown container toggled by profile button
+ * - `logoutBtn`     : logout button
+ *
+ * External dependencies:
+ * - Template functions from `member-templates.js`
+ * - `initBoard()` from `board.js`
+ * - Firebase Auth instance `auth` and `signOut()`
+ *
+ * @module member-ui
+ */
+import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate, getAddOverlayTemplate, generateTodosHTML } from './member-templates.js';
+import { initBoard } from './board.js';
+import { updateHTML } from './board.js';
+import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { auth } from "../../scripts/firebase/firebase.js";
+
+init();
+
+
+async function renderBoard() {
+  await initBoard();
+}
+
+/**
+ * Entry point for module initialization.
+ * Renders all UI parts in sequence.
+ *
+ * @async
+ * @returns {Promise&lt;void>}
+ */
+async function init() {
+  await render();
+  // renderBoard();
+};
+
+
+/**
+ * Renders all static UI sections and the board.
+ *
+ * @async
+ * @returns {Promise&lt;void>}
+ */
+async function render() {
+  await renderHeader();
+  await renderSidebar();
+
+  // only attempt to render the add‑task button if the placeholder exists
+  if (document.getElementById('add_task')) {
+    await renderAddTask();
+  }
+
+  // renderContactAddOverlay();   &lt;-- Aktivieren, um das Overlay zum Hinzufügen von Kontakten anzuzeigen
+  // renderContactEditOverlay(); Contact
+  await renderBoard();
+};
+
+
+/**
+ * Injects the header template into `#header`.
+ *
+ * @returns {void}
+ */
+function renderHeader() {
+  const headerRef = document.getElementById('header');
+  if (headerRef) {
+    headerRef.innerHTML = getHeaderTemplate();
+  } else {
+    console.error('Header-Element nicht gefunden!');
+  }
+};
+
+
+/**
+ * Injects the sidebar template into `#sidebar`.
+ *
+ * @returns {void}
+ */
+function renderSidebar() {
+  const sidebarRef = document.getElementById('sidebar');
+  if (sidebarRef) {
+    sidebarRef.innerHTML = getSidebarTemplate();
+  } else {
+    console.error('Sidebar-Element nicht gefunden!');
+  }
+};
+
+
+
+/**
+ * Injects the add-task template into `#add_task`.
+ *
+ * @returns {void}
+ */
+function renderAddTask() {
+  const addTaskRef = document.getElementById('add_task');
+  if (addTaskRef) {
+    addTaskRef.innerHTML = getTaskTemplate();
+  } else {
+    console.error('Add Task-Element nicht gefunden!');
+  }
+};
+
+
+/**
+ * Injects the contact edit overlay template into `#editC_overlay`.
+ *
+ * @returns {void}
+ */
+function renderContactEditOverlay() {
+  const editContactRef = document.getElementById('editC_overlay');
+  if (editContactRef) {
+    editContactRef.innerHTML = getEditOverlayTemplate();
+  } else {
+    console.error('ContactOverlay-Element nicht gefunden!');
+  }
+};
+
+
+
+/**
+ * Registers UI event listeners after the DOM is ready:
+ * - Toggle header dropdown menu
+ * - Sign out user and redirect to index page
+ *
+ * @event DOMContentLoaded
+ * @listens Document#DOMContentLoaded
+ * @returns {void}
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  const profileBtn = document.getElementById('headerMenue');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const headerMenueNav = document.getElementById('headerMenueNav');
+  profileBtn.addEventListener('click', () => {
+    headerMenueNav.classList.toggle('d_none');
+  })
+  logoutBtn.addEventListener('click', () => {
+    try {
+      const userCredential = signOut(auth);
+      console.log("Logout erfolgreich:", userCredential.user);
+      window.location.href = "./index.html"; // target page after Logout
+    } catch (error) {
+      console.error("Logout Fehlgeschlagen:", error.message);
+      alert("Logout fehlgeschlagen");
+    }
+  })
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

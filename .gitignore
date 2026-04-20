@@ -3,7 +3,8 @@
 .env*
 !example.env
 firebase.js
-
+env.*
+.DS_Store
 # config files
 *.vscode
 .vscode*

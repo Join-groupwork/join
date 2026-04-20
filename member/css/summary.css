@@ -1,92 +1,183 @@
+@import url('./summary-responsive.css');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: OpenSans, sans-serif;
+}
+
+.summary-page {
+  font-family: "Open Sans", sans-serif;
+  min-width: 320px;
 }
 
 .app {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 }
 
+.logo {
+  margin-left: 20px;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+.legal a {
+  display: block;
+  font-size: 14px;
+  color: #abb0b3;
+  cursor: pointer;
+  width: calc(100% + 80px);
+  margin-left: -40px;
+  margin-right: -40px;
+  padding: 10px 40px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.legal a:hover {
+  color: #2ba9e5;
+  font-weight: bold;
+}
 
 .main {
   flex: 1;
-  background: #f6f7f8;
+  min-width: 0;
   overflow-y: auto;
 }
 
 .dashboard {
- padding: 186px 0px 0px 340px;
+  padding: 160px 24px 32px;
 }
 
-.cards {
-  margin-top: 20px;
+.dashboard__top {
   display: flex;
-  gap: 20px;
-}
-
-/* Dashboard two-column layout: left = cards, right = greeting (50% / 50%) */
-.dashboard-top {
-  display: flex;
+  flex-wrap: wrap;
   gap: 24px;
-  align-items: stretch;
-  width: calc(100% - 60px);
+  align-items: center;
 }
 
-.dashboard-left {
-  flex: 0 0 50%;
+.dashboard__left,
+.dashboard-right {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.dashboard__left {
+  width: 100%;
+  max-width: 720px;
 }
 
 .dashboard-right {
-  flex: 0 0 50%;
   display: flex;
   align-items: center;
-  justify-content: flex-start
+  justify-content: flex-start;
 }
 
 .greeting {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  align-items: center;
-  padding-left: 24px;
+  align-items: flex-start;
+  padding-left: 48px;
 }
 
 .greeting-line {
-  font-size: 32px;
+  font-size: 48px;
   color: #2c374b;
 }
 
 .greeting-name {
-  font-size: 38px;
+  font-size: 64px;
   font-weight: 700;
   color: #45a0c5;
+  word-break: break-word;
+}
+
+.cards {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.cards>.card {
+  flex: 1 1 calc(50% - 15px);
+  min-width: 0;
 }
 
 .card {
   background: white;
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 24px;
   width: 100%;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.heading-join {
+.card.icon-card,
+.card.urgent-info,
+.small-card {
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  cursor: pointer;
+}
+
+.card.icon-card:hover,
+.card.urgent-info:hover,
+.small-card:hover {
+  background: #2a3547;
+  transform: scale(1.10);
+}
+
+.card.icon-card:hover .card-title,
+.card.icon-card:hover .card-sub,
+.card.urgent-info:hover .card-title,
+.card.urgent-info:hover .card-sub,
+.small-card:hover .big,
+.small-card:hover .label {
+  color: #ffffff;
+}
+
+.card.urgent-info:hover .urgent-right .date,
+.card.urgent-info:hover .urgent-right .small-sub {
+  color: #ffffff;
+}
+
+.card-left-icon:hover {
+  background-image: url('../../assets/icons/check-circle-white.svg');
+}
+
+.summary__title {
   display: flex;
   align-items: center;
   gap: 16px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.summary__title h3 {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.summary__title h3::before {
+  content: "";
+  width: 2px;
+  height: 60px;
+  background-color: var(--border__bar);
+  border-radius: 8px;
+  flex-shrink: 0;
 }
 
 h1 {
-  font-size: 56px;
+  font-size: 64px;
 }
 
 h3 {
-  font-size: 24px;
+  font-size: 30px;
+  font-weight: normal;
 }
 
 .heading-join h1,
@@ -94,45 +185,61 @@ h3 {
   margin: 0;
 }
 
-.divider-blue {
-  width: 2px;
-  height: 36px;
-  background: #2fa9db;
-  align-self: center;
-  border-radius: 8px;
-}
-
-/* Cards that show an icon on the left and content on the right */
 .icon-card {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
   text-align: left;
+  min-width: 0;
 }
 
 .card-left-icon {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+.card.icon-card.todo>.card-left-icon {
+  background-image: url('../../assets/icons/pencil-circle.svg');
+}
+
+.card.icon-card.done>.card-left-icon {
+  background-image: url('../../assets/icons/check-circle.svg');
+}
+
+.card.urgent-info .card-left-icon {
+  background-image: url('../../assets/icons/urgent-prio-summary.svg');
+}
+
+.card.icon-card.todo:hover>.card-left-icon {
+  background-image: url('../../assets/icons/pencil-circle-white.svg');
+}
+
+.card.icon-card.done:hover>.card-left-icon {
+  background-image: url('../../assets/icons/check-circle-white.svg');
 }
 
 .card-right {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .info-row {
-  margin-top: 16px;
-  display: flex;
-  gap: 20px;
+  margin-top: 30px;
+  display: block;
+  width: 100%;
 }
 
 .urgent-info {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  gap: 16px;
   width: 100%;
   padding: 30px;
   box-sizing: border-box;
@@ -150,6 +257,7 @@ h3 {
   height: 80px;
   background: #d1d1d1;
   align-self: center;
+  flex-shrink: 0;
 }
 
 .urgent-right {
@@ -177,7 +285,7 @@ h3 {
 }
 
 .card-title {
-  font-size: 28px;
+  font-size: 72px;
   font-weight: bold;
 }
 
@@ -190,28 +298,48 @@ h3 {
 }
 
 .small-cards {
-  margin-top: 25px;
+  margin-top: 30px;
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.small-cards>.small-card {
+  flex: 1 1 calc(33.333% - 20px);
+  min-width: 0;
 }
 
 .small-card {
   background: white;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 24px;
   width: 100%;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-
-
 .big {
-  font-size: 32px;
+  font-size: 72px;
   font-weight: bold;
 }
 
 .label {
   margin-top: 5px;
   color: #2b3544;
+}
+
+a.card,
+a.small-card,
+a.cards {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.card .card-title,
+a.card .card-sub,
+a.small-card .big,
+a.small-card .label,
+a.cards .card-title,
+a.cards .card-sub {
+  color: inherit;
 }

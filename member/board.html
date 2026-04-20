@@ -2,75 +2,133 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join-Board</title>
-    <link rel="icon" href="/assets/img/logo-bright.svg" type="image/svg" />
-    <link rel="stylesheet" href="/styles/standard.css">
-    <link rel="stylesheet" href="/styles/join.css">
-    <link rel="stylesheet" href="/styles/fonts.css">
-    <link rel="stylesheet" href="/styles/colors.css">
-    <link rel="stylesheet" href="/styles/assets.css">
-    <link rel="stylesheet" href="/member/css/board.css">
-    <script type="module" src="/scripts/firebase/firebase.js"></script>
-    <script type="module" src="/login/auth-guard.js"></script>
-    <script type="module" src="/member/js/member-templates.js"></script>
-    <script type="module" src="/member/js/member-script.js"></script>
+  <script type="module" src="../scripts/firebase/firebase.js"></script>
+  <script type="module" src="../login/auth-guard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join - Board</title>
+  <link rel="icon" href="../assets/img/logo-dark.svg" type="image/svg" />
+  <link rel="stylesheet" href="../styles/standard.css">
+  <link rel="stylesheet" href="../styles/join.css">
+  <link rel="stylesheet" href="../styles/fonts.css">
+  <link rel="stylesheet" href="../styles/colors.css">
+  <link rel="stylesheet" href="../styles/contacts.css">
+  <link rel="stylesheet" href="../member/css/board-responsive.css">
+  <link rel="stylesheet" href="../styles/assets.css">
+  <link rel="stylesheet" href="./css/board.css">
+  <link rel="stylesheet" href="./css/add-task.css">
+  <script type="module" src="./js/member-templates.js"></script>
+  <script type="module" src="../scripts/firebase/get-task.js"></script>
+  <script type="module" src="./js/drag-n-drop.js"></script>
+  <script type="module" src="./js/member-script.js"></script>
+  <script type="module" src="./js/add-task.js"></script>
+  <script type="module" src="./js/board.js"></script>
 </head>
 
+
 <body>
+  <!-- bitte id vergeben, die man gut zuordnen kann, overlay container kann alles sein -->
+  <div id="overlay_container" class="d_none"></div>
+  <!-- zum beispiel: task_detail_overlay -->
 
-    <header class="topbar" id="header"></header>
+  <section id="add_task_overlay" class="board-overlay d_none">
+    <div id="add_task" class="board-overlay__content"></div>
+  </section>
+
+  <header class="topbar" id="header"></header>
+  <div class="layout">
     <aside class="sidebar" id="sidebar"></aside>
-
-    
-    <section class="main-content">
-        <h1 class="board-h1">Board</h1>
-        <div class="input-section">
-            <div class="border"></div>
-            <input class="input-feld" placeholder="Find Task" type="text" />
-            <button class="add-task-Button">Add task  <img class="plus-icon" src="/assets/icons/plus-solid-full.svg" alt="Plus Icon"></button>
+    <div class="content">
+      <!-- searchTask input -->
+      <section class="board__header">
+        <div class="board__top-row">
+          <h1 class="board__header--title">Board</h1>
         </div>
-    </section>
 
-    <main class="board-main">
-        <section>
-            <div class="card-bar">
-                <h3 class="cards-h3">To do</h3>
-                <img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="Add task">
-            </div>
 
-            <div class="column" data-status="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <p class="card-placeholder">No tasks to do</p>
-            </div>
+        <div class="board__search--section">
+          <div class="board__search--wrapper">
+            <input type="text" id="searchInput" class="board__search--input" placeholder="Find Task"
+              oninput="searchTask(this.value)">
+            <img class="board__search--icon" src="../assets/icons/search.svg" alt="Search">
+
+          </div>
+          <div class="board__task">
+            <button type="button" id="openAddTaskOverlay" class="button board-add-btn ">
+              Add task
+              <img class="board-add-icon" src="../assets/icons/add-icon-white.svg" alt="">
+            </button>
+          </div>
+          <div class="board__task--mobile">
+            <button type="button" class="openAddTaskOverlay button button__mobile board-add-btn ">
+              <img class="board-add-icon" src="../assets/icons/add-icon-white.svg" alt="">
+            </button>
+          </div>
+
+      </section>
+      <main class="board__tasks">
+
+        <section name="todo" class="task__section">
+          <div class="task task__area--title">
+            <h3 class="task__title">To do</h3>
+            <img class="circle-plus-icon" src="../assets/icons/square-plus.svg" alt="Add task">
+          </div>
+          <div class="task task__area" data-status="todo">
+            <p class="task__area--placeholder">No tasks to do</p>
+            <div id="todo" class="task__list"></div>
+          </div>
         </section>
 
-
-        <section>
-            <div class="card-bar"><h3 class="cards-h3">In Progress</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="plus-icon"></div>
-            <div class="column" data-status="progress" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <p class="card-p">No tasks to do</p>
-            </div>
+        <section name="in Progress" class="task__section">
+          <div class="task task__area--title">
+            <h3 class="task__title">In Progress</h3><img class="circle-plus-icon" src="../assets/icons/square-plus.svg"
+              alt="plus-icon">
+          </div>
+          <div class="task task__area" data-status="in-progress">
+            <p class="task__area--placeholder">No tasks in Progress</p>
+            <div id="inProgress" class="task__list"></div>
+          </div>
         </section>
 
-        <section>
-            <div class="card-bar"><h3 class="cards-h3">Await Feedback</h3><img class="circle-plus-icon" src="/assets/icons/square-plus.svg" alt="plus-icon"></div>
-            <div class="column" data-status="feedback" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <p class="card-p">No tasks to do</p>
-            </div>
+        <section name="Await Feedback" class="task__section">
+          <div class="task task__area--title">
+            <h3 class="task__title">Await Feedback</h3><img class="circle-plus-icon"
+              src="../assets/icons/square-plus.svg" alt="plus-icon">
+          </div>
+          <div class="task task__area" data-status="await-feedback">
+            <p class="task__area--placeholder">No tasks await Feedback</p>
+            <div id="awaitFeedback" class="task__list"></div>
+          </div>
         </section>
 
-        <section>
-            <div class="card-bar"><h3 class="cards-h3 padding-bottom">Done</h3></div>
-            <div class="column" data-status="done" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <p class="card-p">No tasks to do</p>     
-            </div>
+        <section name="Done" class="task__section">
+          <div class="task task__area--title">
+            <h3 class="task__title">Done</h3>
+          </div>
+          <div class="task task__area" data-status="done">
+            <p class="task__area--placeholder">No tasks done</p>
+            <div id="done" class="task__list"></div>
+          </div>
         </section>
-    </main>
 
+      </main>
+    </div>
+  </div>
 
-    <script type="module" src="/assets/templates/sideBar.js"></script>
-    <script type="module" src="/assets/templates/header.js"></script>
+  <footer class="footer__responsive">
+    <a href="summary.html" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/summary__mobile.svg" alt="summary mobile">
+    </a>
+    <a href="add-task.html" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/add-task__mobile.svg" alt="add-task mobile">
+    </a>
+    <a href="board.html" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/board__mobile.svg" alt="board mobile">
+    </a>
+    <a href="contacts.html" class="button button__mobile">
+      <img class="icon__mobile" src="../assets/icons/menu/contacs__mobile.svg" alt="contacts mobile">
+    </a>
+  </footer>
 </body>
 
 </html>

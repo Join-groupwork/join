@@ -1,17 +1,56 @@
+import { getInitials, getAvatarColor } from './contacts-render.js';
+
+/**
+ * @file HTML template factory functions for member pages.
+ *
+ * Provides functions that return HTML strings for commonly used UI parts:
+ * header, sidebar, add-task form, contact overlays, signup message, and board task cards.
+ *
+ * @module member-templates
+ */
+
+/**
+ * Task categories supported by the board UI.
+ * Used for CSS class naming (e.g. `task__category--user-story`).
+ *
+ * @typedef {"user-story" | "technical-task" | string} Category
+ */
+
+/**
+ * Priority values supported by the board UI.
+ * Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
+ *
+ * @typedef {"low" | "medium" | "urgent" | string} Priority
+ */
+
+/**
+ * Generates the header HTML for member pages.
+ *
+ * Includes:
+ * - Help link
+ * - Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)
+ *
+ * DOM hooks created by this template:
+ * - `#headerMenue` (toggle button)
+ * - `#headerMenueNav` (dropdown container)
+ * - `#logoutBtn` (logout trigger)
+ *
+ * @returns {string} HTML string representing the member header.
+ */
 export function getHeaderTemplate() {
   return `
-        <header>
-          <div class="topbar-left f-s-20">Kanban Project Management Tool</div>
+          <div class="topbar-left">Kanban Project Management Tool</div>
+          <div class="topbar__logo"><img class="header__logo" src="../../assets/img/logo-dark.svg" alt="" ></div>
           <div class="topbar-right">
-              <a href="/member/help.html"class="help-circle" title="Help">?</a>
+              <a href="./help.html"class="help-circle" title="Help">?</a>
               <div id="headerMenue" class="profile">
-                  SM
-                  <nav id="headerMenueNav" class="header-menue-nav bg-menue color-menue d_none">
+                  <span id="profileInitials"></span>
+                  <nav id="headerMenueNav" class="header-menue-nav d_none">
                       <ul>
-                          <a href="legal_notice.html">Legal Notice</a>
+                          <a href="./legal-notice-user.html">Legal Notice</a>
                       </ul>
                       <ul>
-                          <a href="privacy_policy.html">Privacy Policy</a>
+                          <a href="./privacy-policy-user.html">Privacy Policy</a>
                       </ul>
                       <ul>
                           <a id="logoutBtn">
@@ -21,183 +60,221 @@ export function getHeaderTemplate() {
                   </nav>
               </div>
           </div>
-        </header>
       `;
-}
+};
 
+
+/**
+ * Generates the sidebar HTML for member pages.
+ *
+ * Includes:
+ * - Logo
+ * - Navigation links (Summary / Add Task / Board / Contacts)
+ * - Footer links (Privacy Policy / Legal Notice)
+ *
+ * @returns {string} HTML string representing the member sidebar.
+ */
 export function getSidebarTemplate() {
   return `
       <div class="logo">
-        <img src="/assets/img/logo-bright.svg" alt="" >
+        <img src="../assets/img/logo-bright.svg" alt="" >
       </div>
 
       <nav class="nav">
-        <a class="nav-item" href="/member/summary-guest.html"><img src="/assets/icons/side-menu/summary-icon.svg" alt="Summary" class="nav-icon">Summary</a>
-        <a class="nav-item" href="/member/add-task.html"><img src="/assets/icons/side-menu/add-task-icon.svg" alt="Add Task" class="nav-icon">Add Task</a>
-        <a class="nav-item" href="/member/board.html"><img src="/assets/icons/side-menu/board-icon.svg" alt="Board" class="nav-icon">Board</a>
-        <a class="nav-item" href="/member/contacts.html"><img src="/assets/icons/side-menu/contacts-icon.svg" alt="Contacts" class="nav-icon">Contacts</a>
+        <a class="nav-item" href="./summary.html"><img src="../assets/icons/side-menu/summary-icon.svg" alt="Summary" class="nav-icon">Summary</a>
+        <a class="nav-item" href="./add-task.html"><img src="../assets/icons/side-menu/add-task-icon.svg" alt="Add Task" class="nav-icon">Add Task</a>
+        <a class="nav-item" href="./board.html"><img src="../assets/icons/side-menu/board-icon.svg" alt="Board" class="nav-icon">Board</a>
+        <a class="nav-item" href="./contacts.html"><img src="../assets/icons/side-menu/contacts-icon.svg" alt="Contacts" class="nav-icon">Contacts</a>
       </nav>
 
-      <div class="legal">
-        <a href="/member/privacy-policy-user.html">Privacy Policy</a>
-        <a href="/member/legal-notice-user.html">Legal Notice</a>
+      <div class="footer">
+        <a href="./privacy-policy-user.html">Privacy Policy</a>
+        <a href="./legal-notice-user.html">Legal Notice</a>
       </div>
     `;
-}
+};
+
+// FIXME Line 129 - 131: icons in assets folder wrong. We musst change to correct icons or rename icons to BEM.
+/**
+ * Generates the "Add Task" form HTML.
+ *
+ * NOTE:
+ * This function only returns markup. Event handling (submit, priority button selection,
+ * form validation, etc.) should be implemented in the page/controller script.
+ *
+ * @returns {string} HTML string representing the add-task form section.
+ */
 
 export function getTaskTemplate() {
   return `
-     <section class="overlay_add_task">
-        <h1 class="h1_add_task">Add Task</h1>
-            <section class="section_add_task">
+    <section class="overlay_add_task">
+      <button class="add-task-close-btn " type="button" aria-label="Close">
+        <img src="../assets/icons/close-icon.svg" alt="">
+      </button>
 
-            <section>
-                <form class="form_add_task">
-                    <label for="title">Title*</label>
-                    <input class="input_add_task" type="text" id="title" name="title" required placeholder="Enter a title">
+      <h1 class="add-task__title">Add Task</h1>
 
-                    <label for="description">Description</label>
-                    <textarea class="textarea_add_task" id="description" name="description" required placeholder="Enter a Description"></textarea>
+      <form id="add_task_form">
+        <section class="add-task__grid">
+          <section class="add-task__column add-task__column--left">
+            <div class="form-field">
+              <label for="title">Title <span class="required">*</span></label>
+              <input class="add-task__input" type="text" id="title" name="title" required placeholder="Enter a title">
+              <span class="error-message">This field is required</span>
+            </div>
 
-                    <label for="due_date">Due date*</label>
-                    <input class="input_add_task" type="date" id="due_date" name="due_date" required placeholder="dd/mm/yyyy">
-                </form>
+            <div class="form-field">
+              <label for="description">Description</label>
+              <textarea class="add-task__textarea" id="description" name="description" placeholder="Enter a Description"></textarea>
+            </div>
+
+            <div class="form-field">
+              <label for="due_date">Due date <span class="required">*</span></label>
+              <input class="add-task__input" type="date" id="due_date" name="due_date" required>
+              <span class="error-message">This field is required</span>
+            </div>
+          </section>
+
+          <hr class="add-task__divider">
+
+          <section class="add-task__column add-task__column--right">
+            <section class="add-task__priority">
+              <label for="priority">Priority</label>
+              <div id="priority" class="add-task__priority-options" name="priority">
+                <button type="button" class="button add-task__priority-button" value="urgent">
+                  Urgent <img src="../assets/icons/urgent-prio-icon.svg" alt="">
+                </button>
+                <button type="button" class="button add-task__priority-button" value="medium">
+                  Medium <img src="../assets/icons/medium-prio-icon.svg" alt="">
+                </button>
+                <button type="button" class="button add-task__priority-button" value="low">
+                  Low <img src="../assets/icons/low-prio-icon.svg" alt="">
+                </button>
+              </div>
             </section>
-            <hr class="hr_add_task">
-            <form class="select_add_task">
-                <section class="section_priority">
-                    <label for="priority">Priority</label>
-                    <div id="priority" class="priority" name="priority">
-                        <button class="priority_button" value="low">Urgent <img src="assets\icons\Property 1=Urgent.svg" alt=""></button>
-                        <button class="priority_button" value="medium">Medium <img src="assets\icons\Property 1=Medium.svg" alt=""></button>
-                        <button class="priority_button" value="high">Low <img src="assets\icons\Property 1=Low.svg" alt=""></button>
-                    </div>
-                </section>
 
-                <label for="">Assigned to</label>
-                <select class="input_add_task margin_bottom_add_task" type="text" id="assigned_to" name="assigned_to" required
-                    placeholder="Select contacts to assign">
-                    <option value="select_contact">Select contacts to assign</option>
-                    <option value="contact_1">Contact 1</option>
-                    <option value="contact_2">Contact 2</option>
-                    <option value="contact_3">Contact 3</option>
-                </select>
+            <label for="assigned_to_input">Assigned to</label>
+            <div class="custom-select add-task__field-spacing" id="assigned_to">
+              <button type="button" class="custom-select__trigger" id="assigned_to_trigger">
+                <span class="custom-select__trigger-label">Select contacts to assign</span>
+                <span class="custom-select__arrow">▾</span>
+              </button>
+              <div class="custom-select__options d_none" id="assigned_to_options"></div>
+            </div>
+            <input type="hidden" id="assigned_to_input" name="assigned_to">
+            <div class="add-task__selected-assignees" id="selected_assignees_display"></div>
 
-                <label for="">Category</label>
-                <select class="input_add_task margin_bottom_add_task" id="category" name="category" required placeholder="">
-                    <option value="select_task_category">Select task category</option>
-                    <option value="technical_task">Technical Task</option>
-                    <option value="user_story">User Story</option>
-                </select>
+            <label for="category">Category</label>
+            <div class="select-native-wrapper add-task__field-spacing">
+              <select class="add-task__input add-task__input--select" id="category" name="category" required>
+                <option value="select_task_category">Select task category</option>
+                <option value="technical-task">Technical Task</option>
+                <option value="user-story">User Story</option>
+              </select>
+              <span class="custom-select__arrow">▾</span>
+            </div>
 
-                <label for="">Subtasks</label>
-                <input class="input_add_task" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
-            </form>
+            <label for="subtask">Subtasks</label>
+            <div class="add-task__subtask">
+              <input class="add-task__input add-task__subtask-input" type="text" id="subtask" name="subtask" placeholder="Add new subtask">
+              <div class="add-task__subtask-actions d_none" id="subtask_actions">
+                <button type="button" class="add-task__subtask-action-btn" id="clear_subtask_btn">✕</button>
+                <span class="subtask-divider">|</span>
+                <button type="button" class="add-task__subtask-action-btn" id="confirm_subtask_btn">✓</button>
+              </div>
+            </div>
+            <div class="subtask-list" id="subtask_list"></div>
+          </section>
         </section>
-        <section class="section_add_task_button">
-            <button class="clear_button_add_task" type="button">Cancel <img src="assets\icons\close.svg" alt=""></button>
-            <button class="Create_button_add_task" type="submit">Create Task <img src="assets\icons\check.svg" alt=""></button>
+
+        <section class="add-task__footer">
+          <span class="add-task__required-hint">
+            <span class="add-task__required-star">*</span> This field is required
+          </span>
+
+          <div class="add-task__actions">
+            <button class="button add-task__button add-task__button--secondary" type="button">
+              Cancel <img src="../assets/icons/close-icon.svg" alt="">
+            </button>
+            <button class="button add-task__button add-task__button--primary" type="button">
+              Create Task <img src="../assets/icons/check-icon-white.svg" alt="">
+            </button>
+          </div>
         </section>
+      </form>
     </section>
-    `;
+  `;
 }
 
 // contact overlays einbinden --->id="editC_overlay" oder id="addC_overlay" in den <body> einfügen,
 // (siehe contact_add_overlay.html/contact_edit_overlay.html <-- können danach gelöscht werden)
 // je nachdem welches overlay gebraucht wird --- ansonsten bis auf css fertig
+/**
+ * Generates the contact edit overlay HTML.
+ *
+ * Intended to be injected into a container element like `#editC_overlay`.
+ *
+ * @returns {string} HTML string representing the edit-contact overlay.
+ */
 
-export function getEditOverlayTemplate() {
-  return `
- <main class="addContact_overlay" >
-  <section class="overlay_add_contact">
-
-            <div class="overlay_add_contact_left">
-                <img class="join_logo_overlay" src="/assets/img/joinlogo.png" alt="Join Logo">
-                <h2 class="heading_add_contact">Edit Contact</h2>
-                <img class="h2_underline" src="/assets/icons/underline-blue.svg" alt="">
-
-            </div>
-
-            <div class="overlay_add_contact_right">
-            <div class="close_overlay_icon_container">
-            <img class="close_overlay_icon" src="/assets/icons/x_cancel.svg" alt="Close Overlay Icon">
-            </div>
-                <div class="addContact_form_container">
-                    <div>
-                        <img src="/assets/icons/Contact_icon.svg" alt="Contact Icon">
-                    </div>
-
-                    <form class="form_add_contact" action="">
-                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact"
-                            placeholder="Name">
-                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact"
-                            placeholder="Email">
-                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact"
-                            placeholder="Phone">
-                    </form>
-                </div>
-
-                <div class="buttons_add_contact">
-                    <button type="submit" class="btn_save_contact">Delete</button>
-                    <button type="button" class="btn_cancel_contact">Save <img src="assets/icons/check.svg"
-                            alt=""></button>
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-    `;
-}
-
+// CHECK Line 192: Why not with pseudoclass ::after?
+/**
+ * Generates the contact add overlay HTML.
+ *
+ * Intended to be injected into a container element like `#addC_overlay`.
+ *
+ * @returns {string} HTML string representing the add-contact overlay.
+ */
 export function getAddOverlayTemplate() {
   return `
-
      <main class="addContact_overlay">
           <section class="overlay_add_contact">
 
             <div class="overlay_add_contact_left">
-                <img class="join_logo_overlay" src="assets/img/joinlogo.png" alt="Join Logo">
+                <img class="join_logo_overlay" src="../../assets/img/logo-bright.svg" alt="Join Logo">
                 <div>
                 <h2 class="heading_add_contact">Add Contact</h2>
                 <p>Tasks are better with a team!</p>
-                <img class="h2_underline" style="margin: unset; height: unset; width: 90px;" src="assets/icons/Vector 5.svg" alt="">
+                <img class="h2_underline" style="margin: unset; height: unset; width: 90px;" src="../../assets/icons/underline-blue.svg" alt="">
                 </div>
             </div>
 
             <div class="overlay_add_contact_right">
+
                 <div class="close_overlay_icon_container">
-                    <img class="close_overlay_icon" src="assets/icons/x_cancel.svg" alt="Close Overlay Icon">
+                    <img class="close_overlay_icon" src="../../assets/icons/close-white.svg" alt="Close Overlay Icon" onclick="hideAddContactOverlay()">
                 </div>
                 <div class="addContact_form_container">
 
                     <div>
-                        <img src="/assets/icons/Contact_icon.svg" alt="Contact Icon">
+                        <img class="overlay_avatar" src="../../assets/icons/contact-icon.svg" alt="Contact Icon">
                     </div>
-                    <form class="form_add_contact" action="">
-                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact"
-                            placeholder="Name">
-                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact"
-                            placeholder="Email">
-                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact"
-                            placeholder="Phone">
+                    <form class="form_add_contact" id="add_contact_form">
+                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact" required>
+                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact" required>
+                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact">
                     </form>
                 </div>
 
                 <div class="buttons_add_contact">
-                    <button type="submit" class="btn_save_contact">Cancel <img src="assets/icons/x_cancel.svg" alt=""></button>
-                    <button type="button" class="btn_cancel_contact">Create contact <img src="assets/icons/check.svg" alt=""></button>
+                    <button type="button" class="btn_save_contact" onclick="hideAddContactOverlay()">Cancel <img src="../../assets/icons/close-white.svg" alt="Close Icon"></button>
+                    <button type="submit" form="add_contact_form" class="btn_cancel_contact">Create contact <img src="../../assets/icons/check-icon-white.svg" alt="Check Icon"></button>
                 </div>
 
             </div>
 
-        </section>
+          </section>
 
-    </main>
+      </main>
     `;
-}
+};
 
+
+/**
+ * Generates a success message shown after a successful signup.
+ *
+ * @returns {string} HTML string representing a signup success message.
+ */
 export function signupMassegeTemplate() {
   return `
         <aside class="signup-massege-box">
@@ -205,5 +282,360 @@ export function signupMassegeTemplate() {
                 You Signed Up successfully
             </p>
         </aside>
-    `
+    `;
+};
+
+/**
+ * Formats an internal task category value into a user-friendly label.
+ *
+ * Converts values like "user-story" or "technical-task"
+ * into readable UI labels such as "User Story" and "Technical Task".
+ *
+ * Falls keine Zuordnung vorhanden ist, wird der Originalwert zurückgegeben.
+ *
+ * @param {string} category - The raw category value from Firebase.
+ * @returns {string} The formatted category label for display in the UI.
+ */
+function formatCategoryLabel(category) {
+  const labels = {
+    'user-story': 'User Story',
+    'technical-task': 'Technical Task'
+  };
+
+  return labels[category] || category;
+}
+
+/**
+ * Generates a task card HTML string for the board (drag-and-drop).
+ *
+ * NOTE:
+ * - `category` is used to build the CSS class name `task__category--${category}`
+ * - `priority` is used to build the icon path `/assets/icons/${priority}-prio-icon.svg`
+ *
+ * @param {string} id - Task ID (used as DOM element `id` and for drag & drop).
+ * @param {string} title - Task title.
+ * @param {Category} category - Task category label.
+ * @param {string} description - Task description.
+ * @param {Priority} priority - Task priority label.
+ * @returns {string} HTML string representing the task card.
+ */
+export function generateTodosHTML(id, title, category, description, priority, subtaskProgressHTML = '', assigneeAvatarsHTML = '') {
+  return `
+            <div class="task__card" id="${id}" onclick="openTaskOverlay('${id}')" draggable="true" >
+              <span class="task__category--${category}">${formatCategoryLabel(category)}</span><br>
+              <h4 class="task__title">${title}</h4><br>
+              <p class="task__text">${description}</p><br>
+              ${subtaskProgressHTML}
+              <div class="task__footer">
+                <div class="task__assignees">${assigneeAvatarsHTML}</div>
+                <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
+              </div>
+            </div>
+          `;
+};
+
+/**
+ * Two show contact details overlay.
+ *
+ * @param {string} contact - Name frome Contact
+ * @param {string} initials - Initials from Contact Name
+ * @param {string} bgColor - Background Color for Avatar
+ * @param {number} phone - Phonenumber from Contact
+ * @returns {string} - HTML string representing the contact details
+ */
+export function getActiveContactTemplate(contact, initials, bgColor, phone) {
+  return `
+    <section class="contact_detail_card contact_detail_card--enter">
+
+      <div class="contact_mobile_heading_row">
+        <div class="contact_mobile_heading_text">
+          <h1 class="contact_mobile_title">Contacts</h1>
+          <p class="contact_mobile_subtitle">Better with a team</p>
+          <span class="contact_mobile_underline"></span>
+        </div>
+        <button type="button" class="contact_mobile_back_btn" onclick="closeMobileDetailView()" aria-label="Back to contacts">
+          <img src="../../assets/icons/arrow-left-icon.svg" alt="Back">
+        </button>
+      </div>
+
+      <div class="contact_detail_header">
+        <div class="contact_avatar contact_avatar--large" style="background-color:${bgColor}">
+          ${initials}
+        </div>
+        <div>
+          <h2 class="contact_detail_name">${contact.name || ''}</h2>
+          <div class="contact_detail_actions">
+            <button type="button" class="link_btn" onclick="editContact('${contact.id}')">
+              <img src="../../assets/icons/pencil-icon.svg" alt="Edit"><span>Edit</span>
+            </button>
+            <button type="button" class="link_btn" onclick="deleteContact('${contact.id}')">
+              <img src="../../assets/icons/trash-icon.svg" alt="Delete"><span>Delete</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="contact_detail_subtitle">Contact Information</h3>
+
+      <div class="contact_detail_info">
+        <strong>Email</strong>
+        <a class="contact_detail_email" href="mailto:${contact.email || ''}">${contact.email || ''}</a>
+      </div>
+
+      <div class="contact_detail_info">
+        <strong>Phone</strong>
+        <a class="contact_detail_phone" href="tel:${phone}">${phone}</a>
+      </div>
+
+      <button type="button" class="contact_mobile_fab_btn" onclick="toggleContactMobileActions()" aria-label="Open contact actions">
+        <span class="contact_mobile_fab_dots">&#8942;</span>
+      </button>
+
+      <div id="contact_mobile_actions_menu" class="contact_mobile_actions_menu d_none">
+        <button type="button" class="contact_mobile_action_btn" onclick="editContact('${contact.id}')">
+          <img src="../../assets/icons/pencil-icon.svg" alt="Edit"><span>Edit</span>
+        </button>
+        <button type="button" class="contact_mobile_action_btn" onclick="deleteContact('${contact.id}')">
+          <img src="../../assets/icons/trash-icon.svg" alt="Delete"><span>Delete</span>
+        </button>
+      </div>
+
+    </section>
+  `;
+}
+
+/**
+ * Show the overlay to editing contact details.
+ *
+ * @param {string} contactId
+ * @param {string} contact
+ * @param {string} initials
+ * @param {string} color
+ * @returns {string} - HTML string representing the contact editing overlay.
+ */
+export function getEditOverlayTemplate(contactId, contact, initials, color) {
+  return `
+    <section class="overlay_add_contact" onclick="event.stopPropagation()">
+      <div class="overlay_add_contact_left">
+        <img class="join_logo_overlay" src="../../assets/img/logo-bright.svg" alt="Join Logo">
+        <h2 class="heading_add_contact">Edit Contact</h2>
+        <img class="h2_underline" src="../../assets/icons/underline-blue.svg" alt="">
+      </div>
+
+      <div class="overlay_add_contact_right">
+       <div class="close_overlay_icon_container">
+                    <img class="close_overlay_icon" src="../../assets/icons/close-white.svg" alt="Close Overlay Icon" onclick="closeEditOverlay()">
+                </div>
+        <div class="addContact_form_container">
+            <div class="contact_avatar contact_avatar--large edit_overlay_avatar overlay_avatar" style="background-color:${color}">
+                ${initials}
+            </div>
+          <form class="form_add_contact" id="edit_contact_form">
+            <input type="text" id="contact_name" class="input_add_contact" placeholder="Name" value="${contact.name || ''}" required>
+            <input type="email" id="contact_email" class="input_add_contact" placeholder="Email" value="${contact.email || ''}" required>
+            <input type="tel" id="contact_phone" class="input_add_contact" placeholder="Phone" value="${contact.phone || ''}">
+            <div class="buttons_add_contact">
+              <button type="button" class="btn_save_contact" onclick="deleteContact('${contactId}')">Delete</button>
+              <button type="submit" class="btn_cancel_contact">Save<img src="../../assets/icons/check-icon-white.svg" alt=""></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+export function getTaskOverlayTemplate(id, category, title, description, due_date, priority, assigned_to, subtasks) {
+  console.log('subtasks input:', subtasks);
+  const assignedArray = Array.isArray(assigned_to)
+    ? assigned_to
+    : assigned_to.split(', ');
+
+  const subtaskEntries = subtasks && typeof subtasks === 'object'
+    ? Object.entries(subtasks)
+    : [];
+
+  return `
+  <div class="task-overlay-content">
+      <div class="overlaytemplate-first-section">
+        <p class="task__category--${category} overlaytemplate-category">${formatCategoryLabel(category)}</p>
+        <button onclick="closeTaskOverlay()"><img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt=""></button>
+      </div>
+
+    <h2 class="overlaytemplate-title">${title}</h2>
+    <p class="overlaytemplate-description">${description}</p>
+    <p class="overlaytemplate-due_date">Due date: ${due_date.replace(/-/g, "/")}</p>
+    <div class="overlaytemplate__priority--container">
+        <p class="overlaytemplate__priority">Priority: ${priority}</p>
+        <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
+    </div>
+    <div class="overlaytemplate__assigned-to">
+      <p>Assigned To:</p>
+      ${assignedArray.map(person => `
+        <div class="assigned_contact">
+          <div class="contact_avatar" style="background-color: ${getAvatarColor(person)}">
+            ${getInitials(person)}
+          </div>
+          <span>${person}</span>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="overlaytemplate-subtask">
+      <p>Subtasks:</p>
+      <div class="overlaytemplate-subtask-checkbox">
+
+        ${subtaskEntries.map(([key, s]) => {
+    const isChecked = s.status === true || s.completed === true;
+    const iconSrc = isChecked
+      ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
+      : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
+    return `
+          <div class="subtask-item-taskoverlay">
+            <img class="checkbox-icon" src="${iconSrc}" alt="" data-task-id="${id}" data-subtask-key="${key}">
+            ${s.title}
+          </div>
+        `}).join('')}
+      </div>
+    </div>
+
+    <div class="taskoverlay_detail_actions">
+      <button type="button" class="link_btn-taskoverlay" onclick="deleteTask('${id}')"><img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
+      <div class="divider-grey"></div>
+      <button type="button" class="link_btn-taskoverlay" onclick="editTask('${id}')"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
+    </div>
+
+  </div>
+  `;
+}
+
+/**
+ * @param {string} id - Task ID
+ * @param {string} category - Task category
+ * @param {string} title - Task title
+ * @param {string} description - Task description
+ * @param {string} due_date - Due date
+ * @param {string} priority - Priority level
+ * @param {string|Array} assigned_to - Assigned contacts
+ * @param {Object} subtasks - Subtasks object
+ * @returns {string} HTML string for edit task overlay
+ */
+export function getEditTaskOverlayTemplate(id, category, title, description, due_date, priority, assigned_to, subtasks) {
+  const assignedArray = Array.isArray(assigned_to) ? assigned_to : assigned_to.split(', ');
+  const subtaskArray = subtasks && typeof subtasks === 'object' ? Object.values(subtasks) : [];
+
+  return `
+  <div class="task-overlay-content edit-task-form">
+    <div class="overlaytemplate-first-section">
+      <button onclick="closeTaskOverlay()">
+        <img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt="">
+      </button>
+    </div>
+
+    <form id="edit_task_form" class="add-task__column add-task__column--left">
+      <div class="form-field">
+        <input type="text" id="edit_title" class="add-task__input" value="${title}" required placeholder="Enter a title" style="border: none; border-bottom: 1px solid #d1d1d1; border-radius: 0; padding: 8px 0; margin-bottom: 16px; font-size: 16px;">
+      </div>
+
+      <div class="form-field">
+        <label for="edit_description" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Description</label>
+        <textarea id="edit_description" class="add-task__textarea" placeholder="Enter a description" style="min-height: 80px; font-size: 16px; resize: vertical;">${description}</textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="edit_due_date" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Due date</label>
+        <input type="date" id="edit_due_date" class="add-task__input" value="${due_date}" required style="font-size: 16px;">
+      </div>
+
+      <div class="add-task__priority">
+        <label style="font-size: 14px; color: #2a3647; font-weight: 400;">Priority</label>
+        <div class="add-task__priority-options">
+          <button type="button" class="button add-task__priority-button ${priority === 'urgent' ? 'selected' : ''}" value="urgent" data-priority="urgent">
+            Urgent <img src="../assets/icons/urgent-prio-icon.svg" alt="">
+          </button>
+          <button type="button" class="button add-task__priority-button ${priority === 'medium' ? 'selected' : ''}" value="medium" data-priority="medium">
+            Medium <img src="../assets/icons/medium-prio-icon.svg" alt="">
+          </button>
+          <button type="button" class="button add-task__priority-button ${priority === 'low' ? 'selected' : ''}" value="low" data-priority="low">
+            Low <img src="../assets/icons/low-prio-icon.svg" alt="">
+          </button>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="edit_assigned_to" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Assigned to</label>
+        <div class="custom-select" id="edit_assigned_to" style="margin-bottom: 12px;">
+          <button type="button" class="custom-select__trigger" id="edit_assigned_to_trigger">
+            <span class="custom-select__trigger-label">Select contacts to assign</span>
+            <span class="custom-select__arrow">▾</span>
+          </button>
+          <div class="custom-select__options d_none" id="edit_assigned_to_options"></div>
+        </div>
+        <div class="add-task__selected-assignees" id="edit_selected_assignees_display" style="display: flex; gap: 8px; margin-bottom: 22px;">
+          ${assignedArray.map(person => `
+            <div class="add-task__avatar" style="background-color: ${getAvatarColor(person)}; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 500; font-size: 14px;">
+              ${getInitials(person)}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Subtasks</label>
+        <div class="add-task__subtask" style="position: relative; margin-bottom: 12px;">
+          <input class="add-task__input add-task__subtask-input" type="text" id="edit_subtask" name="edit_subtask" placeholder="Add new subtask" style="font-size: 16px;">
+          <div class="add-task__subtask-actions d_none" id="edit_subtask_actions">
+            <button type="button" class="add-task__subtask-action-btn" id="edit_clear_subtask_btn">✕</button>
+            <span class="subtask-divider">|</span>
+            <button type="button" class="add-task__subtask-action-btn" id="edit_confirm_subtask_btn">✓</button>
+          </div>
+        </div>
+        <div class="subtask-list" id="edit_subtask_list" style="margin-bottom: 8px;">
+          ${Object.entries(subtasks && typeof subtasks === 'object' ? subtasks : {}).map(([key, s]) => `
+            <div class="subtask-item" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 12px; font-size: 16px; color: #2a3647;">
+              <div style="display: flex; align-items: center; gap: 8px; flex: 1;">
+                <span style="line-height: 1.5;">•</span>
+                <span style="line-height: 1.5; flex: 1;" id="subtask_text_${key}">${s.title}</span>
+              </div>
+              <div class="subtask-item-actions" style="display: flex; gap: 8px;">
+                <button type="button" class="subtask-icon-btn" onclick="editExistingSubtask('${id}', '${key}')" title="Edit" style="border: none; background: transparent; cursor: pointer; font-size: 18px; padding: 0;">
+                  <img src="../assets/icons/pencil-icon.svg" alt="Edit" style="width: 16px; height: 16px;">
+                </button>
+                <button type="button" class="subtask-icon-btn" onclick="deleteExistingSubtask('${id}', '${key}')" title="Delete" style="border: none; background: transparent; cursor: pointer; font-size: 18px; padding: 0;">
+                  <img src="../assets/icons/trash-icon.svg" alt="Delete" style="width: 16px; height: 16px;">
+                </button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="subtask-list" id="edit_subtask_list_new"></div>
+      </div>
+
+      <div class="add-task__actions" style="margin-top: 40px;">
+        <button type="button" class="button add-task__button add-task__button--primary" onclick="saveEditedTask('${id}')">
+          Ok <img src="../assets/icons/check-icon-white.svg" alt="">
+        </button>
+      </div>
+    </form>
+  </div>
+  `;
+}
+
+export function getMobileFooterTemplate() {
+  return `
+    <footer class="footer__responsive footer__responsive--member">
+      <a href="./summary.html" class="button button__mobile button__mobile--member">
+        <img class="icon__mobile" src="../assets/icons/menu/summary__mobile.svg" alt="summary mobile">
+      </a>
+      <a href="./add-task.html" class="button button__mobile button__mobile--member">
+        <img class="icon__mobile" src="../assets/icons/menu/add-task__mobile.svg" alt="add-task mobile">
+      </a>
+      <a href="./board.html" class="button button__mobile button__mobile--member">
+        <img class="icon__mobile" src="../assets/icons/menu/board__mobile.svg" alt="board mobile">
+      </a>
+      <a href="./contacts.html" class="button button__mobile button__mobile--member">
+        <img class="icon__mobile" src="../assets/icons/menu/contacs__mobile.svg" alt="contacts mobile">
+      </a>
+    </footer>
+  `
 }

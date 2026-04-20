@@ -18,7 +18,11 @@ a:hover {
 }
 
 .d_none {
-    display: none;
+    display: none !important;
+}
+
+.d-none {
+    display: none !important;
 }
 
 /* overlay, dialog, modal */
@@ -28,5 +32,5 @@ a:hover {
     left: 0;
     height: 100vh;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.432);
+    background-color: var(--color-overlay-strong);
 }
