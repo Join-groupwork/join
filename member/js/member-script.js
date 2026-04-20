@@ -173,6 +173,13 @@ function openAddTaskOverlay(overlay) {
   }
   document.body.classList.add('no-scroll');
 }
+document.querySelectorAll('.openAddTaskOverlay').forEach(btn => {
+  btn.addEventListener('click', () => {
+
+    const overlay = document.getElementById('add_task_overlay');
+    openAddTaskOverlay(overlay);
+  });
+});
 
 function closeAddTaskOverlay(overlay) {
   const content = overlay.querySelector('.overlay_add_task');
