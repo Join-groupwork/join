@@ -8,7 +8,7 @@
     overflow: auto;
     /* width: 100%; */
     gap: 10px;
-    align-items: flex-start;
+   
 }
 
 .task__card{
@@ -107,7 +107,7 @@
   }
 }
 
-@media (max-width:822px) {
+@media (max-width:830px) {
 
   .sidebar {
     display: none;
@@ -146,7 +146,7 @@
   .task__list {
     min-height: 24px;
     display: flex;
-    flex-direction: column;
+    width:100%;
   }
 
   .task__category--technical-task {
