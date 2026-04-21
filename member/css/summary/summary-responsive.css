@@ -188,8 +188,15 @@ RESPONSIVE
 
   .cards,
   .small-cards {
-    flex-wrap: nowrap;
     gap: 12px;
+  }
+
+  .cards {
+    flex-wrap: nowrap;
+  }
+
+  .small-cards {
+    flex-wrap: nowrap;
   }
 
   .cards>.card {
@@ -281,4 +288,3 @@ RESPONSIVE
     font-size: 30px;
   }
 }
-
