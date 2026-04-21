@@ -27,24 +27,66 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @file Provides drag-and-drop handling for board tasks.
+ * @file Provides basic Kanban board rendering + drag-and-drop handling for tasks ("todos").
  *
  * This module:
- * - Tracks the currently dragged task card
- * - Highlights valid drop zones during dragging
- * - Updates the task status locally and in Firebase on drop
- * - Clears drag preview and highlight states after drag operations
+ * - Keeps a temporary in-memory `todos` object (placeholder until Firebase is connected)
+ * - Renders tasks into the four board columns (todo / in-progress / await-feedback / done)
+ * - Toggles column placeholders when a column has no tasks
+ * - Implements drag &amp; drop using document-level event listeners
  *
  * DOM expectations:
- * - Drop zones with class `.task__area` and `data-status` values matching task.status
- * - Placeholder/task container `.task__list` inside each `.task__area`
- * - Task cards with class `.task__card` and an `id` matching the task key
+ * - Columns with IDs: `todo`, `inProgress`, `awaitFeedback`, `done`
+ * - Drop zones with class `.task__area` and `data-status` values matching todo.subtask
+ * - Placeholder element inside each `.task__area`: `.task__area--placeholder`
+ * - Task cards have class `.task__card` and an `id` that matches the todo key
  *
  * @module drag-n-drop
  */
 import { database } from '../../scripts/firebase/firebase.js';
-import { todos, updateHTML } from './board.js';
+import { loadTasks } from '../../scripts/firebase/get-firebase.js';
+import { generateTodosHTML } from './member-templates.js';
+import { getInitials, getAvatarColor } from './contacts-render.js';
 import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/**
+ * Possible board states.
+ * @typedef {"todo" | "in-progress" | "await-feedback" | "done"} SubtaskStatus
+ */
+
+/**
+ * Possible task categories.
+ * @typedef {"user-story" | "technical-task"} Category
+ */
+
+/**
+ * Possible priority values.
+ * @typedef {"low" | "medium" | "urgent"} Priority
+ */
+
+
+let activeSearchTerm = ''; // INFO This is currently only used in the search function
+/**
+ * Represents a board task.
+ *
+ * @typedef {Object} Todo
+ * @property {string} title - Task title.
+ * @property {string} description - Task description.
+ * @property {string} date - Due date (YYYY-MM-DD) or empty string.
+ * @property {Priority} priority - Task priority level.
+ * @property {string} assignedTo - Person(s) assigned to this task (currently unused).
+ * @property {Category} category - Task category.
+ * @property {SubtaskStatus} status - Current board column/status.
+ */
+
+
+/**
+ * Task collection indexed by id.
+ * NOTE: Placeholder data until Firebase is connected.
+ *
+ * @type {Record&lt;string, Todo>}
+ */
+export let todos = {};
 
 /**
  * ID (key in {@link todos}) of the currently dragged task card.
@@ -52,17 +94,25 @@ import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-
  *
  * @type {string|undefined}
  */
-export let currentDraggedElement;
-
+let currentDraggedElement;
 
 /**
- * Persists a task status change to Firebase.
  *
- * Updates `tasks/{taskId}` with the new `status` value.
+ */
+async function initBoard() {
+  try {
+    todos = await loadTasks();
+    updateHTML();
+  } catch (error) {
+    console.error('Fehler bei Laden der Tasks:', error);
+  }
+}
+
+/**
+ * Handles the upload to firebase after switch category.
  *
- * @param {string} taskId - ID of the task to update.
- * @param {string} newStatus - New board status for the task.
- * @returns {Promise&lt;void>}
+ * @param {string} taskId - ID from task
+ * @param {string} newStatus - Status from task
  */
 export async function updateTaskStatus(taskId, newStatus) {
   await update(ref(database, `tasks/${taskId}`), {
@@ -71,21 +121,227 @@ export async function updateTaskStatus(taskId, newStatus) {
 }
 
 /**
- * Removes the highlight class from all drop zones.
+ * Calculates subtask progress.
+ * @param {Object} subtasks
+ * @returns {string} HTML for progress bar
+ */
+function calculateSubtaskProgress(subtasks = {}) {
+  const subtaskArray = Object.values(subtasks);
+  const totalSubtasks = subtaskArray.length;
+  if (totalSubtasks === 0) return '';
+  const completedSubtasks = subtaskArray.filter(s => s.status === true || s.completed === true).length;
+  const progressPercent = (completedSubtasks / totalSubtasks) * 100;
+  return `
+    &lt;div class="task__progress">
+      &lt;div class="task__progress--bar">
+        &lt;div class="task__progress--fill" style="width: ${progressPercent}%">&lt;/div>
+      &lt;/div>
+      &lt;span class="task__progress--text">${completedSubtasks}/${totalSubtasks} Subtasks&lt;/span>
+    &lt;/div>`;
+}
+
+/**
+ * Generates HTML for assignee avatars.
  *
+ * Displays up to 3 avatars and adds a "+X" avatar
+ * if more assignees are present.
+ *
+ * @param {Object|Array|string} assigned_to - Assigned contacts data.
+ * @returns {string} HTML string for avatar rendering.
+ */
+function generateAssigneeAvatars(assigned_to = {}) {
+  const names = extractAssigneeNames(assigned_to);
+  const visible = names.slice(0, 3);
+  const remaining = names.length - 3;
+  return `
+    ${renderVisibleAvatars(visible)}
+    ${renderExtraAvatar(remaining)}
+  `;
+}
+
+/**
+ * Extracts assignee names from different data formats.
+ *
+ * Supports objects, arrays, and comma-separated strings.
+ *
+ * @param {Object|Array|string} assigned_to - Raw assigned data.
+ * @returns {string[]} Array of valid assignee names.
+ */
+function extractAssigneeNames(assigned_to) {
+  if (Array.isArray(assigned_to)) return assigned_to;
+  if (assigned_to &amp;&amp; typeof assigned_to === 'object') {
+    return Object.values(assigned_to)
+      .map(c => typeof c === 'string' ? c : c?.name)
+      .filter(Boolean);
+  }
+  if (typeof assigned_to === 'string') {
+    return assigned_to.split(',').map(s => s.trim()).filter(Boolean);
+  }
+  return [];
+}
+
+/**
+ * Renders HTML for visible assignee avatars.
+ *
+ * @param {string[]} names - List of assignee names.
+ * @returns {string} HTML string for avatar elements.
+ */
+function renderVisibleAvatars(names) {
+  return names.map(name => {
+    return `
+      &lt;div
+        class="task__assignee--avatar"
+        style="background-color: ${getAvatarColor(name)}"
+        title="${name}"
+      >
+        ${getInitials(name)}
+      &lt;/div>
+    `;
+  }).join('');
+}
+
+/**
+ * Renders an avatar displaying remaining assignee count.
+ *
+ * @param {number} count - Number of hidden assignees.
+ * @returns {string} HTML string for overflow avatar.
+ */
+function renderExtraAvatar(count) {
+  if (count &lt;= 0) return '';
+  return `
+    &lt;div
+      class="task__assignee--avatar task__assignee--avatar--extra"
+      title="${count} more assignees"
+    >
+      +${count}
+    &lt;/div>
+  `;
+}
+
+
+/**
+ * Re-renders all board columns and updates placeholder visibility.
+ *
+ * @export
  * @returns {void}
  */
+export async function updateHTML() {
+  // if this page doesn’t have a todo column we’re not on the board,
+  // so skip all DOM updates to avoid null errors
+  if (!document.getElementById('todo')) return;
+  updateTodo();
+  updateInProgress();
+  updateAwaitFeedback();
+  updateDone();
+  togglePlaceholder();
+};
+
+
+/**
+ * Renders tasks with {@link Todo.subtask} === `"todo"` into the `#todo` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateTodo() {
+  const container = document.getElementById('todo');
+  if (!container) return;
+  container.innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'todo' &amp;&amp; matchesSearch(element)) {
+      const progressHTML = calculateSubtaskProgress(element.subtasks);
+      const avatarsHTML = generateAssigneeAvatars(element.assigned_to);
+      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.subtask} === `"in-progress"` into the `#inProgress` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateInProgress() {
+  document.getElementById('inProgress').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'in-progress' &amp;&amp; matchesSearch(element)) {
+      const progressHTML = calculateSubtaskProgress(element.subtasks);
+      const avatarsHTML = generateAssigneeAvatars(element.assigned_to);
+      document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.subtask} === `"await-feedback"` into the `#awaitFeedback` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateAwaitFeedback() {
+  document.getElementById('awaitFeedback').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'await-feedback' &amp;&amp; matchesSearch(element)) {
+      const progressHTML = calculateSubtaskProgress(element.subtasks);
+      const avatarsHTML = generateAssigneeAvatars(element.assigned_to);
+      document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
+    }
+  }
+};
+
+
+/**
+ * Renders tasks with {@link Todo.subtask} === `"done"` into the `#done` column.
+ *
+ * @private
+ * @returns {void}
+ */
+function updateDone() {
+  document.getElementById('done').innerHTML = '';
+  for (const [id, element] of Object.entries(todos)) {
+    if (element.status === 'done' &amp;&amp; matchesSearch(element)) {
+      const progressHTML = calculateSubtaskProgress(element.subtasks);
+      const avatarsHTML = generateAssigneeAvatars(element.assigned_to);
+      document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
+    }
+  }
+};
+
+
+/**
+ * Shows/hides the placeholder inside each `.task__area` depending on whether
+ * at least one task exists for that column.
+ *
+ * Uses `.task__area[data - status]` to match against {@link Todo.status}.
+ *
+ * @private
+ * @returns {void}
+ */
+function togglePlaceholder() {
+  const taskAres = document.querySelectorAll('.task__area');
+  taskAres.forEach(area => {
+    let status = area.dataset.status;
+    const placeholder = area.querySelector('.task__area--placeholder');
+    let hasTask = Object.values(todos).some(task => task.status === status &amp;&amp; matchesSearch(task));
+    if (hasTask) {
+      placeholder.classList.add('d_none')
+    } else {
+      placeholder.classList.remove('d_none');
+    }
+  });
+};
+
+
 function clearDropHighlights() {
   document.querySelectorAll(".task__area--highlight").forEach(zone => {
     zone.classList.remove("task__area--highlight");
   });
 }
 
-/**
- * Removes the preview class from all task lists.
- *
- * @returns {void}
- */
+
 function clearDropCardPreview() {
   document.querySelectorAll(".task__list--preview").forEach(list => {
     list.classList.remove("task__list--preview");
@@ -103,7 +359,6 @@ function clearDropCardPreview() {
 document.addEventListener("dragstart", function (event) {
   const card = event.target.closest(".task__card");
   if (!card) return;
-
   currentDraggedElement = card.id;
   card.classList.add("task__card--dragging");
 });
@@ -141,11 +396,11 @@ document.addEventListener("dragover", function (event) {
   clearDropHighlights();
   clearDropCardPreview();
   if (!dropZone) return; // INFO If there is no drop zone, cancel.
-  dropZone.classList.add("task__area--highlight");
   const taskList = dropZone.querySelector(".task__list");
   if (!taskList) return;
   taskList.classList.add("task__list--preview");
 });
+
 
 /**
  * Handles `drop` within a `.task__area` drop zone.
@@ -165,13 +420,11 @@ document.addEventListener("drop", async function (event) {
   const oldStatus = todos[currentDraggedElement]?.status;
   dropZone.classList.remove("task__list--preview");
   todos[currentDraggedElement].status = newStatus;
-
   updateHTML();
   try {
     await updateTaskStatus(currentDraggedElement, newStatus)
   } catch (error) {
     console.error("Firebase-Update fehlgeschlagen:", error);
-
     // rollback
     if (todos[currentDraggedElement]) {
       todos[currentDraggedElement].status = oldStatus;
@@ -195,6 +448,25 @@ document.addEventListener("dragleave", function (event) {
   if (!dropZone) return;
   dropZone.classList.remove("task__area--highlight");
 });
+
+
+function matchesSearch(task) {
+  if (!activeSearchTerm) return true;
+  const haystack = [task.title, task.description, task.category, task.priority]
+    .map(v => String(v || '').toLowerCase())
+    .join(' ');
+  return haystack.includes(activeSearchTerm);
+}
+
+function searchTask(value) {
+  activeSearchTerm = String(value || '').toLowerCase().trim();
+  updateHTML();
+}
+
+initBoard();
+
+
+window.searchTask = searchTask;
 </code></pre>
         </article>
     </section>
@@ -205,13 +477,13 @@ document.addEventListener("dragleave", function (event) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#applyPrioritySelection">applyPrioritySelection</a></li><li><a href="global.html#assignName">assignName</a></li><li><a href="global.html#awaitFeedbackTasks">awaitFeedbackTasks</a></li><li><a href="global.html#bindAssigneeEvents">bindAssigneeEvents</a></li><li><a href="global.html#bindSubtaskEvents">bindSubtaskEvents</a></li><li><a href="global.html#buildCheckbox">buildCheckbox</a></li><li><a href="global.html#buildContactOptionElement">buildContactOptionElement</a></li><li><a href="global.html#buildOptionMain">buildOptionMain</a></li><li><a href="global.html#buildSubtaskItem">buildSubtaskItem</a></li><li><a href="global.html#buildTaskData">buildTaskData</a></li><li><a href="global.html#buildTaskUpdateObject">buildTaskUpdateObject</a></li><li><a href="global.html#clearAddTaskForm">clearAddTaskForm</a></li><li><a href="global.html#clearFieldError">clearFieldError</a></li><li><a href="global.html#clearSelectedAssignees">clearSelectedAssignees</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#clearSubtasks">clearSubtasks</a></li><li><a href="global.html#closeAssignedOptions">closeAssignedOptions</a></li><li><a href="global.html#collectEditFormData">collectEditFormData</a></li><li><a href="global.html#columns">columns</a></li><li><a href="global.html#createSubtaskActions">createSubtaskActions</a></li><li><a href="global.html#createSubtaskEditInput">createSubtaskEditInput</a></li><li><a href="global.html#createSubtaskText">createSubtaskText</a></li><li><a href="global.html#deleteExistingSubtask">deleteExistingSubtask</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#doneTasks">doneTasks</a></li><li><a href="global.html#editExistingSubtask">editExistingSubtask</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTask">editTask</a></li><li><a href="global.html#findPriorityButton">findPriorityButton</a></li><li><a href="global.html#getAssignedNames">getAssignedNames</a></li><li><a href="global.html#getAvatarColor">getAvatarColor</a></li><li><a href="global.html#getContactData">getContactData</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getSortedContacts">getSortedContacts</a></li><li><a href="global.html#getSubtasks">getSubtasks</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#handleOutsideClick">handleOutsideClick</a></li><li><a href="global.html#handleSubtaskKeydown">handleSubtaskKeydown</a></li><li><a href="global.html#handleSubtaskListClick">handleSubtaskListClick</a></li><li><a href="global.html#handleTriggerClick">handleTriggerClick</a></li><li><a href="global.html#hashString">hashString</a></li><li><a href="global.html#initAssignees">initAssignees</a></li><li><a href="global.html#initMobileGreetingOverlay">initMobileGreetingOverlay</a></li><li><a href="global.html#initSubtasks">initSubtasks</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#initializeEditAssignees">initializeEditAssignees</a></li><li><a href="global.html#initializeEditSubtasks">initializeEditSubtasks</a></li><li><a href="global.html#isSelected">isSelected</a></li><li><a href="global.html#openTaskOverlay">openTaskOverlay</a></li><li><a href="global.html#populateAssignedToDropdown">populateAssignedToDropdown</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#refreshBoardAndShowTask">refreshBoardAndShowTask</a></li><li><a href="global.html#renderContactOptions">renderContactOptions</a></li><li><a href="global.html#renderEditOverlay">renderEditOverlay</a></li><li><a href="global.html#renderNoContacts">renderNoContacts</a></li><li><a href="global.html#renderSelectedAssignees">renderSelectedAssignees</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#saveEditedSubtask">saveEditedSubtask</a></li><li><a href="global.html#saveEditedTask">saveEditedTask</a></li><li><a href="global.html#saveNewSubtask">saveNewSubtask</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#saveSubtaskValue">saveSubtaskValue</a></li><li><a href="global.html#selectPriority">selectPriority</a></li><li><a href="global.html#setDefaultPriority">setDefaultPriority</a></li><li><a href="global.html#setupRequiredFieldValidation">setupRequiredFieldValidation</a></li><li><a href="global.html#setupSubtaskEditListeners">setupSubtaskEditListeners</a></li><li><a href="global.html#submitTask">submitTask</a></li><li><a href="global.html#syncOptionToggle">syncOptionToggle</a></li><li><a href="global.html#syncTasksAndTodos">syncTasksAndTodos</a></li><li><a href="global.html#tasksInBoard">tasksInBoard</a></li><li><a href="global.html#tasksInProgress">tasksInProgress</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#toggleAssignedOptions">toggleAssignedOptions</a></li><li><a href="global.html#toggleAssignee">toggleAssignee</a></li><li><a href="global.html#toggleSubtaskActions">toggleSubtaskActions</a></li><li><a href="global.html#trackContactsForUser">trackContactsForUser</a></li><li><a href="global.html#updateAssignedInput">updateAssignedInput</a></li><li><a href="global.html#updateTaskInFirebase">updateTaskInFirebase</a></li><li><a href="global.html#urgentTasks">urgentTasks</a></li><li><a href="global.html#urgentTasksDeadLine">urgentTasksDeadLine</a></li><li><a href="global.html#validateRequiredField">validateRequiredField</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Apr 21 2026 15:16:46 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

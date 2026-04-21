@@ -38,18 +38,19 @@
     <div class="container-overview">
     
         
-            <div class="description">Provides drag-and-drop handling for board tasks.
+            <div class="description">Provides basic Kanban board rendering + drag-and-drop handling for tasks ("todos").
 
 This module:
-- Tracks the currently dragged task card
-- Highlights valid drop zones during dragging
-- Updates the task status locally and in Firebase on drop
-- Clears drag preview and highlight states after drag operations
+- Keeps a temporary in-memory `todos` object (placeholder until Firebase is connected)
+- Renders tasks into the four board columns (todo / in-progress / await-feedback / done)
+- Toggles column placeholders when a column has no tasks
+- Implements drag & drop using document-level event listeners
 
 DOM expectations:
-- Drop zones with class `.task__area` and `data-status` values matching task.status
-- Placeholder/task container `.task__list` inside each `.task__area`
-- Task cards with class `.task__card` and an `id` matching the task key</div>
+- Columns with IDs: `todo`, `inProgress`, `awaitFeedback`, `done`
+- Drop zones with class `.task__area` and `data-status` values matching todo.subtask
+- Placeholder element inside each `.task__area`: `.task__area--placeholder`
+- Task cards have class `.task__card` and an `id` that matches the todo key</div>
         
 
         
@@ -149,13 +150,86 @@ DOM expectations:
 
         
             
-<h4 class="name" id=".currentDraggedElement"><span class="type-signature">(static) </span>currentDraggedElement<span class="type-signature"> :string|undefined</span></h4>
+<h4 class="name" id=".todos"><span class="type-signature">(static) </span>todos<span class="type-signature"> :Record.&lt;string, Todo></span></h4>
 
 
 
 
 <div class="description">
-    ID (key in <a href="global.html#todos">todos</a>) of the currently dragged task card.
+    Task collection indexed by id.
+NOTE: Placeholder data until Firebase is connected.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Record.&lt;string, Todo></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line61">line 61</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~currentDraggedElement"><span class="type-signature">(inner) </span>currentDraggedElement<span class="type-signature"> :string|undefined</span></h4>
+
+
+
+
+<div class="description">
+    ID (key in todos) of the currently dragged task card.
 Set on `dragstart`, consumed on `drop`.
 </div>
 
@@ -207,7 +281,7 @@ Set on `dragstart`, consumed on `drop`.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line27">line 27</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line69">line 69</a>
     </li></ul></dd>
     
 
@@ -235,7 +309,7 @@ Set on `dragstart`, consumed on `drop`.
     
 
     
-    <h4 class="name" id=".updateTaskStatus"><span class="type-signature">(static) </span>updateTaskStatus<span class="signature">(taskId, newStatus)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
+    <h4 class="name" id=".updateHTML"><span class="type-signature">(static) </span>updateHTML<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
@@ -243,9 +317,113 @@ Set on `dragstart`, consumed on `drop`.
 
 
 <div class="description">
-    Persists a task status change to Firebase.
+    Re-renders all board columns and updates placeholder visibility.
+</div>
 
-Updates `tasks/{taskId}` with the new `status` value.
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line200">line 200</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".updateTaskStatus"><span class="type-signature">(static) </span>updateTaskStatus<span class="signature">(taskId, newStatus)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Handles the upload to firebase after switch category.
 </div>
 
 
@@ -297,7 +475,7 @@ Updates `tasks/{taskId}` with the new `status` value.
 
             
 
-            <td class="description last">ID of the task to update.</td>
+            <td class="description last">ID from task</td>
         </tr>
 
     
@@ -320,7 +498,7 @@ Updates `tasks/{taskId}` with the new `status` value.
 
             
 
-            <td class="description last">New board status for the task.</td>
+            <td class="description last">Status from task</td>
         </tr>
 
     
@@ -361,7 +539,144 @@ Updates `tasks/{taskId}` with the new `status` value.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line39">line 39</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line89">line 89</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~calculateSubtaskProgress"><span class="type-signature">(inner) </span>calculateSubtaskProgress<span class="signature">(subtasks)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Calculates subtask progress.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>subtasks</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line100">line 100</a>
     </li></ul></dd>
     
 
@@ -389,6 +704,10 @@ Updates `tasks/{taskId}` with the new `status` value.
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    HTML for progress bar
+</div>
+
 
 
 <dl>
@@ -397,7 +716,7 @@ Updates `tasks/{taskId}` with the new `status` value.
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;void></span>
+<span class="param-type">string</span>
 
 
     </dd>
@@ -415,7 +734,7 @@ Updates `tasks/{taskId}` with the new `status` value.
     
 
     
-    <h4 class="name" id="~clearDropCardPreview"><span class="type-signature">(inner) </span>clearDropCardPreview<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    <h4 class="name" id="~extractAssigneeNames"><span class="type-signature">(inner) </span>extractAssigneeNames<span class="signature">(assigned_to)</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
     
 
     
@@ -423,8 +742,339 @@ Updates `tasks/{taskId}` with the new `status` value.
 
 
 <div class="description">
-    Removes the preview class from all task lists.
+    Extracts assignee names from different data formats.
+
+Supports objects, arrays, and comma-separated strings.
 </div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>assigned_to</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Raw assigned data.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line142">line 142</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Array of valid assignee names.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;string></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~generateAssigneeAvatars"><span class="type-signature">(inner) </span>generateAssigneeAvatars<span class="signature">(assigned_to)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Generates HTML for assignee avatars.
+
+Displays up to 3 avatars and adds a "+X" avatar
+if more assignees are present.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>assigned_to</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Assigned contacts data.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line124">line 124</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    HTML string for avatar rendering.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~initBoard"><span class="type-signature">(async, inner) </span>initBoard<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
 
 
 
@@ -467,7 +1117,7 @@ Updates `tasks/{taskId}` with the new `status` value.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line61">line 61</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line74">line 74</a>
     </li></ul></dd>
     
 
@@ -492,24 +1142,6 @@ Updates `tasks/{taskId}` with the new `status` value.
 
 
 
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">void</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -521,7 +1153,7 @@ Updates `tasks/{taskId}` with the new `status` value.
     
 
     
-    <h4 class="name" id="~clearDropHighlights"><span class="type-signature">(inner) </span>clearDropHighlights<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    <h4 class="name" id="~renderExtraAvatar"><span class="type-signature">(inner) </span>renderExtraAvatar<span class="signature">(count)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -529,7 +1161,7 @@ Updates `tasks/{taskId}` with the new `status` value.
 
 
 <div class="description">
-    Removes the highlight class from all drop zones.
+    Renders an avatar displaying remaining assignee count.
 </div>
 
 
@@ -538,6 +1170,55 @@ Updates `tasks/{taskId}` with the new `status` value.
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>count</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Number of hidden assignees.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -573,7 +1254,7 @@ Updates `tasks/{taskId}` with the new `status` value.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line50">line 50</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line181">line 181</a>
     </li></ul></dd>
     
 
@@ -601,6 +1282,10 @@ Updates `tasks/{taskId}` with the new `status` value.
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    HTML string for overflow avatar.
+</div>
+
 
 
 <dl>
@@ -609,7 +1294,166 @@ Updates `tasks/{taskId}` with the new `status` value.
     </dt>
     <dd>
         
-<span class="param-type">void</span>
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~renderVisibleAvatars"><span class="type-signature">(inner) </span>renderVisibleAvatars<span class="signature">(names)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Renders HTML for visible assignee avatars.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>names</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List of assignee names.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line161">line 161</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    HTML string for avatar elements.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
 
 
     </dd>
@@ -624,6 +1468,506 @@ Updates `tasks/{taskId}` with the new `status` value.
         
     
 
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+<h4 class="name" id="~Category">Category</h4>
+
+
+
+
+<div class="description">
+    Possible task categories.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">"user-story"</span>
+|
+
+<span class="param-type">"technical-task"</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="~Priority">Priority</h4>
+
+
+
+
+<div class="description">
+    Possible priority values.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">"low"</span>
+|
+
+<span class="param-type">"medium"</span>
+|
+
+<span class="param-type">"urgent"</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="~SubtaskStatus">SubtaskStatus</h4>
+
+
+
+
+<div class="description">
+    Possible board states.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">"todo"</span>
+|
+
+<span class="param-type">"in-progress"</span>
+|
+
+<span class="param-type">"await-feedback"</span>
+|
+
+<span class="param-type">"done"</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line24">line 24</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="~Todo">Todo</h4>
+
+
+
+
+<div class="description">
+    Represents a board task.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Task title.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Task description.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>date</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Due date (YYYY-MM-DD) or empty string.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>priority</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Priority</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Task priority level.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>assignedTo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Person(s) assigned to this task (currently unused).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>category</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Category</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Task category.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>status</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">SubtaskStatus</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Current board column/status.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line41">line 41</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
     
 
     
@@ -637,13 +1981,13 @@ Updates `tasks/{taskId}` with the new `status` value.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#applyPrioritySelection">applyPrioritySelection</a></li><li><a href="global.html#assignName">assignName</a></li><li><a href="global.html#awaitFeedbackTasks">awaitFeedbackTasks</a></li><li><a href="global.html#bindAssigneeEvents">bindAssigneeEvents</a></li><li><a href="global.html#bindSubtaskEvents">bindSubtaskEvents</a></li><li><a href="global.html#buildCheckbox">buildCheckbox</a></li><li><a href="global.html#buildContactOptionElement">buildContactOptionElement</a></li><li><a href="global.html#buildOptionMain">buildOptionMain</a></li><li><a href="global.html#buildSubtaskItem">buildSubtaskItem</a></li><li><a href="global.html#buildTaskData">buildTaskData</a></li><li><a href="global.html#buildTaskUpdateObject">buildTaskUpdateObject</a></li><li><a href="global.html#clearAddTaskForm">clearAddTaskForm</a></li><li><a href="global.html#clearFieldError">clearFieldError</a></li><li><a href="global.html#clearSelectedAssignees">clearSelectedAssignees</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#clearSubtasks">clearSubtasks</a></li><li><a href="global.html#closeAssignedOptions">closeAssignedOptions</a></li><li><a href="global.html#collectEditFormData">collectEditFormData</a></li><li><a href="global.html#columns">columns</a></li><li><a href="global.html#createSubtaskActions">createSubtaskActions</a></li><li><a href="global.html#createSubtaskEditInput">createSubtaskEditInput</a></li><li><a href="global.html#createSubtaskText">createSubtaskText</a></li><li><a href="global.html#deleteExistingSubtask">deleteExistingSubtask</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#doneTasks">doneTasks</a></li><li><a href="global.html#editExistingSubtask">editExistingSubtask</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTask">editTask</a></li><li><a href="global.html#findPriorityButton">findPriorityButton</a></li><li><a href="global.html#getAssignedNames">getAssignedNames</a></li><li><a href="global.html#getAvatarColor">getAvatarColor</a></li><li><a href="global.html#getContactData">getContactData</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getSortedContacts">getSortedContacts</a></li><li><a href="global.html#getSubtasks">getSubtasks</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#handleOutsideClick">handleOutsideClick</a></li><li><a href="global.html#handleSubtaskKeydown">handleSubtaskKeydown</a></li><li><a href="global.html#handleSubtaskListClick">handleSubtaskListClick</a></li><li><a href="global.html#handleTriggerClick">handleTriggerClick</a></li><li><a href="global.html#hashString">hashString</a></li><li><a href="global.html#initAssignees">initAssignees</a></li><li><a href="global.html#initMobileGreetingOverlay">initMobileGreetingOverlay</a></li><li><a href="global.html#initSubtasks">initSubtasks</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#initializeEditAssignees">initializeEditAssignees</a></li><li><a href="global.html#initializeEditSubtasks">initializeEditSubtasks</a></li><li><a href="global.html#isSelected">isSelected</a></li><li><a href="global.html#openTaskOverlay">openTaskOverlay</a></li><li><a href="global.html#populateAssignedToDropdown">populateAssignedToDropdown</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#refreshBoardAndShowTask">refreshBoardAndShowTask</a></li><li><a href="global.html#renderContactOptions">renderContactOptions</a></li><li><a href="global.html#renderEditOverlay">renderEditOverlay</a></li><li><a href="global.html#renderNoContacts">renderNoContacts</a></li><li><a href="global.html#renderSelectedAssignees">renderSelectedAssignees</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#saveEditedSubtask">saveEditedSubtask</a></li><li><a href="global.html#saveEditedTask">saveEditedTask</a></li><li><a href="global.html#saveNewSubtask">saveNewSubtask</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#saveSubtaskValue">saveSubtaskValue</a></li><li><a href="global.html#selectPriority">selectPriority</a></li><li><a href="global.html#setDefaultPriority">setDefaultPriority</a></li><li><a href="global.html#setupRequiredFieldValidation">setupRequiredFieldValidation</a></li><li><a href="global.html#setupSubtaskEditListeners">setupSubtaskEditListeners</a></li><li><a href="global.html#submitTask">submitTask</a></li><li><a href="global.html#syncOptionToggle">syncOptionToggle</a></li><li><a href="global.html#syncTasksAndTodos">syncTasksAndTodos</a></li><li><a href="global.html#tasksInBoard">tasksInBoard</a></li><li><a href="global.html#tasksInProgress">tasksInProgress</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#toggleAssignedOptions">toggleAssignedOptions</a></li><li><a href="global.html#toggleAssignee">toggleAssignee</a></li><li><a href="global.html#toggleSubtaskActions">toggleSubtaskActions</a></li><li><a href="global.html#trackContactsForUser">trackContactsForUser</a></li><li><a href="global.html#updateAssignedInput">updateAssignedInput</a></li><li><a href="global.html#updateTaskInFirebase">updateTaskInFirebase</a></li><li><a href="global.html#urgentTasks">urgentTasks</a></li><li><a href="global.html#urgentTasksDeadLine">urgentTasksDeadLine</a></li><li><a href="global.html#validateRequiredField">validateRequiredField</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Apr 21 2026 15:16:46 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -38,10 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">HTML template factory functions for member pages.
-
-Provides functions that return HTML strings for commonly used UI parts:
-header, sidebar, add-task form, contact overlays, signup message, and board task cards.</div>
+            <div class="description">HTML template factory functions for member pages.Provides functions that return HTML strings for commonly used UI parts:header, sidebar, add-task form, contact overlays, signup message, and board task cards.</div>
         
 
         
@@ -90,7 +87,7 @@ header, sidebar, add-task form, contact overlays, signup message, and board task
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line1">line 1</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line3">line 3</a>
     </li></ul></dd>
     
 
@@ -155,11 +152,7 @@ header, sidebar, add-task form, contact overlays, signup message, and board task
 
 
 <div class="description">
-    Generates a task card HTML string for the board (drag-and-drop).
-
-NOTE:
-- `category` is used to build the CSS class name `task__category--${category}`
-- `priority` is used to build the icon path `/assets/icons/${priority}-prio-icon.svg`
+    Generates a task card HTML string for the board (drag-and-drop).NOTE:- `category` is used to build the CSS class name `task__category--${category}`- `priority` is used to build the icon path `/assets/icons/${priority}-prio-icon.svg`
 </div>
 
 
@@ -247,7 +240,7 @@ NOTE:
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#Category">Category</a></span>
+<span class="param-type">Category</span>
 
 
             
@@ -293,7 +286,7 @@ NOTE:
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#Priority">Priority</a></span>
+<span class="param-type">Priority</span>
 
 
             
@@ -344,7 +337,7 @@ NOTE:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line257">line 257</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line322">line 322</a>
     </li></ul></dd>
     
 
@@ -572,7 +565,7 @@ NOTE:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line289">line 289</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line346">line 346</a>
     </li></ul></dd>
     
 
@@ -638,9 +631,7 @@ NOTE:
 
 
 <div class="description">
-    Generates the contact add overlay HTML.
-
-Intended to be injected into a container element like `#addC_overlay`.
+    Generates the contact add overlay HTML.Intended to be injected into a container element like `#addC_overlay`.
 </div>
 
 
@@ -684,7 +675,7 @@ Intended to be injected into a container element like `#addC_overlay`.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line182">line 182</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line228">line 228</a>
     </li></ul></dd>
     
 
@@ -912,7 +903,7 @@ Intended to be injected into a container element like `#addC_overlay`.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line329">line 329</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line416">line 416</a>
     </li></ul></dd>
     
 
@@ -970,6 +961,325 @@ Intended to be injected into a container element like `#addC_overlay`.
     
 
     
+    <h4 class="name" id=".getEditTaskOverlayTemplate"><span class="type-signature">(static) </span>getEditTaskOverlayTemplate<span class="signature">(id, category, title, description, due_date, priority, assigned_to, subtasks)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Task ID</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>category</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Task category</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Task title</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Task description</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>due_date</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Due date</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>priority</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Priority level</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>assigned_to</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Assigned contacts</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>subtasks</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Subtasks object</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line523">line 523</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    HTML string for edit task overlay
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id=".getHeaderTemplate"><span class="type-signature">(static) </span>getHeaderTemplate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
@@ -978,16 +1288,7 @@ Intended to be injected into a container element like `#addC_overlay`.
 
 
 <div class="description">
-    Generates the header HTML for member pages.
-
-Includes:
-- Help link
-- Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)
-
-DOM hooks created by this template:
-- `#headerMenue` (toggle button)
-- `#headerMenueNav` (dropdown container)
-- `#logoutBtn` (logout trigger)
+    Generates the header HTML for member pages.Includes:- Help link- Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)DOM hooks created by this template:- `#headerMenue` (toggle button)- `#headerMenueNav` (dropdown container)- `#logoutBtn` (logout trigger)
 </div>
 
 
@@ -1031,7 +1332,7 @@ DOM hooks created by this template:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line38">line 38</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -1097,12 +1398,7 @@ DOM hooks created by this template:
 
 
 <div class="description">
-    Generates the sidebar HTML for member pages.
-
-Includes:
-- Logo
-- Navigation links (Summary / Add Task / Board / Contacts)
-- Footer links (Privacy Policy / Legal Notice)
+    Generates the sidebar HTML for member pages.Includes:- Logo- Navigation links (Summary / Add Task / Board / Contacts)- Footer links (Privacy Policy / Legal Notice)
 </div>
 
 
@@ -1146,7 +1442,7 @@ Includes:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line76">line 76</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line77">line 77</a>
     </li></ul></dd>
     
 
@@ -1212,11 +1508,7 @@ Includes:
 
 
 <div class="description">
-    Generates the "Add Task" form HTML.
-
-NOTE:
-This function only returns markup. Event handling (submit, priority button selection,
-form validation, etc.) should be implemented in the page/controller script.
+    Generates the "Add Task" form HTML.NOTE:This function only returns markup. Event handling (submit, priority button selection,form validation, etc.) should be implemented in the page/controller script.
 </div>
 
 
@@ -1260,7 +1552,7 @@ form validation, etc.) should be implemented in the page/controller script.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line106">line 106</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line108">line 108</a>
     </li></ul></dd>
     
 
@@ -1370,7 +1662,7 @@ form validation, etc.) should be implemented in the page/controller script.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line232">line 232</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line278">line 278</a>
     </li></ul></dd>
     
 
@@ -1423,6 +1715,165 @@ form validation, etc.) should be implemented in the page/controller script.
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="~formatCategoryLabel"><span class="type-signature">(inner) </span>formatCategoryLabel<span class="signature">(category)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Formats an internal task category value into a user-friendly label.Converts values like "user-story" or "technical-task"into readable UI labels such as "User Story" and "Technical Task".Falls keine Zuordnung vorhanden ist, wird der Originalwert zurückgegeben.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>category</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The raw category value from Firebase.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line299">line 299</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The formatted category label for display in the UI.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
@@ -1436,8 +1887,7 @@ form validation, etc.) should be implemented in the page/controller script.
 
 
 <div class="description">
-    Task categories supported by the board UI.
-Used for CSS class naming (e.g. `task__category--user-story`).
+    Task categories supported by the board UI.Used for CSS class naming (e.g. `task__category--user-story`).
 </div>
 
 
@@ -1491,7 +1941,7 @@ Used for CSS class naming (e.g. `task__category--user-story`).
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line10">line 10</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line12">line 12</a>
     </li></ul></dd>
     
 
@@ -1515,8 +1965,7 @@ Used for CSS class naming (e.g. `task__category--user-story`).
 
 
 <div class="description">
-    Priority values supported by the board UI.
-Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
+    Priority values supported by the board UI.Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
 </div>
 
 
@@ -1573,7 +2022,7 @@ Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line17">line 17</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line19">line 19</a>
     </li></ul></dd>
     
 
@@ -1603,13 +2052,13 @@ Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#applyPrioritySelection">applyPrioritySelection</a></li><li><a href="global.html#assignName">assignName</a></li><li><a href="global.html#awaitFeedbackTasks">awaitFeedbackTasks</a></li><li><a href="global.html#bindAssigneeEvents">bindAssigneeEvents</a></li><li><a href="global.html#bindSubtaskEvents">bindSubtaskEvents</a></li><li><a href="global.html#buildCheckbox">buildCheckbox</a></li><li><a href="global.html#buildContactOptionElement">buildContactOptionElement</a></li><li><a href="global.html#buildOptionMain">buildOptionMain</a></li><li><a href="global.html#buildSubtaskItem">buildSubtaskItem</a></li><li><a href="global.html#buildTaskData">buildTaskData</a></li><li><a href="global.html#buildTaskUpdateObject">buildTaskUpdateObject</a></li><li><a href="global.html#clearAddTaskForm">clearAddTaskForm</a></li><li><a href="global.html#clearFieldError">clearFieldError</a></li><li><a href="global.html#clearSelectedAssignees">clearSelectedAssignees</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#clearSubtasks">clearSubtasks</a></li><li><a href="global.html#closeAssignedOptions">closeAssignedOptions</a></li><li><a href="global.html#collectEditFormData">collectEditFormData</a></li><li><a href="global.html#columns">columns</a></li><li><a href="global.html#createSubtaskActions">createSubtaskActions</a></li><li><a href="global.html#createSubtaskEditInput">createSubtaskEditInput</a></li><li><a href="global.html#createSubtaskText">createSubtaskText</a></li><li><a href="global.html#deleteExistingSubtask">deleteExistingSubtask</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#doneTasks">doneTasks</a></li><li><a href="global.html#editExistingSubtask">editExistingSubtask</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTask">editTask</a></li><li><a href="global.html#findPriorityButton">findPriorityButton</a></li><li><a href="global.html#getAssignedNames">getAssignedNames</a></li><li><a href="global.html#getAvatarColor">getAvatarColor</a></li><li><a href="global.html#getContactData">getContactData</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getSortedContacts">getSortedContacts</a></li><li><a href="global.html#getSubtasks">getSubtasks</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#handleOutsideClick">handleOutsideClick</a></li><li><a href="global.html#handleSubtaskKeydown">handleSubtaskKeydown</a></li><li><a href="global.html#handleSubtaskListClick">handleSubtaskListClick</a></li><li><a href="global.html#handleTriggerClick">handleTriggerClick</a></li><li><a href="global.html#hashString">hashString</a></li><li><a href="global.html#initAssignees">initAssignees</a></li><li><a href="global.html#initMobileGreetingOverlay">initMobileGreetingOverlay</a></li><li><a href="global.html#initSubtasks">initSubtasks</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#initializeEditAssignees">initializeEditAssignees</a></li><li><a href="global.html#initializeEditSubtasks">initializeEditSubtasks</a></li><li><a href="global.html#isSelected">isSelected</a></li><li><a href="global.html#openTaskOverlay">openTaskOverlay</a></li><li><a href="global.html#populateAssignedToDropdown">populateAssignedToDropdown</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#refreshBoardAndShowTask">refreshBoardAndShowTask</a></li><li><a href="global.html#renderContactOptions">renderContactOptions</a></li><li><a href="global.html#renderEditOverlay">renderEditOverlay</a></li><li><a href="global.html#renderNoContacts">renderNoContacts</a></li><li><a href="global.html#renderSelectedAssignees">renderSelectedAssignees</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#saveEditedSubtask">saveEditedSubtask</a></li><li><a href="global.html#saveEditedTask">saveEditedTask</a></li><li><a href="global.html#saveNewSubtask">saveNewSubtask</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#saveSubtaskValue">saveSubtaskValue</a></li><li><a href="global.html#selectPriority">selectPriority</a></li><li><a href="global.html#setDefaultPriority">setDefaultPriority</a></li><li><a href="global.html#setupRequiredFieldValidation">setupRequiredFieldValidation</a></li><li><a href="global.html#setupSubtaskEditListeners">setupSubtaskEditListeners</a></li><li><a href="global.html#submitTask">submitTask</a></li><li><a href="global.html#syncOptionToggle">syncOptionToggle</a></li><li><a href="global.html#syncTasksAndTodos">syncTasksAndTodos</a></li><li><a href="global.html#tasksInBoard">tasksInBoard</a></li><li><a href="global.html#tasksInProgress">tasksInProgress</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#toggleAssignedOptions">toggleAssignedOptions</a></li><li><a href="global.html#toggleAssignee">toggleAssignee</a></li><li><a href="global.html#toggleSubtaskActions">toggleSubtaskActions</a></li><li><a href="global.html#trackContactsForUser">trackContactsForUser</a></li><li><a href="global.html#updateAssignedInput">updateAssignedInput</a></li><li><a href="global.html#updateTaskInFirebase">updateTaskInFirebase</a></li><li><a href="global.html#urgentTasks">urgentTasks</a></li><li><a href="global.html#urgentTasksDeadLine">urgentTasksDeadLine</a></li><li><a href="global.html#validateRequiredField">validateRequiredField</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Apr 21 2026 15:16:46 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>
