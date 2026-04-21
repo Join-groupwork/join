@@ -1,6 +1,10 @@
+html,
+body {
+  margin: 0 auto;
+}
+
 body {
   display: block;
-  margin: 0 auto;
 }
 
 .signup {
