@@ -1,42 +1,83 @@
 /**
- * @file  Handles user registration including form validation,
- * Firebase authentication and contact persistence.
+ * @file Handles user registration including form validation,
+ * Firebase authentication, and contact persistence.
  *
  * @module signup
  */
 
-/**
- *
- */
 import { auth } from "../../scripts/firebase/firebase.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { pushContact } from "../../scripts/firebase/push-contact.js";
 
+/**
+ * Name input field of the signup form.
+ *
+ * @type {HTMLInputElement|null}
+ */
 const signupName = document.getElementById('signupName');
+
+/**
+ * Email input field of the signup form.
+ *
+ * @type {HTMLInputElement|null}
+ */
 const signupEmail = document.getElementById('loginEmail');
+
+/**
+ * Password input field of the signup form.
+ *
+ * @type {HTMLInputElement|null}
+ */
 const signupPassword = document.getElementById('loginPassword');
+
+/**
+ * Password confirmation input field of the signup form.
+ *
+ * @type {HTMLInputElement|null}
+ */
 const signupConfirmPassword = document.getElementById('signupConfirmPassword');
+
+/**
+ * Terms acceptance checkbox of the signup form.
+ *
+ * @type {HTMLInputElement|null}
+ */
 const termsCheckbox = document.getElementById('termsCheckbox');
+
+/**
+ * Submit button of the signup form.
+ *
+ * @type {HTMLButtonElement|null}
+ */
 const signupBtn = document.getElementById('signupBtn');
+
+/**
+ * Signup form element.
+ *
+ * @type {HTMLFormElement|null}
+ */
 const signupForm = document.getElementById('signupForm');
 
-
 /**
- * @event Eventlistener
+ * Registers the signup form validation and submit event handlers.
+ *
+ * @returns {void}
  */
-signupName.addEventListener('input', validateForm);
-signupEmail.addEventListener('input', validateForm);
-signupPassword.addEventListener('input', validateForm);
-signupConfirmPassword.addEventListener('input', validateForm);
-termsCheckbox.addEventListener('change', validateForm);
-signupForm.addEventListener('submit', handleSignup);
+signupName?.addEventListener('input', validateForm);
+signupEmail?.addEventListener('input', validateForm);
+signupPassword?.addEventListener('input', validateForm);
+signupConfirmPassword?.addEventListener('input', validateForm);
+termsCheckbox?.addEventListener('change', validateForm);
+signupForm?.addEventListener('submit', handleSignup);
 
 /**
- * Validates the signup form inputs and enables or disables the submit button.
+ * Validates the signup form and enables or disables the submit button.
  *
  * @returns {void}
  */
 function validateForm() {
+  if (!signupName || !signupEmail || !signupPassword || !signupConfirmPassword || !termsCheckbox || !signupBtn) return;
+
   const nameFilled = signupName.value.trim() !== '';
   const emailFilled = signupEmail.value.trim() !== '';
   const passwordFilled = signupPassword.value !== '';
@@ -46,6 +87,12 @@ function validateForm() {
   signupBtn.disabled = !formIsValid;
 }
 
+/**
+ * Returns a user-friendly signup error message for a Firebase auth error code.
+ *
+ * @param {string} errorCode - The Firebase auth error code.
+ * @returns {string} Human-readable error message.
+ */
 function getSignupErrorMessage(errorCode) {
   const messages = {
     "auth/email-already-in-use": "Diese E-Mail ist bereits registriert. Bitte logge dich ein oder nutze eine andere E-Mail.",
@@ -58,35 +105,40 @@ function getSignupErrorMessage(errorCode) {
 }
 
 /**
- * Handles the signup form submission.
- * Create a Firebase user and stores additional contact data.
+ * Handles signup form submission.
+ *
+ * Creates a Firebase user account and stores the related contact data.
  *
  * @async
- * @param {SubmitEvent} event - Form submit event
- * @returns {Promise<void>}
+ * @param {SubmitEvent} event - The signup form submit event.
+ * @returns {Promise<void>} Resolves when the signup flow is complete.
  */
 async function handleSignup(event) {
   event.preventDefault();
+
+  if (!signupName || !signupEmail || !signupPassword || !signupBtn) return;
 
   const email = signupEmail.value.trim();
   const password = signupPassword.value;
 
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
     const uid = userCredential.user.uid;
 
     /**
-    * Contact data that will be stored in your database.
-    * @type {{ uid: string, name: string, email: string, createdAT: number }}
-    */
+     * Contact data stored in the database for the newly registered user.
+     *
+     * @type {{ uid: string, name: string, email: string, createdAT: number }}
+     */
     const contactData = {
       uid: uid,
       name: signupName.value.trim(),
       email: email,
       createdAT: Date.now()
     };
+
     await pushContact(contactData);
+
     setTimeout(() => {
       window.location.href = "/index.html";
     }, 1500);
