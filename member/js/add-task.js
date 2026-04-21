@@ -1,16 +1,6 @@
 import { pushTask } from '../../scripts/firebase/push-task.js';
-
-import {
-  initAssignees,
-  trackContactsForUser,
-  getAssignedNames,
-  clearSelectedAssignees
-} from './add-task-assignees.js';
-import {
-  initSubtasks,
-  getSubtasks,
-  clearSubtasks
-} from './add-task-subtasks.js';
+import { initAssignees, trackContactsForUser, getAssignedNames, clearSelectedAssignees } from './add-task-assignees.js';
+import { initSubtasks, getSubtasks, clearSubtasks } from './add-task-subtasks.js';
 
 /**
  * Initializes the Add Task page after the DOM is fully loaded.
@@ -51,7 +41,6 @@ export function initAddTask(container, options = {}) {
       selectedPriority = null;
       return;
     }
-
     button.classList.add('selected');
     selectedPriority =
       button.value ||
@@ -59,15 +48,21 @@ export function initAddTask(container, options = {}) {
       button.textContent.trim();
   }
 
+  /**
+ * Closes the add-task page view.
+ *
+ * Navigates back in browser history when the previous page belongs
+ * to the same origin. Otherwise redirects to the board page.
+ *
+ * @returns {void}
+ */
   function closeAddTaskPage() {
     const hasReferrer = Boolean(document.referrer);
     const isInternalReferrer = hasReferrer && new URL(document.referrer).origin === window.location.origin;
-
     if (isInternalReferrer && window.history.length > 1) {
       window.history.back();
       return;
     }
-
     window.location.href = './board.html';
   }
 
@@ -85,7 +80,6 @@ export function initAddTask(container, options = {}) {
         button.value ||
         button.getAttribute('value') ||
         button.textContent.trim();
-
       return buttonPriority.toLowerCase() === priorityName.toLowerCase();
     });
   }
@@ -123,7 +117,6 @@ export function initAddTask(container, options = {}) {
   });
 
   setDefaultPriority();
-
   priorityButtons.forEach((btn) => {
     btn.addEventListener('click', (event) =>
       selectPriority(event, btn, priorityButtons)
@@ -132,23 +125,18 @@ export function initAddTask(container, options = {}) {
 
   createBtn?.addEventListener('click', async (event) => {
     event.preventDefault();
-
     const isTitleValid = validateRequiredField(titleInput);
     const isDueValid = validateRequiredField(dueInput);
-
     if (!isTitleValid || !isDueValid) return;
-
     const taskData = buildTaskData();
     if (!taskData) return;
-
     await submitTask(taskData, createBtn, options, priorityButtons, clearAddTaskForm);
   });
 
+
   cancelBtn?.addEventListener('click', (event) => {
     event.preventDefault();
-
     clearAddTaskForm(priorityButtons);
-
     if (options.mode === 'overlay' && typeof options.onClose === 'function') {
       options.onClose();
     }
@@ -160,6 +148,7 @@ export function initAddTask(container, options = {}) {
       closeAddTaskPage();
     });
   }
+
   /**
    * Handles priority button selection.
    *
@@ -197,13 +186,10 @@ export function initAddTask(container, options = {}) {
     if (descInput) descInput.value = '';
     if (dueInput) dueInput.value = '';
     if (categorySelect) categorySelect.selectedIndex = 0;
-
     clearSelectedAssignees(assigneeState);
     clearSubtasks(subtaskState);
-
     clearFieldError(titleInput);
     clearFieldError(dueInput);
-
     const mediumButton = findPriorityButton(buttons, 'medium');
     applyPrioritySelection(mediumButton || null, buttons);
   }
@@ -226,25 +212,23 @@ export function initAddTask(container, options = {}) {
    * @returns {Object|null} The task data object, or null if required data is missing.
    */
   function buildTaskData() {
-  const title = titleInput?.value?.trim();
-  const dueDate = dueInput?.value || '';
-
-  if (!title || !dueDate) return null;
-  const overlay = document.getElementById('add_task_overlay');
-  const status = overlay?.dataset.target || 'todo';
-
-  return {
-    title,
-    description: descInput?.value?.trim() || '',
-    due_date: dueDate,
-    priority: selectedPriority || 'medium',
-    assigned_to: getAssignedNames(assigneeState),
-    category: categorySelect?.value || '',
-    subtasks: getSubtasks(subtaskState),
-    status,           
-    createdAt: new Date().toISOString()
-  };
-} 
+    const title = titleInput?.value?.trim();
+    const dueDate = dueInput?.value || '';
+    if (!title || !dueDate) return null;
+    const overlay = document.getElementById('add_task_overlay');
+    const status = overlay?.dataset.target || 'todo';
+    return {
+      title,
+      description: descInput?.value?.trim() || '',
+      due_date: dueDate,
+      priority: selectedPriority || 'medium',
+      assigned_to: getAssignedNames(assigneeState),
+      category: categorySelect?.value || '',
+      subtasks: getSubtasks(subtaskState),
+      status,
+      createdAt: new Date().toISOString()
+    };
+  }
 }
 
 
@@ -260,18 +244,14 @@ export function initAddTask(container, options = {}) {
  */
 function validateRequiredField(input) {
   if (!input) return false;
-
   const formField = input.closest('.form-field');
   if (!formField) return true;
-
   const isEmpty = input.value === '';
-
   if (isEmpty) {
     input.classList.add('input-error');
     formField.classList.add('error');
     return false;
   }
-
   input.classList.remove('input-error');
   formField.classList.remove('error');
   return true;
@@ -286,7 +266,6 @@ function validateRequiredField(input) {
  */
 function clearFieldError(input) {
   if (!input) return;
-
   const formField = input.closest('.form-field');
   input.classList.remove('input-error');
   formField?.classList.remove('error');
@@ -307,13 +286,11 @@ function setupRequiredFieldValidation(fields) {
     field?.addEventListener('blur', () => {
       validateRequiredField(field);
     });
-
     field?.addEventListener('input', () => {
       if (field.classList.contains('input-error')) {
         validateRequiredField(field);
       }
     });
-
     field?.addEventListener('change', () => {
       if (field.classList.contains('input-error')) {
         validateRequiredField(field);
@@ -341,26 +318,19 @@ function setupRequiredFieldValidation(fields) {
  */
 async function submitTask(taskData, createBtn, options = {}, priorityButtons, clearForm) {
   createBtn.disabled = true;
-
   try {
     const key = await pushTask(taskData);
-    console.log('Pushed task, key:', key);
     alert('Task created successfully');
-
     if (options.mode === 'overlay') {
       clearForm(priorityButtons);
-
       if (typeof options.onSuccess === 'function') {
         await options.onSuccess();
       }
-
       if (typeof options.onClose === 'function') {
         options.onClose();
       }
-
       return;
     }
-
     window.location.href = './board.html';
   } catch (error) {
     console.error(error);
@@ -370,9 +340,18 @@ async function submitTask(taskData, createBtn, options = {}, priorityButtons, cl
   }
 }
 
+/**
+ * Initializes the add-task page automatically after the DOM is ready.
+ *
+ * Looks up the add-task container and starts page mode initialization
+ * if the container exists.
+ *
+ * @event DOMContentLoaded
+ * @listens Document#DOMContentLoaded
+ * @returns {void}
+ */
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.add-task__container');
   if (!container) return;
-
   initAddTask(container, { mode: 'page' });
 });

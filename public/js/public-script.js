@@ -85,9 +85,7 @@ function renderMobileFooter() {
     testRef.innerHTML = getPublicFooterTemplate();
   } else {
     console.error('Footer-Element not found!');
-  } console.log(testRef);
-
-
+  }
 }
 // CHECK Why this function? Function don't used!
 /**

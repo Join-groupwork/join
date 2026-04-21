@@ -26,67 +26,47 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { auth } from '../../scripts/firebase/firebase.js';
-import { loadTasks } from '../../scripts/firebase/get-firebase.js';
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Provides summary page logic for task counters, greeting text,
+ * username display, urgent deadline display, and mobile greeting overlay.
+ *
+ * @module summary
+ */
 
-
-async function initSummary() {
- const data = await loadTasks();
-  const tasks = Object.values(data || {});
-  todoTasks(tasks);
-  doneTasks(tasks);
-  urgentTasks(tasks);
-  tasksInBoard(tasks);
-  tasksInProgress(tasks);
-  awaitFeedbackTasks(tasks);
-  urgentTasksDeadLine(tasks);
-  greetings();
-}
-// function todoTasks(tasks) {
-//   const count = tasks.filter(task => task.status === "todo").length;
-//   document.getElementById("todo-count").textContent = count;
-// }
-
-
-
-// initSummary(); window.addEventListener('load', initSummary); calls the initSummary function when the page loads already
-
-
-// INFO die tasks von firebase müssen abgerufen werden
-// INFO firebase tasks auslesen "subtask"
-// INFO need greetings for user and guest
+import { auth } from '../../scripts/firebase/firebase.js';
+import { loadTasks, getContacts, loadData } from '../../scripts/firebase/get-firebase.js';
 
 /**
- * Counts the number of tasks with the status "todo" or "to do"
- * and updates the corresponding value in the summary UI.
+ * Represents a summary task object.
  *
- * The function also ensures backward compatibility by checking
- * if a task uses the old `subtask` property instead of `status`
- * and assigns it accordingly.
+ * @typedef {Object} SummaryTask
+ * @property {string} [status] - Current task status.
+ * @property {string} [subtask] - Legacy fallback status value.
+ * @property {string} [priority] - Task priority.
+ * @property {string} [due_date] - Task due date in YYYY-MM-DD format.
+ */
+
+/**
+ * Counts tasks with status "todo" or "to do"
+ * and updates the corresponding summary UI element.
+ *
+ * Also applies backward compatibility for legacy `subtask` status values.
  *
  * @async
- * @function todoTasks
- * @param {Array&lt;Object>} tasks - Array of task objects retrieved from the database.
- * @param {string} [tasks[].status] - The current status of the task (e.g. "todo", "in progress", "done").
- * @param {string} [tasks[].subtask] - Legacy property used as a fallback for the task status.
- *
+ * @param {SummaryTask[]} tasks - Array of task objects.
  * @returns {Promise&lt;void>} Resolves after the UI has been updated.
  */
 async function todoTasks(tasks) {
-  // ensure every task has a `status` property (else fall back to old `subtask`)
   tasks.forEach(task => {
     if (!task.status &amp;&amp; task.subtask) {
       task.status = task.subtask;
     }
   });
 
- const count = tasks.filter(task => {
+  const count = tasks.filter(task => {
     const s = (task.status || '').toLowerCase().trim();
     return s === 'todo' || s === 'to do';
   }).length;
-
-  console.log('Computed todo count:', count);
 
   const element = document.querySelector('.todo .card-title');
   if (element) {
@@ -96,21 +76,26 @@ async function todoTasks(tasks) {
   }
 }
 
-// [ ] show how much tasks "done"
+/**
+ * Counts tasks with status "done"
+ * and updates the corresponding summary UI element.
+ *
+ * Also applies backward compatibility for legacy `subtask` status values.
+ *
+ * @async
+ * @param {SummaryTask[]} tasks - Array of task objects.
+ * @returns {Promise&lt;void>} Resolves after the UI has been updated.
+ */
 async function doneTasks(tasks) {
   tasks.forEach(task => {
     if (!task.status &amp;&amp; task.subtask) {
       task.status = task.subtask;
     }
   });
-
- const count = tasks.filter(task => {
+  const count = tasks.filter(task => {
     const s = (task.status || '').toLowerCase().trim();
-    return s === 'done' ;
+    return s === 'done';
   }).length;
-
-  console.log('Computed done count:', count);
-
   const element = document.querySelector('.done .card-title');
   if (element) {
     element.textContent = count;
@@ -118,18 +103,20 @@ async function doneTasks(tasks) {
     console.warn("Element '.done .card-title' nicht gefunden!");
   }
 }
-// INFO Urgent task
-// INFO functoin for "when is the next deadline?"
-// [ ] show how much task "urgent"
 
+/**
+ * Counts tasks with priority "urgent"
+ * and updates the corresponding summary UI element.
+ *
+ * @async
+ * @param {SummaryTask[]} tasks - Array of task objects.
+ * @returns {Promise&lt;void>} Resolves after the UI has been updated.
+ */
 async function urgentTasks(tasks) {
- const count = tasks.filter(task => {
+  const count = tasks.filter(task => {
     const s = (task.priority || '').toLowerCase().trim();
-    return s === 'urgent' ;
+    return s === 'urgent';
   }).length;
-
-  console.log('Computed urgent count:', count);
-
   const element = document.querySelector('.urgent-info .card-title');
   if (element) {
     element.textContent = count;
@@ -138,26 +125,20 @@ async function urgentTasks(tasks) {
   }
 }
 
-// [ ] show how much "tasks in "board"
-// async function tasksInBoard(tasks) {
-//   const count = tasks.length;
-//   const element = document.querySelector('.all-tasks .big');
-//   if (element) {
-//     element.textContent = count;
-//   } else {
-//     console.warn("Element '.all-tasks .big' nicht gefunden!");
-//   }
-// }
-// INFO the count of tasks in board was not correct, now it counts only the tasks with the status "todo", "in progress", "await feedback" and "done". Because only these tasks are in the board.
-//
+/**
+ * Counts all tasks that belong to valid board statuses
+ * and updates the corresponding summary UI element.
+ *
+ * @async
+ * @param {SummaryTask[]} tasks - Array of task objects.
+ * @returns {Promise&lt;void>} Resolves after the UI has been updated.
+ */
 async function tasksInBoard(tasks) {
   const validStatuses = new Set(['todo', 'in-progress', 'await-feedback', 'done']);
-
   const count = tasks.filter(task => {
     const status = (task.status || '').toLowerCase().trim();
     return validStatuses.has(status);
   }).length;
-
   const element = document.querySelector('.all-tasks .big');
   if (element) {
     element.textContent = count;
@@ -166,54 +147,47 @@ async function tasksInBoard(tasks) {
   }
 }
 
-// [ ] show how much "task in progress"
-// async function tasksInProgress(tasks) {
-//   tasks.forEach(task => {
-//     if (!task.status &amp;&amp; task.subtask) {
-//       task.status = task.subtask;
-//     }
-//   });
-//   const count = tasks.filter(task => task.status === 'inProgress').length;
-//   console.log('Computed inProgress count:', count);
-//   const element = document.querySelector('.tasks-in-progress .big');
-//   if (element) {
-//     element.textContent = count;
-//   } else {
-//     console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
-//   }
-// }
-
-// inProgress didn't count correct, because in firebase the status is "in-progress" not "inProgress".
+/**
+ * Counts tasks with status "in-progress"
+ * and updates the corresponding summary UI element.
+ *
+ * @async
+ * @param {SummaryTask[]} tasks - Array of task objects.
+ * @returns {Promise&lt;void>} Resolves after the UI has been updated.
+ */
 async function tasksInProgress(tasks) {
-const count = tasks.filter(task => {
-const status = (task.status || '').toLowerCase().trim();
-return status === 'in-progress';
-}).length;
-
-console.log('Computed in-progress count (strict):', count);
-
-const element = document.querySelector('.tasks-in-progress .big');
-if (element) {
-element.textContent = count;
-} else {
-console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
-}
+  const count = tasks.filter(task => {
+    const status = (task.status || '').toLowerCase().trim();
+    return status === 'in-progress';
+  }).length;
+  const element = document.querySelector('.tasks-in-progress .big');
+  if (element) {
+    element.textContent = count;
+  } else {
+    console.warn("Element '.tasks-in-progress .big' nicht gefunden!");
+  }
 }
 
-// [ ] show how much tasks "await feedback"
+/**
+ * Counts tasks with status "await-feedback"
+ * and updates the corresponding summary UI element.
+ *
+ * Also applies backward compatibility for legacy `subtask` status values.
+ *
+ * @async
+ * @param {SummaryTask[]} tasks - Array of task objects.
+ * @returns {Promise&lt;void>} Resolves after the UI has been updated.
+ */
 async function awaitFeedbackTasks(tasks) {
   tasks.forEach(task => {
     if (!task.status &amp;&amp; task.subtask) {
       task.status = task.subtask;
     }
   });
-
   const count = tasks.filter(task => {
     const s = (task.status || '').toLowerCase().trim();
     return s === 'await-feedback';
   }).length;
-
-  console.log('Computed await-feedback count:', count);
   const element = document.querySelector('.await-feedback-info .big');
   if (element) {
     element.textContent = count;
@@ -222,84 +196,142 @@ async function awaitFeedbackTasks(tasks) {
   }
 }
 
-
 /**
- * Displays a greeting message based on the current time of day
- * and shows the name of the currently authenticated user.
+ * Updates the greeting text based on the current local time.
  *
- * The function:
- * - Determines the appropriate greeting ("Good morning", "Good afternoon", "Good evening")
- *   based on the user's local time.
- * - Updates the greeting text in the DOM.
- * - Checks whether a user is authenticated.
- * - Displays the user's display name or email if logged in,
- *   otherwise falls back to "Guest".
- * - Listens for authentication state changes and updates the name dynamically.
- *
- * @async
- * @function greetings
- * @returns {Promise&lt;void>} Resolves after initializing the greeting display and auth listener.
+ * @returns {void}
  */
-async function greetings() {
+function greetings() {
   const daytimeElem = document.getElementById('greetingTime');
-  const nameElem = document.getElementById('greetingName');
-
-  // determine time-based message
+  if (!daytimeElem) return;
   const hour = new Date().getHours();
-  let greetingText;
+  let greetingText = 'Good evening';
   if (hour &lt; 12) greetingText = 'Good morning';
   else if (hour &lt; 18) greetingText = 'Good afternoon';
-  else greetingText = 'Good evening';
-
-  if (daytimeElem) {
-    daytimeElem.textContent = greetingText;
-  }
-
-  // BUGFIX email is the wrong name to use for greeting. It musst use the user name or displayuser name
-  // BUGFIX the displayuser name in firebase is dosn't the right name
-  /**
-   * Assigns the displayed username depending on the authentication state.
-   *
-   * If a logged-in user exists and is not anonymous, their display name
-   * or email will be shown. Otherwise, the label "Guest" will be used.
-   *
-   * @param {Object|null} user - The authenticated user object from Firebase Auth.
-   * @param {string} [user.displayName] - The user's display name.
-   * @param {string} [user.email] - The user's email address.
-   * @param {boolean} [user.isAnonymous] - Indicates whether the user is anonymous.
-   * @returns {void}
-   */
-  function assignName(user) {
-    if (!nameElem) return;
-    if (user &amp;&amp; !user.isAnonymous) {
-      nameElem.textContent = user.displayName || user.email || 'User';
-    } else {
-      nameElem.textContent = 'Guest';
-    }
-  }
-
-  assignName(auth.currentUser);
-  onAuthStateChanged(auth, assignName);
+  daytimeElem.textContent = greetingText;
 }
 
+/**
+ * Assigns the displayed username depending on the authentication state.
+ *
+ * Shows the matching contact name for logged-in non-anonymous users
+ * and "Guest" otherwise.
+ *
+ * @param {Object|null} user - The authenticated Firebase user object, or null.
+ * @param {boolean} [user.isAnonymous] - Whether the user is anonymous.
+ * @param {string} [user.uid] - The user id.
+ * @param {HTMLElement|null} nameElem - The greeting name element.
+ * @returns {void}
+ */
+export function assignName(user, nameElem) {
+  if (!nameElem) {
+    console.warn('Kein nameElem vorhanden!');
+    return;
+  }
+  if (user &amp;&amp; !user.isAnonymous) {
+    const contacts = getContacts();
+    const contact = Object.values(contacts || {}).find(c => c.uid === user.uid);
+    nameElem.textContent = contact?.name || 'User';
+    return;
+  }
+  nameElem.textContent = 'Guest';
+}
+
+/**
+ * Finds the nearest upcoming deadline among urgent tasks
+ * and renders it into the summary UI.
+ *
+ * @param {SummaryTask[]} tasks - Array of task objects.
+ * @returns {void}
+ */
 function urgentTasksDeadLine(tasks) {
-    const urgentTasks = tasks
-        .filter(task => task.priority === "urgent" &amp;&amp; task.due_date)
-        .sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
-
-    if (urgentTasks.length > 0) {
-        const nextDate = new Date(urgentTasks[0].due_date);
-
-        document.getElementById("urgentTasks-dead-line").textContent =
-            nextDate.toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-            });
-    }
+  const urgentTasks = tasks
+    .filter(task => task.priority === 'urgent' &amp;&amp; task.due_date)
+    .sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+  const deadlineElement = document.getElementById('urgentTasks-dead-line');
+  if (!deadlineElement) return;
+  if (urgentTasks.length > 0) {
+    const nextDate = new Date(urgentTasks[0].due_date);
+    deadlineElement.textContent = nextDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
 }
 
+/**
+ * Initializes the mobile greeting overlay.
+ *
+ * Copies the already rendered desktop greeting into the mobile overlay,
+ * shows it briefly on small screens, and then hides it.
+ *
+ * @returns {void}
+ */
+function initMobileGreetingOverlay() {
+  const overlay = document.getElementById('mobileGreetingOverlay');
+  const desktopTime = document.getElementById('greetingTime');
+  const desktopName = document.getElementById('greetingName');
+  const mobileTime = document.getElementById('mobileGreetingTime');
+  const mobileName = document.getElementById('mobileGreetingName');
+  if (!overlay || !desktopTime || !desktopName || !mobileTime || !mobileName) return;
+  if (window.innerWidth > 600) return;
+  if (overlay.dataset.started === 'true') return;
+  const timeText = desktopTime.textContent.trim();
+  const nameText = desktopName.textContent.trim();
+  if (!timeText || !nameText) return;
+  mobileTime.textContent = timeText;
+  mobileName.textContent = nameText;
+  overlay.dataset.started = 'true';
+  overlay.classList.remove('hide');
+  overlay.classList.add('show');
+  setTimeout(() => {
+    overlay.classList.remove('show');
+    overlay.classList.add('hide');
+  }, 200);
+}
 
+/**
+ * Initializes the summary page.
+ *
+ * Loads tasks, updates all counters, sets the greeting text,
+ * loads contacts, renders the current user's name,
+ * and starts the mobile greeting overlay.
+ *
+ * @async
+ * @returns {Promise&lt;void>} Resolves when the summary initialization is complete.
+ */
+export async function initSummary() {
+  const tasksData = await loadTasks();
+  const tasks = Object.values(tasksData || {});
+  await todoTasks(tasks);
+  await doneTasks(tasks);
+  await urgentTasks(tasks);
+  await tasksInBoard(tasks);
+  await tasksInProgress(tasks);
+  await awaitFeedbackTasks(tasks);
+  urgentTasksDeadLine(tasks);
+  greetings();
+  const nameElem = document.getElementById('greetingName');
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      loadData(() => {
+        assignName(user, nameElem);
+        initMobileGreetingOverlay();
+      });
+    } else {
+      assignName(null, nameElem);
+      initMobileGreetingOverlay();
+    }
+  });
+}
+
+/**
+ * Initializes the summary page after the window has fully loaded.
+ *
+ * @listens Window#load
+ * @returns {void}
+ */
 window.addEventListener('load', initSummary);
 </code></pre>
         </article>
@@ -311,13 +343,13 @@ window.addEventListener('load', initSummary);
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-contacts.html">contacts</a></li><li><a href="module-contacts-render.html">contacts-render</a></li><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-get-firebase.html">get-firebase</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li><li><a href="module-summary.html">summary</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-contacts.html#event:click">click</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#applyPrioritySelection">applyPrioritySelection</a></li><li><a href="global.html#bindAssigneeEvents">bindAssigneeEvents</a></li><li><a href="global.html#bindSubtaskEvents">bindSubtaskEvents</a></li><li><a href="global.html#buildCheckbox">buildCheckbox</a></li><li><a href="global.html#buildContactOptionElement">buildContactOptionElement</a></li><li><a href="global.html#buildOptionMain">buildOptionMain</a></li><li><a href="global.html#buildSubtaskItem">buildSubtaskItem</a></li><li><a href="global.html#buildTaskData">buildTaskData</a></li><li><a href="global.html#buildTaskUpdateObject">buildTaskUpdateObject</a></li><li><a href="global.html#clearAddTaskForm">clearAddTaskForm</a></li><li><a href="global.html#clearFieldError">clearFieldError</a></li><li><a href="global.html#clearSelectedAssignees">clearSelectedAssignees</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#clearSubtasks">clearSubtasks</a></li><li><a href="global.html#closeAssignedOptions">closeAssignedOptions</a></li><li><a href="global.html#closeTaskOverlay">closeTaskOverlay</a></li><li><a href="global.html#collectEditFormData">collectEditFormData</a></li><li><a href="global.html#columns">columns</a></li><li><a href="global.html#createSubtaskActions">createSubtaskActions</a></li><li><a href="global.html#createSubtaskEditInput">createSubtaskEditInput</a></li><li><a href="global.html#createSubtaskText">createSubtaskText</a></li><li><a href="global.html#deleteExistingSubtask">deleteExistingSubtask</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#editExistingSubtask">editExistingSubtask</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTask">editTask</a></li><li><a href="global.html#findPriorityButton">findPriorityButton</a></li><li><a href="global.html#getAssignedNames">getAssignedNames</a></li><li><a href="global.html#getAvatarColor">getAvatarColor</a></li><li><a href="global.html#getContactData">getContactData</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getSortedContacts">getSortedContacts</a></li><li><a href="global.html#getSubtasks">getSubtasks</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#handleOutsideClick">handleOutsideClick</a></li><li><a href="global.html#handleOverlayClick">handleOverlayClick</a></li><li><a href="global.html#handleSubtaskKeydown">handleSubtaskKeydown</a></li><li><a href="global.html#handleSubtaskListClick">handleSubtaskListClick</a></li><li><a href="global.html#handleTriggerClick">handleTriggerClick</a></li><li><a href="global.html#hashString">hashString</a></li><li><a href="global.html#initAssignees">initAssignees</a></li><li><a href="global.html#initSubtasks">initSubtasks</a></li><li><a href="global.html#initTasks">initTasks</a></li><li><a href="global.html#initializeEditAssignees">initializeEditAssignees</a></li><li><a href="global.html#initializeEditSubtasks">initializeEditSubtasks</a></li><li><a href="global.html#isSelected">isSelected</a></li><li><a href="global.html#openTaskOverlay">openTaskOverlay</a></li><li><a href="global.html#populateAssignedToDropdown">populateAssignedToDropdown</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderContactOptions">renderContactOptions</a></li><li><a href="global.html#renderEditOverlay">renderEditOverlay</a></li><li><a href="global.html#renderNoContacts">renderNoContacts</a></li><li><a href="global.html#renderSelectedAssignees">renderSelectedAssignees</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#saveEditedSubtask">saveEditedSubtask</a></li><li><a href="global.html#saveEditedTask">saveEditedTask</a></li><li><a href="global.html#saveNewSubtask">saveNewSubtask</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#saveSubtaskValue">saveSubtaskValue</a></li><li><a href="global.html#selectPriority">selectPriority</a></li><li><a href="global.html#setDefaultPriority">setDefaultPriority</a></li><li><a href="global.html#setupPriorityButtons">setupPriorityButtons</a></li><li><a href="global.html#setupRequiredFieldValidation">setupRequiredFieldValidation</a></li><li><a href="global.html#setupSubtaskEditListeners">setupSubtaskEditListeners</a></li><li><a href="global.html#submitTask">submitTask</a></li><li><a href="global.html#syncOptionToggle">syncOptionToggle</a></li><li><a href="global.html#syncTasksAndTodos">syncTasksAndTodos</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#toggleAssignedOptions">toggleAssignedOptions</a></li><li><a href="global.html#toggleAssignee">toggleAssignee</a></li><li><a href="global.html#toggleCheckbox">toggleCheckbox</a></li><li><a href="global.html#toggleSubtaskActions">toggleSubtaskActions</a></li><li><a href="global.html#trackContactsForUser">trackContactsForUser</a></li><li><a href="global.html#updateAssignedInput">updateAssignedInput</a></li><li><a href="global.html#updateTaskInFirebase">updateTaskInFirebase</a></li><li><a href="global.html#validateRequiredField">validateRequiredField</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Apr 21 2026 19:05:09 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

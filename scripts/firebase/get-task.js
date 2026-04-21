@@ -14,8 +14,6 @@ async function getTask() {
   try {
     let tasks = await fetch(BASE_URL + "/tasks" + ".json");
     let tasksToJson = await tasks.json();
-    console.log(tasksToJson);
-
   } catch (error) {
     return [];
   }

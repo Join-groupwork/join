@@ -23,16 +23,17 @@
     color: white;
     font-weight: 500;
     font-size: 16px;
-    min-width: 32px
+    min-width: 42px;
 }
 
 .contact_avatar--large {
     width: 120px;
     height: 120px;
-    min-width: 60px;
-    min-height: 60px;
+    min-width: 120px;
+    min-height: 120px;
     font-size: 47px;
 }
+
 .contact_info {
     display: flex;
     flex-direction: column;
@@ -154,7 +155,6 @@
     gap: 24px;
 }
 
-
 .contact_detail_name {
     margin: 0;
     font-size: 42px;
@@ -240,7 +240,7 @@
     background: #2a3647;
     color: #fff;
     border-radius: 10px;
-    min-width: 231px;
+    min-width: 280px;
     padding: 10px;
 }
 

@@ -1,24 +1,23 @@
 import { getInitials, getAvatarColor } from './contacts-render.js';
 
 /**
- * @file HTML template factory functions for member pages.
+ * @file Provides HTML template factory functions for member pages.
  *
- * Provides functions that return HTML strings for commonly used UI parts:
- * header, sidebar, add-task form, contact overlays, signup message, and board task cards.
+ * Includes templates for the member header, sidebar, add-task form,
+ * contact overlays, signup success message, task overlays, board task cards,
+ * and mobile footer.
  *
  * @module member-templates
  */
 
 /**
  * Task categories supported by the board UI.
- * Used for CSS class naming (e.g. `task__category--user-story`).
  *
  * @typedef {"user-story" | "technical-task" | string} Category
  */
 
 /**
  * Priority values supported by the board UI.
- * Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
  *
  * @typedef {"low" | "medium" | "urgent" | string} Priority
  */
@@ -26,14 +25,8 @@ import { getInitials, getAvatarColor } from './contacts-render.js';
 /**
  * Generates the header HTML for member pages.
  *
- * Includes:
- * - Help link
- * - Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)
- *
- * DOM hooks created by this template:
- * - `#headerMenue` (toggle button)
- * - `#headerMenueNav` (dropdown container)
- * - `#logoutBtn` (logout trigger)
+ * Includes the help link and the profile menu with legal, privacy,
+ * and logout actions.
  *
  * @returns {string} HTML string representing the member header.
  */
@@ -61,16 +54,12 @@ export function getHeaderTemplate() {
               </div>
           </div>
       `;
-};
-
+}
 
 /**
  * Generates the sidebar HTML for member pages.
  *
- * Includes:
- * - Logo
- * - Navigation links (Summary / Add Task / Board / Contacts)
- * - Footer links (Privacy Policy / Legal Notice)
+ * Includes the main navigation and footer links.
  *
  * @returns {string} HTML string representing the member sidebar.
  */
@@ -92,19 +81,16 @@ export function getSidebarTemplate() {
         <a href="./legal-notice-user.html">Legal Notice</a>
       </div>
     `;
-};
+}
 
-// FIXME Line 129 - 131: icons in assets folder wrong. We musst change to correct icons or rename icons to BEM.
 /**
- * Generates the "Add Task" form HTML.
+ * Generates the add-task form HTML.
  *
- * NOTE:
- * This function only returns markup. Event handling (submit, priority button selection,
- * form validation, etc.) should be implemented in the page/controller script.
+ * Returns markup only. Event handling and validation
+ * are implemented in the related controller script.
  *
- * @returns {string} HTML string representing the add-task form section.
+ * @returns {string} HTML string representing the add-task form.
  */
-
 export function getTaskTemplate() {
   return `
     <section class="overlay_add_task">
@@ -206,22 +192,10 @@ export function getTaskTemplate() {
   `;
 }
 
-// contact overlays einbinden --->id="editC_overlay" oder id="addC_overlay" in den <body> einfügen,
-// (siehe contact_add_overlay.html/contact_edit_overlay.html <-- können danach gelöscht werden)
-// je nachdem welches overlay gebraucht wird --- ansonsten bis auf css fertig
 /**
- * Generates the contact edit overlay HTML.
+ * Generates the add-contact overlay HTML.
  *
- * Intended to be injected into a container element like `#editC_overlay`.
- *
- * @returns {string} HTML string representing the edit-contact overlay.
- */
-
-// CHECK Line 192: Why not with pseudoclass ::after?
-/**
- * Generates the contact add overlay HTML.
- *
- * Intended to be injected into a container element like `#addC_overlay`.
+ * Intended to be injected into an overlay container element.
  *
  * @returns {string} HTML string representing the add-contact overlay.
  */
@@ -267,13 +241,12 @@ export function getAddOverlayTemplate() {
 
       </main>
     `;
-};
-
+}
 
 /**
  * Generates a success message shown after a successful signup.
  *
- * @returns {string} HTML string representing a signup success message.
+ * @returns {string} HTML string representing the signup success message.
  */
 export function signupMassegeTemplate() {
   return `
@@ -283,18 +256,13 @@ export function signupMassegeTemplate() {
             </p>
         </aside>
     `;
-};
+}
 
 /**
  * Formats an internal task category value into a user-friendly label.
  *
- * Converts values like "user-story" or "technical-task"
- * into readable UI labels such as "User Story" and "Technical Task".
- *
- * Falls keine Zuordnung vorhanden ist, wird der Originalwert zurückgegeben.
- *
- * @param {string} category - The raw category value from Firebase.
- * @returns {string} The formatted category label for display in the UI.
+ * @param {string} category - The raw category value.
+ * @returns {string} The formatted category label.
  */
 function formatCategoryLabel(category) {
   const labels = {
@@ -306,18 +274,16 @@ function formatCategoryLabel(category) {
 }
 
 /**
- * Generates a task card HTML string for the board (drag-and-drop).
+ * Generates the HTML string for a task card in the board view.
  *
- * NOTE:
- * - `category` is used to build the CSS class name `task__category--${category}`
- * - `priority` is used to build the icon path `/assets/icons/${priority}-prio-icon.svg`
- *
- * @param {string} id - Task ID (used as DOM element `id` and for drag & drop).
- * @param {string} title - Task title.
- * @param {Category} category - Task category label.
- * @param {string} description - Task description.
- * @param {Priority} priority - Task priority label.
- * @returns {string} HTML string representing the task card.
+ * @param {string} id - The task id.
+ * @param {string} title - The task title.
+ * @param {Category} category - The task category.
+ * @param {string} description - The task description.
+ * @param {Priority} priority - The task priority.
+ * @param {string} [subtaskProgressHTML=''] - Prebuilt subtask progress HTML.
+ * @param {string} [assigneeAvatarsHTML=''] - Prebuilt assignee avatar HTML.
+ * @returns {string} HTML string representing the board task card.
  */
 export function generateTodosHTML(id, title, category, description, priority, subtaskProgressHTML = '', assigneeAvatarsHTML = '') {
   return `
@@ -332,16 +298,19 @@ export function generateTodosHTML(id, title, category, description, priority, su
               </div>
             </div>
           `;
-};
+}
 
 /**
- * Two show contact details overlay.
+ * Generates the active-contact detail template.
  *
- * @param {string} contact - Name frome Contact
- * @param {string} initials - Initials from Contact Name
- * @param {string} bgColor - Background Color for Avatar
- * @param {number} phone - Phonenumber from Contact
- * @returns {string} - HTML string representing the contact details
+ * @param {Object} contact - The contact data.
+ * @param {string} [contact.id] - The contact id.
+ * @param {string} [contact.name] - The contact name.
+ * @param {string} [contact.email] - The contact email.
+ * @param {string} initials - The contact initials.
+ * @param {string} bgColor - The avatar background color.
+ * @param {string|number} phone - The displayed phone number.
+ * @returns {string} HTML string representing the active contact details.
  */
 export function getActiveContactTemplate(contact, initials, bgColor, phone) {
   return `
@@ -405,13 +374,16 @@ export function getActiveContactTemplate(contact, initials, bgColor, phone) {
 }
 
 /**
- * Show the overlay to editing contact details.
+ * Generates the edit-contact overlay template.
  *
- * @param {string} contactId
- * @param {string} contact
- * @param {string} initials
- * @param {string} color
- * @returns {string} - HTML string representing the contact editing overlay.
+ * @param {string} contactId - The id of the contact being edited.
+ * @param {Object} contact - The contact data.
+ * @param {string} [contact.name] - The contact name.
+ * @param {string} [contact.email] - The contact email.
+ * @param {string} [contact.phone] - The contact phone number.
+ * @param {string} initials - The contact initials.
+ * @param {string} color - The avatar background color.
+ * @returns {string} HTML string representing the edit-contact overlay.
  */
 export function getEditOverlayTemplate(contactId, contact, initials, color) {
   return `
@@ -445,6 +417,19 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
   `;
 }
 
+/**
+ * Generates the task-detail overlay template.
+ *
+ * @param {string} id - The task id.
+ * @param {Category} category - The task category.
+ * @param {string} title - The task title.
+ * @param {string} description - The task description.
+ * @param {string} due_date - The task due date.
+ * @param {Priority} priority - The task priority.
+ * @param {string[]|string} assigned_to - Assigned contacts.
+ * @param {Object<string, {status?: boolean, completed?: boolean, title?: string}>} subtasks - Task subtasks.
+ * @returns {string} HTML string representing the task-detail overlay.
+ */
 export function getTaskOverlayTemplate(id, category, title, description, due_date, priority, assigned_to, subtasks) {
   console.log('subtasks input:', subtasks);
   const assignedArray = Array.isArray(assigned_to)
@@ -510,15 +495,17 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
 }
 
 /**
- * @param {string} id - Task ID
- * @param {string} category - Task category
- * @param {string} title - Task title
- * @param {string} description - Task description
- * @param {string} due_date - Due date
- * @param {string} priority - Priority level
- * @param {string|Array} assigned_to - Assigned contacts
- * @param {Object} subtasks - Subtasks object
- * @returns {string} HTML string for edit task overlay
+ * Generates the edit-task overlay template.
+ *
+ * @param {string} id - The task id.
+ * @param {Category} category - The task category.
+ * @param {string} title - The task title.
+ * @param {string} description - The task description.
+ * @param {string} due_date - The task due date.
+ * @param {Priority} priority - The task priority.
+ * @param {string[]|string} assigned_to - Assigned contacts.
+ * @param {Object<string, {title?: string, status?: boolean, completed?: boolean}>} subtasks - Task subtasks.
+ * @returns {string} HTML string representing the edit-task overlay.
  */
 export function getEditTaskOverlayTemplate(id, category, title, description, due_date, priority, assigned_to, subtasks) {
   const assignedArray = Array.isArray(assigned_to) ? assigned_to : assigned_to.split(', ');
@@ -621,6 +608,11 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
   `;
 }
 
+/**
+ * Generates the member mobile footer HTML.
+ *
+ * @returns {string} HTML string representing the mobile footer.
+ */
 export function getMobileFooterTemplate() {
   return `
     <footer class="footer__responsive footer__responsive--member">
@@ -637,5 +629,5 @@ export function getMobileFooterTemplate() {
         <img class="icon__mobile" src="../assets/icons/menu/contacs__mobile.svg" alt="contacts mobile">
       </a>
     </footer>
-  `
+  `;
 }

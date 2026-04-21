@@ -58,12 +58,10 @@ async function render() {
   renderProfileInitials()
   await renderSidebar();
   highlightActiveNavItem();
-
   if (document.getElementById('add_task')) {
     await renderAddTask();
     setupAddTaskOverlay();
   }
-
   await renderBoard();
 };
 
@@ -107,10 +105,8 @@ function renderSidebar() {
 function renderAddTask() {
   const addTaskRef = document.getElementById('add_task');
   const overlay = document.getElementById('add_task_overlay');
-
   if (addTaskRef && overlay) {
     addTaskRef.innerHTML = getTaskTemplate({ isOverlay: true });
-
     initAddTask(addTaskRef, {
       mode: 'overlay',
       onClose: () => closeAddTaskOverlay(overlay),
@@ -181,6 +177,7 @@ document.querySelectorAll('.openAddTaskOverlay').forEach(btn => {
   });
 });
 
+
 function closeAddTaskOverlay(overlay) {
   const content = overlay.querySelector('.overlay_add_task');
   if (!content) {
@@ -197,9 +194,11 @@ function closeAddTaskOverlay(overlay) {
   }, { once: true });
 }
 
+
 function setupOpenButton(openBtn, overlay) {
   openBtn.addEventListener('click', () => openAddTaskOverlay(overlay));
 }
+
 
 function setupBackdropAndCloseButton(overlay) {
   overlay.addEventListener('click', (event) => {
@@ -209,14 +208,15 @@ function setupBackdropAndCloseButton(overlay) {
   });
 }
 
+
 function setupAddTaskOverlay() {
   const openBtn = document.getElementById('openAddTaskOverlay');
   const overlay = document.getElementById('add_task_overlay');
   if (!openBtn || !overlay) return;
-
   setupOpenButton(openBtn, overlay);
   setupBackdropAndCloseButton(overlay);
 }
+
 
 function highlightActiveNavItem() {
   const currentPage = window.location.pathname.split('/').pop();
@@ -225,6 +225,7 @@ function highlightActiveNavItem() {
     link.classList.toggle('nav-item--active', linkPage === currentPage);
   });
 }
+
 
 function renderProfileInitials() {
   auth.onAuthStateChanged((user) => {
@@ -254,28 +255,25 @@ async function renderBoard() {
   updateHTML();
 }
 
-// setupAddTaskOverlay();
-
 
 // addtask-status-handling
-
 function setupAddTaskForAllColumns() {
   const overlay = document.getElementById('add_task_overlay');
   if (!overlay) return;
-
   document.querySelectorAll('.circle-plus-icon').forEach(icon => {
     icon.addEventListener('click', () => {
       // Wir gehen von Icon -> .task__section -> .task__area
       const section = icon.closest('.task__section');
       const taskArea = section?.querySelector('.task__area');
-      const status = taskArea?.dataset.status || 'todo'; 
-      overlay.dataset.target = status; 
+      const status = taskArea?.dataset.status || 'todo';
+      overlay.dataset.target = status;
       openAddTaskOverlay(overlay);
     });
   });
 }
 
+
 renderBoard().then(() => {
-  setupAddTaskOverlay();       
-  setupAddTaskForAllColumns(); 
+  setupAddTaskOverlay();
+  setupAddTaskForAllColumns();
 });
