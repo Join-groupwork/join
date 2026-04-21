@@ -49,12 +49,10 @@ async function doneTasks(tasks) {
       task.status = task.subtask;
     }
   });
-
   const count = tasks.filter(task => {
     const s = (task.status || '').toLowerCase().trim();
     return s === 'done';
   }).length;
-
   const element = document.querySelector('.done .card-title');
   if (element) {
     element.textContent = count;
@@ -75,7 +73,6 @@ async function urgentTasks(tasks) {
     const s = (task.priority || '').toLowerCase().trim();
     return s === 'urgent';
   }).length;
-
   const element = document.querySelector('.urgent-info .card-title');
   if (element) {
     element.textContent = count;
@@ -93,12 +90,10 @@ async function urgentTasks(tasks) {
  */
 async function tasksInBoard(tasks) {
   const validStatuses = new Set(['todo', 'in-progress', 'await-feedback', 'done']);
-
   const count = tasks.filter(task => {
     const status = (task.status || '').toLowerCase().trim();
     return validStatuses.has(status);
   }).length;
-
   const element = document.querySelector('.all-tasks .big');
   if (element) {
     element.textContent = count;
@@ -119,7 +114,6 @@ async function tasksInProgress(tasks) {
     const status = (task.status || '').toLowerCase().trim();
     return status === 'in-progress';
   }).length;
-
   const element = document.querySelector('.tasks-in-progress .big');
   if (element) {
     element.textContent = count;
@@ -141,12 +135,10 @@ async function awaitFeedbackTasks(tasks) {
       task.status = task.subtask;
     }
   });
-
   const count = tasks.filter(task => {
     const s = (task.status || '').toLowerCase().trim();
     return s === 'await-feedback';
   }).length;
-
   const element = document.querySelector('.await-feedback-info .big');
   if (element) {
     element.textContent = count;
@@ -163,13 +155,10 @@ async function awaitFeedbackTasks(tasks) {
 function greetings() {
   const daytimeElem = document.getElementById('greetingTime');
   if (!daytimeElem) return;
-
   const hour = new Date().getHours();
   let greetingText = 'Good evening';
-
   if (hour < 12) greetingText = 'Good morning';
   else if (hour < 18) greetingText = 'Good afternoon';
-
   daytimeElem.textContent = greetingText;
 }
 
@@ -188,14 +177,12 @@ export function assignName(user, nameElem) {
     console.warn('Kein nameElem vorhanden!');
     return;
   }
-
   if (user && !user.isAnonymous) {
     const contacts = getContacts();
     const contact = Object.values(contacts || {}).find(c => c.uid === user.uid);
     nameElem.textContent = contact?.name || 'User';
     return;
   }
-
   nameElem.textContent = 'Guest';
 }
 
@@ -210,10 +197,8 @@ function urgentTasksDeadLine(tasks) {
   const urgentTasks = tasks
     .filter(task => task.priority === 'urgent' && task.due_date)
     .sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
-
   const deadlineElement = document.getElementById('urgentTasks-dead-line');
   if (!deadlineElement) return;
-
   if (urgentTasks.length > 0) {
     const nextDate = new Date(urgentTasks[0].due_date);
     deadlineElement.textContent = nextDate.toLocaleDateString('en-US', {
@@ -239,23 +224,17 @@ function initMobileGreetingOverlay() {
   const desktopName = document.getElementById('greetingName');
   const mobileTime = document.getElementById('mobileGreetingTime');
   const mobileName = document.getElementById('mobileGreetingName');
-
   if (!overlay || !desktopTime || !desktopName || !mobileTime || !mobileName) return;
   if (window.innerWidth > 600) return;
   if (overlay.dataset.started === 'true') return;
-
   const timeText = desktopTime.textContent.trim();
   const nameText = desktopName.textContent.trim();
-
   if (!timeText || !nameText) return;
-
   mobileTime.textContent = timeText;
   mobileName.textContent = nameText;
-
   overlay.dataset.started = 'true';
   overlay.classList.remove('hide');
   overlay.classList.add('show');
-
   setTimeout(() => {
     overlay.classList.remove('show');
     overlay.classList.add('hide');
@@ -277,7 +256,6 @@ function initMobileGreetingOverlay() {
 export async function initSummary() {
   const tasksData = await loadTasks();
   const tasks = Object.values(tasksData || {});
-
   await todoTasks(tasks);
   await doneTasks(tasks);
   await urgentTasks(tasks);
@@ -285,11 +263,8 @@ export async function initSummary() {
   await tasksInProgress(tasks);
   await awaitFeedbackTasks(tasks);
   urgentTasksDeadLine(tasks);
-
   greetings();
-
   const nameElem = document.getElementById('greetingName');
-
   auth.onAuthStateChanged((user) => {
     if (user) {
       loadData(() => {
