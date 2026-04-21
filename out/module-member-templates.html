@@ -38,7 +38,11 @@
     <div class="container-overview">
     
         
-            <div class="description">HTML template factory functions for member pages.Provides functions that return HTML strings for commonly used UI parts:header, sidebar, add-task form, contact overlays, signup message, and board task cards.</div>
+            <div class="description">Provides HTML template factory functions for member pages.
+
+Includes templates for the member header, sidebar, add-task form,
+contact overlays, signup success message, task overlays, board task cards,
+and mobile footer.</div>
         
 
         
@@ -144,7 +148,7 @@
     
 
     
-    <h4 class="name" id=".generateTodosHTML"><span class="type-signature">(static) </span>generateTodosHTML<span class="signature">(id, title, category, description, priority)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id=".generateTodosHTML"><span class="type-signature">(static) </span>generateTodosHTML<span class="signature">(id, title, category, description, priority, subtaskProgressHTML<span class="signature-attributes">opt</span>, assigneeAvatarsHTML<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -152,7 +156,7 @@
 
 
 <div class="description">
-    Generates a task card HTML string for the board (drag-and-drop).NOTE:- `category` is used to build the CSS class name `task__category--${category}`- `priority` is used to build the icon path `/assets/icons/${priority}-prio-icon.svg`
+    Generates the HTML string for a task card in the board view.
 </div>
 
 
@@ -176,7 +180,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -201,10 +209,22 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last">Task ID (used as DOM element `id` and for drag & drop).</td>
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The task id.</td>
         </tr>
 
     
@@ -224,10 +244,22 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last">Task title.</td>
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The task title.</td>
         </tr>
 
     
@@ -247,10 +279,22 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last">Task category label.</td>
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The task category.</td>
         </tr>
 
     
@@ -270,10 +314,22 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last">Task description.</td>
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The task description.</td>
         </tr>
 
     
@@ -293,10 +349,100 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last">Task priority label.</td>
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The task priority.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>subtaskProgressHTML</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ''
+                
+                </td>
+            
+
+            <td class="description last">Prebuilt subtask progress HTML.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>assigneeAvatarsHTML</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ''
+                
+                </td>
+            
+
+            <td class="description last">Prebuilt assignee avatar HTML.</td>
         </tr>
 
     
@@ -337,7 +483,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line322">line 322</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line288">line 288</a>
     </li></ul></dd>
     
 
@@ -366,7 +512,7 @@
 
         
 <div class="param-desc">
-    HTML string representing the task card.
+    HTML string representing the board task card.
 </div>
 
 
@@ -403,7 +549,7 @@
 
 
 <div class="description">
-    Two show contact details overlay.
+    Generates the active-contact detail template.
 </div>
 
 
@@ -445,7 +591,7 @@
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Object</span>
 
 
             
@@ -455,7 +601,134 @@
 
             
 
-            <td class="description last">Name frome Contact</td>
+            <td class="description last">The contact data.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The contact id.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The contact name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The contact email.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -478,7 +751,7 @@
 
             
 
-            <td class="description last">Initials from Contact Name</td>
+            <td class="description last">The contact initials.</td>
         </tr>
 
     
@@ -501,7 +774,7 @@
 
             
 
-            <td class="description last">Background Color for Avatar</td>
+            <td class="description last">The avatar background color.</td>
         </tr>
 
     
@@ -514,6 +787,9 @@
             <td class="type">
             
                 
+<span class="param-type">string</span>
+|
+
 <span class="param-type">number</span>
 
 
@@ -524,7 +800,7 @@
 
             
 
-            <td class="description last">Phonenumber from Contact</td>
+            <td class="description last">The displayed phone number.</td>
         </tr>
 
     
@@ -565,7 +841,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line346">line 346</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line315">line 315</a>
     </li></ul></dd>
     
 
@@ -594,7 +870,7 @@
 
         
 <div class="param-desc">
-    - HTML string representing the contact details
+    HTML string representing the active contact details.
 </div>
 
 
@@ -631,7 +907,9 @@
 
 
 <div class="description">
-    Generates the contact add overlay HTML.Intended to be injected into a container element like `#addC_overlay`.
+    Generates the add-contact overlay HTML.
+
+Intended to be injected into an overlay container element.
 </div>
 
 
@@ -675,7 +953,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line228">line 228</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line202">line 202</a>
     </li></ul></dd>
     
 
@@ -741,7 +1019,7 @@
 
 
 <div class="description">
-    Show the overlay to editing contact details.
+    Generates the edit-contact overlay template.
 </div>
 
 
@@ -793,7 +1071,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">The id of the contact being edited.</td>
         </tr>
 
     
@@ -806,7 +1084,7 @@
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Object</span>
 
 
             
@@ -816,7 +1094,134 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">The contact data.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The contact name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The contact email.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>phone</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The contact phone number.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -839,7 +1244,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">The contact initials.</td>
         </tr>
 
     
@@ -862,7 +1267,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">The avatar background color.</td>
         </tr>
 
     
@@ -903,7 +1308,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line416">line 416</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line388">line 388</a>
     </li></ul></dd>
     
 
@@ -932,7 +1337,7 @@
 
         
 <div class="param-desc">
-    - HTML string representing the contact editing overlay.
+    HTML string representing the edit-contact overlay.
 </div>
 
 
@@ -967,6 +1372,10 @@
     
 
 
+
+<div class="description">
+    Generates the edit-task overlay template.
+</div>
 
 
 
@@ -1017,7 +1426,7 @@
 
             
 
-            <td class="description last">Task ID</td>
+            <td class="description last">The task id.</td>
         </tr>
 
     
@@ -1030,7 +1439,7 @@
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Category</span>
 
 
             
@@ -1040,7 +1449,7 @@
 
             
 
-            <td class="description last">Task category</td>
+            <td class="description last">The task category.</td>
         </tr>
 
     
@@ -1063,7 +1472,7 @@
 
             
 
-            <td class="description last">Task title</td>
+            <td class="description last">The task title.</td>
         </tr>
 
     
@@ -1086,7 +1495,7 @@
 
             
 
-            <td class="description last">Task description</td>
+            <td class="description last">The task description.</td>
         </tr>
 
     
@@ -1109,7 +1518,7 @@
 
             
 
-            <td class="description last">Due date</td>
+            <td class="description last">The task due date.</td>
         </tr>
 
     
@@ -1122,7 +1531,7 @@
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Priority</span>
 
 
             
@@ -1132,7 +1541,7 @@
 
             
 
-            <td class="description last">Priority level</td>
+            <td class="description last">The task priority.</td>
         </tr>
 
     
@@ -1145,10 +1554,10 @@
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Array.&lt;string></span>
 |
 
-<span class="param-type">Array</span>
+<span class="param-type">string</span>
 
 
             
@@ -1158,7 +1567,7 @@
 
             
 
-            <td class="description last">Assigned contacts</td>
+            <td class="description last">Assigned contacts.</td>
         </tr>
 
     
@@ -1170,18 +1579,13 @@
 
             <td class="type">
             
-                
-<span class="param-type">Object</span>
-
-
-            
             </td>
 
             
 
             
 
-            <td class="description last">Subtasks object</td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -1222,7 +1626,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line523">line 523</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line510">line 510</a>
     </li></ul></dd>
     
 
@@ -1251,7 +1655,7 @@
 
         
 <div class="param-desc">
-    HTML string for edit task overlay
+    HTML string representing the edit-task overlay.
 </div>
 
 
@@ -1288,7 +1692,10 @@
 
 
 <div class="description">
-    Generates the header HTML for member pages.Includes:- Help link- Profile button with a dropdown menu (Legal Notice / Privacy Policy / Logout)DOM hooks created by this template:- `#headerMenue` (toggle button)- `#headerMenueNav` (dropdown container)- `#logoutBtn` (logout trigger)
+    Generates the header HTML for member pages.
+
+Includes the help link and the profile menu with legal, privacy,
+and logout actions.
 </div>
 
 
@@ -1332,7 +1739,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line40">line 40</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -1390,7 +1797,7 @@
     
 
     
-    <h4 class="name" id=".getSidebarTemplate"><span class="type-signature">(static) </span>getSidebarTemplate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id=".getMobileFooterTemplate"><span class="type-signature">(static) </span>getMobileFooterTemplate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -1398,7 +1805,7 @@
 
 
 <div class="description">
-    Generates the sidebar HTML for member pages.Includes:- Logo- Navigation links (Summary / Add Task / Board / Contacts)- Footer links (Privacy Policy / Legal Notice)
+    Generates the member mobile footer HTML.
 </div>
 
 
@@ -1442,7 +1849,119 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line77">line 77</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line616">line 616</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    HTML string representing the mobile footer.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".getSidebarTemplate"><span class="type-signature">(static) </span>getSidebarTemplate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Generates the sidebar HTML for member pages.
+
+Includes the main navigation and footer links.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line66">line 66</a>
     </li></ul></dd>
     
 
@@ -1500,6 +2019,324 @@
     
 
     
+    <h4 class="name" id=".getTaskOverlayTemplate"><span class="type-signature">(static) </span>getTaskOverlayTemplate<span class="signature">(id, category, title, description, due_date, priority, assigned_to, subtasks)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Generates the task-detail overlay template.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The task id.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>category</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Category</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The task category.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The task title.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The task description.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>due_date</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The task due date.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>priority</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Priority</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The task priority.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>assigned_to</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Assigned contacts.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>subtasks</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line433">line 433</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    HTML string representing the task-detail overlay.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id=".getTaskTemplate"><span class="type-signature">(static) </span>getTaskTemplate<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
@@ -1508,7 +2345,10 @@
 
 
 <div class="description">
-    Generates the "Add Task" form HTML.NOTE:This function only returns markup. Event handling (submit, priority button selection,form validation, etc.) should be implemented in the page/controller script.
+    Generates the add-task form HTML.
+
+Returns markup only. Event handling and validation
+are implemented in the related controller script.
 </div>
 
 
@@ -1552,7 +2392,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line108">line 108</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line94">line 94</a>
     </li></ul></dd>
     
 
@@ -1581,7 +2421,7 @@
 
         
 <div class="param-desc">
-    HTML string representing the add-task form section.
+    HTML string representing the add-task form.
 </div>
 
 
@@ -1662,7 +2502,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line278">line 278</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line251">line 251</a>
     </li></ul></dd>
     
 
@@ -1691,7 +2531,7 @@
 
         
 <div class="param-desc">
-    HTML string representing a signup success message.
+    HTML string representing the signup success message.
 </div>
 
 
@@ -1728,7 +2568,7 @@
 
 
 <div class="description">
-    Formats an internal task category value into a user-friendly label.Converts values like "user-story" or "technical-task"into readable UI labels such as "User Story" and "Technical Task".Falls keine Zuordnung vorhanden ist, wird der Originalwert zurückgegeben.
+    Formats an internal task category value into a user-friendly label.
 </div>
 
 
@@ -1780,7 +2620,7 @@
 
             
 
-            <td class="description last">The raw category value from Firebase.</td>
+            <td class="description last">The raw category value.</td>
         </tr>
 
     
@@ -1821,7 +2661,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line299">line 299</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line267">line 267</a>
     </li></ul></dd>
     
 
@@ -1850,7 +2690,7 @@
 
         
 <div class="param-desc">
-    The formatted category label for display in the UI.
+    The formatted category label.
 </div>
 
 
@@ -1887,7 +2727,7 @@
 
 
 <div class="description">
-    Task categories supported by the board UI.Used for CSS class naming (e.g. `task__category--user-story`).
+    Task categories supported by the board UI.
 </div>
 
 
@@ -1941,7 +2781,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line12">line 12</a>
+        <a href="member_js_member-templates.js.html">member/js/member-templates.js</a>, <a href="member_js_member-templates.js.html#line13">line 13</a>
     </li></ul></dd>
     
 
@@ -1965,7 +2805,7 @@
 
 
 <div class="description">
-    Priority values supported by the board UI.Used for icon naming (e.g. `/assets/icons/urgent-prio-icon.svg`).
+    Priority values supported by the board UI.
 </div>
 
 
@@ -2058,7 +2898,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Apr 21 2026 18:25:55 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Apr 21 2026 18:51:11 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>
