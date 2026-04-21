@@ -2,13 +2,11 @@ import { loadTasks } from '/scripts/firebase/get-firebase.js';
 import { getTaskOverlayTemplate, getEditTaskOverlayTemplate } from './member-templates.js';
 import { ref, onValue, remove, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 import { database } from "../../scripts/firebase/firebase.js";
-import { updateHTML,todos  } from './drag-n-drop.js';
+import { updateHTML, todos } from './drag-n-drop.js';
 import { initAssignees, trackContactsForUser, getAssignedNames } from './add-task-assignees.js';
 import { initSubtasks, getSubtasks } from './add-task-subtasks.js';
 
 export let tasks = {};
-
-
 export async function initTasks() {
   tasks = await loadTasks();
 }
@@ -63,13 +61,10 @@ const columns = {
  * @async
  * @returns {Promise<void>}
  */
-
 function openTaskOverlay(taskId) {
   const task = tasks[taskId];
   if (!task) return console.warn("Task nicht gefunden:", taskId);
-
   const overlayContainer = document.getElementById("overlay_container");
-
   overlayContainer.innerHTML = getTaskOverlayTemplate(
     taskId,
     task.category,
@@ -80,14 +75,14 @@ function openTaskOverlay(taskId) {
     task.assigned_to,
     task.subtasks,
   );
-
   overlayContainer.classList.remove('d_none');
-   setTimeout(() => {
+  setTimeout(() => {
     overlayContainer.classList.add('show');
   }, 10);
-
   overlayContainer.addEventListener('click', handleOverlayClick);
 }
+
+
 window.openTaskOverlay = openTaskOverlay;
 
 
@@ -98,6 +93,7 @@ function handleOverlayClick(event) {
   }
 }
 
+
 function closeTaskOverlay() {
   const overlayContainer = document.getElementById("overlay_container");
   overlayContainer.classList.remove('show');
@@ -105,40 +101,35 @@ function closeTaskOverlay() {
   overlayContainer.removeEventListener('click', handleOverlayClick);
 }
 
+
 window.closeTaskOverlay = closeTaskOverlay;
 
 
 async function toggleCheckbox(img) {
   const taskId = img.dataset.taskId;
   const subtaskKey = img.dataset.subtaskKey;
-
   if (!taskId || !subtaskKey) return;
-
   try {
     const currentStatus = tasks[taskId]?.subtasks?.[subtaskKey]?.status || false;
     const newStatus = !currentStatus;
-
     await update(ref(database, `tasks/${taskId}/subtasks/${subtaskKey}`), {
       status: newStatus
     });
-
     if (tasks[taskId]?.subtasks?.[subtaskKey]) {
       tasks[taskId].subtasks[subtaskKey].status = newStatus;
     }
-
     if (todos[taskId]?.subtasks?.[subtaskKey]) {
       todos[taskId].subtasks[subtaskKey].status = newStatus;
     }
-
     img.src = newStatus
       ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
       : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
-
     updateHTML();
   } catch (error) {
     console.error("Error toggling subtask:", error);
   }
 }
+
 
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("checkbox-icon")) {
@@ -146,18 +137,18 @@ document.addEventListener("click", (e) => {
   }
 });
 
+
 async function deleteTask(taskId) {
   try {
     await remove(ref(database, `tasks/${taskId}`));
     delete todos[taskId];
-
     closeTaskOverlay();
     updateHTML();
-
   } catch (error) {
     console.error("Error deleting task:", error);
   }
 }
+
 
 window.deleteTask = deleteTask;
 
@@ -176,7 +167,7 @@ function renderEditOverlay(taskId, task) {
 
 function setupPriorityButtons() {
   document.querySelectorAll('.add-task__priority-button').forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function () {
       document.querySelectorAll('.add-task__priority-button').forEach(b => b.classList.remove('selected'));
       this.classList.add('selected');
     });
@@ -220,14 +211,13 @@ function initializeEditSubtasks(container) {
 function editTask(taskId) {
   const task = tasks[taskId];
   if (!task) return console.warn("Task nicht gefunden:", taskId);
-
   renderEditOverlay(taskId, task);
   setupPriorityButtons();
-
   window.editAssigneeState = initializeEditAssignees();
   window.editSubtaskState = initializeEditSubtasks(document.getElementById("overlay_container"));
   window.currentTaskId = taskId;
 }
+
 
 window.editTask = editTask;
 
@@ -259,11 +249,9 @@ function buildTaskUpdateObject(taskId, formData) {
     due_date: formData.due_date,
     priority: formData.priority
   };
-
   if (Object.keys(formData.assignedNames).length > 0) {
     updatedTask.assigned_to = formData.assignedNames;
   }
-
   const existingSubtasks = tasks[taskId]?.subtasks || {};
   const mergedSubtasks = { ...existingSubtasks, ...formData.newSubtasks };
   if (Object.keys(mergedSubtasks).length > 0) {
@@ -308,6 +296,7 @@ async function saveEditedTask(taskId) {
   }
 }
 
+
 window.saveEditedTask = saveEditedTask;
 
 /**
@@ -319,23 +308,20 @@ async function deleteExistingSubtask(taskId, subtaskKey) {
   try {
     const task = tasks[taskId];
     if (!task || !task.subtasks) return;
-
     const updatedSubtasks = { ...task.subtasks };
     delete updatedSubtasks[subtaskKey];
-
     await update(ref(database, `tasks/${taskId}/subtasks`), updatedSubtasks);
     tasks[taskId].subtasks = updatedSubtasks;
-
     if (todos[taskId]) {
       todos[taskId].subtasks = updatedSubtasks;
     }
-
     updateHTML();
     editTask(taskId);
   } catch (error) {
     console.error("Error deleting subtask:", error);
   }
 }
+
 
 window.deleteExistingSubtask = deleteExistingSubtask;
 
@@ -376,13 +362,13 @@ function setupSubtaskEditListeners(input, taskId, subtaskKey) {
 function editExistingSubtask(taskId, subtaskKey) {
   const textElement = document.getElementById(`subtask_text_${subtaskKey}`);
   if (!textElement) return;
-
   const input = createSubtaskEditInput(textElement.textContent);
   textElement.replaceWith(input);
   input.focus();
   input.select();
   setupSubtaskEditListeners(input, taskId, subtaskKey);
 }
+
 
 window.editExistingSubtask = editExistingSubtask;
 
@@ -395,27 +381,18 @@ window.editExistingSubtask = editExistingSubtask;
 async function saveSubtaskEdit(taskId, subtaskKey, input) {
   const newText = input.value.trim();
   if (!newText) return editTask(taskId);
-
   try {
     await update(ref(database, `tasks/${taskId}/subtasks/${subtaskKey}`), {
       title: newText,
       status: tasks[taskId].subtasks[subtaskKey].status
     });
-
     tasks[taskId].subtasks[subtaskKey].title = newText;
-
     if (todos[taskId]?.subtasks?.[subtaskKey]) {
       todos[taskId].subtasks[subtaskKey].title = newText;
     }
-
     updateHTML();
     editTask(taskId);
   } catch (error) {
     console.error("Error saving subtask:", error);
   }
 }
-
-
-
-/* renderBoard(); */
-
