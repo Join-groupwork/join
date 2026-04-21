@@ -38,19 +38,10 @@
     <div class="container-overview">
     
         
-            <div class="description">Provides basic Kanban board rendering + drag-and-drop handling for tasks ("todos").
+            <div class="description">Provides Kanban board rendering and drag-and-drop handling for tasks.
 
-This module:
-- Keeps a temporary in-memory `todos` object (placeholder until Firebase is connected)
-- Renders tasks into the four board columns (todo / in-progress / await-feedback / done)
-- Toggles column placeholders when a column has no tasks
-- Implements drag & drop using document-level event listeners
-
-DOM expectations:
-- Columns with IDs: `todo`, `inProgress`, `awaitFeedback`, `done`
-- Drop zones with class `.task__area` and `data-status` values matching todo.subtask
-- Placeholder element inside each `.task__area`: `.task__area--placeholder`
-- Task cards have class `.task__card` and an `id` that matches the todo key</div>
+Renders tasks into the board columns, updates column placeholders,
+supports task search, and synchronizes status changes with Firebase.</div>
         
 
         
@@ -157,7 +148,6 @@ DOM expectations:
 
 <div class="description">
     Task collection indexed by id.
-NOTE: Placeholder data until Firebase is connected.
 </div>
 
 
@@ -205,7 +195,79 @@ NOTE: Placeholder data until Firebase is connected.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line61">line 61</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line59">line 59</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~activeSearchTerm"><span class="type-signature">(inner) </span>activeSearchTerm<span class="type-signature"> :string</span></h4>
+
+
+
+
+<div class="description">
+    Current active search term used for board filtering.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line52">line 52</a>
     </li></ul></dd>
     
 
@@ -229,8 +291,7 @@ NOTE: Placeholder data until Firebase is connected.
 
 
 <div class="description">
-    ID (key in todos) of the currently dragged task card.
-Set on `dragstart`, consumed on `drop`.
+    Id of the currently dragged task card.
 </div>
 
 
@@ -281,7 +342,7 @@ Set on `dragstart`, consumed on `drop`.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line69">line 69</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line66">line 66</a>
     </li></ul></dd>
     
 
@@ -361,7 +422,7 @@ Set on `dragstart`, consumed on `drop`.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line200">line 200</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line201">line 201</a>
     </li></ul></dd>
     
 
@@ -415,7 +476,7 @@ Set on `dragstart`, consumed on `drop`.
     
 
     
-    <h4 class="name" id=".updateTaskStatus"><span class="type-signature">(static) </span>updateTaskStatus<span class="signature">(taskId, newStatus)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".updateTaskStatus"><span class="type-signature">(async, static) </span>updateTaskStatus<span class="signature">(taskId, newStatus)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
     
 
     
@@ -423,7 +484,7 @@ Set on `dragstart`, consumed on `drop`.
 
 
 <div class="description">
-    Handles the upload to firebase after switch category.
+    Updates the status of a task in Firebase.
 </div>
 
 
@@ -475,7 +536,7 @@ Set on `dragstart`, consumed on `drop`.
 
             
 
-            <td class="description last">ID from task</td>
+            <td class="description last">The id of the task to update.</td>
         </tr>
 
     
@@ -488,7 +549,7 @@ Set on `dragstart`, consumed on `drop`.
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">SubtaskStatus</span>
 
 
             
@@ -498,7 +559,7 @@ Set on `dragstart`, consumed on `drop`.
 
             
 
-            <td class="description last">Status from task</td>
+            <td class="description last">The new board status.</td>
         </tr>
 
     
@@ -539,7 +600,7 @@ Set on `dragstart`, consumed on `drop`.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line89">line 89</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line91">line 91</a>
     </li></ul></dd>
     
 
@@ -564,6 +625,28 @@ Set on `dragstart`, consumed on `drop`.
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Resolves when the status update has been saved.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void></span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -583,7 +666,7 @@ Set on `dragstart`, consumed on `drop`.
 
 
 <div class="description">
-    Calculates subtask progress.
+    Calculates and returns the subtask progress HTML for a task.
 </div>
 
 
@@ -623,11 +706,6 @@ Set on `dragstart`, consumed on `drop`.
             
 
             <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
             
             </td>
 
@@ -676,7 +754,7 @@ Set on `dragstart`, consumed on `drop`.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line100">line 100</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line103">line 103</a>
     </li></ul></dd>
     
 
@@ -705,7 +783,7 @@ Set on `dragstart`, consumed on `drop`.
 
         
 <div class="param-desc">
-    HTML for progress bar
+    HTML string for the progress bar, or an empty string if no subtasks exist.
 </div>
 
 
@@ -734,6 +812,218 @@ Set on `dragstart`, consumed on `drop`.
     
 
     
+    <h4 class="name" id="~clearDropCardPreview"><span class="type-signature">(inner) </span>clearDropCardPreview<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Removes all drag preview classes from task lists.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line319">line 319</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~clearDropHighlights"><span class="type-signature">(inner) </span>clearDropHighlights<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Removes all drop-zone highlight classes.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line308">line 308</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="~extractAssigneeNames"><span class="type-signature">(inner) </span>extractAssigneeNames<span class="signature">(assigned_to)</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
     
 
@@ -742,7 +1032,7 @@ Set on `dragstart`, consumed on `drop`.
 
 
 <div class="description">
-    Extracts assignee names from different data formats.
+    Extracts assignee names from supported data formats.
 
 Supports objects, arrays, and comma-separated strings.
 </div>
@@ -802,7 +1092,7 @@ Supports objects, arrays, and comma-separated strings.
 
             
 
-            <td class="description last">Raw assigned data.</td>
+            <td class="description last">Raw assigned contact data.</td>
         </tr>
 
     
@@ -843,7 +1133,7 @@ Supports objects, arrays, and comma-separated strings.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line142">line 142</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line145">line 145</a>
     </li></ul></dd>
     
 
@@ -872,7 +1162,7 @@ Supports objects, arrays, and comma-separated strings.
 
         
 <div class="param-desc">
-    Array of valid assignee names.
+    Array of assignee names.
 </div>
 
 
@@ -901,7 +1191,7 @@ Supports objects, arrays, and comma-separated strings.
     
 
     
-    <h4 class="name" id="~generateAssigneeAvatars"><span class="type-signature">(inner) </span>generateAssigneeAvatars<span class="signature">(assigned_to)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id="~generateAssigneeAvatars"><span class="type-signature">(inner) </span>generateAssigneeAvatars<span class="signature">(assigned_to<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -909,10 +1199,10 @@ Supports objects, arrays, and comma-separated strings.
 
 
 <div class="description">
-    Generates HTML for assignee avatars.
+    Generates the HTML for task assignee avatars.
 
-Displays up to 3 avatars and adds a "+X" avatar
-if more assignees are present.
+Displays up to three avatars and adds an overflow avatar
+when more assignees exist.
 </div>
 
 
@@ -936,7 +1226,11 @@ if more assignees are present.
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -967,7 +1261,23 @@ if more assignees are present.
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
             
 
             <td class="description last">Assigned contacts data.</td>
@@ -1011,7 +1321,7 @@ if more assignees are present.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line124">line 124</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line127">line 127</a>
     </li></ul></dd>
     
 
@@ -1040,7 +1350,7 @@ if more assignees are present.
 
         
 <div class="param-desc">
-    HTML string for avatar rendering.
+    HTML string for the assignee avatars.
 </div>
 
 
@@ -1069,12 +1379,16 @@ if more assignees are present.
     
 
     
-    <h4 class="name" id="~initBoard"><span class="type-signature">(async, inner) </span>initBoard<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~initBoard"><span class="type-signature">(async, inner) </span>initBoard<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
     
 
     
 
 
+
+<div class="description">
+    Loads all tasks from Firebase and initializes the board view.
+</div>
 
 
 
@@ -1142,6 +1456,187 @@ if more assignees are present.
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Resolves when the board data has been loaded.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~matchesSearch"><span class="type-signature">(inner) </span>matchesSearch<span class="signature">(task)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Checks whether a task matches the active board search term.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>task</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Todo</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The task to test against the current search term.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line433">line 433</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    True if the task matches or no search term is active.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1161,7 +1656,7 @@ if more assignees are present.
 
 
 <div class="description">
-    Renders an avatar displaying remaining assignee count.
+    Renders the overflow avatar for hidden assignees.
 </div>
 
 
@@ -1254,7 +1749,7 @@ if more assignees are present.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line181">line 181</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line184">line 184</a>
     </li></ul></dd>
     
 
@@ -1283,7 +1778,7 @@ if more assignees are present.
 
         
 <div class="param-desc">
-    HTML string for overflow avatar.
+    HTML string for the overflow avatar, or an empty string.
 </div>
 
 
@@ -1320,7 +1815,7 @@ if more assignees are present.
 
 
 <div class="description">
-    Renders HTML for visible assignee avatars.
+    Renders the visible assignee avatars.
 </div>
 
 
@@ -1372,7 +1867,7 @@ if more assignees are present.
 
             
 
-            <td class="description last">List of assignee names.</td>
+            <td class="description last">The assignee names to render.</td>
         </tr>
 
     
@@ -1413,7 +1908,7 @@ if more assignees are present.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line161">line 161</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line164">line 164</a>
     </li></ul></dd>
     
 
@@ -1442,7 +1937,7 @@ if more assignees are present.
 
         
 <div class="param-desc">
-    HTML string for avatar elements.
+    HTML string for the visible avatars.
 </div>
 
 
@@ -1454,6 +1949,692 @@ if more assignees are present.
     <dd>
         
 <span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~searchTask"><span class="type-signature">(inner) </span>searchTask<span class="signature">(value)</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Updates the active board search term and refreshes the board view.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The raw search input value.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line447">line 447</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~togglePlaceholder"><span class="type-signature">(inner) </span>togglePlaceholder<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Shows or hides the placeholder inside each task area
+depending on whether matching tasks exist.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line288">line 288</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~updateAwaitFeedback"><span class="type-signature">(inner) </span>updateAwaitFeedback<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Renders all tasks with status `"await-feedback"` into the await-feedback column.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line251">line 251</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~updateDone"><span class="type-signature">(inner) </span>updateDone<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Renders all tasks with status `"done"` into the done column.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line269">line 269</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~updateInProgress"><span class="type-signature">(inner) </span>updateInProgress<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Renders all tasks with status `"in-progress"` into the in-progress column.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line233">line 233</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~updateTodo"><span class="type-signature">(inner) </span>updateTodo<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Renders all tasks with status `"todo"` into the todo column.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line215">line 215</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
 
 
     </dd>
@@ -1530,7 +2711,7 @@ if more assignees are present.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line29">line 29</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -1608,7 +2789,7 @@ if more assignees are present.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line34">line 34</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -1689,7 +2870,7 @@ if more assignees are present.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line24">line 24</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -1804,7 +2985,7 @@ if more assignees are present.
 
         <tr>
             
-                <td class="name"><code>date</code></td>
+                <td class="name"><code>due_date</code></td>
             
 
             <td class="type">
@@ -1820,7 +3001,7 @@ if more assignees are present.
 
             
 
-            <td class="description last">Due date (YYYY-MM-DD) or empty string.</td>
+            <td class="description last">Due date in YYYY-MM-DD format or an empty string.</td>
         </tr>
 
     
@@ -1850,12 +3031,18 @@ if more assignees are present.
 
         <tr>
             
-                <td class="name"><code>assignedTo</code></td>
+                <td class="name"><code>assigned_to</code></td>
             
 
             <td class="type">
             
                 
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">Array</span>
+|
+
 <span class="param-type">string</span>
 
 
@@ -1866,7 +3053,7 @@ if more assignees are present.
 
             
 
-            <td class="description last">Person(s) assigned to this task (currently unused).</td>
+            <td class="description last">Assigned contacts.</td>
         </tr>
 
     
@@ -1912,7 +3099,25 @@ if more assignees are present.
 
             
 
-            <td class="description last">Current board column/status.</td>
+            <td class="description last">Current board column status.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code></code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -1951,7 +3156,7 @@ if more assignees are present.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line41">line 41</a>
+        <a href="member_js_drag-n-drop.js.html">member/js/drag-n-drop.js</a>, <a href="member_js_drag-n-drop.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -1987,7 +3192,7 @@ if more assignees are present.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Apr 21 2026 18:21:59 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Apr 21 2026 18:25:55 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

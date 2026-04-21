@@ -1,17 +1,8 @@
 /**
- * @file Provides basic Kanban board rendering + drag-and-drop handling for tasks ("todos").
+ * @file Provides Kanban board rendering and drag-and-drop handling for tasks.
  *
- * This module:
- * - Keeps a temporary in-memory `todos` object (placeholder until Firebase is connected)
- * - Renders tasks into the four board columns (todo / in-progress / await-feedback / done)
- * - Toggles column placeholders when a column has no tasks
- * - Implements drag & drop using document-level event listeners
- *
- * DOM expectations:
- * - Columns with IDs: `todo`, `inProgress`, `awaitFeedback`, `done`
- * - Drop zones with class `.task__area` and `data-status` values matching todo.subtask
- * - Placeholder element inside each `.task__area`: `.task__area--placeholder`
- * - Task cards have class `.task__card` and an `id` that matches the todo key
+ * Renders tasks into the board columns, updates column placeholders,
+ * supports task search, and synchronizes status changes with Firebase.
  *
  * @module drag-n-drop
  */
@@ -23,53 +14,62 @@ import { ref, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-
 
 /**
  * Possible board states.
+ *
  * @typedef {"todo" | "in-progress" | "await-feedback" | "done"} SubtaskStatus
  */
 
 /**
  * Possible task categories.
+ *
  * @typedef {"user-story" | "technical-task"} Category
  */
 
 /**
  * Possible priority values.
+ *
  * @typedef {"low" | "medium" | "urgent"} Priority
  */
 
-
-let activeSearchTerm = ''; // INFO This is currently only used in the search function
 /**
  * Represents a board task.
  *
  * @typedef {Object} Todo
  * @property {string} title - Task title.
  * @property {string} description - Task description.
- * @property {string} date - Due date (YYYY-MM-DD) or empty string.
+ * @property {string} due_date - Due date in YYYY-MM-DD format or an empty string.
  * @property {Priority} priority - Task priority level.
- * @property {string} assignedTo - Person(s) assigned to this task (currently unused).
+ * @property {Object|Array|string} assigned_to - Assigned contacts.
  * @property {Category} category - Task category.
- * @property {SubtaskStatus} status - Current board column/status.
+ * @property {SubtaskStatus} status - Current board column status.
+ * @property {Object<string, {status?: boolean, completed?: boolean, title?: string}>} [subtasks] - Task subtasks.
  */
 
+/**
+ * Current active search term used for board filtering.
+ *
+ * @type {string}
+ */
+let activeSearchTerm = '';
 
 /**
  * Task collection indexed by id.
- * NOTE: Placeholder data until Firebase is connected.
  *
  * @type {Record<string, Todo>}
  */
 export let todos = {};
 
 /**
- * ID (key in {@link todos}) of the currently dragged task card.
- * Set on `dragstart`, consumed on `drop`.
+ * Id of the currently dragged task card.
  *
  * @type {string|undefined}
  */
 let currentDraggedElement;
 
 /**
+ * Loads all tasks from Firebase and initializes the board view.
  *
+ * @async
+ * @returns {Promise<void>} Resolves when the board data has been loaded.
  */
 async function initBoard() {
   try {
@@ -81,10 +81,12 @@ async function initBoard() {
 }
 
 /**
- * Handles the upload to firebase after switch category.
+ * Updates the status of a task in Firebase.
  *
- * @param {string} taskId - ID from task
- * @param {string} newStatus - Status from task
+ * @async
+ * @param {string} taskId - The id of the task to update.
+ * @param {SubtaskStatus} newStatus - The new board status.
+ * @returns {Promise<void>} Resolves when the status update has been saved.
  */
 export async function updateTaskStatus(taskId, newStatus) {
   await update(ref(database, `tasks/${taskId}`), {
@@ -93,9 +95,10 @@ export async function updateTaskStatus(taskId, newStatus) {
 }
 
 /**
- * Calculates subtask progress.
- * @param {Object} subtasks
- * @returns {string} HTML for progress bar
+ * Calculates and returns the subtask progress HTML for a task.
+ *
+ * @param {Object<string, {status?: boolean, completed?: boolean}>} [subtasks={}] - The task subtasks.
+ * @returns {string} HTML string for the progress bar, or an empty string if no subtasks exist.
  */
 function calculateSubtaskProgress(subtasks = {}) {
   const subtaskArray = Object.values(subtasks);
@@ -113,13 +116,13 @@ function calculateSubtaskProgress(subtasks = {}) {
 }
 
 /**
- * Generates HTML for assignee avatars.
+ * Generates the HTML for task assignee avatars.
  *
- * Displays up to 3 avatars and adds a "+X" avatar
- * if more assignees are present.
+ * Displays up to three avatars and adds an overflow avatar
+ * when more assignees exist.
  *
- * @param {Object|Array|string} assigned_to - Assigned contacts data.
- * @returns {string} HTML string for avatar rendering.
+ * @param {Object|Array|string} [assigned_to={}] - Assigned contacts data.
+ * @returns {string} HTML string for the assignee avatars.
  */
 function generateAssigneeAvatars(assigned_to = {}) {
   const names = extractAssigneeNames(assigned_to);
@@ -132,12 +135,12 @@ function generateAssigneeAvatars(assigned_to = {}) {
 }
 
 /**
- * Extracts assignee names from different data formats.
+ * Extracts assignee names from supported data formats.
  *
  * Supports objects, arrays, and comma-separated strings.
  *
- * @param {Object|Array|string} assigned_to - Raw assigned data.
- * @returns {string[]} Array of valid assignee names.
+ * @param {Object|Array|string} assigned_to - Raw assigned contact data.
+ * @returns {string[]} Array of assignee names.
  */
 function extractAssigneeNames(assigned_to) {
   if (Array.isArray(assigned_to)) return assigned_to;
@@ -153,10 +156,10 @@ function extractAssigneeNames(assigned_to) {
 }
 
 /**
- * Renders HTML for visible assignee avatars.
+ * Renders the visible assignee avatars.
  *
- * @param {string[]} names - List of assignee names.
- * @returns {string} HTML string for avatar elements.
+ * @param {string[]} names - The assignee names to render.
+ * @returns {string} HTML string for the visible avatars.
  */
 function renderVisibleAvatars(names) {
   return names.map(name => {
@@ -173,10 +176,10 @@ function renderVisibleAvatars(names) {
 }
 
 /**
- * Renders an avatar displaying remaining assignee count.
+ * Renders the overflow avatar for hidden assignees.
  *
  * @param {number} count - Number of hidden assignees.
- * @returns {string} HTML string for overflow avatar.
+ * @returns {string} HTML string for the overflow avatar, or an empty string.
  */
 function renderExtraAvatar(count) {
   if (count <= 0) return '';
@@ -190,29 +193,23 @@ function renderExtraAvatar(count) {
   `;
 }
 
-
 /**
  * Re-renders all board columns and updates placeholder visibility.
  *
- * @export
  * @returns {void}
  */
-export async function updateHTML() {
-  // if this page doesn’t have a todo column we’re not on the board,
-  // so skip all DOM updates to avoid null errors
+export function updateHTML() {
   if (!document.getElementById('todo')) return;
   updateTodo();
   updateInProgress();
   updateAwaitFeedback();
   updateDone();
   togglePlaceholder();
-};
-
+}
 
 /**
- * Renders tasks with {@link Todo.subtask} === `"todo"` into the `#todo` column.
+ * Renders all tasks with status `"todo"` into the todo column.
  *
- * @private
  * @returns {void}
  */
 function updateTodo() {
@@ -226,94 +223,99 @@ function updateTodo() {
       container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
     }
   }
-};
-
+}
 
 /**
- * Renders tasks with {@link Todo.subtask} === `"in-progress"` into the `#inProgress` column.
+ * Renders all tasks with status `"in-progress"` into the in-progress column.
  *
- * @private
  * @returns {void}
  */
 function updateInProgress() {
-  document.getElementById('inProgress').innerHTML = '';
+  const container = document.getElementById('inProgress');
+  if (!container) return;
+  container.innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'in-progress' && matchesSearch(element)) {
       const progressHTML = calculateSubtaskProgress(element.subtasks);
       const avatarsHTML = generateAssigneeAvatars(element.assigned_to);
-      document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
+      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
     }
   }
-};
-
+}
 
 /**
- * Renders tasks with {@link Todo.subtask} === `"await-feedback"` into the `#awaitFeedback` column.
+ * Renders all tasks with status `"await-feedback"` into the await-feedback column.
  *
- * @private
  * @returns {void}
  */
 function updateAwaitFeedback() {
-  document.getElementById('awaitFeedback').innerHTML = '';
+  const container = document.getElementById('awaitFeedback');
+  if (!container) return;
+  container.innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'await-feedback' && matchesSearch(element)) {
       const progressHTML = calculateSubtaskProgress(element.subtasks);
       const avatarsHTML = generateAssigneeAvatars(element.assigned_to);
-      document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
+      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
     }
   }
-};
-
+}
 
 /**
- * Renders tasks with {@link Todo.subtask} === `"done"` into the `#done` column.
+ * Renders all tasks with status `"done"` into the done column.
  *
- * @private
  * @returns {void}
  */
 function updateDone() {
-  document.getElementById('done').innerHTML = '';
+  const container = document.getElementById('done');
+  if (!container) return;
+  container.innerHTML = '';
   for (const [id, element] of Object.entries(todos)) {
     if (element.status === 'done' && matchesSearch(element)) {
       const progressHTML = calculateSubtaskProgress(element.subtasks);
       const avatarsHTML = generateAssigneeAvatars(element.assigned_to);
-      document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
+      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority, progressHTML, avatarsHTML);
     }
   }
-};
-
+}
 
 /**
- * Shows/hides the placeholder inside each `.task__area` depending on whether
- * at least one task exists for that column.
+ * Shows or hides the placeholder inside each task area
+ * depending on whether matching tasks exist.
  *
- * Uses `.task__area[data - status]` to match against {@link Todo.status}.
- *
- * @private
  * @returns {void}
  */
 function togglePlaceholder() {
-  const taskAres = document.querySelectorAll('.task__area');
-  taskAres.forEach(area => {
-    let status = area.dataset.status;
+  const taskAreas = document.querySelectorAll('.task__area');
+  taskAreas.forEach(area => {
+    const status = area.dataset.status;
     const placeholder = area.querySelector('.task__area--placeholder');
-    let hasTask = Object.values(todos).some(task => task.status === status && matchesSearch(task));
+    if (!placeholder) return;
+    const hasTask = Object.values(todos).some(task => task.status === status && matchesSearch(task));
     if (hasTask) {
-      placeholder.classList.add('d_none')
+      placeholder.classList.add('d_none');
     } else {
       placeholder.classList.remove('d_none');
     }
   });
-};
+}
 
-
+/**
+ * Removes all drop-zone highlight classes.
+ *
+ * @returns {void}
+ */
 function clearDropHighlights() {
   document.querySelectorAll(".task__area--highlight").forEach(zone => {
     zone.classList.remove("task__area--highlight");
   });
 }
 
-
+/**
+ * Removes all drag preview classes from task lists.
+ *
+ * @returns {void}
+ */
 function clearDropCardPreview() {
   document.querySelectorAll(".task__list--preview").forEach(list => {
     list.classList.remove("task__list--preview");
@@ -321,11 +323,12 @@ function clearDropCardPreview() {
 }
 
 /**
- * Handles `dragstart` on `.task__card`.
- * Stores dragged task id and adds a visual dragging class.
+ * Handles drag start on task cards.
+ *
+ * Stores the dragged task id and adds the dragging class.
  *
  * @listens Document#dragstart
- * @param {DragEvent} event - Browser dragstart event.
+ * @param {DragEvent} event - The browser dragstart event.
  * @returns {void}
  */
 document.addEventListener("dragstart", function (event) {
@@ -335,13 +338,13 @@ document.addEventListener("dragstart", function (event) {
   card.classList.add("task__card--dragging");
 });
 
-
 /**
- * Handles `dragend` on `.task__card`.
- * Removes the visual dragging class.
+ * Handles drag end on task cards.
+ *
+ * Removes drag-related UI state and clears the dragged task id.
  *
  * @listens Document#dragend
- * @param {DragEvent} event - Browser dragend event.
+ * @param {DragEvent} event - The browser dragend event.
  * @returns {void}
  */
 document.addEventListener("dragend", function (event) {
@@ -350,37 +353,38 @@ document.addEventListener("dragend", function (event) {
   card.classList.remove("task__card--dragging");
   clearDropHighlights();
   clearDropCardPreview();
-  currentDraggedElement = undefined
+  currentDraggedElement = undefined;
 });
 
-
 /**
- * Handles `dragover` within a `.task__area` drop zone.
- * Calls `preventDefault()` to allow dropping and highlights the drop zone.
+ * Handles dragover on board drop zones.
+ *
+ * Enables dropping and shows the drop preview on the current task list.
  *
  * @listens Document#dragover
- * @param {DragEvent} event - Browser dragover event.
+ * @param {DragEvent} event - The browser dragover event.
  * @returns {void}
  */
 document.addEventListener("dragover", function (event) {
-  event.preventDefault(); //INFO This prevents the browser from blocking the drop.
-  const dropZone = event.target.closest(".task__area"); //INFO The columns are also found for child elements.
+  event.preventDefault();
+  const dropZone = event.target.closest(".task__area");
   clearDropHighlights();
   clearDropCardPreview();
-  if (!dropZone) return; // INFO If there is no drop zone, cancel.
+  if (!dropZone) return;
   const taskList = dropZone.querySelector(".task__list");
   if (!taskList) return;
   taskList.classList.add("task__list--preview");
 });
 
-
 /**
- * Handles `drop` within a `.task__area` drop zone.
- * Moves the dragged task into the drop zone's status and re-renders the board.
+ * Handles dropping a task into a board column.
+ *
+ * Updates the local task status, refreshes the board,
+ * and persists the new status to Firebase with rollback on failure.
  *
  * @listens Document#drop
- * @param {DragEvent} event - Browser drop event.
- * @returns {void}
+ * @param {DragEvent} event - The browser drop event.
+ * @returns {Promise<void>} Resolves when the drop handling is complete.
  */
 document.addEventListener("drop", async function (event) {
   event.preventDefault();
@@ -388,16 +392,15 @@ document.addEventListener("drop", async function (event) {
   clearDropHighlights();
   clearDropCardPreview();
   if (!dropZone || !currentDraggedElement) return;
-  const newStatus = dropZone.dataset.status;
+  const newStatus = /** @type {SubtaskStatus} */ (dropZone.dataset.status);
   const oldStatus = todos[currentDraggedElement]?.status;
   dropZone.classList.remove("task__list--preview");
   todos[currentDraggedElement].status = newStatus;
   updateHTML();
   try {
-    await updateTaskStatus(currentDraggedElement, newStatus)
+    await updateTaskStatus(currentDraggedElement, newStatus);
   } catch (error) {
     console.error("Firebase-Update fehlgeschlagen:", error);
-    // rollback
     if (todos[currentDraggedElement]) {
       todos[currentDraggedElement].status = oldStatus;
       updateHTML();
@@ -406,13 +409,13 @@ document.addEventListener("drop", async function (event) {
   }
 });
 
-
 /**
- * Handles `dragleave` for `.task__area`.
- * Removes the drop zone highlight class.
+ * Handles dragleave on task areas.
+ *
+ * Removes the drop-zone highlight class.
  *
  * @listens Document#dragleave
- * @param {DragEvent} event - Browser dragleave event.
+ * @param {DragEvent} event - The browser dragleave event.
  * @returns {void}
  */
 document.addEventListener("dragleave", function (event) {
@@ -421,7 +424,12 @@ document.addEventListener("dragleave", function (event) {
   dropZone.classList.remove("task__area--highlight");
 });
 
-
+/**
+ * Checks whether a task matches the active board search term.
+ *
+ * @param {Todo} task - The task to test against the current search term.
+ * @returns {boolean} True if the task matches or no search term is active.
+ */
 function matchesSearch(task) {
   if (!activeSearchTerm) return true;
   const haystack = [task.title, task.description, task.category, task.priority]
@@ -430,12 +438,17 @@ function matchesSearch(task) {
   return haystack.includes(activeSearchTerm);
 }
 
+/**
+ * Updates the active board search term and refreshes the board view.
+ *
+ * @param {string} value - The raw search input value.
+ * @returns {void}
+ */
 function searchTask(value) {
   activeSearchTerm = String(value || '').toLowerCase().trim();
   updateHTML();
 }
 
 initBoard();
-
 
 window.searchTask = searchTask;
