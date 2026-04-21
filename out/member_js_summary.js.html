@@ -26,22 +26,34 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { auth } from '../../scripts/firebase/firebase.js';
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Provides summary page logic for task counters, greeting text,
+ * username display, urgent deadline display, and mobile greeting overlay.
+ *
+ * @module summary
+ */
+
+import { auth } from '../../scripts/firebase/firebase.js';
 import { loadTasks, getContacts, loadData } from '../../scripts/firebase/get-firebase.js';
 
 /**
- * Counts the number of tasks with the status "todo" or "to do"
- * and updates the corresponding value in the summary UI.
+ * Represents a summary task object.
  *
- * The function also ensures backward compatibility by checking
- * if a task uses the old `subtask` property instead of `status`
- * and assigns it accordingly.
+ * @typedef {Object} SummaryTask
+ * @property {string} [status] - Current task status.
+ * @property {string} [subtask] - Legacy fallback status value.
+ * @property {string} [priority] - Task priority.
+ * @property {string} [due_date] - Task due date in YYYY-MM-DD format.
+ */
+
+/**
+ * Counts tasks with status "todo" or "to do"
+ * and updates the corresponding summary UI element.
+ *
+ * Also applies backward compatibility for legacy `subtask` status values.
  *
  * @async
- * @function todoTasks
- * @param {Array&lt;Object>} tasks - Array of task objects retrieved from the database.
- * @param {string} [tasks[].status] - The current status of the task.
- * @param {string} [tasks[].subtask] - Legacy property used as a fallback for the task status.
+ * @param {SummaryTask[]} tasks - Array of task objects.
  * @returns {Promise&lt;void>} Resolves after the UI has been updated.
  */
 async function todoTasks(tasks) {
@@ -65,11 +77,14 @@ async function todoTasks(tasks) {
 }
 
 /**
- * Counts tasks with status "done" and updates the summary UI.
+ * Counts tasks with status "done"
+ * and updates the corresponding summary UI element.
+ *
+ * Also applies backward compatibility for legacy `subtask` status values.
  *
  * @async
- * @param {Array&lt;Object>} tasks - Array of task objects.
- * @returns {Promise&lt;void>}
+ * @param {SummaryTask[]} tasks - Array of task objects.
+ * @returns {Promise&lt;void>} Resolves after the UI has been updated.
  */
 async function doneTasks(tasks) {
   tasks.forEach(task => {
@@ -90,11 +105,12 @@ async function doneTasks(tasks) {
 }
 
 /**
- * Counts urgent tasks and updates the summary UI.
+ * Counts tasks with priority "urgent"
+ * and updates the corresponding summary UI element.
  *
  * @async
- * @param {Array&lt;Object>} tasks - Array of task objects.
- * @returns {Promise&lt;void>}
+ * @param {SummaryTask[]} tasks - Array of task objects.
+ * @returns {Promise&lt;void>} Resolves after the UI has been updated.
  */
 async function urgentTasks(tasks) {
   const count = tasks.filter(task => {
@@ -110,11 +126,12 @@ async function urgentTasks(tasks) {
 }
 
 /**
- * Counts tasks that are valid board tasks and updates the summary UI.
+ * Counts all tasks that belong to valid board statuses
+ * and updates the corresponding summary UI element.
  *
  * @async
- * @param {Array&lt;Object>} tasks - Array of task objects.
- * @returns {Promise&lt;void>}
+ * @param {SummaryTask[]} tasks - Array of task objects.
+ * @returns {Promise&lt;void>} Resolves after the UI has been updated.
  */
 async function tasksInBoard(tasks) {
   const validStatuses = new Set(['todo', 'in-progress', 'await-feedback', 'done']);
@@ -131,11 +148,12 @@ async function tasksInBoard(tasks) {
 }
 
 /**
- * Counts tasks with status "in-progress" and updates the summary UI.
+ * Counts tasks with status "in-progress"
+ * and updates the corresponding summary UI element.
  *
  * @async
- * @param {Array&lt;Object>} tasks - Array of task objects.
- * @returns {Promise&lt;void>}
+ * @param {SummaryTask[]} tasks - Array of task objects.
+ * @returns {Promise&lt;void>} Resolves after the UI has been updated.
  */
 async function tasksInProgress(tasks) {
   const count = tasks.filter(task => {
@@ -151,11 +169,14 @@ async function tasksInProgress(tasks) {
 }
 
 /**
- * Counts tasks with status "await-feedback" and updates the summary UI.
+ * Counts tasks with status "await-feedback"
+ * and updates the corresponding summary UI element.
+ *
+ * Also applies backward compatibility for legacy `subtask` status values.
  *
  * @async
- * @param {Array&lt;Object>} tasks - Array of task objects.
- * @returns {Promise&lt;void>}
+ * @param {SummaryTask[]} tasks - Array of task objects.
+ * @returns {Promise&lt;void>} Resolves after the UI has been updated.
  */
 async function awaitFeedbackTasks(tasks) {
   tasks.forEach(task => {
@@ -176,7 +197,7 @@ async function awaitFeedbackTasks(tasks) {
 }
 
 /**
- * Displays the greeting text based on the current time of day.
+ * Updates the greeting text based on the current local time.
  *
  * @returns {void}
  */
@@ -193,11 +214,13 @@ function greetings() {
 /**
  * Assigns the displayed username depending on the authentication state.
  *
- * If a logged-in user exists and is not anonymous, their contact name
- * will be shown. Otherwise, the label "Guest" will be used.
+ * Shows the matching contact name for logged-in non-anonymous users
+ * and "Guest" otherwise.
  *
- * @param {Object|null} user - The authenticated user object from Firebase Auth.
- * @param {HTMLElement|null} nameElem - DOM element for the greeting name.
+ * @param {Object|null} user - The authenticated Firebase user object, or null.
+ * @param {boolean} [user.isAnonymous] - Whether the user is anonymous.
+ * @param {string} [user.uid] - The user id.
+ * @param {HTMLElement|null} nameElem - The greeting name element.
  * @returns {void}
  */
 export function assignName(user, nameElem) {
@@ -215,10 +238,10 @@ export function assignName(user, nameElem) {
 }
 
 /**
- * Finds the next upcoming deadline among urgent tasks
+ * Finds the nearest upcoming deadline among urgent tasks
  * and renders it into the summary UI.
  *
- * @param {Array&lt;Object>} tasks - Array of task objects.
+ * @param {SummaryTask[]} tasks - Array of task objects.
  * @returns {void}
  */
 function urgentTasksDeadLine(tasks) {
@@ -238,11 +261,10 @@ function urgentTasksDeadLine(tasks) {
 }
 
 /**
- * Shows the greeting overlay on mobile devices for a short time
- * and then hides it.
+ * Initializes the mobile greeting overlay.
  *
- * Copies the already rendered desktop greeting text into the
- * mobile overlay elements before hiding the overlay.
+ * Copies the already rendered desktop greeting into the mobile overlay,
+ * shows it briefly on small screens, and then hides it.
  *
  * @returns {void}
  */
@@ -270,16 +292,14 @@ function initMobileGreetingOverlay() {
 }
 
 /**
- * Initializes the summary page:
- * - loads tasks
- * - updates all counters
- * - sets greeting text
- * - loads contact data
- * - resolves and renders the current user's name
- * - starts the mobile greeting overlay
+ * Initializes the summary page.
+ *
+ * Loads tasks, updates all counters, sets the greeting text,
+ * loads contacts, renders the current user's name,
+ * and starts the mobile greeting overlay.
  *
  * @async
- * @returns {Promise&lt;void>}
+ * @returns {Promise&lt;void>} Resolves when the summary initialization is complete.
  */
 export async function initSummary() {
   const tasksData = await loadTasks();
@@ -306,6 +326,12 @@ export async function initSummary() {
   });
 }
 
+/**
+ * Initializes the summary page after the window has fully loaded.
+ *
+ * @listens Window#load
+ * @returns {void}
+ */
 window.addEventListener('load', initSummary);
 </code></pre>
         </article>
@@ -317,13 +343,13 @@ window.addEventListener('load', initSummary);
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-contacts.html">contacts</a></li><li><a href="module-contacts-render.html">contacts-render</a></li><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li><li><a href="module-contacts.html#event:click">click</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#applyPrioritySelection">applyPrioritySelection</a></li><li><a href="global.html#assignName">assignName</a></li><li><a href="global.html#awaitFeedbackTasks">awaitFeedbackTasks</a></li><li><a href="global.html#bindAssigneeEvents">bindAssigneeEvents</a></li><li><a href="global.html#bindSubtaskEvents">bindSubtaskEvents</a></li><li><a href="global.html#buildCheckbox">buildCheckbox</a></li><li><a href="global.html#buildContactOptionElement">buildContactOptionElement</a></li><li><a href="global.html#buildOptionMain">buildOptionMain</a></li><li><a href="global.html#buildSubtaskItem">buildSubtaskItem</a></li><li><a href="global.html#buildTaskData">buildTaskData</a></li><li><a href="global.html#buildTaskUpdateObject">buildTaskUpdateObject</a></li><li><a href="global.html#clearAddTaskForm">clearAddTaskForm</a></li><li><a href="global.html#clearFieldError">clearFieldError</a></li><li><a href="global.html#clearSelectedAssignees">clearSelectedAssignees</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#clearSubtasks">clearSubtasks</a></li><li><a href="global.html#closeAssignedOptions">closeAssignedOptions</a></li><li><a href="global.html#closeTaskOverlay">closeTaskOverlay</a></li><li><a href="global.html#collectEditFormData">collectEditFormData</a></li><li><a href="global.html#columns">columns</a></li><li><a href="global.html#createSubtaskActions">createSubtaskActions</a></li><li><a href="global.html#createSubtaskEditInput">createSubtaskEditInput</a></li><li><a href="global.html#createSubtaskText">createSubtaskText</a></li><li><a href="global.html#deleteExistingSubtask">deleteExistingSubtask</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#doneTasks">doneTasks</a></li><li><a href="global.html#editExistingSubtask">editExistingSubtask</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTask">editTask</a></li><li><a href="global.html#findPriorityButton">findPriorityButton</a></li><li><a href="global.html#getAssignedNames">getAssignedNames</a></li><li><a href="global.html#getAvatarColor">getAvatarColor</a></li><li><a href="global.html#getContactData">getContactData</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getSortedContacts">getSortedContacts</a></li><li><a href="global.html#getSubtasks">getSubtasks</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#handleOutsideClick">handleOutsideClick</a></li><li><a href="global.html#handleOverlayClick">handleOverlayClick</a></li><li><a href="global.html#handleSubtaskKeydown">handleSubtaskKeydown</a></li><li><a href="global.html#handleSubtaskListClick">handleSubtaskListClick</a></li><li><a href="global.html#handleTriggerClick">handleTriggerClick</a></li><li><a href="global.html#hashString">hashString</a></li><li><a href="global.html#initAssignees">initAssignees</a></li><li><a href="global.html#initMobileGreetingOverlay">initMobileGreetingOverlay</a></li><li><a href="global.html#initSubtasks">initSubtasks</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#initTasks">initTasks</a></li><li><a href="global.html#initializeEditAssignees">initializeEditAssignees</a></li><li><a href="global.html#initializeEditSubtasks">initializeEditSubtasks</a></li><li><a href="global.html#isSelected">isSelected</a></li><li><a href="global.html#openTaskOverlay">openTaskOverlay</a></li><li><a href="global.html#populateAssignedToDropdown">populateAssignedToDropdown</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderContactOptions">renderContactOptions</a></li><li><a href="global.html#renderEditOverlay">renderEditOverlay</a></li><li><a href="global.html#renderNoContacts">renderNoContacts</a></li><li><a href="global.html#renderSelectedAssignees">renderSelectedAssignees</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#saveEditedSubtask">saveEditedSubtask</a></li><li><a href="global.html#saveEditedTask">saveEditedTask</a></li><li><a href="global.html#saveNewSubtask">saveNewSubtask</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#saveSubtaskValue">saveSubtaskValue</a></li><li><a href="global.html#selectPriority">selectPriority</a></li><li><a href="global.html#setDefaultPriority">setDefaultPriority</a></li><li><a href="global.html#setupPriorityButtons">setupPriorityButtons</a></li><li><a href="global.html#setupRequiredFieldValidation">setupRequiredFieldValidation</a></li><li><a href="global.html#setupSubtaskEditListeners">setupSubtaskEditListeners</a></li><li><a href="global.html#submitTask">submitTask</a></li><li><a href="global.html#syncOptionToggle">syncOptionToggle</a></li><li><a href="global.html#syncTasksAndTodos">syncTasksAndTodos</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#tasksInBoard">tasksInBoard</a></li><li><a href="global.html#tasksInProgress">tasksInProgress</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#toggleAssignedOptions">toggleAssignedOptions</a></li><li><a href="global.html#toggleAssignee">toggleAssignee</a></li><li><a href="global.html#toggleCheckbox">toggleCheckbox</a></li><li><a href="global.html#toggleSubtaskActions">toggleSubtaskActions</a></li><li><a href="global.html#trackContactsForUser">trackContactsForUser</a></li><li><a href="global.html#updateAssignedInput">updateAssignedInput</a></li><li><a href="global.html#updateTaskInFirebase">updateTaskInFirebase</a></li><li><a href="global.html#urgentTasks">urgentTasks</a></li><li><a href="global.html#urgentTasksDeadLine">urgentTasksDeadLine</a></li><li><a href="global.html#validateRequiredField">validateRequiredField</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-contacts.html">contacts</a></li><li><a href="module-contacts-render.html">contacts-render</a></li><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li><li><a href="module-summary.html">summary</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li><li><a href="module-contacts.html#event:click">click</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#applyPrioritySelection">applyPrioritySelection</a></li><li><a href="global.html#bindAssigneeEvents">bindAssigneeEvents</a></li><li><a href="global.html#bindSubtaskEvents">bindSubtaskEvents</a></li><li><a href="global.html#buildCheckbox">buildCheckbox</a></li><li><a href="global.html#buildContactOptionElement">buildContactOptionElement</a></li><li><a href="global.html#buildOptionMain">buildOptionMain</a></li><li><a href="global.html#buildSubtaskItem">buildSubtaskItem</a></li><li><a href="global.html#buildTaskData">buildTaskData</a></li><li><a href="global.html#buildTaskUpdateObject">buildTaskUpdateObject</a></li><li><a href="global.html#clearAddTaskForm">clearAddTaskForm</a></li><li><a href="global.html#clearFieldError">clearFieldError</a></li><li><a href="global.html#clearSelectedAssignees">clearSelectedAssignees</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#clearSubtasks">clearSubtasks</a></li><li><a href="global.html#closeAssignedOptions">closeAssignedOptions</a></li><li><a href="global.html#closeTaskOverlay">closeTaskOverlay</a></li><li><a href="global.html#collectEditFormData">collectEditFormData</a></li><li><a href="global.html#columns">columns</a></li><li><a href="global.html#createSubtaskActions">createSubtaskActions</a></li><li><a href="global.html#createSubtaskEditInput">createSubtaskEditInput</a></li><li><a href="global.html#createSubtaskText">createSubtaskText</a></li><li><a href="global.html#deleteExistingSubtask">deleteExistingSubtask</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#editExistingSubtask">editExistingSubtask</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTask">editTask</a></li><li><a href="global.html#findPriorityButton">findPriorityButton</a></li><li><a href="global.html#getAssignedNames">getAssignedNames</a></li><li><a href="global.html#getAvatarColor">getAvatarColor</a></li><li><a href="global.html#getContactData">getContactData</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getSortedContacts">getSortedContacts</a></li><li><a href="global.html#getSubtasks">getSubtasks</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#handleOutsideClick">handleOutsideClick</a></li><li><a href="global.html#handleOverlayClick">handleOverlayClick</a></li><li><a href="global.html#handleSubtaskKeydown">handleSubtaskKeydown</a></li><li><a href="global.html#handleSubtaskListClick">handleSubtaskListClick</a></li><li><a href="global.html#handleTriggerClick">handleTriggerClick</a></li><li><a href="global.html#hashString">hashString</a></li><li><a href="global.html#initAssignees">initAssignees</a></li><li><a href="global.html#initSubtasks">initSubtasks</a></li><li><a href="global.html#initTasks">initTasks</a></li><li><a href="global.html#initializeEditAssignees">initializeEditAssignees</a></li><li><a href="global.html#initializeEditSubtasks">initializeEditSubtasks</a></li><li><a href="global.html#isSelected">isSelected</a></li><li><a href="global.html#openTaskOverlay">openTaskOverlay</a></li><li><a href="global.html#populateAssignedToDropdown">populateAssignedToDropdown</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderContactOptions">renderContactOptions</a></li><li><a href="global.html#renderEditOverlay">renderEditOverlay</a></li><li><a href="global.html#renderNoContacts">renderNoContacts</a></li><li><a href="global.html#renderSelectedAssignees">renderSelectedAssignees</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#saveEditedSubtask">saveEditedSubtask</a></li><li><a href="global.html#saveEditedTask">saveEditedTask</a></li><li><a href="global.html#saveNewSubtask">saveNewSubtask</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#saveSubtaskValue">saveSubtaskValue</a></li><li><a href="global.html#selectPriority">selectPriority</a></li><li><a href="global.html#setDefaultPriority">setDefaultPriority</a></li><li><a href="global.html#setupPriorityButtons">setupPriorityButtons</a></li><li><a href="global.html#setupRequiredFieldValidation">setupRequiredFieldValidation</a></li><li><a href="global.html#setupSubtaskEditListeners">setupSubtaskEditListeners</a></li><li><a href="global.html#submitTask">submitTask</a></li><li><a href="global.html#syncOptionToggle">syncOptionToggle</a></li><li><a href="global.html#syncTasksAndTodos">syncTasksAndTodos</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#toggleAssignedOptions">toggleAssignedOptions</a></li><li><a href="global.html#toggleAssignee">toggleAssignee</a></li><li><a href="global.html#toggleCheckbox">toggleCheckbox</a></li><li><a href="global.html#toggleSubtaskActions">toggleSubtaskActions</a></li><li><a href="global.html#trackContactsForUser">trackContactsForUser</a></li><li><a href="global.html#updateAssignedInput">updateAssignedInput</a></li><li><a href="global.html#updateTaskInFirebase">updateTaskInFirebase</a></li><li><a href="global.html#validateRequiredField">validateRequiredField</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Apr 21 2026 18:51:10 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Apr 21 2026 18:55:11 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>
