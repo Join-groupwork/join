@@ -48,6 +48,14 @@ export function initAddTask(container, options = {}) {
       button.textContent.trim();
   }
 
+  /**
+ * Closes the add-task page view.
+ *
+ * Navigates back in browser history when the previous page belongs
+ * to the same origin. Otherwise redirects to the board page.
+ *
+ * @returns {void}
+ */
   function closeAddTaskPage() {
     const hasReferrer = Boolean(document.referrer);
     const isInternalReferrer = hasReferrer && new URL(document.referrer).origin === window.location.origin;
@@ -310,7 +318,6 @@ function setupRequiredFieldValidation(fields) {
  */
 async function submitTask(taskData, createBtn, options = {}, priorityButtons, clearForm) {
   createBtn.disabled = true;
-
   try {
     const key = await pushTask(taskData);
     alert('Task created successfully');
@@ -333,6 +340,16 @@ async function submitTask(taskData, createBtn, options = {}, priorityButtons, cl
   }
 }
 
+/**
+ * Initializes the add-task page automatically after the DOM is ready.
+ *
+ * Looks up the add-task container and starts page mode initialization
+ * if the container exists.
+ *
+ * @event DOMContentLoaded
+ * @listens Document#DOMContentLoaded
+ * @returns {void}
+ */
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.add-task__container');
   if (!container) return;
