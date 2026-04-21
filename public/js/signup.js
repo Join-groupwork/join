@@ -42,17 +42,8 @@ function validateForm() {
   const passwordFilled = signupPassword.value !== '';
   const passwordsMatch = signupPassword.value === signupConfirmPassword.value && signupConfirmPassword.value !== '';
   const termsAccepted = termsCheckbox.checked;
-
   const formIsValid = nameFilled && emailFilled && passwordFilled && passwordsMatch && termsAccepted;
   signupBtn.disabled = !formIsValid;
-
-  console.log({
-    nameFilled,
-    emailFilled,
-    passwordFilled,
-    passwordsMatch,
-    termsAccepted
-  });
 }
 
 function getSignupErrorMessage(errorCode) {
@@ -96,10 +87,6 @@ async function handleSignup(event) {
       createdAT: Date.now()
     };
     await pushContact(contactData);
-    // signupMassegeTemplate();
-    // signupForm.reset();
-
-
     setTimeout(() => {
       window.location.href = "/index.html";
     }, 1500);
@@ -107,7 +94,5 @@ async function handleSignup(event) {
     signupBtn.disabled = false;
     console.error("Fehler beim Speichern:", error.code, error.message);
     alert(getSignupErrorMessage(error.code));
-    // signupBtn.disabled = true;
-    // console.error('Fehler beim Speichern:', error);
   }
 }
