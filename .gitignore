@@ -5,6 +5,7 @@
 firebase.js
 env.*
 .DS_Store
+.htaccess
 # config files
 *.vscode
 .vscode*
