@@ -28,7 +28,6 @@ export function getHeaderTemplate() {
           <img class="topbar__mobile--logo" src="../assets/img/logo-dark.svg" alt="Logo">
         </div>
       `;
-
 };
 
 
@@ -47,11 +46,9 @@ export function getSidebarTemplate() {
       <div class="logo">
         <img src="../assets/img/logo-bright.svg" alt="" srcset="">
       </div>
-
       <nav class="nav">
         <a href="../index.html" class="nav-item"><img src="../assets/icons/side-menu/login-icon.svg" alt="Summary" class="nav-icon">Log In</a>
       </nav>
-
       <div class="legal">
         <a href="./privacy-policy-public.html">Privacy Policy</a>
         <a href="./legal-notice-public.html">Legal Notice</a>
@@ -68,12 +65,13 @@ export function getSidebarTemplate() {
 export function signupMassegeTemplate() {
   return `
         <aside class="signup-massege-box">
-            <p>
-                You Signed Up successfully
-            </p>
+          <p>
+            You Signed Up successfully
+          </p>
         </aside>
     `
 };
+
 
 export function getPublicFooterTemplate() {
   return `
@@ -89,8 +87,5 @@ export function getPublicFooterTemplate() {
         <span class="footer__mobile--font">Legal Notice</span>
       </a>
     </div>
-
-
   `
 }
-// <footer class="footer__responsive">  // </footer>
