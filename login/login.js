@@ -42,10 +42,8 @@ function getLoginElements() {
 
 function syncSplashLogoTarget(elements) {
   if (!elements.splashLogo || !elements.targetLogo) return;
-
   const { top, left, width } = elements.targetLogo.getBoundingClientRect();
   const root = document.documentElement;
-
   root.style.setProperty("--logo-target-top", `${top}px`);
   root.style.setProperty("--logo-target-left", `${left}px`);
   root.style.setProperty("--logo-target-width", `${width}px`);
@@ -67,10 +65,8 @@ function bindGuestButton(elements) {
 
 async function handleLoginClick(event, elements) {
   event.preventDefault();
-
   const email = elements.emailInput.value.trim();
   const password = elements.passwordInput.value;
-
   if (!hasLoginData(email, password)) return;
   await loginWithEmail(email, password);
 }
@@ -115,4 +111,3 @@ export function loginAsGuest() {
       alert("Gast Login Fehlgeschlagen:" + error.message);
     });
 }
-
