@@ -29,10 +29,4 @@ onAuthStateChanged(auth, (user) => {
     window.location.href = "../index.html";
     return;
   }
-
-  if (user.isAnonymous) {
-    console.log("User ist als Gast eingeloggt");
-  } else {
-    console.log("User ist als Member eingeloggt");
-  }
 });

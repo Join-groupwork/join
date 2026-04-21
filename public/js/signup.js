@@ -95,11 +95,7 @@ async function handleSignup(event) {
       email: email,
       createdAT: Date.now()
     };
-
-    console.log('Contact-Daten vorbereitet:', contactData);
-
     await pushContact(contactData);
-    console.log('Contact erfolgreich gespeichert');
     // signupMassegeTemplate();
     // signupForm.reset();
 

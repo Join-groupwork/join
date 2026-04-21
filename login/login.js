@@ -8,14 +8,6 @@
 import { auth } from "../scripts/firebase/firebase.js";
 import { signInWithEmailAndPassword, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// INFO Die console.log werden vor angabe entfernt.
-console.log("Auth object:", auth);
-if (location.protocol === 'https:') {
-  console.log("Seite läuft über HTTPS ✅");
-} else {
-  console.log("Seite läuft NICHT über HTTPS ❌");
-}
-
 
 /**
  * Initializes login UI handlers once the DOM is loaded.
@@ -28,63 +20,6 @@ if (location.protocol === 'https:') {
  * @listens Document#DOMContentLoaded
  * @returns {void}
  */
-// 
-// document.addEventListener("DOMContentLoaded", () => {
-//   const loginBtn = document.getElementById("loginBtn");
-//   const guestBtn = document.getElementById("guestBtn");
-//   const emailInput = document.getElementById("email");
-//   const passwordInput = document.getElementById("password");
-//   const splashLogo = document.querySelector(".logo-splash__img");
-//   const targetLogo = document.querySelector(".join__logo");
-//   const splashOverlay = document.querySelector(".logo-splash");
-
-//   if (splashLogo && targetLogo && splashOverlay) {
-//     const targetRect = targetLogo.getBoundingClientRect();
-
-//     document.documentElement.style.setProperty("--logo-target-top", `${targetRect.top}px`);
-//     document.documentElement.style.setProperty("--logo-target-left", `${targetRect.left}px`);
-//     document.documentElement.style.setProperty("--logo-target-width", `${targetRect.width}px`);
-//   }
-
-//   loginBtn.addEventListener("click", async (event) => {
-//     event.preventDefault();
-//     const email = emailInput.value.trim();
-//     const password = passwordInput.value;
-
-//     if (!email || !password) {
-//       alert("Check your email and password. Pleasy try again.");
-//       return;
-//     }
-//     try {
-//       const userCredential = await signInWithEmailAndPassword(
-//         auth,
-//         email,
-//         password
-//       );
-//       console.log("Login erforlgreich:", userCredential.user);
-//       window.location.href = "./member/summary.html"; // target page after login
-//     } catch (error) {
-//       console.error("Login Fehlgeschlagen:", error.message);
-//       alert("Login fehlgeschlagen");
-//     }
-//     console.log("LOGIN CLICK");
-//     console.log("Email:", email);
-//     console.log("Password:", password);
-//   })
-
-//   guestBtn.addEventListener("click", async () => {
-//     try {
-//       const userCredential = await signInAnonymously(auth);
-//       console.log("GUEST LOGIN CLICK");
-//       window.location.href = "./member/summary.html"; // target page after login
-//     } catch (error) {
-//       console.error(error.message);
-//       alert("Gast-Login fehlgeschlagen");
-//     }
-//   });
-
-// })
-
 document.addEventListener("DOMContentLoaded", initLoginPage);
 
 function initLoginPage() {
@@ -157,7 +92,6 @@ function hasLoginData(email, password) {
 export function loginWithEmail(email, password) {
   return signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
-      console.log("Login erfolgreich:", userCredential.user);
       window.location.href = "./member/summary.html";
     })
     .catch(error => {
@@ -174,7 +108,6 @@ export function loginWithEmail(email, password) {
 export function loginAsGuest() {
   return signInAnonymously(auth)
     .then(userCredential => {
-      console.log("Gast eingeloggt:", userCredential.user);
       window.location.href = "./member/summary.html";
     })
     .catch(error => {

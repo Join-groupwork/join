@@ -25,7 +25,6 @@ export async function pushTask(taskData) {
   try {
     const tasksRef = ref(database, "tasks");
     const newTaskRef = await push(tasksRef, taskData);
-    console.log("Task saved with Key:", newTaskRef.key);
     return newTaskRef.key;
   } catch (error) {
     console.error("Error while saving Tasks:", error.message || error);
