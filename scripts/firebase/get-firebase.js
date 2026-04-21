@@ -80,7 +80,6 @@ export async function loadData(onContactsLoaded) {
   const tasksRef = ref(database, 'tasks');
   onValue(tasksRef, (firebaseData) => {
     tasks = firebaseData.val() || {};
-    console.log('Tasks loaded:', tasks);
   });
 
   const categoryRef = ref(database, 'category');
@@ -101,7 +100,6 @@ export async function loadTasks() {
   const response = await fetch(`${BASE_URL}tasks.json`);
   const data = await response.json();
   if (!data) {
-    console.log("No Tasks");
     return {};
   }
   return data;
