@@ -32,7 +32,6 @@ export function initAssignees(elements) {
     selectedAssignees: [],
     currentContacts: {}
   };
-
   bindAssigneeEvents(state);
   return state;
 }
@@ -98,11 +97,9 @@ function bindAssigneeEvents(state) {
   state.assignedContainer?.addEventListener('click', (event) => {
     event.stopPropagation();
   });
-
   state.assignedTrigger?.addEventListener('click', (event) =>
     handleTriggerClick(event, state)
   );
-
   document.addEventListener('click', (event) => handleOutsideClick(event, state));
 }
 
@@ -214,7 +211,6 @@ function updateAssignedInput(state) {
  */
 function renderSelectedAssignees(state) {
   if (!state.selectedDisplay) return;
-
   state.selectedDisplay.innerHTML = state.selectedAssignees
     .map((item) => {
       return `<span class="add-task__avatar" title="${item.name}" style="background-color: ${item.avatarColor}">
@@ -237,7 +233,6 @@ function toggleAssignee(state, contactData) {
   state.selectedAssignees = isSelected(state, contactData.id)
     ? state.selectedAssignees.filter((item) => item.id !== contactData.id)
     : [...state.selectedAssignees, contactData];
-
   updateAssignedInput(state);
   renderSelectedAssignees(state);
 }
@@ -359,17 +354,13 @@ function renderContactOptions(state, entries) {
  */
 function populateAssignedToDropdown(state, contacts) {
   if (!state.assignedOptions) return;
-
   state.currentContacts = contacts || {};
   state.assignedOptions.innerHTML = '';
-
   const entries = getSortedContacts(state.currentContacts);
-
   if (entries.length === 0) {
     renderNoContacts(state);
     return;
   }
-
   renderContactOptions(state, entries);
 }
 
