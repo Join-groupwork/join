@@ -24,7 +24,6 @@ export function initSubtasks(container, elements) {
     subtasks: [],
     editingSubtaskIndex: -1
   };
-
   bindSubtaskEvents(state);
   return state;
 }
@@ -163,7 +162,6 @@ function saveSubtaskValue(state, value) {
     saveEditedSubtask(state, value);
     return;
   }
-
   saveNewSubtask(state, value);
 }
 
@@ -241,7 +239,6 @@ function renderSubtasks(state) {
 function addSubtask(state) {
   const value = state.subtaskInput?.value.trim();
   if (!value) return;
-
   saveSubtaskValue(state, value);
   renderSubtasks(state);
   clearSubtaskInput(state);
@@ -290,7 +287,6 @@ function deleteSubtask(state, index) {
 function handleSubtaskListClick(event, state) {
   const editIndex = event.target.dataset.edit;
   const deleteIndex = event.target.dataset.delete;
-
   if (editIndex !== undefined) editSubtask(state, Number(editIndex));
   if (deleteIndex !== undefined) deleteSubtask(state, Number(deleteIndex));
 }
