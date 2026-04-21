@@ -101,10 +101,8 @@ function calculateSubtaskProgress(subtasks = {}) {
   const subtaskArray = Object.values(subtasks);
   const totalSubtasks = subtaskArray.length;
   if (totalSubtasks === 0) return '';
-
   const completedSubtasks = subtaskArray.filter(s => s.status === true || s.completed === true).length;
   const progressPercent = (completedSubtasks / totalSubtasks) * 100;
-
   return `
     <div class="task__progress">
       <div class="task__progress--bar">
@@ -127,7 +125,6 @@ function generateAssigneeAvatars(assigned_to = {}) {
   const names = extractAssigneeNames(assigned_to);
   const visible = names.slice(0, 3);
   const remaining = names.length - 3;
-
   return `
     ${renderVisibleAvatars(visible)}
     ${renderExtraAvatar(remaining)}
@@ -144,17 +141,14 @@ function generateAssigneeAvatars(assigned_to = {}) {
  */
 function extractAssigneeNames(assigned_to) {
   if (Array.isArray(assigned_to)) return assigned_to;
-
   if (assigned_to && typeof assigned_to === 'object') {
     return Object.values(assigned_to)
       .map(c => typeof c === 'string' ? c : c?.name)
       .filter(Boolean);
   }
-
   if (typeof assigned_to === 'string') {
     return assigned_to.split(',').map(s => s.trim()).filter(Boolean);
   }
-
   return [];
 }
 
@@ -186,7 +180,6 @@ function renderVisibleAvatars(names) {
  */
 function renderExtraAvatar(count) {
   if (count <= 0) return '';
-
   return `
     <div
       class="task__assignee--avatar task__assignee--avatar--extra"
@@ -208,7 +201,6 @@ export async function updateHTML() {
   // if this page doesn’t have a todo column we’re not on the board,
   // so skip all DOM updates to avoid null errors
   if (!document.getElementById('todo')) return;
-
   updateTodo();
   updateInProgress();
   updateAwaitFeedback();
@@ -321,6 +313,7 @@ function clearDropHighlights() {
   });
 }
 
+
 function clearDropCardPreview() {
   document.querySelectorAll(".task__list--preview").forEach(list => {
     list.classList.remove("task__list--preview");
@@ -338,7 +331,6 @@ function clearDropCardPreview() {
 document.addEventListener("dragstart", function (event) {
   const card = event.target.closest(".task__card");
   if (!card) return;
-
   currentDraggedElement = card.id;
   card.classList.add("task__card--dragging");
 });
@@ -405,7 +397,6 @@ document.addEventListener("drop", async function (event) {
     await updateTaskStatus(currentDraggedElement, newStatus)
   } catch (error) {
     console.error("Firebase-Update fehlgeschlagen:", error);
-
     // rollback
     if (todos[currentDraggedElement]) {
       todos[currentDraggedElement].status = oldStatus;
@@ -429,7 +420,6 @@ document.addEventListener("dragleave", function (event) {
   if (!dropZone) return;
   dropZone.classList.remove("task__area--highlight");
 });
-
 
 
 function matchesSearch(task) {
