@@ -31,9 +31,9 @@
           <h3>Key Metrics at a Glance</h3>
         </div>
 
-        <div class="dashboard__top">
-          <div class="dashboard__left">
-            <div class="cards">
+        <section class="dashboard__top">
+          <section class="dashboard__left">
+            <section class="cards" aria-label="Task overview">
               <a href="board.html#todo" class="card icon-card todo">
                 <span class="card-left-icon" aria-hidden="true"></span>
                 <div class="card-right">
@@ -49,10 +49,10 @@
                   <div class="card-sub">Done</div>
                 </div>
               </a>
-            </div>
+            </section>
 
             <a href="board.html" class="cards info-row">
-              <div class="card urgent-info">
+              <article class="card urgent-info">
                 <div class="urgent-left">
                   <img src="../assets/icons/urgent-prio-summary.svg" alt="Urgent" class="card-left-icon" />
                   <div class="card-right">
@@ -67,10 +67,10 @@
                   <div class="date" id="urgentTasks-dead-line">0</div>
                   <div class="small-sub">Upcoming Deadline</div>
                 </div>
-              </div>
+              </article>
             </a>
 
-            <div class="cards small-cards">
+            <section class="cards small-cards" aria-label="Board statistics">
               <a href="board.html#allTasks" class="small-card all-tasks">
                 <div class="big">0</div>
                 <div class="label">Tasks in Board</div>
@@ -83,26 +83,26 @@
                 <div class="big">0</div>
                 <div class="label">Awaiting Feedback</div>
               </a>
-            </div>
-          </div>
+            </section>
+          </section>
 
-          <div class="dashboard-right">
-            <div class="greeting desktop-greeting">
+          <aside class="dashboard-right">
+            <section class="greeting desktop-greeting" aria-label="Greeting">
               <div class="greeting-line" id="greetingTime"></div>
               <div class="greeting-line greeting-name" id="greetingName"></div>
-            </div>
-          </div>
-        </div>
+            </section>
+          </aside>
+        </section>
       </section>
     </main>
   </div>
 
-  <div class="mobile-greeting-overlay" id="mobileGreetingOverlay">
+  <aside class="mobile-greeting-overlay" id="mobileGreetingOverlay" aria-label="Mobile greeting">
     <div class="mobile-greeting-content">
       <div class="greeting-line" id="mobileGreetingTime"></div>
       <div class="greeting-line greeting-name" id="mobileGreetingName"></div>
     </div>
-  </div>
+  </aside>
 
   <footer class="footer__responsive">
     <a href="./summary.html" class="button button__mobile button__mobile--member">

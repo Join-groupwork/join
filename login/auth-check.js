@@ -21,7 +21,5 @@ onAuthStateChanged(auth, (user) => {
     window.location.href = "./member/summary.html";
   } if (user.isAnonymous === true) {
     window.location.href = "./member/summary.html";
-  } else {
-    console.log("Nicht eingeloggt");
   }
 });

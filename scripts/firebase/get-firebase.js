@@ -1,29 +1,71 @@
+/**
+ * @file Provides Firebase data-loading helpers for contacts, tasks, and categories.
+ *
+ * Includes auth-state-based data initialization, live listeners for database data,
+ * and a fetch-based task loader.
+ *
+ * @module get-firebase
+ */
+
 import { database, auth, BASE_URL } from './firebase.js';
 import { ref, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 import { renderContactsList } from '../../member/js/contacts.js';
 
+/**
+ * Cached contacts object indexed by contact id.
+ *
+ * @type {Object<string, Object>}
+ */
 let contacts = {};
+
+/**
+ * Cached tasks object indexed by task id.
+ *
+ * @type {Object<string, Object>}
+ */
 let tasks = {};
+
+/**
+ * Cached category object.
+ *
+ * @type {Object<string, Object>}
+ */
 let category = {};
 
+/**
+ * Returns the cached contacts object.
+ *
+ * @returns {Object<string, Object>} Contacts indexed by contact id.
+ */
 export function getContacts() {
   return contacts;
 }
 
-//  authentifizierung
+/**
+ * Starts data loading when an authenticated user is available.
+ *
+ * @listens Auth#onAuthStateChanged
+ * @returns {void}
+ */
 auth.onAuthStateChanged((user) => {
   if (user) {
-    // console.log('User authenticated:', user.uid);
     loadData();
   } else {
     console.error('No user authenticated');
   }
 });
 
-// Daten laden
+/**
+ * Loads contacts, tasks, and categories from Firebase using live listeners.
+ *
+ * Updates local caches and renders the contacts list when the contact list element exists.
+ *
+ * @async
+ * @param {Function} [onContactsLoaded] - Optional callback invoked after contacts are loaded.
+ * @returns {Promise<void>} Resolves after all listeners have been registered.
+ */
 export async function loadData(onContactsLoaded) {
   const contactsRef = ref(database, 'contacts');
-  // contacts auslesen
   onValue(contactsRef, (firebaseData) => {
     contacts = firebaseData.val() || {};
 
@@ -36,42 +78,29 @@ export async function loadData(onContactsLoaded) {
   });
 
   const tasksRef = ref(database, 'tasks');
-  // tasks auslesen
   onValue(tasksRef, (firebaseData) => {
     tasks = firebaseData.val() || {};
-    console.log('Tasks loaded:', tasks);
   });
 
   const categoryRef = ref(database, 'category');
-  // category auslesen
   onValue(categoryRef, (firebaseData) => {
     category = firebaseData.val() || {};
   });
 }
 
+/**
+ * Loads tasks from the Firebase Realtime Database via fetch.
+ *
+ * Returns an empty object when no task data exists.
+ *
+ * @async
+ * @returns {Promise<Object<string, Object>>} Tasks indexed by task id.
+ */
 export async function loadTasks() {
   const response = await fetch(`${BASE_URL}tasks.json`);
   const data = await response.json();
-  // Check if there is any data
   if (!data) {
-    console.log("No Tasks");   // If there are no tasks, log a message
-    return {};                 // Return an empty Object so renderBoard() won't crash
+    return {};
   }
   return data;
-  const categoryRef = ref(database, 'category');
-  // category auslesen
-  onValue(categoryRef, (firebaseData) => {
-    category = firebaseData.val() || {};
-  });
 }
-// export async function loadTasks() {
-//   const response = await fetch(`${BASE_URL}tasks.json`);
-//   const data = await response.json();
-//   // Check if there is any data
-//   if (!data) {
-//     console.log("No Tasks");   // If there are no tasks, log a message
-//     return {};                 // Return an empty Object so renderBoard() won't crash
-//   }
-//   return data;
-
-// }

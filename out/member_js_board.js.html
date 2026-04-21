@@ -26,39 +26,59 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { loadTasks } from '../../scripts/firebase/get-firebase.js';
-import { generateTodosHTML } from './member-templates.js';
+            <pre class="prettyprint source linenums"><code>import { loadTasks } from '/scripts/firebase/get-firebase.js';
+import { getTaskOverlayTemplate, getEditTaskOverlayTemplate } from './member-templates.js';
+import { ref, onValue, remove, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import { database } from "../../scripts/firebase/firebase.js";
+import { updateHTML, todos } from './drag-n-drop.js';
+import { initAssignees, trackContactsForUser, getAssignedNames } from './add-task-assignees.js';
+import { initSubtasks, getSubtasks } from './add-task-subtasks.js';
 
 /**
- * Possible board states.
- * @typedef {"todo" | "in-progress" | "await-feedback" | "done"} TaskStatus
- */
-
-/**
- * Possible task categories.
- * @typedef {"user-story" | "technical-task"} Category
- */
-
-/**
- * Possible priority values.
- * @typedef {"low" | "medium" | "urgent"} Priority
- */
-
-/**
- * Represents a board task.
+ * Task collection loaded from Firebase, indexed by task id.
  *
- * @typedef {Object} Todo
- * @property {string} title - Task title.
- * @property {string} description - Task description.
- * @property {string} date - Due date (YYYY-MM-DD) or empty string.
- * @property {Priority} priority - Task priority level.
- * @property {string} assignedTo - Person(s) assigned to this task (currently unused).
- * @property {Category} category - Task category.
- * @property {TaskStatus} status - Current board column/status.
+ * @type {Object&lt;string, Object>}
  */
+export let tasks = {};
+
+/**
+ * Loads all tasks from Firebase and stores them
+ * in the local `tasks` collection.
+ *
+ * @async
+ * @returns {Promise&lt;void>} Resolves when the tasks have been loaded.
+ */
+export async function initTasks() {
+  tasks = await loadTasks();
+}
+
+/**
+ * Synchronizes the local `tasks` collection with the board `todos` object.
+ *
+ * Updates only task entries that already exist in `todos`
+ * and replaces them with the latest task data.
+ *
+ * @returns {void}
+ */
+function syncTasksAndTodos() {
+  Object.keys(tasks).forEach(taskId => {
+    if (todos[taskId]) {
+      todos[taskId] = { ...tasks[taskId] };
+    }
+  });
+}
+
+initTasks();
 
 /**
  * References to the DOM containers (board columns) where tasks are rendered.
+ *
+ * Why this exists:
+ * - You query the DOM *once* (instead of repeating `document.getElementById(...)` everywhere).
+ * - Your code becomes cleaner: `columns.todo` is easier to read than `"todo"` strings everywhere.
+ * - It centralizes the “IDs must exist” assumption in one place (good for debugging).
+ *
+ * Note: These can be `null` if the elements don’t exist in the current HTML page.
  *
  * @type {{
  *   todo: HTMLElement|null,
@@ -73,138 +93,465 @@ const columns = {
   /** @type {HTMLElement|null} */ awaitFeedback: document.getElementById('awaitFeedback'),
   /** @type {HTMLElement|null} */ done: document.getElementById('done'),
 };
+
 /**
- * Task collection indexed by id.
- * NOTE: Placeholder data until Firebase is connected.
+ * Opens the task detail overlay for the given task.
  *
- * @type {Record&lt;string, Todo>}
+ * Renders the task data into the overlay container,
+ * shows the overlay, and registers the backdrop click handler.
+ *
+ * @param {string} taskId - The id of the task to display.
+ * @returns {void}
  */
-export let todos = {};
+function openTaskOverlay(taskId) {
+  const task = tasks[taskId];
+  if (!task) return console.warn("Task nicht gefunden:", taskId);
+  const overlayContainer = document.getElementById("overlay_container");
+  overlayContainer.innerHTML = getTaskOverlayTemplate(
+    taskId,
+    task.category,
+    task.title,
+    task.description,
+    task.due_date,
+    task.priority,
+    task.assigned_to,
+    task.subtasks,
+  );
+  overlayContainer.classList.remove('d_none');
+  setTimeout(() => {
+    overlayContainer.classList.add('show');
+  }, 10);
+  overlayContainer.addEventListener('click', handleOverlayClick);
+}
 
+
+window.openTaskOverlay = openTaskOverlay;
 
 /**
- * Loads all tasks from Firebase and renders them into the board.
+ * Handles clicks on the task overlay backdrop.
+ *
+ * Closes the overlay when the user clicks directly
+ * on the overlay container outside the content.
+ *
+ * @param {MouseEvent} event - The click event on the overlay container.
+ * @returns {void}
+ */
+function handleOverlayClick(event) {
+  const overlayContainer = document.getElementById("overlay_container");
+  if (event.target === overlayContainer) {
+    closeTaskOverlay();
+  }
+}
+
+/**
+ * Closes the task overlay and removes its click listener.
+ *
+ * @returns {void}
+ */
+function closeTaskOverlay() {
+  const overlayContainer = document.getElementById("overlay_container");
+  overlayContainer.classList.remove('show');
+  overlayContainer.classList.add('d_none');
+  overlayContainer.removeEventListener('click', handleOverlayClick);
+}
+
+
+window.closeTaskOverlay = closeTaskOverlay;
+
+/**
+ * Toggles the completion status of a subtask checkbox.
+ *
+ * Updates the subtask status in Firebase, synchronizes the local task data,
+ * swaps the checkbox icon, and refreshes the board UI.
  *
  * @async
- * @returns {Promise&lt;void>}
+ * @param {HTMLImageElement} img - The clicked checkbox image element.
+ * @returns {Promise&lt;void>} Resolves when the toggle operation is complete.
  */
-export async function initBoard() {
+async function toggleCheckbox(img) {
+  const taskId = img.dataset.taskId;
+  const subtaskKey = img.dataset.subtaskKey;
+  if (!taskId || !subtaskKey) return;
   try {
-    todos = await loadTasks();
+    const currentStatus = tasks[taskId]?.subtasks?.[subtaskKey]?.status || false;
+    const newStatus = !currentStatus;
+    await update(ref(database, `tasks/${taskId}/subtasks/${subtaskKey}`), {
+      status: newStatus
+    });
+    if (tasks[taskId]?.subtasks?.[subtaskKey]) {
+      tasks[taskId].subtasks[subtaskKey].status = newStatus;
+    }
+    if (todos[taskId]?.subtasks?.[subtaskKey]) {
+      todos[taskId].subtasks[subtaskKey].status = newStatus;
+    }
+    img.src = newStatus
+      ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
+      : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
     updateHTML();
   } catch (error) {
-    console.error('Fehler bei Laden der Tasks:', error);
+    console.error("Error toggling subtask:", error);
+  }
+}
+
+/**
+ * Delegates clicks on subtask checkbox icons
+ * to the checkbox toggle handler.
+ *
+ * @event click
+ * @listens Document#click
+ * @returns {void}
+ */
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("checkbox-icon")) {
+    toggleCheckbox(e.target);
+  }
+});
+
+/**
+ * Deletes a task from Firebase and updates the board UI.
+ *
+ * Removes the task from the database, deletes it from the local board state,
+ * closes the task overlay, and refreshes the board rendering.
+ *
+ * @async
+ * @param {string} taskId - The id of the task to delete.
+ * @returns {Promise&lt;void>} Resolves when the delete process is complete.
+ */
+async function deleteTask(taskId) {
+  try {
+    await remove(ref(database, `tasks/${taskId}`));
+    delete todos[taskId];
+    closeTaskOverlay();
+    updateHTML();
+  } catch (error) {
+    console.error("Error deleting task:", error);
   }
 }
 
 
+window.deleteTask = deleteTask;
+
 /**
- * Re-renders all board columns and updates placeholder visibility.
+ * Renders the edit-task overlay for the given task.
  *
- * Skips rendering when the board DOM is not present.
+ * Inserts the generated edit form HTML into the overlay container.
+ *
+ * @param {string} taskId - The id of the task being edited.
+ * @param {Object} task - The task object to render in edit mode.
+ * @returns {void}
+ */
+function renderEditOverlay(taskId, task) {
+  const overlayContainer = document.getElementById("overlay_container");
+  overlayContainer.innerHTML = getEditTaskOverlayTemplate(
+    taskId, task.category, task.title, task.description,
+    task.due_date, task.priority, task.assigned_to, task.subtasks
+  );
+}
+
+/**
+ * Registers click handlers for the priority buttons
+ * inside the edit-task overlay.
+ *
+ * Ensures that only one priority button is marked as selected.
  *
  * @returns {void}
  */
-export function updateHTML() {
-  // if this page doesn’t have a todo column we’re not on the board,
-  // so skip all DOM updates to avoid null errors
-  if (!document.getElementById('todo')) return;
-  updateTodo();
-  updateInProgress();
-  updateAwaitFeedback();
-  updateDone();
-  togglePlaceholder();
-};
-
-
-/**
- * Renders tasks with {@link Todo.status} === "todo" into the `#todo` column.
- *
- * @private
- * @returns {void}
- */
-function updateTodo() {
-  const container = document.getElementById('todo');
-  if (!container) return;
-  container.innerHTML = '';
-  for (const [id, element] of Object.entries(todos)) {
-    if (element.status === 'todo') {
-      container.innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
-    }
-  }
-};
-
-
-/**
- * Renders tasks with {@link Todo.status} === `"in-progress"` into the `#inProgress` column.
- *
- * @private
- * @returns {void}
- */
-function updateInProgress() {
-  document.getElementById('inProgress').innerHTML = '';
-  for (const [id, element] of Object.entries(todos)) {
-    if (element.status === 'in-progress') {
-      document.getElementById('inProgress').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
-    }
-  }
-};
-
-
-/**
- * Renders tasks with {@link Todo.status} === `"await-feedback"` into the `#awaitFeedback` column.
- *
- * @private
- * @returns {void}
- */
-function updateAwaitFeedback() {
-  document.getElementById('awaitFeedback').innerHTML = '';
-  for (const [id, element] of Object.entries(todos)) {
-    if (element.status === 'await-feedback') {
-      document.getElementById('awaitFeedback').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
-    }
-  }
-};
-
-
-/**
- * Renders tasks with {@link Todo.status} === `"done"` into the `#done` column.
- *
- * @private
- * @returns {void}
- */
-function updateDone() {
-  document.getElementById('done').innerHTML = '';
-  for (const [id, element] of Object.entries(todos)) {
-    if (element.status === 'done') {
-      document.getElementById('done').innerHTML += generateTodosHTML(id, element.title, element.category, element.description, element.priority);
-    }
-  }
-};
-
-
-/**
- * Shows/hides the placeholder inside each `.task__area` depending on whether
- * at least one task exists for that column.
- *
- * Uses `.task__area[data-status]` to match against {@link Todo.status}.
- *
- * @private
- * @returns {void}
- */
-function togglePlaceholder() {
-  const taskAreas = document.querySelectorAll('.task__area');
-  taskAreas.forEach(area => {
-    let status = area.dataset.status;
-    const placeholder = area.querySelector('.task__area--placeholder');
-    let hasTask = Object.values(todos).some(task => task.status === status);
-    if (hasTask) {
-      placeholder.classList.add('d-none')
-    } else {
-      placeholder.classList.remove('d-none');
-    }
+function setupPriorityButtons() {
+  document.querySelectorAll('.add-task__priority-button').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.add-task__priority-button').forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+    });
   });
-};
+}
+
+/**
+ * Initializes the assignee module for edit mode.
+ *
+ * Collects all required edit-overlay DOM elements,
+ * starts contact tracking, and returns the assignee state object.
+ *
+ * @returns {Object} The initialized assignee state.
+ */
+function initializeEditAssignees() {
+  const assigneeState = initAssignees({
+    assignedContainer: document.getElementById('edit_assigned_to'),
+    assignedInput: document.getElementById('edit_assigned_to_input'),
+    assignedTrigger: document.getElementById('edit_assigned_to_trigger'),
+    assignedOptions: document.getElementById('edit_assigned_to_options'),
+    selectedDisplay: document.getElementById('edit_selected_assignees_display')
+  });
+  trackContactsForUser(assigneeState);
+  return assigneeState;
+}
+
+/**
+ * Initializes the subtasks module for edit mode.
+ *
+ * Uses the edit overlay elements and returns the subtask state object.
+ *
+ * @param {HTMLElement} container - Overlay container
+ * @returns {Object} Subtask state
+ */
+function initializeEditSubtasks(container) {
+  return initSubtasks(container, {
+    subtaskInput: document.getElementById('edit_subtask'),
+    subtaskActions: document.getElementById('edit_subtask_actions'),
+    confirmSubtaskBtn: document.getElementById('edit_confirm_subtask_btn'),
+    clearSubtaskBtn: document.getElementById('edit_clear_subtask_btn'),
+    subtaskList: document.getElementById('edit_subtask_list_new')
+  });
+}
+
+/**
+ * Opens the edit mode for a task.
+ *
+ * Renders the edit overlay, initializes priority handling,
+ * assignee handling, and subtask handling, and stores the current edit state globally.
+ *
+ * @param {string} taskId - The id of the task to edit.
+ * @returns {void}
+ */
+function editTask(taskId) {
+  const task = tasks[taskId];
+  if (!task) return console.warn("Task nicht gefunden:", taskId);
+  renderEditOverlay(taskId, task);
+  setupPriorityButtons();
+  window.editAssigneeState = initializeEditAssignees();
+  window.editSubtaskState = initializeEditSubtasks(document.getElementById("overlay_container"));
+  window.currentTaskId = taskId;
+}
+
+
+window.editTask = editTask;
+
+/**
+ * Collects the current values from the edit-task form.
+ *
+ * Reads the edited title, description, due date, priority,
+ * selected assignees, and newly created subtasks.
+ *
+ * @returns {{
+ *   title: string,
+ *   description: string,
+ *   due_date: string,
+ *   priority: string,
+ *   assignedNames: Object&lt;number, string>,
+ *   newSubtasks: Object
+ * }} The collected edit form data.
+ */
+function collectEditFormData() {
+  return {
+    title: document.getElementById('edit_title').value,
+    description: document.getElementById('edit_description').value,
+    due_date: document.getElementById('edit_due_date').value,
+    priority: document.querySelector('.add-task__priority-button.selected')?.dataset.priority || 'medium',
+    assignedNames: window.editAssigneeState ? getAssignedNames(window.editAssigneeState) : {},
+    newSubtasks: window.editSubtaskState ? getSubtasks(window.editSubtaskState) : {}
+  };
+}
+
+/**
+ * Builds the update payload for an edited task.
+ *
+ * Combines the edited base fields with optional assignee updates
+ * and merged subtask data.
+ *
+ * @param {string} taskId - The id of the task being updated.
+ * @param {Object} formData - The collected edit form data.
+ * @returns {Object} The task update object for Firebase.
+ */
+function buildTaskUpdateObject(taskId, formData) {
+  const updatedTask = {
+    title: formData.title,
+    description: formData.description,
+    due_date: formData.due_date,
+    priority: formData.priority
+  };
+  if (Object.keys(formData.assignedNames).length > 0) {
+    updatedTask.assigned_to = formData.assignedNames;
+  }
+  const existingSubtasks = tasks[taskId]?.subtasks || {};
+  const mergedSubtasks = { ...existingSubtasks, ...formData.newSubtasks };
+  if (Object.keys(mergedSubtasks).length > 0) {
+    updatedTask.subtasks = mergedSubtasks;
+  }
+  return updatedTask;
+}
+
+/**
+ * Updates a task in Firebase and synchronizes the local task collection.
+ *
+ * @async
+ * @param {string} taskId - The id of the task to update.
+ * @param {Object} updatedTask - The update payload for the task.
+ * @returns {Promise&lt;void>} Resolves when the task update is complete.
+ */
+async function updateTaskInFirebase(taskId, updatedTask) {
+  await update(ref(database, `tasks/${taskId}`), updatedTask);
+  tasks[taskId] = { ...tasks[taskId], ...updatedTask };
+}
+
+/**
+ * Refreshes the board data and reopens the task overlay.
+ *
+ * Reloads all tasks, synchronizes board state, updates the board HTML,
+ * and shows the refreshed task details again.
+ *
+ * @async
+ * @param {string} taskId - The id of the task to reopen.
+ * @re
+async function refreshBoardAndShowTask(taskId) {
+  await initTasks();
+  syncTasksAndTodos();
+  updateHTML();
+  openTaskOverlay(taskId);
+}
+
+/**
+ * Saves the edited task data.
+ *
+ * Collects the current edit form values, builds the update payload,
+ * updates the task in Firebase, and refreshes the board view.
+ *
+ * @async
+ * @param {string} taskId - The id of the task to save.
+ * @returns {Promise&lt;void>} Resolves when the save flow is complete.
+ */
+async function saveEditedTask(taskId) {
+  try {
+    const formData = collectEditFormData();
+    const updatedTask = buildTaskUpdateObject(taskId, formData);
+    await updateTaskInFirebase(taskId, updatedTask);
+    await refreshBoardAndShowTask(taskId);
+  } catch (error) {
+    console.error("Error saving task:", error);
+  }
+}
+
+
+window.saveEditedTask = saveEditedTask;
+
+/**
+ * Deletes an existing subtask from a task.
+ *
+ * Removes the subtask from Firebase, updates the local task state,
+ * refreshes the board UI, and reopens the task in edit mode.
+ *
+ * @async
+ * @param {string} taskId - The id of the parent task.
+ * @param {string} subtaskKey - The key of the subtask to delete.
+ * @returns {Promise&lt;void>} Resolves when the subtask deletion is complete.
+ */
+async function deleteExistingSubtask(taskId, subtaskKey) {
+  try {
+    const task = tasks[taskId];
+    if (!task || !task.subtasks) return;
+    const updatedSubtasks = { ...task.subtasks };
+    delete updatedSubtasks[subtaskKey];
+    await update(ref(database, `tasks/${taskId}/subtasks`), updatedSubtasks);
+    tasks[taskId].subtasks = updatedSubtasks;
+    if (todos[taskId]) {
+      todos[taskId].subtasks = updatedSubtasks;
+    }
+    updateHTML();
+    editTask(taskId);
+  } catch (error) {
+    console.error("Error deleting subtask:", error);
+  }
+}
+
+
+window.deleteExistingSubtask = deleteExistingSubtask;
+
+/**
+ * Creates an input element for editing a subtask title.
+ *
+ * @param {string} currentText - The current subtask title.
+ * @returns {HTMLInputElement} The created input element.
+ */
+function createSubtaskEditInput(currentText) {
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.value = currentText;
+  input.className = 'add-task__input';
+  input.style.fontSize = '16px';
+  input.style.marginBottom = '0';
+  return input;
+}
+
+/**
+ * Registers the edit listeners for a subtask input field.
+ *
+ * Saves the edited subtask on blur or Enter,
+ * and restores edit mode on Escape.
+ *
+ * @param {HTMLInputElement} input - The input field used for editing.
+ * @param {string} taskId - The id of the parent task.
+ * @param {string} subtaskKey - The key of the edited subtask.
+ * @returns {void}
+ */
+function setupSubtaskEditListeners(input, taskId, subtaskKey) {
+  input.addEventListener('blur', () => saveSubtaskEdit(taskId, subtaskKey, input));
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') saveSubtaskEdit(taskId, subtaskKey, input);
+    if (e.key === 'Escape') editTask(taskId);
+  });
+}
+
+/**
+ * Enables inline edit mode for an existing subtask.
+ *
+ * Replaces the subtask text element with an input field,
+ * focuses it, and registers the edit listeners.
+ *
+ * @param {string} taskId - The id of the parent task.
+ * @param {string} subtaskKey - The key of the subtask to edit.
+ * @returns {void}
+ */
+function editExistingSubtask(taskId, subtaskKey) {
+  const textElement = document.getElementById(`subtask_text_${subtaskKey}`);
+  if (!textElement) return;
+  const input = createSubtaskEditInput(textElement.textContent);
+  textElement.replaceWith(input);
+  input.focus();
+  input.select();
+  setupSubtaskEditListeners(input, taskId, subtaskKey);
+}
+
+
+window.editExistingSubtask = editExistingSubtask;
+
+/**
+ * Saves the edited title of an existing subtask.
+ *
+ * Updates the subtask in Firebase, synchronizes the local task data,
+ * refreshes the board UI, and reopens edit mode.
+ *
+ * @async
+ * @param {string} taskId - The id of the parent task.
+ * @param {string} subtaskKey - The key of the subtask to save.
+ * @param {HTMLInputElement} input - The input field containing the edited title.
+ * @returns {Promise&lt;void>} Resolves when the subtask update is complete.
+ */
+async function saveSubtaskEdit(taskId, subtaskKey, input) {
+  const newText = input.value.trim();
+  if (!newText) return editTask(taskId);
+  try {
+    await update(ref(database, `tasks/${taskId}/subtasks/${subtaskKey}`), {
+      title: newText,
+      status: tasks[taskId].subtasks[subtaskKey].status
+    });
+    tasks[taskId].subtasks[subtaskKey].title = newText;
+    if (todos[taskId]?.subtasks?.[subtaskKey]) {
+      todos[taskId].subtasks[subtaskKey].title = newText;
+    }
+    updateHTML();
+    editTask(taskId);
+  } catch (error) {
+    console.error("Error saving subtask:", error);
+  }
+}
 </code></pre>
         </article>
     </section>
@@ -215,13 +562,13 @@ function togglePlaceholder() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-contacts.html">contacts</a></li><li><a href="module-contacts-render.html">contacts-render</a></li><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-get-firebase.html">get-firebase</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li><li><a href="module-summary.html">summary</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-contacts.html#event:click">click</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#applyPrioritySelection">applyPrioritySelection</a></li><li><a href="global.html#bindAssigneeEvents">bindAssigneeEvents</a></li><li><a href="global.html#bindSubtaskEvents">bindSubtaskEvents</a></li><li><a href="global.html#buildCheckbox">buildCheckbox</a></li><li><a href="global.html#buildContactOptionElement">buildContactOptionElement</a></li><li><a href="global.html#buildOptionMain">buildOptionMain</a></li><li><a href="global.html#buildSubtaskItem">buildSubtaskItem</a></li><li><a href="global.html#buildTaskData">buildTaskData</a></li><li><a href="global.html#buildTaskUpdateObject">buildTaskUpdateObject</a></li><li><a href="global.html#clearAddTaskForm">clearAddTaskForm</a></li><li><a href="global.html#clearFieldError">clearFieldError</a></li><li><a href="global.html#clearSelectedAssignees">clearSelectedAssignees</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#clearSubtasks">clearSubtasks</a></li><li><a href="global.html#closeAssignedOptions">closeAssignedOptions</a></li><li><a href="global.html#closeTaskOverlay">closeTaskOverlay</a></li><li><a href="global.html#collectEditFormData">collectEditFormData</a></li><li><a href="global.html#columns">columns</a></li><li><a href="global.html#createSubtaskActions">createSubtaskActions</a></li><li><a href="global.html#createSubtaskEditInput">createSubtaskEditInput</a></li><li><a href="global.html#createSubtaskText">createSubtaskText</a></li><li><a href="global.html#deleteExistingSubtask">deleteExistingSubtask</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#editExistingSubtask">editExistingSubtask</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTask">editTask</a></li><li><a href="global.html#findPriorityButton">findPriorityButton</a></li><li><a href="global.html#getAssignedNames">getAssignedNames</a></li><li><a href="global.html#getAvatarColor">getAvatarColor</a></li><li><a href="global.html#getContactData">getContactData</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getSortedContacts">getSortedContacts</a></li><li><a href="global.html#getSubtasks">getSubtasks</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#handleOutsideClick">handleOutsideClick</a></li><li><a href="global.html#handleOverlayClick">handleOverlayClick</a></li><li><a href="global.html#handleSubtaskKeydown">handleSubtaskKeydown</a></li><li><a href="global.html#handleSubtaskListClick">handleSubtaskListClick</a></li><li><a href="global.html#handleTriggerClick">handleTriggerClick</a></li><li><a href="global.html#hashString">hashString</a></li><li><a href="global.html#initAssignees">initAssignees</a></li><li><a href="global.html#initSubtasks">initSubtasks</a></li><li><a href="global.html#initTasks">initTasks</a></li><li><a href="global.html#initializeEditAssignees">initializeEditAssignees</a></li><li><a href="global.html#initializeEditSubtasks">initializeEditSubtasks</a></li><li><a href="global.html#isSelected">isSelected</a></li><li><a href="global.html#openTaskOverlay">openTaskOverlay</a></li><li><a href="global.html#populateAssignedToDropdown">populateAssignedToDropdown</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderContactOptions">renderContactOptions</a></li><li><a href="global.html#renderEditOverlay">renderEditOverlay</a></li><li><a href="global.html#renderNoContacts">renderNoContacts</a></li><li><a href="global.html#renderSelectedAssignees">renderSelectedAssignees</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#saveEditedSubtask">saveEditedSubtask</a></li><li><a href="global.html#saveEditedTask">saveEditedTask</a></li><li><a href="global.html#saveNewSubtask">saveNewSubtask</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#saveSubtaskValue">saveSubtaskValue</a></li><li><a href="global.html#selectPriority">selectPriority</a></li><li><a href="global.html#setDefaultPriority">setDefaultPriority</a></li><li><a href="global.html#setupPriorityButtons">setupPriorityButtons</a></li><li><a href="global.html#setupRequiredFieldValidation">setupRequiredFieldValidation</a></li><li><a href="global.html#setupSubtaskEditListeners">setupSubtaskEditListeners</a></li><li><a href="global.html#submitTask">submitTask</a></li><li><a href="global.html#syncOptionToggle">syncOptionToggle</a></li><li><a href="global.html#syncTasksAndTodos">syncTasksAndTodos</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#toggleAssignedOptions">toggleAssignedOptions</a></li><li><a href="global.html#toggleAssignee">toggleAssignee</a></li><li><a href="global.html#toggleCheckbox">toggleCheckbox</a></li><li><a href="global.html#toggleSubtaskActions">toggleSubtaskActions</a></li><li><a href="global.html#trackContactsForUser">trackContactsForUser</a></li><li><a href="global.html#updateAssignedInput">updateAssignedInput</a></li><li><a href="global.html#updateTaskInFirebase">updateTaskInFirebase</a></li><li><a href="global.html#validateRequiredField">validateRequiredField</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Apr 21 2026 19:05:09 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

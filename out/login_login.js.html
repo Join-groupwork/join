@@ -27,92 +27,172 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @file Handle authentication logic (email/password and anonymous login).
+ * @file Handles authentication logic for email/password login and anonymous guest login.
  *
- * Binds UI event listenerss after DOM is ready and provides exported helper functions for logging in with email/password or as an anonymous guest.
+ * Binds UI event listeners after the DOM is loaded and provides helper
+ * functions for logging in with Firebase Authentication.
  *
  * @module join-login
  */
 import { auth } from "../scripts/firebase/firebase.js";
 import { signInWithEmailAndPassword, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// INFO Die console.log werden vor angabe entfernt.
-console.log("Auth object:", auth);
-if (location.protocol === 'https:') {
-  console.log("Seite läuft über HTTPS ✅");
-} else {
-  console.log("Seite läuft NICHT über HTTPS ❌");
-}
-
 
 /**
- * Initializes login UI handlers once the DOM is loaded.
+ * Initializes the login page after the DOM is ready.
  *
- * Looks up required from elements and attaches click handlers:
- *  - Login button: validates input, signs in via Firabase Auth, redirects on success
- *  - Guest button: signs in anonymously, redirects on success
+ * Collects all required DOM elements, synchronizes the splash logo
+ * animation target, and binds login-related button events.
  *
  * @event DOMContentLoaded
  * @listens Document#DOMContentLoaded
  * @returns {void}
  */
-document.addEventListener("DOMContentLoaded", () => {
-  const loginBtn = document.getElementById("loginBtn");
-  const guestBtn = document.getElementById("guestBtn");
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-
-  loginBtn.addEventListener("click", async (event) => {
-    event.preventDefault();
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
-
-    if (!email || !password) {
-      alert("Check your email and password. Pleasy try again.");
-      return;
-    }
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log("Login erforlgreich:", userCredential.user);
-      window.location.href = "./member/summary.html"; // target page after login
-    } catch (error) {
-      console.error("Login Fehlgeschlagen:", error.message);
-      alert("Login fehlgeschlagen");
-    }
-    console.log("LOGIN CLICK");
-    console.log("Email:", email);
-    console.log("Password:", password);
-  })
-
-  guestBtn.addEventListener("click", async () => {
-    try {
-      const userCredential = await signInAnonymously(auth);
-      console.log("GUEST LOGIN CLICK");
-      window.location.href = "./member/summary.html"; // target page after login
-    } catch (error) {
-      console.error(error.message);
-      alert("Gast-Login fehlgeschlagen");
-    }
-  });
-
-})
-
+document.addEventListener("DOMContentLoaded", initLoginPage);
 
 /**
- * Login as user with email and password.
+ * Initializes all login page interactions.
  *
- * @param {string} email - Email adress for login
- * @param {string} password - Password for login
- * @returns {Promise&lt;void>} Resolves when login flow is complete
+ * Loads the required DOM references, prepares the splash logo animation
+ * target, and binds the login and guest actions.
+ *
+ * @returns {void}
+ */
+function initLoginPage() {
+  const elements = getLoginElements();
+  syncSplashLogoTarget(elements);
+  bindLoginButton(elements);
+  bindGuestButton(elements);
+}
+
+/**
+ * Collects and returns all DOM elements required by the login page.
+ *
+ * @returns {{
+ *   loginBtn: HTMLButtonElement|null,
+ *   guestBtn: HTMLButtonElement|null,
+ *   emailInput: HTMLInputElement|null,
+ *   passwordInput: HTMLInputElement|null,
+ *   splashLogo: HTMLElement|null,
+ *   targetLogo: HTMLElement|null
+ * }} Object containing the relevant login page elements.
+ */
+function getLoginElements() {
+  return {
+    loginBtn: document.getElementById("loginBtn"),
+    guestBtn: document.getElementById("guestBtn"),
+    emailInput: document.getElementById("email"),
+    passwordInput: document.getElementById("password"),
+    splashLogo: document.querySelector(".logo-splash__img"),
+    targetLogo: document.querySelector(".join__logo")
+  };
+}
+
+/**
+ * Updates CSS custom properties for the splash logo animation target.
+ *
+ * Reads the position and width of the target logo and writes the values
+ * to CSS variables on the document root.
+ *
+ * @param {{
+ *   splashLogo: HTMLElement|null,
+ *   targetLogo: HTMLElement|null
+ * }} elements - Object containing the splash and target logo elements.
+ * @returns {void}
+ */
+function syncSplashLogoTarget(elements) {
+  if (!elements.splashLogo || !elements.targetLogo) return;
+  const { top, left, width } = elements.targetLogo.getBoundingClientRect();
+  const root = document.documentElement;
+  root.style.setProperty("--logo-target-top", `${top}px`);
+  root.style.setProperty("--logo-target-left", `${left}px`);
+  root.style.setProperty("--logo-target-width", `${width}px`);
+}
+
+/**
+ * Binds the click event for the login button.
+ *
+ * Starts the email/password login flow when the login button is pressed.
+ *
+ * @param {{
+ *   loginBtn: HTMLButtonElement|null
+ * }} elements - Object containing the login button reference.
+ * @returns {void}
+ */
+function bindLoginButton(elements) {
+  if (!elements.loginBtn) return;
+  elements.loginBtn.addEventListener("click", (event) => {
+    void handleLoginClick(event, elements);
+  });
+}
+
+/**
+ * Binds the click event for the guest login button.
+ *
+ * Starts the anonymous login flow when the guest button is pressed.
+ *
+ * @param {{
+ *   guestBtn: HTMLButtonElement|null
+ * }} elements - Object containing the guest button reference.
+ * @returns {void}
+ */
+function bindGuestButton(elements) {
+  if (!elements.guestBtn) return;
+  elements.guestBtn.addEventListener("click", () => {
+    void loginAsGuest();
+  });
+}
+
+/**
+ * Handles the login button click event.
+ *
+ * Prevents the default form behavior, reads the entered credentials,
+ * validates them, and starts the email/password login process.
+ *
+ * @async
+ * @param {Event} event - The click event triggered by the login button.
+ * @param {{
+ *   emailInput: HTMLInputElement|null,
+ *   passwordInput: HTMLInputElement|null
+ * }} elements - Object containing the login input fields.
+ * @returns {Promise&lt;void>} Resolves when the login handling is complete.
+ */
+async function handleLoginClick(event, elements) {
+  event.preventDefault();
+  const email = elements.emailInput.value.trim();
+  const password = elements.passwordInput.value;
+  if (!hasLoginData(email, password)) return;
+  await loginWithEmail(email, password);
+}
+
+/**
+ * Checks whether both login credentials are present.
+ *
+ * Shows an alert if either the email or password is missing.
+ *
+ * @param {string} email - The entered email address.
+ * @param {string} password - The entered password.
+ * @returns {boolean} True if both values are present, otherwise false.
+ */
+function hasLoginData(email, password) {
+  if (email &amp;&amp; password) return true;
+  alert("Check your email and password. Pleasy try again.");
+  return false;
+}
+
+/**
+ * Logs in a user with email and password.
+ *
+ * On success, the user is redirected to the member summary page.
+ * On failure, an error is logged and shown in an alert.
+ *
+ * @param {string} email - Email address used for login.
+ * @param {string} password - Password used for login.
+ * @returns {Promise&lt;void>} Resolves when the login flow is finished.
  */
 export function loginWithEmail(email, password) {
-  signInWithEmailAndPassword(auth, email, password)
+  return signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
-      console.log("Login erfolgreich:", userCredential.user);
       window.location.href = "./member/summary.html";
     })
     .catch(error => {
@@ -121,16 +201,17 @@ export function loginWithEmail(email, password) {
     });
 }
 
-
 /**
- * Login as guest without mail and password
+ * Logs in a user anonymously as a guest.
  *
- * @returns {Promise&lt;void>} Resolves when login flow is complete
+ * On success, the user is redirected to the member summary page.
+ * On failure, an error is logged and shown in an alert.
+ *
+ * @returns {Promise&lt;void>} Resolves when the guest login flow is finished.
  */
 export function loginAsGuest() {
-  signInAnonymously(auth)
+  return signInAnonymously(auth)
     .then(userCredential => {
-      console.log("Gast eingeloggt:", userCredential.user);
       window.location.href = "./member/summary.html";
     })
     .catch(error => {
@@ -138,7 +219,6 @@ export function loginAsGuest() {
       alert("Gast Login Fehlgeschlagen:" + error.message);
     });
 }
-
 </code></pre>
         </article>
     </section>
@@ -149,13 +229,13 @@ export function loginAsGuest() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-contacts.html">contacts</a></li><li><a href="module-contacts-render.html">contacts-render</a></li><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-get-firebase.html">get-firebase</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li><li><a href="module-summary.html">summary</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-contacts.html#event:click">click</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#applyPrioritySelection">applyPrioritySelection</a></li><li><a href="global.html#bindAssigneeEvents">bindAssigneeEvents</a></li><li><a href="global.html#bindSubtaskEvents">bindSubtaskEvents</a></li><li><a href="global.html#buildCheckbox">buildCheckbox</a></li><li><a href="global.html#buildContactOptionElement">buildContactOptionElement</a></li><li><a href="global.html#buildOptionMain">buildOptionMain</a></li><li><a href="global.html#buildSubtaskItem">buildSubtaskItem</a></li><li><a href="global.html#buildTaskData">buildTaskData</a></li><li><a href="global.html#buildTaskUpdateObject">buildTaskUpdateObject</a></li><li><a href="global.html#clearAddTaskForm">clearAddTaskForm</a></li><li><a href="global.html#clearFieldError">clearFieldError</a></li><li><a href="global.html#clearSelectedAssignees">clearSelectedAssignees</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#clearSubtasks">clearSubtasks</a></li><li><a href="global.html#closeAssignedOptions">closeAssignedOptions</a></li><li><a href="global.html#closeTaskOverlay">closeTaskOverlay</a></li><li><a href="global.html#collectEditFormData">collectEditFormData</a></li><li><a href="global.html#columns">columns</a></li><li><a href="global.html#createSubtaskActions">createSubtaskActions</a></li><li><a href="global.html#createSubtaskEditInput">createSubtaskEditInput</a></li><li><a href="global.html#createSubtaskText">createSubtaskText</a></li><li><a href="global.html#deleteExistingSubtask">deleteExistingSubtask</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#editExistingSubtask">editExistingSubtask</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTask">editTask</a></li><li><a href="global.html#findPriorityButton">findPriorityButton</a></li><li><a href="global.html#getAssignedNames">getAssignedNames</a></li><li><a href="global.html#getAvatarColor">getAvatarColor</a></li><li><a href="global.html#getContactData">getContactData</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getSortedContacts">getSortedContacts</a></li><li><a href="global.html#getSubtasks">getSubtasks</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#handleOutsideClick">handleOutsideClick</a></li><li><a href="global.html#handleOverlayClick">handleOverlayClick</a></li><li><a href="global.html#handleSubtaskKeydown">handleSubtaskKeydown</a></li><li><a href="global.html#handleSubtaskListClick">handleSubtaskListClick</a></li><li><a href="global.html#handleTriggerClick">handleTriggerClick</a></li><li><a href="global.html#hashString">hashString</a></li><li><a href="global.html#initAssignees">initAssignees</a></li><li><a href="global.html#initSubtasks">initSubtasks</a></li><li><a href="global.html#initTasks">initTasks</a></li><li><a href="global.html#initializeEditAssignees">initializeEditAssignees</a></li><li><a href="global.html#initializeEditSubtasks">initializeEditSubtasks</a></li><li><a href="global.html#isSelected">isSelected</a></li><li><a href="global.html#openTaskOverlay">openTaskOverlay</a></li><li><a href="global.html#populateAssignedToDropdown">populateAssignedToDropdown</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderContactOptions">renderContactOptions</a></li><li><a href="global.html#renderEditOverlay">renderEditOverlay</a></li><li><a href="global.html#renderNoContacts">renderNoContacts</a></li><li><a href="global.html#renderSelectedAssignees">renderSelectedAssignees</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#saveEditedSubtask">saveEditedSubtask</a></li><li><a href="global.html#saveEditedTask">saveEditedTask</a></li><li><a href="global.html#saveNewSubtask">saveNewSubtask</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#saveSubtaskValue">saveSubtaskValue</a></li><li><a href="global.html#selectPriority">selectPriority</a></li><li><a href="global.html#setDefaultPriority">setDefaultPriority</a></li><li><a href="global.html#setupPriorityButtons">setupPriorityButtons</a></li><li><a href="global.html#setupRequiredFieldValidation">setupRequiredFieldValidation</a></li><li><a href="global.html#setupSubtaskEditListeners">setupSubtaskEditListeners</a></li><li><a href="global.html#submitTask">submitTask</a></li><li><a href="global.html#syncOptionToggle">syncOptionToggle</a></li><li><a href="global.html#syncTasksAndTodos">syncTasksAndTodos</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#toggleAssignedOptions">toggleAssignedOptions</a></li><li><a href="global.html#toggleAssignee">toggleAssignee</a></li><li><a href="global.html#toggleCheckbox">toggleCheckbox</a></li><li><a href="global.html#toggleSubtaskActions">toggleSubtaskActions</a></li><li><a href="global.html#trackContactsForUser">trackContactsForUser</a></li><li><a href="global.html#updateAssignedInput">updateAssignedInput</a></li><li><a href="global.html#updateTaskInFirebase">updateTaskInFirebase</a></li><li><a href="global.html#validateRequiredField">validateRequiredField</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Apr 21 2026 19:05:09 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -26,42 +26,41 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @file Member page bootstrapper: renders header, sidebar and task UI,
- * then initializes the board and wires up header menu + logout.
+            <pre class="prettyprint source linenums"><code>import { initAddTask } from './add-task.js';
+import { getInitials } from './contacts-render.js';
+import { getContacts, loadData, loadTasks } from '../../scripts/firebase/get-firebase.js';
+import { tasks, initTasks } from './board.js';
+
+/**
+ * @file Member page bootstrapper: renders header/sidebar/task UI and wires up header menu + logout.
  *
- * This module injects shared HTML templates into the page and starts
- * board rendering via `initBoard()` from `board.js`.
+ * This module initializes the member UI by injecting HTML templates into the page,
+ * then triggers board rendering (currently via `updateHTML()` from the drag &amp; drop module).
  *
  * DOM requirements (IDs must exist in the HTML):
- * - `header`        : container for the header template
- * - `sidebar`       : container for the sidebar template
- * - `add_task`      : container for the "add task" template
- * - `editC_overlay` : optional container for contact edit overlay
- * - `addC_overlay`  : optional container for contact add overlay
- * - `headerMenue`   : profile/menu button in the header
- * - `headerMenueNav`: dropdown container toggled by profile button
- * - `logoutBtn`     : logout button
+ * - `header`       : container for the header template
+ * - `sidebar`      : container for the sidebar template
+ * - `add_task`     : container for the "add task" template
+ * - `editC_overlay`: (optional) container for contact edit overlay
+ * - `addC_overlay` : (optional) container for contact add overlay
+ * - `headerMenue`  : profile/menu button in the header
+ * - `headerMenueNav`: dropdown/navigation container toggled by profile button
+ * - `logoutBtn`    : logout button
  *
  * External dependencies:
  * - Template functions from `member-templates.js`
- * - `initBoard()` from `board.js`
+ * - `updateHTML()` from `drag-n-drop.js`
  * - Firebase Auth instance `auth` and `signOut()`
  *
  * @module member-ui
  */
 import { getHeaderTemplate, getSidebarTemplate, getTaskTemplate, getEditOverlayTemplate, getAddOverlayTemplate, generateTodosHTML } from './member-templates.js';
-import { initBoard } from './board.js';
-import { updateHTML } from './board.js';
+import { updateHTML, todos } from './drag-n-drop.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { auth } from "../../scripts/firebase/firebase.js";
 
 init();
 
-
-async function renderBoard() {
-  await initBoard();
-}
 
 /**
  * Entry point for module initialization.
@@ -84,15 +83,13 @@ async function init() {
  */
 async function render() {
   await renderHeader();
+  renderProfileInitials()
   await renderSidebar();
-
-  // only attempt to render the add‑task button if the placeholder exists
+  highlightActiveNavItem();
   if (document.getElementById('add_task')) {
     await renderAddTask();
+    setupAddTaskOverlay();
   }
-
-  // renderContactAddOverlay();   &lt;-- Aktivieren, um das Overlay zum Hinzufügen von Kontakten anzuzeigen
-  // renderContactEditOverlay(); Contact
   await renderBoard();
 };
 
@@ -135,10 +132,21 @@ function renderSidebar() {
  */
 function renderAddTask() {
   const addTaskRef = document.getElementById('add_task');
-  if (addTaskRef) {
-    addTaskRef.innerHTML = getTaskTemplate();
+  const overlay = document.getElementById('add_task_overlay');
+  if (addTaskRef &amp;&amp; overlay) {
+    addTaskRef.innerHTML = getTaskTemplate({ isOverlay: true });
+    initAddTask(addTaskRef, {
+      mode: 'overlay',
+      onClose: () => closeAddTaskOverlay(overlay),
+      onSuccess: async () => {
+        await initTasks();
+        Object.assign(todos, tasks);
+        updateHTML();
+      }
+    });
+
   } else {
-    console.error('Add Task-Element nicht gefunden!');
+    console.error('Add Task-Element oder Overlay nicht gefunden!');
   }
 };
 
@@ -148,14 +156,6 @@ function renderAddTask() {
  *
  * @returns {void}
  */
-function renderContactEditOverlay() {
-  const editContactRef = document.getElementById('editC_overlay');
-  if (editContactRef) {
-    editContactRef.innerHTML = getEditOverlayTemplate();
-  } else {
-    console.error('ContactOverlay-Element nicht gefunden!');
-  }
-};
 
 
 
@@ -186,6 +186,125 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 });
+
+
+function openAddTaskOverlay(overlay) {
+  overlay.classList.remove('d_none');
+  const content = overlay.querySelector('.overlay_add_task');
+  if (content) {
+    content.classList.remove('overlay_add_task--slide-out');
+    content.classList.add('overlay_add_task--slide-in');
+  }
+  document.body.classList.add('no-scroll');
+}
+document.querySelectorAll('.openAddTaskOverlay').forEach(btn => {
+  btn.addEventListener('click', () => {
+
+    const overlay = document.getElementById('add_task_overlay');
+    openAddTaskOverlay(overlay);
+  });
+});
+
+
+function closeAddTaskOverlay(overlay) {
+  const content = overlay.querySelector('.overlay_add_task');
+  if (!content) {
+    overlay.classList.add('d_none');
+    document.body.classList.remove('no-scroll');
+    return;
+  }
+  content.classList.remove('overlay_add_task--slide-in');
+  content.classList.add('overlay_add_task--slide-out');
+  content.addEventListener('animationend', () => {
+    content.classList.remove('overlay_add_task--slide-out');
+    overlay.classList.add('d_none');
+    document.body.classList.remove('no-scroll');
+  }, { once: true });
+}
+
+
+function setupOpenButton(openBtn, overlay) {
+  openBtn.addEventListener('click', () => openAddTaskOverlay(overlay));
+}
+
+
+function setupBackdropAndCloseButton(overlay) {
+  overlay.addEventListener('click', (event) => {
+    if (event.target === overlay || event.target.closest('.add-task-close-btn')) {
+      closeAddTaskOverlay(overlay);
+    }
+  });
+}
+
+
+function setupAddTaskOverlay() {
+  const openBtn = document.getElementById('openAddTaskOverlay');
+  const overlay = document.getElementById('add_task_overlay');
+  if (!openBtn || !overlay) return;
+  setupOpenButton(openBtn, overlay);
+  setupBackdropAndCloseButton(overlay);
+}
+
+
+function highlightActiveNavItem() {
+  const currentPage = window.location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-item').forEach(link => {
+    const linkPage = link.getAttribute('href').split('/').pop();
+    link.classList.toggle('nav-item--active', linkPage === currentPage);
+  });
+}
+
+
+function renderProfileInitials() {
+  auth.onAuthStateChanged((user) => {
+    const initialsElem = document.getElementById('profileInitials');
+    if (!initialsElem) return;
+    if (user &amp;&amp; !user.isAnonymous) {
+      loadData(() => {
+        const contacts = getContacts();
+        const contact = Object.values(contacts).find(c => c.uid === user.uid);
+        initialsElem.textContent = getInitials(contact?.name || user.displayName || user.email || 'U');
+      });
+    } else {
+      initialsElem.textContent = 'G';
+    }
+  });
+}
+/**
+ * Triggers the board rendering.
+ *
+ * Currently delegates to `updateHTML()` in `drag-n-drop.js`, which renders the
+ * board columns based on the current in-memory tasks.
+ *
+ * @async
+ * @returns {Promise&lt;void>}
+ */
+async function renderBoard() {
+  updateHTML();
+}
+
+
+// addtask-status-handling
+function setupAddTaskForAllColumns() {
+  const overlay = document.getElementById('add_task_overlay');
+  if (!overlay) return;
+  document.querySelectorAll('.circle-plus-icon').forEach(icon => {
+    icon.addEventListener('click', () => {
+      // Wir gehen von Icon -> .task__section -> .task__area
+      const section = icon.closest('.task__section');
+      const taskArea = section?.querySelector('.task__area');
+      const status = taskArea?.dataset.status || 'todo';
+      overlay.dataset.target = status;
+      openAddTaskOverlay(overlay);
+    });
+  });
+}
+
+
+renderBoard().then(() => {
+  setupAddTaskOverlay();
+  setupAddTaskForAllColumns();
+});
 </code></pre>
         </article>
     </section>
@@ -196,13 +315,13 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-signup.html#~event:Eventlistener">Eventlistener</a></li></ul><h3>Global</h3><ul><li><a href="global.html#columns">columns</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#greetings">greetings</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#todoTasks">todoTasks</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#updateHTML">updateHTML</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-contacts.html">contacts</a></li><li><a href="module-contacts-render.html">contacts-render</a></li><li><a href="module-drag-n-drop.html">drag-n-drop</a></li><li><a href="module-get-firebase.html">get-firebase</a></li><li><a href="module-join-login.html">join-login</a></li><li><a href="module-member-auth-check.html">member-auth-check</a></li><li><a href="module-member-auth-guard.html">member-auth-guard</a></li><li><a href="module-member-templates.html">member-templates</a></li><li><a href="module-member-ui.html">member-ui</a></li><li><a href="module-public-templates.html">public-templates</a></li><li><a href="module-public-ui.html">public-ui</a></li><li><a href="module-push-task.html">push-task</a></li><li><a href="module-signup.html">signup</a></li><li><a href="module-summary.html">summary</a></li></ul><h3>Events</h3><ul><li><a href="module-member-ui.html#~event:DOMContentLoaded">DOMContentLoaded</a></li><li><a href="module-contacts.html#event:click">click</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#applyPrioritySelection">applyPrioritySelection</a></li><li><a href="global.html#bindAssigneeEvents">bindAssigneeEvents</a></li><li><a href="global.html#bindSubtaskEvents">bindSubtaskEvents</a></li><li><a href="global.html#buildCheckbox">buildCheckbox</a></li><li><a href="global.html#buildContactOptionElement">buildContactOptionElement</a></li><li><a href="global.html#buildOptionMain">buildOptionMain</a></li><li><a href="global.html#buildSubtaskItem">buildSubtaskItem</a></li><li><a href="global.html#buildTaskData">buildTaskData</a></li><li><a href="global.html#buildTaskUpdateObject">buildTaskUpdateObject</a></li><li><a href="global.html#clearAddTaskForm">clearAddTaskForm</a></li><li><a href="global.html#clearFieldError">clearFieldError</a></li><li><a href="global.html#clearSelectedAssignees">clearSelectedAssignees</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#clearSubtasks">clearSubtasks</a></li><li><a href="global.html#closeAssignedOptions">closeAssignedOptions</a></li><li><a href="global.html#closeTaskOverlay">closeTaskOverlay</a></li><li><a href="global.html#collectEditFormData">collectEditFormData</a></li><li><a href="global.html#columns">columns</a></li><li><a href="global.html#createSubtaskActions">createSubtaskActions</a></li><li><a href="global.html#createSubtaskEditInput">createSubtaskEditInput</a></li><li><a href="global.html#createSubtaskText">createSubtaskText</a></li><li><a href="global.html#deleteExistingSubtask">deleteExistingSubtask</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#editExistingSubtask">editExistingSubtask</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editTask">editTask</a></li><li><a href="global.html#findPriorityButton">findPriorityButton</a></li><li><a href="global.html#getAssignedNames">getAssignedNames</a></li><li><a href="global.html#getAvatarColor">getAvatarColor</a></li><li><a href="global.html#getContactData">getContactData</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getSortedContacts">getSortedContacts</a></li><li><a href="global.html#getSubtasks">getSubtasks</a></li><li><a href="global.html#getTask">getTask</a></li><li><a href="global.html#handleOutsideClick">handleOutsideClick</a></li><li><a href="global.html#handleOverlayClick">handleOverlayClick</a></li><li><a href="global.html#handleSubtaskKeydown">handleSubtaskKeydown</a></li><li><a href="global.html#handleSubtaskListClick">handleSubtaskListClick</a></li><li><a href="global.html#handleTriggerClick">handleTriggerClick</a></li><li><a href="global.html#hashString">hashString</a></li><li><a href="global.html#initAssignees">initAssignees</a></li><li><a href="global.html#initSubtasks">initSubtasks</a></li><li><a href="global.html#initTasks">initTasks</a></li><li><a href="global.html#initializeEditAssignees">initializeEditAssignees</a></li><li><a href="global.html#initializeEditSubtasks">initializeEditSubtasks</a></li><li><a href="global.html#isSelected">isSelected</a></li><li><a href="global.html#openTaskOverlay">openTaskOverlay</a></li><li><a href="global.html#populateAssignedToDropdown">populateAssignedToDropdown</a></li><li><a href="global.html#pushContact">pushContact</a></li><li><a href="global.html#renderContactOptions">renderContactOptions</a></li><li><a href="global.html#renderEditOverlay">renderEditOverlay</a></li><li><a href="global.html#renderNoContacts">renderNoContacts</a></li><li><a href="global.html#renderSelectedAssignees">renderSelectedAssignees</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#saveEditedSubtask">saveEditedSubtask</a></li><li><a href="global.html#saveEditedTask">saveEditedTask</a></li><li><a href="global.html#saveNewSubtask">saveNewSubtask</a></li><li><a href="global.html#saveSubtaskEdit">saveSubtaskEdit</a></li><li><a href="global.html#saveSubtaskValue">saveSubtaskValue</a></li><li><a href="global.html#selectPriority">selectPriority</a></li><li><a href="global.html#setDefaultPriority">setDefaultPriority</a></li><li><a href="global.html#setupPriorityButtons">setupPriorityButtons</a></li><li><a href="global.html#setupRequiredFieldValidation">setupRequiredFieldValidation</a></li><li><a href="global.html#setupSubtaskEditListeners">setupSubtaskEditListeners</a></li><li><a href="global.html#submitTask">submitTask</a></li><li><a href="global.html#syncOptionToggle">syncOptionToggle</a></li><li><a href="global.html#syncTasksAndTodos">syncTasksAndTodos</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#toggleAssignedOptions">toggleAssignedOptions</a></li><li><a href="global.html#toggleAssignee">toggleAssignee</a></li><li><a href="global.html#toggleCheckbox">toggleCheckbox</a></li><li><a href="global.html#toggleSubtaskActions">toggleSubtaskActions</a></li><li><a href="global.html#trackContactsForUser">trackContactsForUser</a></li><li><a href="global.html#updateAssignedInput">updateAssignedInput</a></li><li><a href="global.html#updateTaskInFirebase">updateTaskInFirebase</a></li><li><a href="global.html#validateRequiredField">validateRequiredField</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Mar 17 2026 15:13:10 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Apr 21 2026 19:05:09 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>
