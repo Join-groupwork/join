@@ -1,11 +1,52 @@
-.policy {
-  width: 77%;
-  padding: 48px 64px;
-  max-width: 1440px;
+.policy-page {
+  padding: 80px 85px 40px 80px;
+  width: 100%;
 }
 
+/* Title */
 .policy__title {
   font-size: 55px;
   font-weight: 700;
   margin-bottom: 60px;
+}
+
+/* Headings */
+.policy-page h2 {
+  font-size: 1.25rem;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.policy-page h3 {
+  font-size: 1rem;
+  margin-top: 20px;
+  margin-bottom: 8px;
+}
+
+/* Text */
+.policy-page p {
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.policy-page ul {
+  margin-left: 20px;
+  margin-bottom: 16px;
+}
+
+.policy-page li {
+  margin-bottom: 6px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .policy-page {
+    padding: 32px 24px;
+  }
+}
+
+@media (max-width: 635px) {
+  .policy-page {
+    padding: 32px 8px;
+  }
 }
