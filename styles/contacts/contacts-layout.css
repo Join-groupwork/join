@@ -355,7 +355,7 @@
 
     #contact_detail {
         display: none;
-        padding: 120px 16px 16px 16px;
+        padding: 40px 16px 16px 16px;
         height: 100%;
         margin-top: 10px;
     }
@@ -431,7 +431,7 @@
         place-items: center;
         position: fixed;
         right: 16px;
-        bottom: 0px;
+        bottom: 100px;
         width: 52px;
         height: 52px;
         border: none;
@@ -451,7 +451,7 @@
     .contact_mobile_actions_menu {
         position: fixed;
         right: 12px;
-        bottom: -4px;
+        bottom: 70px;
         background: #ffffff;
         border-radius: 6px;
         padding: 8px;
@@ -507,6 +507,15 @@
         width: 32px;
         height: 32px;
         font-size: 16px;
+        min-width: unset;
+    }
+
+    .contact_avatar--large{
+        width: 80px;
+        height: 80px;
+        min-width: unset;
+        min-height: unset;
+        font-size: 32px;
     }
 
     .contactside_section {
