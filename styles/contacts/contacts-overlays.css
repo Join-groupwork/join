@@ -106,7 +106,7 @@
 }
 
 .overlay_add_contact_right img {
-    margin: 30px 0px;
+    margin: 0px 0px;
 }
 
 .overlay_add_contact_right form {
@@ -374,7 +374,6 @@
         min-width: 100px;
         font-size: 0;
         margin-top: -50px !important;
-        /* Avatar zur Hälfte überlappend */
         background-image: url('../assets/icons/person-icon.svg');
         background-repeat: no-repeat;
         background-position: center;
@@ -387,7 +386,7 @@
         min-width: 100px;
         font-size: 32px;
         margin-top: -50px !important;
-        /* Avatar zur Hälfte überlappend */
+       
     }
 
     .addContact_form_container {
@@ -427,7 +426,8 @@
     }
 
     .close_overlay_icon {
-    
+        margin-top: 20px!important;
+        margin-right: 20px!important;
         cursor: pointer;
     }
 }
