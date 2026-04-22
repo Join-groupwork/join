@@ -6,11 +6,7 @@
 .legal__title {
   font-size: 55px;
   font-weight: 700;
-  margin-bottom: 60px;
 }
-
-
-
 
 /* Base */
 
@@ -23,7 +19,6 @@
 /* Headings */
 .legal-page h2 {
   font-size: 1.25rem;
-  margin-top: 32px;
   margin-bottom: 12px;
 }
 
@@ -47,8 +42,6 @@
 .legal-page li {
   margin-bottom: 6px;
 }
-
-
 
 .legal a {
   display: block;
@@ -107,6 +100,6 @@
 
 @media (max-width: 635px) {
   .legal-page {
-    padding: 32px 8px;
+    padding: 32px 24px 100px 24px;
   }
 }

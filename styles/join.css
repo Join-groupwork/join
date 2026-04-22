@@ -505,6 +505,7 @@ footer p {
     width: 55%;
     display: flex;
     justify-content: center;
+    gap: 16px;
   }
 
   .footer__mobile--font {

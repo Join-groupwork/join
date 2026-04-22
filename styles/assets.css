@@ -116,9 +116,7 @@ RESPONSIVE
 */
 @media (max-width:580px) {
   .button__mobile {
-    width: 180px;
     height: 50px;
-    padding: 16px;
     font-size: 16px;
   }
 
