@@ -151,15 +151,15 @@
 }
 
 #contact_name {
-    background-image: url('/assets/icons/person-icon.svg');
+    background-image: url('../../assets/icons/person-icon.svg');
 }
 
 #contact_email {
-    background-image: url('/assets/icons/mail-icon.svg');
+    background-image: url('../../assets/icons/mail-icon.svg');
 }
 
 #contact_phone {
-    background-image: url('/assets/icons/phone-icon.svg');
+    background-image: url('../../assets/icons/phone-icon.svg');
 }
 
 #contact_name:focus,
@@ -374,7 +374,7 @@
         min-width: 100px;
         font-size: 0;
         margin-top: -50px !important;
-        background-image: url('../assets/icons/person-icon.svg');
+        background-image: url('../../assets/icons/person-icon.svg');
         background-repeat: no-repeat;
         background-position: center;
         background-size: 50px 50px;
