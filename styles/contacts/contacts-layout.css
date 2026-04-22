@@ -355,9 +355,8 @@
 
     #contact_detail {
         display: none;
-        padding: 40px 16px 16px 16px;
+        padding: 40px 16px 0px 16px;
         height: 100%;
-        margin-top: 10px;
     }
 
     body.contacts-mobile-detail-open .contactside_section {
@@ -431,7 +430,7 @@
         place-items: center;
         position: fixed;
         right: 16px;
-        bottom: 100px;
+        bottom: -30px;
         width: 52px;
         height: 52px;
         border: none;
@@ -562,5 +561,9 @@
     .contact_mobile_add_btn:hover {
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
     }
+
+    .contact_detail_info a.contact_detail_phone {
+    margin-bottom: 0px;
+}
 
 }
