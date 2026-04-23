@@ -1,5 +1,18 @@
+html,
 body {
-  display: block;
+  height: 100%;
+  margin: 0 auto;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .signup {
@@ -52,22 +65,36 @@ body {
 }
 
 .signup__form {
+  width: 420px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
 }
 
+.signup__form>.signup__input,
+.signup__form>.signup__field {
+  width: 100%;
+}
+
 .signup__input {
-  width: 420px;
+  width: 100%;
   height: 46px;
   font-size: 20px;
-  margin: 2px auto 2px auto;
+  margin: 2px 0;
   padding-left: 20px;
   border: 1px solid var(--color-input-placeholder);
   border-radius: 16px;
   background-repeat: no-repeat;
-  background-position: 380px;
+  background-position: calc(100% - 20px);
+  box-sizing: border-box;
+  display: block;
+}
+
+.signup__field {
+  position: relative;
+  width: 100%;
+  padding-bottom: 18px;
 }
 
 .signup__input::placeholder {
@@ -87,6 +114,27 @@ body {
 .signup__input--password,
 .signup__input--confirm-password {
   background-image: url('../../assets/icons/lock-icon.svg');
+}
+
+.signup__error--text {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-danger);
+  line-height: 1.2;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.signup__error--text.show {
+  opacity: 1;
+}
+
+.signup__input--error {
+  border: 1px solid var(--color-danger) !important;
 }
 
 .signup__terms {
@@ -117,6 +165,13 @@ body {
   color: #3d97f1;
 }
 
+#signupConfirmPassword.signup__input--error,
+#signupConfirmPassword.signup__input--error:focus {
+  border: 1px solid var(--color-danger) !important;
+  outline: none;
+  box-shadow: none;
+}
+
 /* ==========
 RESPONSIVE
    ==========
@@ -138,7 +193,9 @@ RESPONSIVE
 @media (max-width:601px) {
   .signup {
     margin-top: 48px;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .signup__checkbox {
@@ -149,19 +206,25 @@ RESPONSIVE
     width: 32px;
     height: 32px;
     position: relative;
-    margin-left: 11%;
+    margin: 38px 0 0 20px;
   }
 
   .signup__title {
     font-size: 47px;
+    margin-top: 24px;
   }
 
-  .signun__form {
+  .signup__form {
     width: calc(100% - 32px);
+  }
+
+  .signup__form>.signup__input,
+  .signup__form>.signup__field,
+  .signup__field .signup__input {
+    width: 100%;
   }
 
   .signup__input {
-    width: calc(100% - 32px);
     height: 50px;
     background-position: calc(100% - 20px);
   }

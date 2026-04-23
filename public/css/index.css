@@ -1,5 +1,18 @@
+html,
 body {
-  display: block;
+  height: 100%;
+  margin: 0 auto;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .index__header {
@@ -55,13 +68,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 30px;
-}
-
-.login__form--buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  height: 30px;
+  position: relative;
 }
 
 .login__input {
@@ -73,6 +80,35 @@ body {
   padding-left: 20px;
   background-repeat: no-repeat;
   background-position: 380px;
+  box-sizing: border-box;
+  display: block;
+}
+
+.login__input--error {
+  border-color: var(--color-danger) !important;
+}
+
+.login__error--text {
+  position: absolute;
+  top: 124px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-danger);
+  line-height: 1.2;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.login__error--text.show {
+  opacity: 1;
+}
+
+.login__form--buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 .login__input::placeholder {
@@ -148,6 +184,10 @@ RESPONSIVE
     width: calc(100% - 32px);
   }
 
+  .login__field {
+    width: 100%;
+  }
+
   .login__input {
     width: 100%;
   }
@@ -161,21 +201,27 @@ RESPONSIVE
   .index__menu--responive {
     font-size: 20px;
     font-weight: 400;
-    margin-top: 80px;
+    margin: 24px 0;
     display: flex;
     justify-content: center;
     gap: 35px;
     align-items: center;
   }
 
+  form {
+    gap: 32px;
+  }
+
   .login__form--buttons {
-    padding-top: 20px;
     flex-direction: column;
     margin: 0 auto 0 auto;
   }
 
-  /* .login__input {
+  .login__input {
     width: calc(100% - 32px);
+  }
 
+  /* .login__field {
+    width: calc(100% - 32px);
   } */
 }

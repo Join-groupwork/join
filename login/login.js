@@ -25,8 +25,9 @@ document.addEventListener("DOMContentLoaded", initLoginPage);
 /**
  * Initializes all login page interactions.
  *
- * Loads the required DOM references, prepares the splash logo animation
- * target, and binds the login and guest actions.
+ * Loads the required DOM references, prepares the splash logo animation target,
+ * binds the login and guest actions, and clears the password error state
+ * while the user is typing in the email or password field.
  *
  * @returns {void}
  */
@@ -35,6 +36,8 @@ function initLoginPage() {
   syncSplashLogoTarget(elements);
   bindLoginButton(elements);
   bindGuestButton(elements);
+  elements.emailInput?.addEventListener("input", clearPasswordError);
+  elements.passwordInput?.addEventListener("input", clearPasswordError);
 }
 
 /**
@@ -140,36 +143,39 @@ async function handleLoginClick(event, elements) {
 /**
  * Checks whether both login credentials are present.
  *
- * Shows an alert if either the email or password is missing.
+ * Clears any previous password error state before validating the inputs.
+ * Shows the password error state if either the email or password is missing.
  *
  * @param {string} email - The entered email address.
  * @param {string} password - The entered password.
  * @returns {boolean} True if both values are present, otherwise false.
  */
 function hasLoginData(email, password) {
+  clearPasswordError();
   if (email && password) return true;
-  alert("Check your email and password. Pleasy try again.");
+  showPasswordError();
   return false;
 }
 
 /**
  * Logs in a user with email and password.
  *
+ * Clears any previous password error state before attempting login.
  * On success, the user is redirected to the member summary page.
- * On failure, an error is logged and shown in an alert.
+ * On failure, the password error state is shown.
  *
- * @param {string} email - Email address used for login.
- * @param {string} password - Password used for login.
+ * @param {string} email - The email address used for login.
+ * @param {string} password - The password used for login.
  * @returns {Promise<void>} Resolves when the login flow is finished.
  */
 export function loginWithEmail(email, password) {
+  clearPasswordError();
   return signInWithEmailAndPassword(auth, email, password)
-    .then(userCredential => {
+    .then(() => {
       window.location.href = "./member/summary.html";
     })
-    .catch(error => {
-      console.log("Login Fehlgeschlagen", error.message);
-      alert("Login Fehlgeschlagen: " + error.message);
+    .catch(() => {
+      showPasswordError();
     });
 }
 
@@ -190,4 +196,24 @@ export function loginAsGuest() {
       console.error("Gast Login Fehlgeschlagen:", error.message);
       alert("Gast Login Fehlgeschlagen:" + error.message);
     });
+}
+
+function showPasswordError() {
+  const passwordInput = document.getElementById("password");
+  const errorText = document.getElementById("passwordError");
+
+  if (!passwordInput || !errorText) return;
+
+  passwordInput.classList.add("login__input--error");
+  errorText.classList.add("show");
+}
+
+function clearPasswordError() {
+  const passwordInput = document.getElementById("password");
+  const errorText = document.getElementById("passwordError");
+
+  if (!passwordInput || !errorText) return;
+
+  passwordInput.classList.remove("login__input--error");
+  errorText.classList.remove("show");
 }
