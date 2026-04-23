@@ -115,8 +115,8 @@ select {
 
 .error-message {
   display: none;
-  margin-top: -16px;
-  margin-bottom: 16px;
+  margin-top: -8px;
+  margin-bottom: 12px;
   font-size: 14px;
   color: #ff3d00;
 }
