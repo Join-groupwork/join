@@ -70,19 +70,21 @@ signupConfirmPassword?.addEventListener('input', validateForm);
 termsCheckbox?.addEventListener('change', validateForm);
 signupForm?.addEventListener('submit', handleSignup);
 
-/**
- * Validates the signup form and enables or disables the submit button.
- *
- * @returns {void}
- */
-function validateForm() {
-  if (!signupName || !signupEmail || !signupPassword || !signupConfirmPassword || !termsCheckbox || !signupBtn) return;
 
+function validateForm() {
   const nameFilled = signupName.value.trim() !== '';
   const emailFilled = signupEmail.value.trim() !== '';
   const passwordFilled = signupPassword.value !== '';
-  const passwordsMatch = signupPassword.value === signupConfirmPassword.value && signupConfirmPassword.value !== '';
+  const confirmFilled = signupConfirmPassword.value !== '';
+  const passwordsMatch = signupPassword.value === signupConfirmPassword.value && confirmFilled;
   const termsAccepted = termsCheckbox.checked;
+
+  if (confirmFilled && !passwordsMatch) {
+    showSignupPasswordError();
+  } else {
+    clearSignupPasswordError();
+  }
+
   const formIsValid = nameFilled && emailFilled && passwordFilled && passwordsMatch && termsAccepted;
   signupBtn.disabled = !formIsValid;
 }
@@ -147,4 +149,15 @@ async function handleSignup(event) {
     console.error("Fehler beim Speichern:", error.code, error.message);
     alert(getSignupErrorMessage(error.code));
   }
+}
+
+
+function showSignupPasswordError() {
+  signupConfirmPassword.classList.add('signup__input--error');
+  document.getElementById('signupPasswordError')?.classList.add('show');
+}
+
+function clearSignupPasswordError() {
+  signupConfirmPassword.classList.remove('signup__input--error');
+  document.getElementById('signupPasswordError')?.classList.remove('show');
 }

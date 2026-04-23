@@ -277,3 +277,24 @@ renderBoard().then(() => {
   setupAddTaskOverlay();
   setupAddTaskForAllColumns();
 });
+
+
+/**
+ * Navigates the user back to the previous page in browser history.
+ * If no history entry exists, it redirects to a fallback page.
+ *
+ * @function initGoBackButton
+ * @returns {void}
+ */
+function initGoBackButton() {
+  const btn = document.getElementById('goBack');
+  if (!btn) return;
+
+  btn.addEventListener('click', () => {
+    if (window.history.length > 1) window.history.back();
+    else window.location.href = './index.html';
+  });
+}
+
+
+document.addEventListener('DOMContentLoaded', initGoBackButton);

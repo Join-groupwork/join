@@ -314,27 +314,24 @@ function setupRequiredFieldValidation(fields) {
  * @param {Array<HTMLButtonElement>} priorityButtons - The priority buttons.
  * @param {Function} clearForm - Function to clear the form.
  * @returns {Promise<void>}
- * @throws {Error} Throws if Firebase push fails.
  */
 async function submitTask(taskData, createBtn, options = {}, priorityButtons, clearForm) {
   createBtn.disabled = true;
   try {
-    const key = await pushTask(taskData);
-    alert('Task created successfully');
+    await pushTask(taskData);
+    showTaskMessage('Task created successfully', 'success');
     if (options.mode === 'overlay') {
       clearForm(priorityButtons);
-      if (typeof options.onSuccess === 'function') {
-        await options.onSuccess();
-      }
-      if (typeof options.onClose === 'function') {
-        options.onClose();
-      }
+      if (typeof options.onSuccess === 'function') await options.onSuccess();
+      if (typeof options.onClose === 'function') setTimeout(() => options.onClose(), 1000);
       return;
     }
-    window.location.href = './board.html';
+    setTimeout(() => {
+      window.location.href = './board.html';
+    }, 1200);
   } catch (error) {
     console.error(error);
-    alert('Failed to create task');
+    showTaskMessage('Task could not be created', 'error');
   } finally {
     createBtn.disabled = false;
   }
@@ -355,3 +352,34 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!container) return;
   initAddTask(container, { mode: 'page' });
 });
+
+
+/**
+ * Displays a feedback message below the form.
+ *
+ * @function showTaskMessage
+ * @param {string} message - Message text.
+ * @param {'success'|'error'} type - Message type.
+ * @returns {void}
+ */
+function showTaskMessage(message, type) {
+  const el = document.getElementById('task_message');
+  if (!el) return;
+  el.textContent = message;
+  el.classList.remove('task-message--success', 'task-message--error');
+  el.classList.add(`task-message--${type}`);
+}
+
+
+/**
+ * Clears the task feedback message.
+ *
+ * @function clearTaskMessage
+ * @returns {void}
+ */
+function clearTaskMessage() {
+  const el = document.getElementById('task_message');
+  if (!el) return;
+  el.textContent = '';
+  el.classList.remove('task-message--success', 'task-message--error');
+}

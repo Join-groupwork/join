@@ -170,3 +170,25 @@
 .custom-select__option-label {
   color: var(--color-menu-bg);
 }
+
+.task-message {
+  min-height: 20px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  visibility: hidden;
+}
+
+.task-message:empty {
+  visibility: hidden;
+}
+
+.task-message--success {
+  color: #2ecc71;
+  visibility: visible;
+}
+
+.task-message--error {
+  color: #e74c3c;
+  visibility: visible;
+}

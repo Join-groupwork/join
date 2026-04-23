@@ -355,9 +355,8 @@
 
     #contact_detail {
         display: none;
-        padding: 120px 16px 16px 16px;
+        padding: 20px 16px 0px 16px;
         height: 100%;
-        margin-top: 10px;
     }
 
     body.contacts-mobile-detail-open .contactside_section {
@@ -431,7 +430,7 @@
         place-items: center;
         position: fixed;
         right: 16px;
-        bottom: 0px;
+        bottom: -30px;
         width: 52px;
         height: 52px;
         border: none;
@@ -451,7 +450,7 @@
     .contact_mobile_actions_menu {
         position: fixed;
         right: 12px;
-        bottom: -4px;
+        bottom: -40px;
         background: #ffffff;
         border-radius: 6px;
         padding: 8px;
@@ -507,6 +506,15 @@
         width: 32px;
         height: 32px;
         font-size: 16px;
+        min-width: unset;
+    }
+
+    .contact_avatar--large{
+        width: 80px;
+        height: 80px;
+        min-width: unset;
+        min-height: unset;
+        font-size: 32px;
     }
 
     .contactside_section {
@@ -554,8 +562,8 @@
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
     }
 
-    .overlay_add_contact_right img {
-        margin: 60px 0px;
-    }
+    .contact_detail_info a.contact_detail_phone {
+    margin-bottom: 0px;
+}
 
 }
