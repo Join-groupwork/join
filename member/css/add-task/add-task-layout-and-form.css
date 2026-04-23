@@ -381,16 +381,15 @@ select {
 
   .add-task__actions {
     justify-content: center;
-    position: fixed;
-    left: 5%;
-    bottom: 95px;
+    position: static;
+    width: 100%;
   }
 
-  .add-task__container {
-    padding: 24px 16px;
-  }
+.add-task__container {
+  padding: 24px 16px;
+}
 
-  form {
-    justify-content: center;
-  }
+form {
+  justify-content: center;
+}
 }
