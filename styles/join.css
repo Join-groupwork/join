@@ -18,12 +18,20 @@ body {
 }
 
 /* fonts */
-.text__color--light-blue {
+.text__color--light-blue,
+.color__text--light-blue {
   color: var(--color-text-tertiary);
 }
 
-.color__text--light-blue {
-  color: var(--color-text-tertiary);
+/* DISPLAY FLEX COLUMN */
+.form-section,
+form,
+.contactside_section,
+.contact_list,
+.nav,
+.sidebar .footer {
+  display: flex;
+  flex-direction: column;
 }
 
 /* menu */
@@ -36,9 +44,7 @@ body {
 }
 
 .form-section {
-  display: flex;
   justify-content: center;
-  flex-direction: column;
   gap: 15px;
 }
 
@@ -47,17 +53,12 @@ body {
 }
 
 form {
-  display: flex;
-  flex-direction: column;
   gap: 60px;
-  /* gap: 30px; //der gap ist aus der index.css */
 }
 
 /* contact css */
 
 .contactside_section {
-  display: flex;
-  flex-direction: column;
   gap: 20px;
   margin-top: 95px;
   height: 89vh;
@@ -67,8 +68,6 @@ form {
 }
 
 .contact_list {
-  display: flex;
-  flex-direction: column;
   gap: 15px;
   height: fit-content;
   width: 100%;
@@ -145,16 +144,13 @@ form {
 /* sidebar */
 .sidebar {
   width: 230px;
-  /* height ergänzt wegen add_task */
   height: 100%;
   background: var(--color-sidemenu-active);
-  /* background: #1a2c47; */
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding: 40px;
-  /* ergänzt für add_task */
   position: fixed;
   left: 0;
   top: 0;
@@ -167,8 +163,6 @@ form {
 
 .nav {
   margin-top: 88px;
-  display: flex;
-  flex-direction: column;
 }
 
 .nav-item {
@@ -184,7 +178,6 @@ form {
 .nav-item:not(.nav-item--active):hover {
   background: rgba(255, 255, 255, 0.08);
 }
-
 
 /* nav active state */
 .nav-item--active,
@@ -245,16 +238,14 @@ header {
   line-height: 1.2;
 }
 
-.topbar__logo {
+.topbar__logo,
+.topbar__mobile,
+.footer__responsive {
   display: none;
 }
 
 .header__logo {
   height: 40px;
-}
-
-.topbar__mobile {
-  display: none;
 }
 
 .topbar-right {
@@ -330,11 +321,7 @@ header {
   cursor: pointer;
 }
 
-.summary_pencil {
-  width: 60px;
-  height: 60px;
-}
-
+.summary_pencil,
 .summary_check {
   width: 60px;
   height: 60px;
@@ -363,18 +350,10 @@ footer {
   text-decoration: none;
 }
 
-.footer__index {}
-
-.footer__signup {}
-
 .footer__privacy:hover,
 .footer__legal:hover {
   color: var(--color-hover);
   font-weight: 700;
-}
-
-.footer__responsive {
-  display: none;
 }
 
 .color-menue a {
@@ -383,8 +362,6 @@ footer {
 
 .sidebar .footer {
   margin-top: auto;
-  display: flex;
-  flex-direction: column;
   gap: 4px;
   padding-bottom: 24px;
 }
@@ -443,16 +420,15 @@ footer {
     position: relative;
   }
 
-  .topbar__logo {
-    display: block;
-  }
-
-  .topbar-left {
-    display: none;
-  }
-
+  .topbar__logo,
   .topbar__mobile {
     display: block;
+  }
+
+  .topbar-left,
+  .help-circle,
+  .sidebar {
+    display: none;
   }
 
   .topbar__mobile--logo {
@@ -464,17 +440,9 @@ footer {
     padding: 0;
   }
 
-  .help-circle {
-    display: none;
-  }
-
   .profile {
     width: 40px;
     height: 40px;
-  }
-
-  .sidebar {
-    display: none;
   }
 
   .cards {
