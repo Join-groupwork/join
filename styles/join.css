@@ -279,73 +279,6 @@ header {
   cursor: default;
 }
 
-.profile {
-  position: relative;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 700;
-  font-size: 20px;
-  border: 3px solid var(--color-menu-bg);
-  color: var(--color-text-tertiary);
-  background: var(--color-background-input);
-  cursor: pointer;
-}
-
-.summary_pencil {
-  width: 60px;
-  height: 60px;
-}
-
-.summary_check {
-  width: 60px;
-  height: 60px;
-}
-
-/* Logo */
-.join__logo {
-  width: 100px;
-  margin: 80px 0 0 76px;
-}
-
-/* FOOTER */
-footer {
-  width: 100%;
-  height: 60px;
-  padding-bottom: 16px;
-  /* position: absolute; */
-  /* bottom: 0; */
-  /* left: 0; */
-  color: var(--color-footer);
-  text-align: center;
-}
-
-footer p {
-  font-size: 14px;
-  font-weight: bold;
-  color: var(--color-footer-p);
-}
-
-.footer-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  font-size: 14px;
-}
-
-.footer {
-  text-decoration: none;
-  color: var(--color-footer);
-  /* color: #aaa; */
-}
-
-.footer__responsive {
-  display: none;
-}
-
 .header-menue-nav {
   position: absolute;
   top: 72px;
@@ -381,10 +314,73 @@ footer p {
   background: var(--color-menu-bg);
 }
 
+.profile {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 20px;
+  border: 3px solid var(--color-menu-bg);
+  color: var(--color-text-tertiary);
+  background: var(--color-background-input);
+  cursor: pointer;
+}
+
+.summary_pencil {
+  width: 60px;
+  height: 60px;
+}
+
+.summary_check {
+  width: 60px;
+  height: 60px;
+}
+
+/* Logo */
+.join__logo {
+  width: 100px;
+  margin: 80px 0 0 76px;
+}
+
+/* FOOTER */
+footer {
+  width: 250px;
+  margin: 16px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.footer {
+  width: 100%;
+  height: 60px;
+  margin: 16px auto;
+  padding-bottom: 16px;
+  color: var(--color-footer);
+  text-align: center;
+  text-decoration: none;
+}
+
+.footer__index {}
+
+.footer__signup {}
+
+.footer__privacy:hover,
+.footer__legal:hover {
+  color: var(--color-hover);
+  font-weight: 700;
+}
+
+.footer__responsive {
+  display: none;
+}
+
 .color-menue a {
   color: var(--color-text-secondary);
 }
-
 
 .sidebar .footer {
   margin-top: auto;
