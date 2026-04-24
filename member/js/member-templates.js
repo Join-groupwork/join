@@ -76,7 +76,7 @@ export function getSidebarTemplate() {
         <a class="nav-item" href="./contacts.html"><img src="../assets/icons/side-menu/contacts-icon.svg" alt="Contacts" class="nav-icon">Contacts</a>
       </nav>
 
-      <div class="footer">
+      <div class="footer footer__sidebar">
         <a href="./privacy-policy-user.html">Privacy Policy</a>
         <a href="./legal-notice-user.html">Legal Notice</a>
       </div>

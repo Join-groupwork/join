@@ -33,13 +33,14 @@ export function getSidebarTemplate() {
       <div class="logo">
         <img src="../assets/img/logo-bright.svg" alt="" srcset="">
       </div>
-      <nav class="nav">
+      <nav class="nav nav__sidebar--footer">
         <a href="../index.html" class="nav-item"><img src="../assets/icons/side-menu/login-icon.svg" alt="Summary" class="nav-icon">Log In</a>
       </nav>
-      <div class="legal">
+      <footer class="footer footer__sidebar">
         <a href="./privacy-policy-public.html">Privacy Policy</a>
         <a href="./legal-notice-public.html">Legal Notice</a>
-      </div>
+      </footer>
+
     `;
 }
 
@@ -65,7 +66,6 @@ export function signupMassegeTemplate() {
  */
 export function getPublicFooterTemplate() {
   return `
-
     <a href="../../index.html" class="button button__mobile button__mobile--public">
       <img class="icon__mobile" src="../../assets/icons/menu/login__mobile.svg" alt="login mobile">
     </a>

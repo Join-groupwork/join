@@ -147,10 +147,11 @@ form {
   height: 100%;
   background: var(--color-sidemenu-active);
   color: white;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 40px;
+  /* padding: 40px; */
   position: fixed;
   left: 0;
   top: 0;
@@ -159,19 +160,23 @@ form {
 
 .logo {
   margin: 12px auto 8px auto;
+  padding-top: 40px;
 }
 
 .nav {
-  margin-top: 88px;
+  margin: 88px 0 10px 50px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-item {
-  width: calc(100% + 80px);
-  margin-left: -40px;
-  margin-right: -40px;
-  padding: 10px 40px;
   cursor: pointer;
   color: var(--color-footer-p);
+  /* display: flex;
+  justify-content: center; */
+  gap: 10px;
+  /* margin: 0 0 10px 50px; */
 }
 
 /* nav hover color  */
@@ -184,12 +189,6 @@ form {
 .nav-item--active:hover {
   background: var(--color-nav-hover);
   color: #ffffff;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
 .nav-icon {
@@ -228,7 +227,6 @@ header {
   align-items: center;
   padding: 0 40px 0 56px;
 }
-
 
 .topbar-left {
   padding-left: 0;
@@ -301,10 +299,6 @@ header {
   color: var(--color-text-button);
 }
 
-.bg-menue {
-  background: var(--color-menu-bg);
-}
-
 .profile {
   position: relative;
   width: 56px;
@@ -339,6 +333,11 @@ footer {
   margin: 16px auto;
   display: flex;
   justify-content: center;
+}
+
+.footer__sidebar {
+  width: 230px;
+  padding-left: 50px;
 }
 
 .footer__link {
