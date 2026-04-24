@@ -191,10 +191,7 @@ RESPONSIVE
     gap: 12px;
   }
 
-  .cards {
-    flex-wrap: nowrap;
-  }
-
+  .cards,
   .small-cards {
     flex-wrap: nowrap;
   }
