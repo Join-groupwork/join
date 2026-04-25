@@ -383,6 +383,10 @@ footer {
   color: #29abe2;
 }
 
+.legal-nav-item:not(.nav-item--active):hover {
+  background: transparent;
+}
+
 /* ==========
    RESPONSIIVE
    ========== */

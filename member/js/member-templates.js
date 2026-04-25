@@ -90,10 +90,10 @@ export function getSidebarTemplate() {
       </nav>
 
       <div class="footer footer__sidebar">
-        <a href="./privacy-policy-user.html" class="nav-item ${privacyActive}">
+        <a href="./privacy-policy-user.html" class="nav-item legal-nav-item ${privacyActive}">
           Privacy Policy
         </a>
-        <a href="./legal-notice-user.html" class="nav-item ${legalActive}">
+        <a href="./legal-notice-user.html" class="nav-item legal-nav-item ${legalActive}">
           Legal Notice
         </a>
       </div>

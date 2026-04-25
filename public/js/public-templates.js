@@ -44,8 +44,12 @@ export function getSidebarTemplate() {
         </a>
       </nav>
       <footer class="footer footer__sidebar">
-        <a href="./privacy-policy-public.html" class="nav-item ${privacyActive}">Privacy Policy</a>
-        <a href="./legal-notice-public.html" class="nav-item ${legalActive}">Legal Notice</a>
+        <a href="./privacy-policy-public.html" class="nav-item legal-nav-item ${privacyActive}">
+          Privacy Policy
+        </a>
+        <a href="./legal-notice-public.html" class="nav-item legal-nav-item ${legalActive}">
+        Legal Notice
+        </a>
       </footer>
     `;
 }
