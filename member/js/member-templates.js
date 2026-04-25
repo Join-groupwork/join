@@ -64,21 +64,38 @@ export function getHeaderTemplate() {
  * @returns {string} HTML string representing the member sidebar.
  */
 export function getSidebarTemplate() {
+  const path = window.location.pathname;
+
+  const privacyActive = path.includes("privacy-policy") ? "nav-item--active" : "";
+  const legalActive = path.includes("legal-notice") ? "nav-item--active" : "";
+
   return `
       <div class="logo">
         <img src="../assets/img/logo-bright.svg" alt="" >
       </div>
 
       <nav class="nav">
-        <a class="nav-item" href="./summary.html"><img src="../assets/icons/side-menu/summary-icon.svg" alt="Summary" class="nav-icon">Summary</a>
-        <a class="nav-item" href="./add-task.html"><img src="../assets/icons/side-menu/add-task-icon.svg" alt="Add Task" class="nav-icon">Add Task</a>
-        <a class="nav-item" href="./board.html"><img src="../assets/icons/side-menu/board-icon.svg" alt="Board" class="nav-icon">Board</a>
-        <a class="nav-item" href="./contacts.html"><img src="../assets/icons/side-menu/contacts-icon.svg" alt="Contacts" class="nav-icon">Contacts</a>
+        <a class="nav-item" href="./summary.html">
+          <img src="../assets/icons/side-menu/summary-icon.svg" alt="Summary" class="nav-icon">Summary
+        </a>
+        <a class="nav-item" href="./add-task.html">
+          <img src="../assets/icons/side-menu/add-task-icon.svg" alt="Add Task" class="nav-icon">Add Task
+        </a>
+        <a class="nav-item" href="./board.html">
+          <img src="../assets/icons/side-menu/board-icon.svg" alt="Board" class="nav-icon">Board
+        </a>
+        <a class="nav-item" href="./contacts.html">
+          <img src="../assets/icons/side-menu/contacts-icon.svg" alt="Contacts" class="nav-icon">Contacts
+        </a>
       </nav>
 
       <div class="footer footer__sidebar">
-        <a href="./privacy-policy-user.html">Privacy Policy</a>
-        <a href="./legal-notice-user.html">Legal Notice</a>
+        <a href="./privacy-policy-user.html" class="nav-item ${privacyActive}">
+          Privacy Policy
+        </a>
+        <a href="./legal-notice-user.html" class="nav-item ${legalActive}">
+          Legal Notice
+        </a>
       </div>
     `;
 }
