@@ -88,7 +88,7 @@
   .board-add-btn {
     height: 40px;
     width: 40px;
-    margin-right: 16px;
+
   }
 
   .board-add-icon {
@@ -115,9 +115,7 @@
     padding: 0;
   }
 
-  .board__task--mobile {
-    margin-right: 16px;
-  }
+  .board__task--mobile {}
 
   .task {
     width: 100%;
@@ -225,7 +223,12 @@
   .board-add-icon {
     margin: 0;
   }
+
+  .board-add-btn {
+    margin-right: 16px;
+  }
 }
+
 
 @media (max-width: 541px) {
   .content {
