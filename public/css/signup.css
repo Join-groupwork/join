@@ -174,12 +174,14 @@ main {
 }
 
 .signup__terms-label:hover::before {
-  background-image: url(../../assets/icons/checkbox/checkbox-icon-unchecked-hover.svg);
+  background-image: url(../../assets/icons/checkbox/checkbox-icon-checked.svg);
+  opacity: 0.5;
   animation-duration: 0ms;
 }
 
 .signup__checkbox:checked+.signup__terms-label::before {
   background-image: url(../../assets/icons/checkbox/checkbox-icon-checked.svg);
+  opacity: 1;
 }
 
 .signup__checkbox:checked+.signup__terms-label:hover::before {
