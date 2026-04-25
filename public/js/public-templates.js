@@ -29,18 +29,24 @@ export function getHeaderTemplate() {
  * @returns {string} HTML string representing the public sidebar.
  */
 export function getSidebarTemplate() {
+  const path = window.location.pathname;
+  const privacyActive = path.includes("privacy-policy") ? "nav-item--active" : "";
+  const legalActive = path.includes("legal-notice") ? "nav-item--active" : "";
+
   return `
       <div class="logo">
         <img src="../assets/img/logo-bright.svg" alt="" srcset="">
       </div>
       <nav class="nav nav__sidebar--footer">
-        <a href="../index.html" class="nav-item"><img src="../assets/icons/side-menu/login-icon.svg" alt="Summary" class="nav-icon">Log In</a>
+        <a href="../index.html" class="nav-item">
+          <img src="../assets/icons/side-menu/login-icon.svg" alt="Summary" class="nav-icon">
+          Log In
+        </a>
       </nav>
       <footer class="footer footer__sidebar">
-        <a href="./privacy-policy-public.html">Privacy Policy</a>
-        <a href="./legal-notice-public.html">Legal Notice</a>
+        <a href="./privacy-policy-public.html" class="nav-item ${privacyActive}">Privacy Policy</a>
+        <a href="./legal-notice-public.html" class="nav-item ${legalActive}">Legal Notice</a>
       </footer>
-
     `;
 }
 

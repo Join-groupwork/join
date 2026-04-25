@@ -197,6 +197,13 @@ form {
   object-fit: contain;
 }
 
+.sidebar .footer .nav-item {
+  width: calc(100% + 50px);
+  margin-left: -50px;
+  padding-left: 50px;
+  box-sizing: border-box;
+}
+
 /* header */
 header {
   height: 60px;
@@ -361,7 +368,6 @@ footer {
 
 .sidebar .footer {
   margin-top: auto;
-  gap: 4px;
   padding-bottom: 24px;
 }
 
