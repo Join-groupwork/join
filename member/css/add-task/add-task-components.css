@@ -1,4 +1,3 @@
-
 .add-task__avatar {
   width: 40px;
   height: 40px;
@@ -11,7 +10,8 @@
   font-size: 16px;
 }
 
-.select-native-wrapper {
+.select-native-wrapper,
+.add-task__subtask {
   position: relative;
 }
 
@@ -24,10 +24,6 @@
   align-items: center;
   pointer-events: none;
   transform: translateY(-10px);
-}
-
-.add-task__subtask {
-  position: relative;
 }
 
 .add-task__subtask-input {
@@ -54,7 +50,9 @@
   padding: 0;
 }
 
-.subtask-divider { color: var(--color-muted); }
+.subtask-divider {
+  color: var(--color-muted);
+}
 
 .subtask-list {
   display: flex;
@@ -146,8 +144,12 @@
   border: none;
   background: transparent;
   cursor: pointer;
+  border-radius: 50%;
 }
 
+.add-task-close-btn:hover {
+  background-color: rgba(58, 79, 237, 0.1) !important;
+}
 .overlay_add_task {
   position: relative;
   display: flex;
@@ -158,7 +160,8 @@
   background: var(--color-background-input);
   border-radius: 12px;
   box-shadow: 0 4px 8px var(--color-shadow-soft);
-  padding: 48px; /* prevent scrolling */
+  padding: 48px;
+  /* prevent scrolling */
   gap: 20px;
 }
 

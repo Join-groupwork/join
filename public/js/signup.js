@@ -1,7 +1,5 @@
 /**
- * @file Handles user registration including form validation,
- * Firebase authentication, and contact persistence.
- *
+ * @file Handles user registration, validation, Firebase auth, and contact persistence.
  * @module signup
  */
 
@@ -9,155 +7,352 @@ import { auth } from "../../scripts/firebase/firebase.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { pushContact } from "../../scripts/firebase/push-contact.js";
 
-/**
- * Name input field of the signup form.
- *
- * @type {HTMLInputElement|null}
- */
-const signupName = document.getElementById('signupName');
+const signupName = document.getElementById("signupName");
+const signupEmail = document.getElementById("loginEmail");
+const signupPassword = document.getElementById("loginPassword");
+const signupConfirmPassword = document.getElementById("signupConfirmPassword");
+const signupPasswordError = document.getElementById("signupPasswordError");
+const termsCheckbox = document.getElementById("termsCheckbox");
+const signupBtn = document.getElementById("signupBtn");
+const signupForm = document.getElementById("signupForm");
 
 /**
- * Email input field of the signup form.
- *
- * @type {HTMLInputElement|null}
- */
-const signupEmail = document.getElementById('loginEmail');
-
-/**
- * Password input field of the signup form.
- *
- * @type {HTMLInputElement|null}
- */
-const signupPassword = document.getElementById('loginPassword');
-
-/**
- * Password confirmation input field of the signup form.
- *
- * @type {HTMLInputElement|null}
- */
-const signupConfirmPassword = document.getElementById('signupConfirmPassword');
-
-/**
- * Terms acceptance checkbox of the signup form.
- *
- * @type {HTMLInputElement|null}
- */
-const termsCheckbox = document.getElementById('termsCheckbox');
-
-/**
- * Submit button of the signup form.
- *
- * @type {HTMLButtonElement|null}
- */
-const signupBtn = document.getElementById('signupBtn');
-
-/**
- * Signup form element.
- *
- * @type {HTMLFormElement|null}
- */
-const signupForm = document.getElementById('signupForm');
-
-/**
- * Registers the signup form validation and submit event handlers.
+ * Initializes signup validation and submit listeners.
  *
  * @returns {void}
  */
-signupName?.addEventListener('input', validateForm);
-signupEmail?.addEventListener('input', validateForm);
-signupPassword?.addEventListener('input', validateForm);
-signupConfirmPassword?.addEventListener('input', validateForm);
-termsCheckbox?.addEventListener('change', validateForm);
-signupForm?.addEventListener('submit', handleSignup);
-
-
-function validateForm() {
-  const nameFilled = signupName.value.trim() !== '';
-  const emailFilled = signupEmail.value.trim() !== '';
-  const passwordFilled = signupPassword.value !== '';
-  const confirmFilled = signupConfirmPassword.value !== '';
-  const passwordsMatch = signupPassword.value === signupConfirmPassword.value && confirmFilled;
-  const termsAccepted = termsCheckbox.checked;
-
-  if (confirmFilled && !passwordsMatch) {
-    showSignupPasswordError();
-  } else {
-    clearSignupPasswordError();
-  }
-
-  const formIsValid = nameFilled && emailFilled && passwordFilled && passwordsMatch && termsAccepted;
-  signupBtn.disabled = !formIsValid;
+function initSignup() {
+  addInputListeners();
+  termsCheckbox?.addEventListener("change", validateForm);
+  signupForm?.addEventListener("submit", handleSignup);
 }
 
 /**
- * Returns a user-friendly signup error message for a Firebase auth error code.
+ * Adds validation listeners to all inputs.
  *
- * @param {string} errorCode - The Firebase auth error code.
- * @returns {string} Human-readable error message.
+ * @returns {void}
  */
-function getSignupErrorMessage(errorCode) {
-  const messages = {
-    "auth/email-already-in-use": "Diese E-Mail ist bereits registriert. Bitte logge dich ein oder nutze eine andere E-Mail.",
-    "auth/invalid-email": "Bitte gib eine gültige E-Mail-Adresse ein.",
-    "auth/weak-password": "Das Passwort ist zu schwach (mindestens 6 Zeichen).",
-    "auth/network-request-failed": "Netzwerkfehler. Bitte prüfe deine Verbindung und versuche es erneut."
-  };
-
-  return messages[errorCode] || "Registrierung fehlgeschlagen. Bitte erneut versuchen.";
+function addInputListeners() {
+  signupName?.addEventListener("input", validateForm);
+  signupEmail?.addEventListener("input", validateForm);
+  signupPassword?.addEventListener("input", validateForm);
+  signupConfirmPassword?.addEventListener("input", validateForm);
 }
 
 /**
- * Handles signup form submission.
+ * Validates the form and updates the submit button.
  *
- * Creates a Firebase user account and stores the related contact data.
+ * @returns {void}
+ */
+function validateForm() {
+  validatePasswordMatch();
+}
+
+/**
+ * Checks if the form is ready to submit.
+ *
+ * @returns {boolean} True if valid.
+ */
+function isFormReady() {
+  return isFilled(signupName)
+    && isFilled(signupEmail)
+    && isFilled(signupPassword)
+    && isFilled(signupConfirmPassword)
+    && passwordsMatch()
+    && termsCheckbox.checked;
+}
+
+/**
+ * Checks if input has a value.
+ *
+ * @param {HTMLInputElement} input - Input element.
+ * @returns {boolean} True if filled.
+ */
+function isFilled(input) {
+  return input?.value.trim() !== "";
+}
+
+/**
+ * Handles form submit.
  *
  * @async
- * @param {SubmitEvent} event - The signup form submit event.
- * @returns {Promise<void>} Resolves when the signup flow is complete.
+ * @param {SubmitEvent} event - Submit event.
+ * @returns {Promise<void>}
  */
 async function handleSignup(event) {
   event.preventDefault();
+  if (!validateBeforeSubmit()) return;
+  await registerUser();
+}
 
-  if (!signupName || !signupEmail || !signupPassword || !signupBtn) return;
+/**
+ * Runs final validation before signup.
+ *
+ * @returns {boolean} True if valid.
+ */
+function validateBeforeSubmit() {
+  const fieldsValid = validateRequiredFields();
+  const emailValid = validateEmail();
+  const passwordValid = validatePasswordMatch();
+  return fieldsValid && emailValid && passwordValid && termsCheckbox.checked;
+}
 
-  const email = signupEmail.value.trim();
-  const password = signupPassword.value;
+/**
+ * Validates all required signup fields.
+ *
+ * @returns {boolean} True if all fields are filled.
+ */
+function validateRequiredFields() {
+  let isValid = true;
+  isValid = validateRequiredInput(signupName) && isValid;
+  isValid = validateRequiredInput(signupEmail) && isValid;
+  isValid = validateRequiredInput(signupPassword) && isValid;
+  isValid = validateRequiredInput(signupConfirmPassword) && isValid;
+  return isValid;
+}
 
+/**
+ * Validates one required input.
+ *
+ * @param {HTMLInputElement} input - Input element.
+ * @returns {boolean} True if input is filled.
+ */
+function validateRequiredInput(input) {
+  if (isFilled(input)) return true;
+  showInputError(input, "This field is required.");
+  return false;
+}
+
+/**
+ * Shows an error below an input.
+ *
+ * @param {HTMLInputElement} input - Input element.
+ * @param {string} message - Error message.
+ * @returns {void}
+ */
+function showInputError(input, message) {
+  const error = getInputError(input);
+  error.textContent = message;
+  error.classList.add("show");
+  input.classList.add("signup__input--error");
+}
+
+/**
+ * Gets or creates an input error element.
+ *
+ * @param {HTMLInputElement} input - Input element.
+ * @returns {HTMLSpanElement} Error element.
+ */
+function getInputError(input) {
+  const errorId = `${input.id}Error`;
+  const existing = document.getElementById(errorId);
+  if (existing) return existing;
+  return createInputError(input, errorId);
+}
+
+/**
+ * Creates an input error element.
+ *
+ * @param {HTMLInputElement} input - Input element.
+ * @returns {HTMLSpanElement} Error element.
+ */
+function createInputError(input, errorId) {
+  const error = document.createElement("span");
+  error.id = errorId;
+  error.className = "signup__error--text";
+  input.insertAdjacentElement("afterend", error);
+  return error;
+}
+
+/**
+ * Registers user in Firebase.
+ *
+ * @async
+ * @returns {Promise<void>}
+ */
+async function registerUser() {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const uid = userCredential.user.uid;
-
-    /**
-     * Contact data stored in the database for the newly registered user.
-     *
-     * @type {{ uid: string, name: string, email: string, createdAT: number }}
-     */
-    const contactData = {
-      uid: uid,
-      name: signupName.value.trim(),
-      email: email,
-      createdAT: Date.now()
-    };
-
-    await pushContact(contactData);
-
-    setTimeout(() => {
-      window.location.href = "/index.html";
-    }, 1500);
+    signupBtn.disabled = true;
+    const credential = await createUser();
+    await saveContact(credential.user.uid);
+    showSuccessOverlay();
   } catch (error) {
-    signupBtn.disabled = false;
-    console.error("Fehler beim Speichern:", error.code, error.message);
-    alert(getSignupErrorMessage(error.code));
+    handleSignupError(error);
   }
 }
 
-
-function showSignupPasswordError() {
-  signupConfirmPassword.classList.add('signup__input--error');
-  document.getElementById('signupPasswordError')?.classList.add('show');
+/**
+ * Creates Firebase user.
+ *
+ * @returns {Promise<UserCredential>}
+ */
+function createUser() {
+  return createUserWithEmailAndPassword(auth, getEmail(), signupPassword.value);
 }
 
-function clearSignupPasswordError() {
-  signupConfirmPassword.classList.remove('signup__input--error');
-  document.getElementById('signupPasswordError')?.classList.remove('show');
+/**
+ * Saves user contact data.
+ *
+ * @param {string} uid - User ID.
+ * @returns {Promise<void>}
+ */
+function saveContact(uid) {
+  return pushContact({
+    uid: uid,
+    name: signupName.value.trim(),
+    email: getEmail(),
+    createdAT: Date.now()
+  });
 }
+
+/**
+ * Returns trimmed email.
+ *
+ * @returns {string}
+ */
+function getEmail() {
+  return signupEmail.value.trim();
+}
+
+/**
+ * Checks if email contains @.
+ *
+ * @returns {boolean}
+ */
+function emailHasAt() {
+  return getEmail().includes("@");
+}
+
+/**
+ * Validates email format.
+ *
+ * @returns {boolean}
+ */
+function validateEmail() {
+  if (!isFilled(signupEmail)) return true;
+  if (emailHasAt()) return true;
+  showInputError(signupEmail, "Email must contain an @ character.");
+  return false;
+}
+
+/**
+ * Validates password match.
+ *
+ * @returns {boolean}
+ */
+function validatePasswordMatch() {
+  if (passwordsMatch() || !signupConfirmPassword.value) {
+    clearPasswordError();
+    return true;
+  }
+  showPasswordError();
+  return false;
+}
+
+/**
+ * Checks password equality.
+ *
+ * @returns {boolean}
+ */
+function passwordsMatch() {
+  return signupPassword.value === signupConfirmPassword.value;
+}
+
+/**
+ * Shows password error.
+ *
+ * @returns {void}
+ */
+function showPasswordError() {
+  signupConfirmPassword.classList.add("signup__input--error");
+  signupPasswordError.textContent = "Your passwords do not match. Please try again.";
+  signupPasswordError.classList.add("show");
+}
+
+/**
+ * Clears password error.
+ *
+ * @returns {void}
+ */
+function clearPasswordError() {
+  signupConfirmPassword.classList.remove("signup__input--error");
+  signupPasswordError.classList.remove("show");
+}
+
+/**
+ * Shows success overlay.
+ *
+ * @returns {void}
+ */
+function showSuccessOverlay() {
+  const overlay = createOverlay();
+  document.body.appendChild(overlay);
+  requestAnimationFrame(() => overlay.classList.add("signup-success--visible"));
+  redirectToLogin();
+}
+
+/**
+ * Creates overlay element.
+ *
+ * @returns {HTMLDivElement}
+ */
+function createOverlay() {
+  const el = document.createElement("div");
+  el.className = "signup-success";
+  el.textContent = "You signed up successfully";
+  return el;
+}
+
+/**
+ * Redirects to login page.
+ *
+ * @returns {void}
+ */
+function redirectToLogin() {
+  setTimeout(() => {
+    window.location.href = "../index.html";
+  }, 1500);
+}
+
+/**
+ * Handles signup errors.
+ *
+ * @param {Error} error - Firebase error.
+ * @returns {void}
+ */
+function handleSignupError(error) {
+  signupBtn.disabled = false;
+  console.error(error.code, error.message);
+
+  const message = getErrorMessage(error.code);
+
+  if (error.code === "auth/weak-password") {
+    showInputError(signupPassword, message);
+    return;
+  }
+
+  if (error.code === "auth/email-already-in-use" || error.code === "auth/invalid-email") {
+    showInputError(signupEmail, message);
+    return;
+  }
+
+  showInputError(signupEmail, message);
+}
+
+/**
+ * Returns error message.
+ *
+ * @param {string} code - Firebase error code.
+ * @returns {string}
+ */
+function getErrorMessage(code) {
+  const messages = {
+    "auth/email-already-in-use": "This email is already registered.",
+    "auth/invalid-email": "Please enter a valid email address.",
+    "auth/weak-password": "Password must be at least 6 characters.",
+    "auth/network-request-failed": "Network error. Please try again."
+  };
+  return messages[code] || "Signup failed. Please try again.";
+}
+
+initSignup();

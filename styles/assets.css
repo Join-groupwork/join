@@ -10,6 +10,9 @@
 button:hover {
   cursor: pointer;
   background-color: var(--background__button--hover);
+  box-shadow: 0px 4px 4px 0px #00000040;
+  animation-timing-function: ease-in-out;
+  animation-duration: 100ms;
 }
 
 .button__index--signup {
@@ -32,6 +35,12 @@ button:hover {
   border: 1px solid var(--color-menu-bg);
   color: var(--color-menu-bg);
   background-color: var(--color-background-input);
+}
+
+.button__login--guest:hover {
+  color: var(--color-hover);
+  background-color: var(--color-background-input);
+  border-color: var(--background__button--hover);
 }
 
 .button__signup {
