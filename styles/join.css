@@ -361,6 +361,13 @@ footer {
   font-weight: 700;
 }
 
+.footer-signup {
+  width: 250px;
+  margin: 16px auto;
+  display: flex;
+  justify-content: center;
+}
+
 .color-menue a {
   color: var(--color-text-secondary);
 }
