@@ -304,6 +304,7 @@ header {
 .header-menue-nav a:hover {
   background: var(--color-nav-hover);
   color: var(--color-text-button);
+  border-radius: 8px;
 }
 
 .profile {
