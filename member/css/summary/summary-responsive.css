@@ -156,7 +156,7 @@ RESPONSIVE
 
 @media (max-width: 600px) {
   .dashboard {
-    padding: 104px 16px 20px;
+    padding: 104px 16px 100px;
   }
 
   .dashboard-right {
@@ -191,10 +191,7 @@ RESPONSIVE
     gap: 12px;
   }
 
-  .cards {
-    flex-wrap: nowrap;
-  }
-
+  .cards,
   .small-cards {
     flex-wrap: nowrap;
   }

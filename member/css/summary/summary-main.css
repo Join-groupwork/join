@@ -1,11 +1,8 @@
 * {
-  margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 .summary-page {
-  font-family: "Open Sans", sans-serif;
   min-width: 320px;
 }
 
@@ -35,7 +32,7 @@
 }
 
 .legal a:hover {
-  color: #2ba9e5;
+  color: var(--color-hover);
   font-weight: bold;
 }
 
@@ -133,10 +130,7 @@
 .card.urgent-info:hover .card-title,
 .card.urgent-info:hover .card-sub,
 .small-card:hover .big,
-.small-card:hover .label {
-  color: #ffffff;
-}
-
+.small-card:hover .label,
 .card.urgent-info:hover .urgent-right .date,
 .card.urgent-info:hover .urgent-right .small-sub {
   color: #ffffff;
