@@ -337,7 +337,6 @@ header {
 /* FOOTER */
 footer {
   width: 250px;
-  margin: 16px auto;
   display: flex;
   justify-content: center;
 }
