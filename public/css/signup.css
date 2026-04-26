@@ -67,7 +67,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .signup__form>.signup__input,
@@ -90,9 +90,7 @@ main {
 }
 
 .signup__field {
-  position: relative;
   width: 100%;
-  padding-bottom: 18px;
 }
 
 .signup__input::placeholder {
@@ -115,20 +113,16 @@ main {
 }
 
 .signup__error--text {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
+  display: none;
   width: 100%;
+  color: #ff8190;
+  font-size: 13px;
   text-align: center;
-  font-size: 12px;
-  color: var(--color-danger);
-  line-height: 1.2;
-  opacity: 0;
-  pointer-events: none;
+  margin-top: 0;
 }
 
 .signup__error--text.show {
-  opacity: 1;
+  display: block;
 }
 
 .signup__input--error {
@@ -208,13 +202,6 @@ main {
   background-image: url(../../assets/icons/checkbox/checkbox-icon-checked.svg);
 }
 
-#signupConfirmPassword.signup__input--error,
-#signupConfirmPassword.signup__input--error:focus {
-  border: 1px solid var(--color-danger) !important;
-  outline: none;
-  box-shadow: none;
-}
-
 /* ==========
 RESPONSIVE
    ==========
@@ -279,4 +266,27 @@ RESPONSIVE
   .terms__checkbox--a {
     font-size: 16px;
   }
+}
+
+.signup__input--error {
+  border: 1px solid #ff8190;
+}
+
+.signup-success {
+  position: fixed;
+  left: 50%;
+  bottom: -120px;
+  transform: translateX(-50%);
+  background-color: #2a3647;
+  color: white;
+  padding: 24px 32px;
+  border-radius: 20px;
+  font-size: 20px;
+  z-index: 9999;
+  transition: bottom 0.4s ease, transform 0.4s ease;
+}
+
+.signup-success--visible {
+  bottom: 50%;
+  transform: translate(-50%, 50%);
 }
