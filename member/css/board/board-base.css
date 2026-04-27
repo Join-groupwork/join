@@ -116,6 +116,7 @@ main {
 
 .task__title {
   font-weight: 700;
+  padding-top: 10px;
 }
 
 .task__text {
