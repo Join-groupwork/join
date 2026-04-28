@@ -240,10 +240,19 @@ export function getAddOverlayTemplate() {
                     <div>
                         <img class="overlay_avatar" src="../../assets/icons/contact-icon.svg" alt="Contact Icon">
                     </div>
-                    <form class="form_add_contact" id="add_contact_form">
-                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact" required>
-                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact" required>
-                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact">
+                    <form class="form_add_contact" id="add_contact_form" novalidate>
+                      <div class="form-field">
+                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact" placeholder="Name">
+                        <span class="error-message" data-default-message="This field is required">This field is required</span>
+                      </div>
+                      <div class="form-field">
+                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact" placeholder="Email">
+                        <span class="error-message" data-default-message="This field is required">This field is required</span>
+                      </div>
+                      <div class="form-field">
+                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact" placeholder="Phone">
+                        <span class="error-message" data-default-message=""></span>
+                      </div>
                     </form>
                 </div>
 
@@ -419,10 +428,19 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
             <div class="contact_avatar contact_avatar--large edit_overlay_avatar overlay_avatar" style="background-color:${color}">
                 ${initials}
             </div>
-          <form class="form_add_contact" id="edit_contact_form">
-            <input type="text" id="contact_name" class="input_add_contact" placeholder="Name" value="${contact.name || ''}" required>
-            <input type="email" id="contact_email" class="input_add_contact" placeholder="Email" value="${contact.email || ''}" required>
-            <input type="tel" id="contact_phone" class="input_add_contact" placeholder="Phone" value="${contact.phone || ''}">
+          <form class="form_add_contact" id="edit_contact_form" novalidate>
+            <div class="form-field">
+              <input type="text" id="contact_name" class="input_add_contact" placeholder="Name" value="${contact.name || ''}">
+              <span class="error-message" data-default-message="This field is required">This field is required</span>
+            </div>
+            <div class="form-field">
+              <input type="email" id="contact_email" class="input_add_contact" placeholder="Email" value="${contact.email || ''}">
+              <span class="error-message" data-default-message="This field is required">This field is required</span>
+            </div>
+            <div class="form-field">
+              <input type="tel" id="contact_phone" class="input_add_contact" placeholder="Phone" value="${contact.phone || ''}">
+              <span class="error-message" data-default-message=""></span>
+            </div>
             <div class="buttons_add_contact">
               <button type="button" class="btn_save_contact" onclick="deleteContact('${contactId}')">Delete</button>
               <button type="submit" class="btn_cancel_contact">Save<img src="../../assets/icons/check-icon-white.svg" alt=""></button>

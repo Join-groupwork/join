@@ -1,5 +1,3 @@
-
-
 .contact_item--active .contact_email {
     color: #9fc8ff;
 }
@@ -77,8 +75,6 @@
 
 }
 
-
-
 .overlay_add_contact_right {
     width: 58%;
     padding: 4% 3% 4% 3%;
@@ -113,7 +109,7 @@
     display: flex;
     flex-direction: column;
     padding: 0px 25px 20px 0px;
-    gap: 35px;
+    gap: 6px;
     width: 63%;
     border-radius: 16px;
 }
@@ -135,6 +131,11 @@
     gap: 18px;
 }
 
+.form_add_contact .form-field {
+    display: flex;
+    flex-direction: column;
+}
+
 .input_add_contact {
     width: 100%;
     height: 48px;
@@ -148,6 +149,25 @@
     background-size: 20px 20px;
     padding-right: 46px;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form_add_contact .error-message {
+    display: block;
+    visibility: hidden;
+    margin-top: 6px;
+    margin-left: 6px;
+    min-height: 17px;
+    font-size: 14px;
+    color: #ff3d00;
+}
+
+.form_add_contact .form-field.error .error-message {
+    visibility: visible;
+}
+
+.input_add_contact.input-error {
+    border: 1px solid #ff3d00 !important;
+    box-shadow: none !important;
 }
 
 #contact_name {

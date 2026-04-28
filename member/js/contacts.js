@@ -48,7 +48,10 @@ export function showAddContactOverlay() {
   const addBtn = document.querySelector('.contact_mobile_add_btn');
   if (addBtn) addBtn.style.display = 'none';
   const form = document.getElementById('add_contact_form');
-  if (form) form.onsubmit = handleAddContact;
+  if (form) {
+    setupContactFormValidation(form);
+    form.onsubmit = handleAddContact;
+  }
 }
 
 /**
@@ -80,8 +83,9 @@ export function hideAddContactOverlay() {
  */
 async function handleAddContact(event) {
   if (event) event.preventDefault();
-  const fields = getAddContactFields();
-  if (!hasRequiredAddContactFields(fields)) return;
+  const fields = getContactFormFields('add_contact_form');
+  if (!hasRequiredContactFields(fields)) return;
+  if (!validateContactFormFields(fields)) return;
   const payload = buildAddContactPayload(fields);
   if (!isValidAddContactPayload(payload)) return;
   const uid = getCurrentUserId();
@@ -100,11 +104,13 @@ async function handleAddContact(event) {
  *   phoneInput: HTMLInputElement|null
  * }} Object containing the add-contact form fields.
  */
-function getAddContactFields() {
+function getContactFormFields(formId) {
+  const form = document.getElementById(formId);
   return {
-    nameInput: document.getElementById('contact_name'),
-    emailInput: document.getElementById('contact_email'),
-    phoneInput: document.getElementById('contact_phone')
+    form,
+    nameInput: form?.querySelector('#contact_name') || null,
+    emailInput: form?.querySelector('#contact_email') || null,
+    phoneInput: form?.querySelector('#contact_phone') || null
   };
 }
 
@@ -118,10 +124,111 @@ function getAddContactFields() {
  * }} fields - The collected add-contact form fields.
  * @returns {boolean} True if the required fields exist, otherwise false.
  */
-function hasRequiredAddContactFields(fields) {
+function hasRequiredContactFields(fields) {
   const hasFields = Boolean(fields.nameInput && fields.emailInput);
   if (!hasFields) console.error('Formular-Felder nicht gefunden!');
   return hasFields;
+}
+
+/**
+ * Adds blur/input/change validation listeners to contact form fields.
+ *
+ * @param {HTMLFormElement} form - Contact form element.
+ * @returns {void}
+ */
+function setupContactFormValidation(form) {
+  const fields = {
+    nameInput: form.querySelector('#contact_name'),
+    emailInput: form.querySelector('#contact_email')
+  };
+  [fields.nameInput, fields.emailInput].forEach((field) => {
+    field?.addEventListener('blur', () => {
+      validateContactField(field);
+    });
+    field?.addEventListener('input', () => {
+      if (field.classList.contains('input-error')) {
+        validateContactField(field);
+      }
+    });
+    field?.addEventListener('change', () => {
+      if (field.classList.contains('input-error')) {
+        validateContactField(field);
+      }
+    });
+  });
+}
+
+/**
+ * Validates required contact form fields.
+ *
+ * @param {{nameInput: HTMLInputElement|null, emailInput: HTMLInputElement|null}} fields - Contact fields.
+ * @returns {boolean} True when all required fields are valid.
+ */
+function validateContactFormFields(fields) {
+  const isNameValid = validateContactField(fields.nameInput);
+  const isEmailValid = validateContactField(fields.emailInput);
+  return isNameValid && isEmailValid;
+}
+
+/**
+ * Validates a single contact form field and sets error state.
+ *
+ * @param {HTMLInputElement|null} input - Field to validate.
+ * @returns {boolean} True when field is valid.
+ */
+function validateContactField(input) {
+  if (!input) return false;
+  const value = input.value.trim();
+  if (!value) {
+    setContactFieldError(input, 'This field is required');
+    return false;
+  }
+  if (input.type === 'email' && !isValidEmail(value)) {
+    setContactFieldError(input, 'Please enter a valid email address');
+    return false;
+  }
+  clearContactFieldError(input);
+  return true;
+}
+
+/**
+ * Adds visual error styles and message to a contact field.
+ *
+ * @param {HTMLInputElement} input - Field with validation error.
+ * @param {string} message - Error message to display.
+ * @returns {void}
+ */
+function setContactFieldError(input, message) {
+  const formField = input.closest('.form-field');
+  const errorMessage = formField?.querySelector('.error-message');
+  input.classList.add('input-error');
+  formField?.classList.add('error');
+  if (errorMessage) errorMessage.textContent = message;
+}
+
+/**
+ * Removes visual error styles and restores default message.
+ *
+ * @param {HTMLInputElement} input - Field to reset.
+ * @returns {void}
+ */
+function clearContactFieldError(input) {
+  const formField = input.closest('.form-field');
+  const errorMessage = formField?.querySelector('.error-message');
+  const defaultMessage = errorMessage?.dataset.defaultMessage || '';
+  input.classList.remove('input-error');
+  formField?.classList.remove('error');
+  if (errorMessage) errorMessage.textContent = defaultMessage;
+}
+
+/**
+ * Tests whether a string is a valid email address.
+ *
+ * @param {string} email - Email value to validate.
+ * @returns {boolean} True when email matches a basic email pattern.
+ */
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 /**
@@ -405,6 +512,7 @@ function renderEditOverlay(overlay, contactId) {
 function bindEditFormSubmit() {
   const form = document.getElementById('edit_contact_form');
   if (!form) return;
+  setupContactFormValidation(form);
   form.removeEventListener('submit', saveEditedContact);
   form.addEventListener('submit', saveEditedContact);
 }
@@ -437,7 +545,10 @@ function closeEditOverlay() {
 async function saveEditedContact(event) {
   preventDefaultIfPresent(event);
   if (!canSaveEditedContact()) return;
-  const payload = getEditedContactPayload();
+  const fields = getContactFormFields('edit_contact_form');
+  if (!hasRequiredContactFields(fields)) return;
+  if (!validateContactFormFields(fields)) return;
+  const payload = getEditedContactPayload(fields);
   if (!isValidEditedContactPayload(payload)) return;
   try {
     await persistEditedContact(payload);
@@ -473,22 +584,12 @@ function canSaveEditedContact() {
  *
  * @returns {{name: string, email: string, phone: string}} The normalized edited contact payload.
  */
-function getEditedContactPayload() {
+function getEditedContactPayload(fields) {
   return {
-    name: getTrimmedInputValue('contact_name'),
-    email: getTrimmedInputValue('contact_email'),
-    phone: getTrimmedInputValue('contact_phone')
+    name: fields.nameInput?.value.trim() || '',
+    email: fields.emailInput?.value.trim() || '',
+    phone: fields.phoneInput?.value.trim() || ''
   };
-}
-
-/**
- * Returns the trimmed value of an input element by id.
- *
- * @param {string} elementId - The id of the input element.
- * @returns {string} The trimmed input value, or an empty string if not found.
- */
-function getTrimmedInputValue(elementId) {
-  return document.getElementById(elementId)?.value.trim() || '';
 }
 
 /**
