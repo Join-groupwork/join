@@ -556,7 +556,8 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
 
     <form id="edit_task_form" class="add-task__column add-task__column--left">
       <div class="form-field">
-        <input type="text" id="edit_title" class="add-task__input" value="${title}" required placeholder="Enter a title" style="border: none; border-bottom: 1px solid #d1d1d1; border-radius: 0; padding: 8px 0; margin-bottom: 16px; font-size: 16px;">
+          <label for="edit_title" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Title</label>
+        <input type="text" id="edit_title" class="add-task__input" value="${title}" required placeholder="Enter a title" style="border-bottom: 1px solid #d1d1d1; border-radius: 10px; padding: 8px 0; margin-bottom: 16px; font-size: 16px;">
       </div>
 
       <div class="form-field">

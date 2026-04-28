@@ -213,6 +213,9 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   max-height: 85vh;
   overflow-y: auto;
   overflow-x: hidden;
+  height: 715px;
+  min-height: 600px;
+  max-height: 85vh;
 }
 
 .edit-task-form .add-task__column {
