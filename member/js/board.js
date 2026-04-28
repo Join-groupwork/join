@@ -364,6 +364,7 @@ async function updateTaskInFirebase(taskId, updatedTask) {
   tasks[taskId] = { ...tasks[taskId], ...updatedTask };
 }
 
+
 /**
  * Refreshes the board data and reopens the task overlay.
  *
@@ -373,6 +374,8 @@ async function updateTaskInFirebase(taskId, updatedTask) {
  * @async
  * @param {string} taskId - The id of the task to reopen.
  * @re
+ */
+
 async function refreshBoardAndShowTask(taskId) {
   await initTasks();
   syncTasksAndTodos();
