@@ -240,8 +240,9 @@
     background: #2a3647;
     color: #fff;
     border-radius: 10px;
-    min-width: 280px;
+    min-width: 14rem;
     padding: 10px;
+    box-sizing: border-box;
 }
 
 
