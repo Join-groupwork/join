@@ -34,40 +34,24 @@
       </div>
 
       <form class="signup__form" id="signupForm" action="" novalidate>
-        <input
-          class="signup__input signup__input--name"
-          type="text"
-          id="signupName"
-          placeholder="Name"
-          autocomplete="username"
-        />
-
-        <input
-          class="signup__input signup__input--email"
-          type="text"
-          name="email"
-          id="loginEmail"
-          placeholder="Email"
-          autocomplete="email"
-        />
-
-        <input
-          class="signup__input signup__input--password"
-          type="password"
-          name="Password"
-          id="loginPassword"
-          placeholder="Password"
-          autocomplete="new-password"
-        />
+        <div class="signup__field">
+          <input class="signup__input signup__input--name" type="text" id="signupName" placeholder="Name"
+            autocomplete="username" />
+        </div>
 
         <div class="signup__field">
-          <input
-            id="signupConfirmPassword"
-            class="signup__input signup__input--confirm-password"
-            type="password"
-            placeholder="Confirm Password"
-            autocomplete="new-password"
-          />
+          <input class="signup__input signup__input--email" type="text" name="email" id="loginEmail" placeholder="Email"
+            autocomplete="email" />
+        </div>
+
+        <div class="signup__field">
+          <input class="signup__input signup__input--password" type="password" name="Password" id="loginPassword"
+            placeholder="Password" autocomplete="new-password" />
+        </div>
+
+        <div class="signup__field">
+          <input id="signupConfirmPassword" class="signup__input signup__input--confirm-password" type="password"
+            placeholder="Confirm Password" autocomplete="new-password" />
 
           <span id="signupPasswordError" class="signup__error--text">
             Your passwords don’t match. Please try again.
@@ -75,12 +59,7 @@
         </div>
 
         <div class="signup__terms">
-          <input
-            class="signup__checkbox"
-            type="checkbox"
-            name="termsCheckbox"
-            id="termsCheckbox"
-          />
+          <input class="signup__checkbox" type="checkbox" name="termsCheckbox" id="termsCheckbox" />
 
           <label class="signup__terms-label" for="termsCheckbox">
             I accept the

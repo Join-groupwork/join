@@ -107,7 +107,6 @@ function validateRequiredFields() {
   isValid = validateRequiredInput(signupName) && isValid;
   isValid = validateRequiredInput(signupEmail) && isValid;
   isValid = validateRequiredInput(signupPassword) && isValid;
-  isValid = validateRequiredInput(signupConfirmPassword) && isValid;
   return isValid;
 }
 

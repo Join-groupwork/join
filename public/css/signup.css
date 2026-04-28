@@ -91,6 +91,9 @@ main {
 
 .signup__field {
   width: 100%;
+  min-height: 70px;
+  display: flex;
+  flex-direction: column;
 }
 
 .signup__input::placeholder {
