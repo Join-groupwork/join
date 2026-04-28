@@ -45,9 +45,38 @@ function addInputListeners() {
  * @returns {void}
  */
 function validateForm() {
-  validatePasswordMatch();
-}
+  const nameFilled = signupName.value.trim() !== '';
+  const emailValue = signupEmail.value.trim();
+  const emailFilled = emailValue !== '';
+  const emailValid = emailValue.includes('@');
 
+  const passwordFilled = signupPassword.value !== '';
+  const confirmFilled = signupConfirmPassword.value !== '';
+  const passwordsMatch = signupPassword.value === signupConfirmPassword.value && confirmFilled;
+  const termsAccepted = termsCheckbox.checked;
+
+  if (emailFilled && !emailValid) {
+    showSignupEmailError();
+  } else {
+    clearSignupEmailError();
+  }
+
+  if (confirmFilled && !passwordsMatch) {
+    showSignupPasswordError();
+  } else {
+    clearSignupPasswordError();
+  }
+
+  const formIsValid =
+    nameFilled &&
+    emailFilled &&
+    emailValid &&
+    passwordFilled &&
+    passwordsMatch &&
+    termsAccepted;
+
+  signupBtn.disabled = !formIsValid;
+}
 /**
  * Checks if the form is ready to submit.
  *
@@ -352,6 +381,17 @@ function getErrorMessage(code) {
     "auth/network-request-failed": "Network error. Please try again."
   };
   return messages[code] || "Signup failed. Please try again.";
+}
+
+
+function showSignupEmailError() {
+  signupEmail.classList.add('signup__input--error');
+  document.getElementById('signupEmailError')?.classList.add('show');
+}
+
+function clearSignupEmailError() {
+  signupEmail.classList.remove('signup__input--error');
+  document.getElementById('signupEmailError')?.classList.remove('show');
 }
 
 initSignup();

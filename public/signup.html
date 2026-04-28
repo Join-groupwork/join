@@ -39,15 +39,13 @@
             autocomplete="username" />
         </div>
 
-        <div class="signup__field">
-          <input class="signup__input signup__input--email" type="text" name="email" id="loginEmail" placeholder="Email"
-            autocomplete="email" />
-        </div>
-
-        <div class="signup__field">
-          <input class="signup__input signup__input--password" type="password" name="Password" id="loginPassword"
-            placeholder="Password" autocomplete="new-password" />
-        </div>
+        <input class="signup__input signup__input--email" type="text" name="email" id="loginEmail" placeholder="Email"
+          autocomplete="email" />
+        <span id="signupEmailError" class="signup__error--text">
+          Email must contain an @ character.
+        </span>
+        <input class="signup__input signup__input--password" type="password" name="Password" id="loginPassword"
+          placeholder="Password" autocomplete="new-password" />
 
         <div class="signup__field">
           <input id="signupConfirmPassword" class="signup__input signup__input--confirm-password" type="password"
