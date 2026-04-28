@@ -477,7 +477,7 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
 
   return `
   <div class="task-overlay-content">
-      <div class="overlaytemplate-first-section">
+      <div class="overlaytemplate-first-section flex-class">
         <p class="task__category--${category} overlaytemplate-category">${formatCategoryLabel(category)}</p>
         <button onclick="closeTaskOverlay()"><img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt=""></button>
       </div>
@@ -556,17 +556,17 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
 
     <form id="edit_task_form" class="add-task__column add-task__column--left">
       <div class="form-field">
-          <label for="edit_title" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Title</label>
-        <input type="text" id="edit_title" class="add-task__input" value="${title}" required placeholder="Enter a title" style="border-bottom: 1px solid #d1d1d1; border-radius: 10px; padding: 8px 0; margin-bottom: 16px; font-size: 16px;">
+          <label for="edit_title" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400; margin-bottom: 6px;">Title</label>
+        <input type="text" id="edit_title" class="add-task__input" value="${title}" required placeholder="Enter a title" style="border-bottom: 1px solid #d1d1d1; border-radius: 10px; padding: 8px 0; margin-bottom: 16px; font-size: 16px; padding-left: 12px;">
       </div>
 
       <div class="form-field">
-        <label for="edit_description" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Description</label>
+        <label for="edit_description" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400; margin-bottom: 6px;">Description</label>
         <textarea id="edit_description" class="add-task__textarea" placeholder="Enter a description" style="min-height: 80px; font-size: 16px; resize: vertical;">${description}</textarea>
       </div>
 
       <div class="form-field">
-        <label for="edit_due_date" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Due date</label>
+        <label for="edit_due_date" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400; margin-bottom: 6px;">Due date</label>
         <input type="date" id="edit_due_date" class="add-task__input" value="${due_date}" required style="font-size: 16px;">
       </div>
 
@@ -586,7 +586,7 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
       </div>
 
       <div class="form-field">
-        <label for="edit_assigned_to" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Assigned to</label>
+        <label for="edit_assigned_to" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400; margin-bottom: 6px;">Assigned to</label>
         <div class="custom-select" id="edit_assigned_to" style="margin-bottom: 12px;">
           <button type="button" class="custom-select__trigger" id="edit_assigned_to_trigger">
             <span class="custom-select__trigger-label">Select contacts to assign</span>
@@ -615,7 +615,7 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
         </div>
         <div class="subtask-list" id="edit_subtask_list" style="margin-bottom: 8px;">
           ${Object.entries(subtasks && typeof subtasks === 'object' ? subtasks : {}).map(([key, s]) => `
-            <div class="subtask-item" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 12px; font-size: 16px; color: #2a3647;">
+            <div class="subtask-item" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0; font-size: 16px; color: #2a3647;">
               <div style="display: flex; align-items: center; gap: 8px; flex: 1;">
                 <span style="line-height: 1.5;">•</span>
                 <span style="line-height: 1.5; flex: 1;" id="subtask_text_${key}">${s.title}</span>
@@ -634,7 +634,7 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
         <div class="subtask-list" id="edit_subtask_list_new"></div>
       </div>
 
-      <div class="add-task__actions" style="margin-top: 40px;">
+      <div class="add-task__actions" style="margin-top: 0;">
         <button type="button" class="button add-task__button add-task__button--primary" onclick="saveEditedTask('${id}')">
           Ok <img src="../assets/icons/check-icon-white.svg" alt="">
         </button>

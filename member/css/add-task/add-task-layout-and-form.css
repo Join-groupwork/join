@@ -158,9 +158,10 @@ select {
   border: 1px solid #d1d1d1;
   background-color: #fff;
   color: #2a3647;
-  height: 48px;
+  height: 41px;
   border-radius: 10px;
   font-weight: 600;
+  font-size: 16px;
 }
 
 .add-task__priority-button img {
@@ -202,6 +203,7 @@ select {
   align-items: center;
   cursor: pointer;
   text-align: left;
+  font-size: 16px;
 }
 
 .custom-select__trigger-label {
