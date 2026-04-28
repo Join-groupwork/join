@@ -67,7 +67,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 21px;
 }
 
 .signup__form>.signup__input,
