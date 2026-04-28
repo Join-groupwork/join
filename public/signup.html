@@ -38,12 +38,13 @@
           <input class="signup__input signup__input--name" type="text" id="signupName" placeholder="Name"
             autocomplete="username" />
         </div>
-
-        <input class="signup__input signup__input--email" type="text" name="email" id="loginEmail" placeholder="Email"
-          autocomplete="email" />
-        <span id="signupEmailError" class="signup__error--text">
-          Email must contain an @ character.
-        </span>
+        <div class="signup__field">
+          <input class="signup__input signup__input--email" type="text" name="email" id="loginEmail" placeholder="Email"
+            autocomplete="email" />
+          <span id="signupEmailError" class="signup__error--text">
+            Email must contain an @ character.
+          </span>
+        </div>
         <input class="signup__input signup__input--password" type="password" name="Password" id="loginPassword"
           placeholder="Password" autocomplete="new-password" />
 
@@ -67,7 +68,7 @@
           </label>
         </div>
 
-        <button class="button button__signup" id="signupBtn" type="submit">
+        <button class="button button__signup" id="signupBtn" type="submit" disabled>
           Sign up
         </button>
       </form>

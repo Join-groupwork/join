@@ -25,6 +25,7 @@ function initSignup() {
   addInputListeners();
   termsCheckbox?.addEventListener("change", validateForm);
   signupForm?.addEventListener("submit", handleSignup);
+  validateForm();
 }
 
 /**
@@ -39,11 +40,6 @@ function addInputListeners() {
   signupConfirmPassword?.addEventListener("input", validateForm);
 }
 
-/**
- * Validates the form and updates the submit button.
- *
- * @returns {void}
- */
 function validateForm() {
   const nameFilled = signupName.value.trim() !== '';
   const emailValue = signupEmail.value.trim();
@@ -62,9 +58,9 @@ function validateForm() {
   }
 
   if (confirmFilled && !passwordsMatch) {
-    showSignupPasswordError();
+    showPasswordError();
   } else {
-    clearSignupPasswordError();
+    clearPasswordError();
   }
 
   const formIsValid =
@@ -72,11 +68,13 @@ function validateForm() {
     emailFilled &&
     emailValid &&
     passwordFilled &&
+    confirmFilled &&
     passwordsMatch &&
     termsAccepted;
 
   signupBtn.disabled = !formIsValid;
 }
+
 /**
  * Checks if the form is ready to submit.
  *
@@ -126,16 +124,29 @@ function validateBeforeSubmit() {
   return fieldsValid && emailValid && passwordValid && termsCheckbox.checked;
 }
 
-/**
- * Validates all required signup fields.
- *
- * @returns {boolean} True if all fields are filled.
- */
 function validateRequiredFields() {
   let isValid = true;
-  isValid = validateRequiredInput(signupName) && isValid;
-  isValid = validateRequiredInput(signupEmail) && isValid;
-  isValid = validateRequiredInput(signupPassword) && isValid;
+
+  if (!isFilled(signupName)) {
+    showInputError(signupName, "This field is required.");
+    isValid = false;
+  }
+
+  if (!isFilled(signupEmail)) {
+    showSignupEmailError("This field is required.");
+    isValid = false;
+  }
+
+  if (!isFilled(signupPassword)) {
+    showInputError(signupPassword, "This field is required.");
+    isValid = false;
+  }
+
+  if (!isFilled(signupConfirmPassword)) {
+    showPasswordError("This field is required.");
+    isValid = false;
+  }
+
   return isValid;
 }
 
@@ -251,15 +262,15 @@ function emailHasAt() {
   return getEmail().includes("@");
 }
 
-/**
- * Validates email format.
- *
- * @returns {boolean}
- */
 function validateEmail() {
   if (!isFilled(signupEmail)) return true;
-  if (emailHasAt()) return true;
-  showInputError(signupEmail, "Email must contain an @ character.");
+
+  if (emailHasAt()) {
+    clearSignupEmailError();
+    return true;
+  }
+
+  showSignupEmailError();
   return false;
 }
 
@@ -286,22 +297,24 @@ function passwordsMatch() {
   return signupPassword.value === signupConfirmPassword.value;
 }
 
-/**
- * Shows password error.
- *
- * @returns {void}
- */
-function showPasswordError() {
+function showSignupEmailError(message = "Email must contain an @ character.") {
+  const emailError = document.getElementById("signupEmailError");
+  signupEmail.classList.add("signup__input--error");
+  emailError.textContent = message;
+  emailError.classList.add("show");
+}
+
+function clearSignupEmailError() {
+  document.getElementById("signupEmailError")?.classList.remove("show");
+  signupEmail.classList.remove("signup__input--error");
+}
+
+function showPasswordError(message = "Your passwords do not match. Please try again.") {
   signupConfirmPassword.classList.add("signup__input--error");
-  signupPasswordError.textContent = "Your passwords do not match. Please try again.";
+  signupPasswordError.textContent = message;
   signupPasswordError.classList.add("show");
 }
 
-/**
- * Clears password error.
- *
- * @returns {void}
- */
 function clearPasswordError() {
   signupConfirmPassword.classList.remove("signup__input--error");
   signupPasswordError.classList.remove("show");
@@ -342,12 +355,6 @@ function redirectToLogin() {
   }, 1500);
 }
 
-/**
- * Handles signup errors.
- *
- * @param {Error} error - Firebase error.
- * @returns {void}
- */
 function handleSignupError(error) {
   signupBtn.disabled = false;
   console.error(error.code, error.message);
@@ -360,11 +367,11 @@ function handleSignupError(error) {
   }
 
   if (error.code === "auth/email-already-in-use" || error.code === "auth/invalid-email") {
-    showInputError(signupEmail, message);
+    showSignupEmailError(message);
     return;
   }
 
-  showInputError(signupEmail, message);
+  showSignupEmailError(message);
 }
 
 /**
@@ -381,17 +388,6 @@ function getErrorMessage(code) {
     "auth/network-request-failed": "Network error. Please try again."
   };
   return messages[code] || "Signup failed. Please try again.";
-}
-
-
-function showSignupEmailError() {
-  signupEmail.classList.add('signup__input--error');
-  document.getElementById('signupEmailError')?.classList.add('show');
-}
-
-function clearSignupEmailError() {
-  signupEmail.classList.remove('signup__input--error');
-  document.getElementById('signupEmailError')?.classList.remove('show');
 }
 
 initSignup();
