@@ -158,7 +158,7 @@ async function toggleCheckbox(img) {
     }
     img.src = newStatus
       ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
-      : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
+      : "../assets/icons/checkbox/checkbox-icon-unchecked.svg";
     updateHTML();
   } catch (error) {
     console.error("Error toggling subtask:", error);
