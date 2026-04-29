@@ -263,8 +263,9 @@ main {
   height: auto;
   min-height: 600px;
   max-height: 85vh;
+}
+.task-overlay-content-scrollable{
   overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .overlaytemplate-first-section {

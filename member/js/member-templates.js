@@ -477,56 +477,58 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
 
   return `
   <div class="task-overlay-content">
-      <div class="overlaytemplate-first-section flex-class">
-        <p class="task__category--${category} overlaytemplate-category">${formatCategoryLabel(category)}</p>
-        <button onclick="closeTaskOverlay()"><img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt=""></button>
-      </div>
-
-    <h2 class="overlaytemplate-title">${title}</h2>
-    <p class="overlaytemplate-description">${description}</p>
-    <p class="overlaytemplate-due_date">Due date: ${due_date.replace(/-/g, "/")}</p>
-    <div class="overlaytemplate__priority--container">
-        <p class="overlaytemplate__priority">Priority: ${priority}</p>
-        <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
-    </div>
-    <div class="overlaytemplate__assigned-to">
-      <p>Assigned To:</p>
-      ${assignedArray.map(person => `
-        <div class="assigned_contact">
-          <div class="contact_avatar" style="background-color: ${getAvatarColor(person)}">
-            ${getInitials(person)}
-          </div>
-          <span>${person}</span>
+   
+        <div class="overlaytemplate-first-section flex-class">
+          <p class="task__category--${category} overlaytemplate-category">${formatCategoryLabel(category)}</p>
+          <button onclick="closeTaskOverlay()"><img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt=""></button>
         </div>
-      `).join('')}
-    </div>
-
-    <div class="overlaytemplate-subtask">
-      <p>Subtasks:</p>
-      <div class="overlaytemplate-subtask-checkbox">
-
-        ${subtaskEntries.map(([key, s]) => {
-    const isChecked = s.status === true || s.completed === true;
-    const iconSrc = isChecked
-      ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
-      : "../assets/icons/checkbox/checkbox-icon-unchecked.svg";
-    return `
-          <div class="subtask-item-taskoverlay">
-            <img class="checkbox-icon" src="${iconSrc}" alt="" data-task-id="${id}" data-subtask-key="${key}">
-            ${s.title}
-          </div>
-        `}).join('')}
+     <div class="task-overlay-content-scrollable">
+      <h2 class="overlaytemplate-title">${title}</h2>
+      <p class="overlaytemplate-description">${description}</p>
+      <p class="overlaytemplate-due_date">Due date: ${due_date.replace(/-/g, "/")}</p>
+      <div class="overlaytemplate__priority--container">
+          <p class="overlaytemplate__priority">Priority: ${priority}</p>
+          <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
       </div>
-    </div>
+      <div class="overlaytemplate__assigned-to">
+        <p>Assigned To:</p>
+        ${assignedArray.map(person => `
+          <div class="assigned_contact">
+            <div class="contact_avatar" style="background-color: ${getAvatarColor(person)}">
+              ${getInitials(person)}
+            </div>
+            <span>${person}</span>
+          </div>
+        `).join('')}
+      </div>
 
-    <div class="taskoverlay_detail_actions">
-      <button type="button" class="link_btn-taskoverlay" onclick="deleteTask('${id}')"><img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
-      <div class="divider-grey"></div>
-      <button type="button" class="link_btn-taskoverlay" onclick="editTask('${id}')"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
-    </div>
+      <div class="overlaytemplate-subtask">
+        <p>Subtasks:</p>
+        <div class="overlaytemplate-subtask-checkbox">
 
-  </div>
-  `;
+          ${subtaskEntries.map(([key, s]) => {
+      const isChecked = s.status === true || s.completed === true;
+      const iconSrc = isChecked
+        ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
+        : "../assets/icons/checkbox/checkbox-icon-unchecked.svg";
+      return `
+            <div class="subtask-item-taskoverlay">
+              <img class="checkbox-icon" src="${iconSrc}" alt="" data-task-id="${id}" data-subtask-key="${key}">
+              ${s.title}
+            </div>
+          `}).join('')}
+        </div>
+      </div>
+
+      <div class="taskoverlay_detail_actions">
+        <button type="button" class="link_btn-taskoverlay" onclick="deleteTask('${id}')"><img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
+        <div class="divider-grey"></div>
+        <button type="button" class="link_btn-taskoverlay" onclick="editTask('${id}')"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
+      </div>
+
+      </div>
+    </div>        
+      `;
 }
 
 /**
