@@ -210,6 +210,13 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
 }
 
 /* Edit Task Overlay Styles */
+.padding-right-class{
+  padding-right: 27px;
+}
+.edit-task-content {
+  padding-right: 16px; 
+  overflow-y: auto; 
+}
 .edit-task-form {
   max-height: 85vh;
   height: 715px;
@@ -221,8 +228,6 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   width: 100%;
   gap: 0;
   margin-top: 0;
-  overflow-y: auto;
-  padding-right: 16px;
 }
 
 .edit-task-form .form-field {
@@ -242,3 +247,4 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   font-size: 16px;
   color: var(--color-menu-bg);
 }
+

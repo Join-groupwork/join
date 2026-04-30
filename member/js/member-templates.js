@@ -507,11 +507,11 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
         <div class="overlaytemplate-subtask-checkbox">
 
           ${subtaskEntries.map(([key, s]) => {
-      const isChecked = s.status === true || s.completed === true;
-      const iconSrc = isChecked
-        ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
-        : "../assets/icons/checkbox/checkbox-icon-unchecked.svg";
-      return `
+    const isChecked = s.status === true || s.completed === true;
+    const iconSrc = isChecked
+      ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
+      : "../assets/icons/checkbox/checkbox-icon-unchecked.svg";
+    return `
             <div class="subtask-item-taskoverlay">
               <img class="checkbox-icon" src="${iconSrc}" alt="" data-task-id="${id}" data-subtask-key="${key}">
               ${s.title}
@@ -550,53 +550,53 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
 
   return `
   <div class="task-overlay-content edit-task-form">
-    <div class="overlaytemplate-first-section">
+    <div class="overlaytemplate-first-section padding-right-class">
       <button onclick="closeTaskOverlay()">
         <img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt="">
       </button>
     </div>
-
-    <form id="edit_task_form" class="add-task__column add-task__column--left">
+    <div class="edit-task-content">
+      <form id="edit_task_form" class="add-task__column add-task__column--left">
       <div class="form-field">
           <label for="edit_title" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400; margin-bottom: 6px;">Title</label>
-        <input type="text" id="edit_title" class="add-task__input" value="${title}" required placeholder="Enter a title" style="border-bottom: 1px solid #d1d1d1; border-radius: 10px; padding: 8px 0; margin-bottom: 16px; font-size: 16px; padding-left: 12px;">
+        <input type="text" id="edit_title" class="add-task__input input__text__editoverlay" value="${title}" required placeholder="Enter a title" style="border-bottom: 1px solid #d1d1d1; border-radius: 10px; padding: 8px 0; margin-bottom: 16px; font-size: 16px; padding-left: 12px;">
       </div>
 
       <div class="form-field">
         <label for="edit_description" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400; margin-bottom: 6px;">Description</label>
-        <textarea id="edit_description" class="add-task__textarea" placeholder="Enter a description" style="min-height: 80px; font-size: 16px; resize: vertical;">${description}</textarea>
+        <textarea id="edit_description" class="add-task__textarea input__text__editoverlay" placeholder="Enter a description" style="min-height: 80px; font-size: 16px; resize: vertical;">${description}</textarea>
       </div>
 
       <div class="form-field">
         <label for="edit_due_date" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400; margin-bottom: 6px;">Due date</label>
-        <input type="date" id="edit_due_date" class="add-task__input" value="${due_date}" required style="font-size: 16px;">
+        <input type="date" id="edit_due_date" class="add-task__input input__text__editoverlay" value="${due_date}" required style="font-size: 16px;">
       </div>
 
       <div class="add-task__priority">
         <label style="font-size: 14px; color: #2a3647; font-weight: 400;">Priority</label>
         <div class="add-task__priority-options">
           <button type="button" class="button add-task__priority-button ${priority === 'urgent' ? 'selected' : ''}" value="urgent" data-priority="urgent">
-            Urgent <img src="../assets/icons/urgent-prio-icon.svg" alt="">
+            Urgent <img class="add-task__priority-icon" src="../assets/icons/urgent-prio-icon.svg" alt="">
           </button>
           <button type="button" class="button add-task__priority-button ${priority === 'medium' ? 'selected' : ''}" value="medium" data-priority="medium">
-            Medium <img src="../assets/icons/medium-prio-icon.svg" alt="">
+            Medium <img class="add-task__priority-icon" src="../assets/icons/medium-prio-icon.svg" alt="">
           </button>
           <button type="button" class="button add-task__priority-button ${priority === 'low' ? 'selected' : ''}" value="low" data-priority="low">
-            Low <img src="../assets/icons/low-prio-icon.svg" alt="">
+            Low <img class="add-task__priority-icon" src="../assets/icons/low-prio-icon.svg" alt="">
           </button>
         </div>
       </div>
 
       <div class="form-field">
         <label for="edit_assigned_to" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400; margin-bottom: 6px;">Assigned to</label>
-        <div class="custom-select" id="edit_assigned_to" style="margin-bottom: 12px;">
-          <button type="button" class="custom-select__trigger" id="edit_assigned_to_trigger">
+        <div class="custom-select" id="edit_assigned_to"  style="margin-bottom: 12px;">
+          <button type="button" class="custom-select__trigger input__text__editoverlay" id="edit_assigned_to_trigger">
             <span class="custom-select__trigger-label">Select contacts to assign</span>
             <span class="custom-select__arrow">▾</span>
           </button>
           <div class="custom-select__options d_none" id="edit_assigned_to_options"></div>
         </div>
-        <div class="add-task__selected-assignees" id="edit_selected_assignees_display" style="display: flex; gap: 8px; margin-bottom: 22px;">
+        <div class="add-task__selected-assignees input__text__editoverlay" id="edit_selected_assignees_display" style="display: flex; gap: 8px; margin-bottom: 22px;">
           ${assignedArray.map(person => `
             <div class="add-task__avatar" style="background-color: ${getAvatarColor(person)}; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 500; font-size: 14px;">
               ${getInitials(person)}
@@ -608,7 +608,7 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
       <div class="form-field">
         <label style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Subtasks</label>
         <div class="add-task__subtask" style="position: relative; margin-bottom: 12px;">
-          <input class="add-task__input add-task__subtask-input" type="text" id="edit_subtask" name="edit_subtask" placeholder="Add new subtask" style="font-size: 16px;">
+          <input class="add-task__input add-task__subtask-input" type="text" id="edit_subtask" name="edit_subtask" placeholder="Add new subtask" ">
           <div class="add-task__subtask-actions d_none" id="edit_subtask_actions">
             <button type="button" class="add-task__subtask-action-btn" id="edit_clear_subtask_btn">✕</button>
             <span class="subtask-divider">|</span>
@@ -635,13 +635,18 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
         </div>
         <div class="subtask-list" id="edit_subtask_list_new"></div>
       </div>
+   
+    </form>
+    
 
-      <div class="add-task__actions" style="margin-top: 0;">
+    </div>
+       <div class="add-task__actions" style="margin-top: 0;">
         <button type="button" class="button add-task__button add-task__button--primary" onclick="saveEditedTask('${id}')">
           Ok <img src="../assets/icons/check-icon-white.svg" alt="">
         </button>
-      </div>
-    </form>
+      </div>        
+    
+  
   </div>
   `;
 }

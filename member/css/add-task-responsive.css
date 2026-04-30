@@ -63,9 +63,7 @@
     min-height: 85px;
   }
 
-  .button.add-task__priority-button {
-    font-size: 18px;
-  }
+  
 
   .button.add-task__button {
     height: 40px;
@@ -115,6 +113,6 @@
   }
 
   .add-task__priority-button[value="medium"].selected {
-    padding-left: 14px;
+    padding-left: 6px;
   }
 }
