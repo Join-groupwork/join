@@ -206,6 +206,7 @@
 
   .task__area {
     min-height: 0;
+    max-height: 350px;
     margin-left: auto;
     margin-right: auto;
   }
