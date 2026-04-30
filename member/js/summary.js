@@ -260,7 +260,7 @@ function initMobileGreetingOverlay() {
   setTimeout(() => {
     overlay.classList.remove('show');
     overlay.classList.add('hide');
-  }, 200);
+  }, 2200);
 }
 
 /**
