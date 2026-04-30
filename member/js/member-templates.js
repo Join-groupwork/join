@@ -240,10 +240,19 @@ export function getAddOverlayTemplate() {
                     <div>
                         <img class="overlay_avatar" src="../../assets/icons/contact-icon.svg" alt="Contact Icon">
                     </div>
-                    <form class="form_add_contact" id="add_contact_form">
-                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact" required>
-                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact" required>
-                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact">
+                    <form class="form_add_contact" id="add_contact_form" novalidate>
+                      <div class="form-field">
+                        <input type="text" id="contact_name" name="contact_name" class="input_add_contact" placeholder="Name">
+                        <span class="error-message" data-default-message="This field is required">This field is required</span>
+                      </div>
+                      <div class="form-field">
+                        <input type="email" id="contact_email" name="contact_email" class="input_add_contact" placeholder="Email">
+                        <span class="error-message" data-default-message="This field is required">This field is required</span>
+                      </div>
+                      <div class="form-field">
+                        <input type="tel" id="contact_phone" name="contact_phone" class="input_add_contact" placeholder="Phone">
+                        <span class="error-message" data-default-message=""></span>
+                      </div>
                     </form>
                 </div>
 
@@ -419,10 +428,19 @@ export function getEditOverlayTemplate(contactId, contact, initials, color) {
             <div class="contact_avatar contact_avatar--large edit_overlay_avatar overlay_avatar" style="background-color:${color}">
                 ${initials}
             </div>
-          <form class="form_add_contact" id="edit_contact_form">
-            <input type="text" id="contact_name" class="input_add_contact" placeholder="Name" value="${contact.name || ''}" required>
-            <input type="email" id="contact_email" class="input_add_contact" placeholder="Email" value="${contact.email || ''}" required>
-            <input type="tel" id="contact_phone" class="input_add_contact" placeholder="Phone" value="${contact.phone || ''}">
+          <form class="form_add_contact" id="edit_contact_form" novalidate>
+            <div class="form-field">
+              <input type="text" id="contact_name" class="input_add_contact" placeholder="Name" value="${contact.name || ''}">
+              <span class="error-message" data-default-message="This field is required">This field is required</span>
+            </div>
+            <div class="form-field">
+              <input type="email" id="contact_email" class="input_add_contact" placeholder="Email" value="${contact.email || ''}">
+              <span class="error-message" data-default-message="This field is required">This field is required</span>
+            </div>
+            <div class="form-field">
+              <input type="tel" id="contact_phone" class="input_add_contact" placeholder="Phone" value="${contact.phone || ''}">
+              <span class="error-message" data-default-message=""></span>
+            </div>
             <div class="buttons_add_contact">
               <button type="button" class="btn_save_contact" onclick="deleteContact('${contactId}')">Delete</button>
               <button type="submit" class="btn_cancel_contact">Save<img src="../../assets/icons/check-icon-white.svg" alt=""></button>
@@ -459,56 +477,58 @@ export function getTaskOverlayTemplate(id, category, title, description, due_dat
 
   return `
   <div class="task-overlay-content">
-      <div class="overlaytemplate-first-section">
-        <p class="task__category--${category} overlaytemplate-category">${formatCategoryLabel(category)}</p>
-        <button onclick="closeTaskOverlay()"><img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt=""></button>
+   
+        <div class="overlaytemplate-first-section flex-class">
+          <p class="task__category--${category} overlaytemplate-category">${formatCategoryLabel(category)}</p>
+          <button onclick="closeTaskOverlay()"><img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt=""></button>
+        </div>
+     <div class="task-overlay-content-scrollable">
+      <h2 class="overlaytemplate-title">${title}</h2>
+      <p class="overlaytemplate-description">${description}</p>
+      <p class="overlaytemplate-due_date">Due date: ${due_date.replace(/-/g, "/")}</p>
+      <div class="overlaytemplate__priority--container">
+          <p class="overlaytemplate__priority">Priority: ${priority}</p>
+          <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
+      </div>
+      <div class="overlaytemplate__assigned-to">
+        <p>Assigned To:</p>
+        ${assignedArray.map(person => `
+          <div class="assigned_contact">
+            <div class="contact_avatar" style="background-color: ${getAvatarColor(person)}">
+              ${getInitials(person)}
+            </div>
+            <span>${person}</span>
+          </div>
+        `).join('')}
       </div>
 
-    <h2 class="overlaytemplate-title">${title}</h2>
-    <p class="overlaytemplate-description">${description}</p>
-    <p class="overlaytemplate-due_date">Due date: ${due_date.replace(/-/g, "/")}</p>
-    <div class="overlaytemplate__priority--container">
-        <p class="overlaytemplate__priority">Priority: ${priority}</p>
-        <img src="../assets/icons/${priority}-prio-icon.svg" alt="">
-    </div>
-    <div class="overlaytemplate__assigned-to">
-      <p>Assigned To:</p>
-      ${assignedArray.map(person => `
-        <div class="assigned_contact">
-          <div class="contact_avatar" style="background-color: ${getAvatarColor(person)}">
-            ${getInitials(person)}
-          </div>
-          <span>${person}</span>
-        </div>
-      `).join('')}
-    </div>
+      <div class="overlaytemplate-subtask">
+        <p>Subtasks:</p>
+        <div class="overlaytemplate-subtask-checkbox">
 
-    <div class="overlaytemplate-subtask">
-      <p>Subtasks:</p>
-      <div class="overlaytemplate-subtask-checkbox">
-
-        ${subtaskEntries.map(([key, s]) => {
+          ${subtaskEntries.map(([key, s]) => {
     const isChecked = s.status === true || s.completed === true;
     const iconSrc = isChecked
       ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
-      : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
+      : "../assets/icons/checkbox/checkbox-icon-unchecked.svg";
     return `
-          <div class="subtask-item-taskoverlay">
-            <img class="checkbox-icon" src="${iconSrc}" alt="" data-task-id="${id}" data-subtask-key="${key}">
-            ${s.title}
-          </div>
-        `}).join('')}
+            <div class="subtask-item-taskoverlay">
+              <img class="checkbox-icon" src="${iconSrc}" alt="" data-task-id="${id}" data-subtask-key="${key}">
+              ${s.title}
+            </div>
+          `}).join('')}
+        </div>
       </div>
-    </div>
 
-    <div class="taskoverlay_detail_actions">
-      <button type="button" class="link_btn-taskoverlay" onclick="deleteTask('${id}')"><img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
-      <div class="divider-grey"></div>
-      <button type="button" class="link_btn-taskoverlay" onclick="editTask('${id}')"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
-    </div>
+      <div class="taskoverlay_detail_actions">
+        <button type="button" class="link_btn-taskoverlay" onclick="deleteTask('${id}')"><img src="../../assets/icons/trash-icon.svg" alt="Delete Icon">Delete</button>
+        <div class="divider-grey"></div>
+        <button type="button" class="link_btn-taskoverlay" onclick="editTask('${id}')"><img src="../../assets/icons/pencil-icon.svg" alt="Edit Icon">Edit</button>
+      </div>
 
-  </div>
-  `;
+      </div>
+    </div>        
+      `;
 }
 
 /**
@@ -530,52 +550,53 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
 
   return `
   <div class="task-overlay-content edit-task-form">
-    <div class="overlaytemplate-first-section">
+    <div class="overlaytemplate-first-section padding-right-class">
       <button onclick="closeTaskOverlay()">
         <img src="../../assets/icons/close-icon.svg" class="close_overlay_icon_getTaskOverlayTemplate" alt="">
       </button>
     </div>
-
-    <form id="edit_task_form" class="add-task__column add-task__column--left">
+    <div class="edit-task-content">
+      <form id="edit_task_form" class="add-task__column add-task__column--left">
       <div class="form-field">
-        <input type="text" id="edit_title" class="add-task__input" value="${title}" required placeholder="Enter a title" style="border: none; border-bottom: 1px solid #d1d1d1; border-radius: 0; padding: 8px 0; margin-bottom: 16px; font-size: 16px;">
+          <label for="edit_title" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400; margin-bottom: 6px;">Title</label>
+        <input type="text" id="edit_title" class="add-task__input input__text__editoverlay" value="${title}" required placeholder="Enter a title" style="border-bottom: 1px solid #d1d1d1; border-radius: 10px; padding: 8px 0; margin-bottom: 16px; font-size: 16px; padding-left: 12px;">
       </div>
 
       <div class="form-field">
-        <label for="edit_description" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Description</label>
-        <textarea id="edit_description" class="add-task__textarea" placeholder="Enter a description" style="min-height: 80px; font-size: 16px; resize: vertical;">${description}</textarea>
+        <label for="edit_description" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400; margin-bottom: 6px;">Description</label>
+        <textarea id="edit_description" class="add-task__textarea input__text__editoverlay" placeholder="Enter a description" style="min-height: 80px; font-size: 16px; resize: vertical;">${description}</textarea>
       </div>
 
       <div class="form-field">
-        <label for="edit_due_date" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Due date</label>
-        <input type="date" id="edit_due_date" class="add-task__input" value="${due_date}" required style="font-size: 16px;">
+        <label for="edit_due_date" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400; margin-bottom: 6px;">Due date</label>
+        <input type="date" id="edit_due_date" class="add-task__input input__text__editoverlay" value="${due_date}" required style="font-size: 16px;">
       </div>
 
       <div class="add-task__priority">
         <label style="font-size: 14px; color: #2a3647; font-weight: 400;">Priority</label>
         <div class="add-task__priority-options">
           <button type="button" class="button add-task__priority-button ${priority === 'urgent' ? 'selected' : ''}" value="urgent" data-priority="urgent">
-            Urgent <img src="../assets/icons/urgent-prio-icon.svg" alt="">
+            Urgent <img class="add-task__priority-icon" src="../assets/icons/urgent-prio-icon.svg" alt="">
           </button>
           <button type="button" class="button add-task__priority-button ${priority === 'medium' ? 'selected' : ''}" value="medium" data-priority="medium">
-            Medium <img src="../assets/icons/medium-prio-icon.svg" alt="">
+            Medium <img class="add-task__priority-icon" src="../assets/icons/medium-prio-icon.svg" alt="">
           </button>
           <button type="button" class="button add-task__priority-button ${priority === 'low' ? 'selected' : ''}" value="low" data-priority="low">
-            Low <img src="../assets/icons/low-prio-icon.svg" alt="">
+            Low <img class="add-task__priority-icon" src="../assets/icons/low-prio-icon.svg" alt="">
           </button>
         </div>
       </div>
 
       <div class="form-field">
-        <label for="edit_assigned_to" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Assigned to</label>
-        <div class="custom-select" id="edit_assigned_to" style="margin-bottom: 12px;">
-          <button type="button" class="custom-select__trigger" id="edit_assigned_to_trigger">
+        <label for="edit_assigned_to" style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400; margin-bottom: 6px;">Assigned to</label>
+        <div class="custom-select" id="edit_assigned_to"  style="margin-bottom: 12px;">
+          <button type="button" class="custom-select__trigger input__text__editoverlay" id="edit_assigned_to_trigger">
             <span class="custom-select__trigger-label">Select contacts to assign</span>
             <span class="custom-select__arrow">▾</span>
           </button>
           <div class="custom-select__options d_none" id="edit_assigned_to_options"></div>
         </div>
-        <div class="add-task__selected-assignees" id="edit_selected_assignees_display" style="display: flex; gap: 8px; margin-bottom: 22px;">
+        <div class="add-task__selected-assignees input__text__editoverlay" id="edit_selected_assignees_display" style="display: flex; gap: 8px; margin-bottom: 22px;">
           ${assignedArray.map(person => `
             <div class="add-task__avatar" style="background-color: ${getAvatarColor(person)}; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 500; font-size: 14px;">
               ${getInitials(person)}
@@ -587,7 +608,7 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
       <div class="form-field">
         <label style="font-size: 14px; margin-bottom: 4px; color: #2a3647; font-weight: 400;">Subtasks</label>
         <div class="add-task__subtask" style="position: relative; margin-bottom: 12px;">
-          <input class="add-task__input add-task__subtask-input" type="text" id="edit_subtask" name="edit_subtask" placeholder="Add new subtask" style="font-size: 16px;">
+          <input class="add-task__input add-task__subtask-input" type="text" id="edit_subtask" name="edit_subtask" placeholder="Add new subtask" ">
           <div class="add-task__subtask-actions d_none" id="edit_subtask_actions">
             <button type="button" class="add-task__subtask-action-btn" id="edit_clear_subtask_btn">✕</button>
             <span class="subtask-divider">|</span>
@@ -596,7 +617,7 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
         </div>
         <div class="subtask-list" id="edit_subtask_list" style="margin-bottom: 8px;">
           ${Object.entries(subtasks && typeof subtasks === 'object' ? subtasks : {}).map(([key, s]) => `
-            <div class="subtask-item" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 12px; font-size: 16px; color: #2a3647;">
+            <div class="subtask-item" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0; font-size: 16px; color: #2a3647;">
               <div style="display: flex; align-items: center; gap: 8px; flex: 1;">
                 <span style="line-height: 1.5;">•</span>
                 <span style="line-height: 1.5; flex: 1;" id="subtask_text_${key}">${s.title}</span>
@@ -614,13 +635,18 @@ export function getEditTaskOverlayTemplate(id, category, title, description, due
         </div>
         <div class="subtask-list" id="edit_subtask_list_new"></div>
       </div>
+   
+    </form>
+    
 
-      <div class="add-task__actions" style="margin-top: 40px;">
+    </div>
+       <div class="add-task__actions" style="margin-top: 0;">
         <button type="button" class="button add-task__button add-task__button--primary" onclick="saveEditedTask('${id}')">
           Ok <img src="../assets/icons/check-icon-white.svg" alt="">
         </button>
-      </div>
-    </form>
+      </div>        
+    
+  
   </div>
   `;
 }

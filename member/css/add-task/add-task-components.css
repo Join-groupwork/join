@@ -65,7 +65,7 @@
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  padding-left: 18px;
+  padding-left: 14px;
 }
 
 .subtask-item-text {
@@ -116,6 +116,8 @@
   padding: 0 20px;
   font-weight: 600;
   gap: 5px;
+  margin-top: 12px;
+
 }
 
 .add-task__button--secondary {

@@ -35,27 +35,29 @@ RESPONSIVE
   position: fixed;
   inset: 0;
   background: #f6f7f8;
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 180ms ease, visibility 180ms ease;
+  transform: translateY(8px);
+  transition: opacity 450ms ease, transform 450ms ease, visibility 450ms ease;
 }
 
 .mobile-greeting-overlay.show {
-  display: flex;
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transform: translateY(0);
 }
 
 .mobile-greeting-overlay.hide {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  transform: translateY(-8px);
 }
 
 .mobile-greeting-content {

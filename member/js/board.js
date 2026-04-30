@@ -158,7 +158,7 @@ async function toggleCheckbox(img) {
     }
     img.src = newStatus
       ? "../assets/icons/checkbox/checkbox-icon-checked.svg"
-      : "../assets/icons/checkbox/checkbox-icon unchecked.svg";
+      : "../assets/icons/checkbox/checkbox-icon-unchecked.svg";
     updateHTML();
   } catch (error) {
     console.error("Error toggling subtask:", error);
@@ -364,6 +364,7 @@ async function updateTaskInFirebase(taskId, updatedTask) {
   tasks[taskId] = { ...tasks[taskId], ...updatedTask };
 }
 
+
 /**
  * Refreshes the board data and reopens the task overlay.
  *
@@ -373,6 +374,8 @@ async function updateTaskInFirebase(taskId, updatedTask) {
  * @async
  * @param {string} taskId - The id of the task to reopen.
  * @re
+ */
+
 async function refreshBoardAndShowTask(taskId) {
   await initTasks();
   syncTasksAndTodos();

@@ -116,6 +116,7 @@ main {
 
 .task__title {
   font-weight: 700;
+  padding-top: 10px;
 }
 
 .task__text {
@@ -262,16 +263,21 @@ main {
   height: auto;
   min-height: 600px;
   max-height: 85vh;
+}
+.task-overlay-content-scrollable{
   overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .overlaytemplate-first-section {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: end;
   width: 100%;
   box-sizing: border-box;
   gap: 10px;
   padding-bottom: 8px;
+}
+.flex-class {
+  display: flex;
+  justify-content: space-between;
 }

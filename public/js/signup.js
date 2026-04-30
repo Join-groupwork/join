@@ -25,6 +25,7 @@ function initSignup() {
   addInputListeners();
   termsCheckbox?.addEventListener("change", validateForm);
   signupForm?.addEventListener("submit", handleSignup);
+  validateForm();
 }
 
 /**
@@ -39,13 +40,39 @@ function addInputListeners() {
   signupConfirmPassword?.addEventListener("input", validateForm);
 }
 
-/**
- * Validates the form and updates the submit button.
- *
- * @returns {void}
- */
 function validateForm() {
-  validatePasswordMatch();
+  const nameFilled = signupName.value.trim() !== '';
+  const emailValue = signupEmail.value.trim();
+  const emailFilled = emailValue !== '';
+  const emailValid = emailValue.includes('@');
+
+  const passwordFilled = signupPassword.value !== '';
+  const confirmFilled = signupConfirmPassword.value !== '';
+  const passwordsMatch = signupPassword.value === signupConfirmPassword.value && confirmFilled;
+  const termsAccepted = termsCheckbox.checked;
+
+  if (emailFilled && !emailValid) {
+    showSignupEmailError();
+  } else {
+    clearSignupEmailError();
+  }
+
+  if (confirmFilled && !passwordsMatch) {
+    showPasswordError();
+  } else {
+    clearPasswordError();
+  }
+
+  const formIsValid =
+    nameFilled &&
+    emailFilled &&
+    emailValid &&
+    passwordFilled &&
+    confirmFilled &&
+    passwordsMatch &&
+    termsAccepted;
+
+  signupBtn.disabled = !formIsValid;
 }
 
 /**
@@ -97,17 +124,29 @@ function validateBeforeSubmit() {
   return fieldsValid && emailValid && passwordValid && termsCheckbox.checked;
 }
 
-/**
- * Validates all required signup fields.
- *
- * @returns {boolean} True if all fields are filled.
- */
 function validateRequiredFields() {
   let isValid = true;
-  isValid = validateRequiredInput(signupName) && isValid;
-  isValid = validateRequiredInput(signupEmail) && isValid;
-  isValid = validateRequiredInput(signupPassword) && isValid;
-  isValid = validateRequiredInput(signupConfirmPassword) && isValid;
+
+  if (!isFilled(signupName)) {
+    showInputError(signupName, "This field is required.");
+    isValid = false;
+  }
+
+  if (!isFilled(signupEmail)) {
+    showSignupEmailError("This field is required.");
+    isValid = false;
+  }
+
+  if (!isFilled(signupPassword)) {
+    showInputError(signupPassword, "This field is required.");
+    isValid = false;
+  }
+
+  if (!isFilled(signupConfirmPassword)) {
+    showPasswordError("This field is required.");
+    isValid = false;
+  }
+
   return isValid;
 }
 
@@ -223,15 +262,15 @@ function emailHasAt() {
   return getEmail().includes("@");
 }
 
-/**
- * Validates email format.
- *
- * @returns {boolean}
- */
 function validateEmail() {
   if (!isFilled(signupEmail)) return true;
-  if (emailHasAt()) return true;
-  showInputError(signupEmail, "Email must contain an @ character.");
+
+  if (emailHasAt()) {
+    clearSignupEmailError();
+    return true;
+  }
+
+  showSignupEmailError();
   return false;
 }
 
@@ -258,22 +297,24 @@ function passwordsMatch() {
   return signupPassword.value === signupConfirmPassword.value;
 }
 
-/**
- * Shows password error.
- *
- * @returns {void}
- */
-function showPasswordError() {
+function showSignupEmailError(message = "Email must contain an @ character.") {
+  const emailError = document.getElementById("signupEmailError");
+  signupEmail.classList.add("signup__input--error");
+  emailError.textContent = message;
+  emailError.classList.add("show");
+}
+
+function clearSignupEmailError() {
+  document.getElementById("signupEmailError")?.classList.remove("show");
+  signupEmail.classList.remove("signup__input--error");
+}
+
+function showPasswordError(message = "Your passwords do not match. Please try again.") {
   signupConfirmPassword.classList.add("signup__input--error");
-  signupPasswordError.textContent = "Your passwords do not match. Please try again.";
+  signupPasswordError.textContent = message;
   signupPasswordError.classList.add("show");
 }
 
-/**
- * Clears password error.
- *
- * @returns {void}
- */
 function clearPasswordError() {
   signupConfirmPassword.classList.remove("signup__input--error");
   signupPasswordError.classList.remove("show");
@@ -314,12 +355,6 @@ function redirectToLogin() {
   }, 1500);
 }
 
-/**
- * Handles signup errors.
- *
- * @param {Error} error - Firebase error.
- * @returns {void}
- */
 function handleSignupError(error) {
   signupBtn.disabled = false;
   console.error(error.code, error.message);
@@ -332,11 +367,11 @@ function handleSignupError(error) {
   }
 
   if (error.code === "auth/email-already-in-use" || error.code === "auth/invalid-email") {
-    showInputError(signupEmail, message);
+    showSignupEmailError(message);
     return;
   }
 
-  showInputError(signupEmail, message);
+  showSignupEmailError(message);
 }
 
 /**

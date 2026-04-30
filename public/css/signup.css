@@ -67,7 +67,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 21px;
 }
 
 .signup__form>.signup__input,
@@ -90,7 +90,7 @@ main {
 }
 
 .signup__field {
-  width: 100%;
+  position: relative;
 }
 
 .signup__input::placeholder {
@@ -114,10 +114,12 @@ main {
 
 .signup__error--text {
   display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
   width: 100%;
   color: #ff8190;
   font-size: 13px;
-  text-align: center;
   margin-top: 0;
 }
 
@@ -200,6 +202,12 @@ main {
   font-size: 14px;
   color: #3d97f1;
   background-image: url(../../assets/icons/checkbox/checkbox-icon-checked.svg);
+}
+
+#signupBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 /* ==========

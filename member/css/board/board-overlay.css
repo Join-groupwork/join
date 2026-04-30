@@ -2,7 +2,7 @@
   padding-bottom: 2px;
 }
 
-.task__overlay--content {}
+
 
 .task-overlay-content h2 {
   font-size: 45px;
@@ -63,6 +63,8 @@
   align-items: center;
   text-align: center;
   gap: 10px;
+  padding-right: 16px;
+
 }
 
 .taskoverlay_detail_actions button {
@@ -209,10 +211,18 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
 }
 
 /* Edit Task Overlay Styles */
+.padding-right-class{
+  padding-right: 27px;
+}
+.edit-task-content {
+  padding-right: 16px; 
+  overflow-y: auto; 
+}
 .edit-task-form {
   max-height: 85vh;
-  overflow-y: auto;
-  overflow-x: hidden;
+  height: 715px;
+  min-height: 600px;
+  max-height: 85vh;
 }
 
 .edit-task-form .add-task__column {
@@ -238,3 +248,4 @@ button img.close_overlay_icon_getTaskOverlayTemplate {
   font-size: 16px;
   color: var(--color-menu-bg);
 }
+

@@ -88,7 +88,6 @@
   .board-add-btn {
     height: 40px;
     width: 40px;
-
   }
 
   .board-add-icon {
@@ -114,8 +113,6 @@
     margin: 0;
     padding: 0;
   }
-
-  .board__task--mobile {}
 
   .task {
     width: 100%;
@@ -206,6 +203,7 @@
 
   .task__area {
     min-height: 0;
+    max-height: 350px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -248,6 +246,10 @@
 
 /*task-overlay-content*/
 @media (max-width: 992px) {
+  .taskoverlay_detail_actions {
+    padding-top: 70px;
+  }
+
   .task-overlay-content {
     width: 369px;
   }
@@ -278,8 +280,12 @@
 }
 
 @media (max-width: 535px) {
+  .taskoverlay_detail_actions {
+    padding-top: 70px;
+  }
+
   .task-overlay-content {
-    width: 275px;
+    width: 281px;
   }
 
   .task-overlay-content h2 {
@@ -375,11 +381,10 @@
 
   .add-task__textarea {
     min-height: 85px;
-
   }
 
   .button.add-task__priority-button {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .button.add-task__button {
@@ -431,5 +436,55 @@
 
   .add-task__priority-button[value="medium"].selected {
     padding-left: 14px;
+  }
+}
+
+/* edit-task-form */
+@media(max-width: 993px) {
+  .task-overlay-content {
+    padding: 20px;
+  }
+
+  .add-task__priority-options {
+    gap: 5px !important;
+  }
+
+  .add-task__priority-button img {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 537px) {
+  .task-overlay-content {
+    padding: 12px;
+  }
+
+  .button.add-task__priority-button {
+    font-size: 12px !important;
+  }
+
+  .add-task__priority-icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .edit-task-content {
+    padding-right: 6px;
+  }
+
+  .add-task__input {
+    font-size: 12px;
+  }
+
+  .input__text__editoverlay {
+    font-size: 13px !important;
+  }
+
+  .edit-task-form .add-task__input {
+    font-size: 14px;
+  }
+
+  .padding-right-class {
+    padding-right: 18px;
   }
 }
