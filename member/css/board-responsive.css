@@ -248,6 +248,9 @@
 
 /*task-overlay-content*/
 @media (max-width: 992px) {
+  .taskoverlay_detail_actions{
+    padding-top: 70px;
+  }
   .task-overlay-content {
     width: 369px;
   }
@@ -278,6 +281,9 @@
 }
 
 @media (max-width: 535px) {
+    .taskoverlay_detail_actions{
+    padding-top: 70px;
+  }
   .task-overlay-content {
     width: 281px;
   }
