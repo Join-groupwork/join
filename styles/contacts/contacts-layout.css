@@ -70,7 +70,6 @@
 
 .h2_underline {
   width: 90px;
-
 }
 
 .body_overlay {
@@ -81,7 +80,6 @@
   height: 100vh;
   margin: 0;
 }
-
 
 .close_overlay_icon_container {
   display: flex;
@@ -122,7 +120,6 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-
 }
 
 @keyframes slideInFromRight {
@@ -189,7 +186,6 @@
   transition: color 0.2s ease;
 }
 
-
 .link_btn:hover {
   color: #29abe2;
 }
@@ -235,7 +231,6 @@
   margin-bottom: 135px;
 }
 
-
 .contact_item--active .contact_container {
   background: #2a3647;
   color: #fff;
@@ -245,11 +240,9 @@
   box-sizing: border-box;
 }
 
-
 .contact_mobile_fab_btn {
   display: none;
 }
-
 
 .contact_mobile_back_btn {
   display: none;
@@ -297,7 +290,6 @@
 
   .contact_slogan p {
     padding-top: unset;
-
   }
 
   #contact_detail {
@@ -466,9 +458,7 @@
     min-width: 126px;
     transform-origin: right bottom;
     animation: mobileActionsSlideInRight 180ms ease-out;
-
   }
-
 
   .contact_mobile_actions_menu.is-closing {
     pointer-events: none;
@@ -498,7 +488,6 @@
 
   .board-overlay {
     align-items: flex-start !important;
-
   }
 }
 
@@ -562,8 +551,6 @@
     filter: brightness(0) invert(1);
   }
 
-
-
   .contact_mobile_add_btn:hover {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
   }
@@ -571,5 +558,4 @@
   .contact_detail_info a.contact_detail_phone {
     margin-bottom: 0px;
   }
-
 }
